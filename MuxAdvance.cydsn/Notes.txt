@@ -1,0 +1,170 @@
+Estados del surtidor
+
+ 0    0x00    Error
+ 6    0x06    Espera
+ 7    0x07    Listo - Manija Arriba
+ 8    0x08    Autorizado
+ 9    0x09    Surtiendo
+10    0x0A    Reporte de venta
+11    0x0B    Reporte de venta
+12    0x0C    Detenido
+13    0x0D    Datos
+14    0x0E    Inicio
+15    0x0F    Inactivo
+
+****************************************************
+Letras para escribir botones en Pantallas
+
+ M    Menu
+****************************************************
+Nombre de botones en Pantallas
+
+button[0][8]   Nombre de boton Ventas
+button[1][8]   Nombre de boton Turnos
+button[2][8]   Nombre de boton Canasta
+button[3][8]   Nombre de boton Consignaciones
+button[4][8]   Nombre de boton Mantenimiento
+button[5][8]   Nombre de boton Copia de Recibo
+button[6][8]   Nombre caja Version
+button[7][8]   Nombre caja Posicion
+button[8][8]   Nombre caja Hora
+button[9][8]   Nombre caja Fecha
+button[10][8]   Nombre caja Direccion IP
+button[11][8]   Nombre caja Digitos Surtidor
+button[12][8]   Nombre de boton Contado
+button[13][8]   Nombre de boton Credito
+button[14][8]   Nombre de boton Dinero
+button[15][8]   Nombre de boton Volumen
+button[16][8]   Nombre de boton Lleno
+button[17][8]   Nombre de imagen Error Surtidor Renglon 1
+button[18][8]   Nombre de imagen Error Surtidor Renglon 2
+button[19][8]   Nombre de imagen Corte
+button[20][8]   Nombre de imagen Teclado Dinero Renglon 1
+button[21][8]   Nombre de imagen Teclado Dinero Renglon 2
+button[22][8]   Nombre de imagen Teclado Volumen Renglon 1
+button[23][8]   Nombre de imagen Teclado Volumen Renglon 2
+button[24][8]   Nombre de imagen Escoja producto Renglon 1
+button[25][8]   Nombre de imagen Escoja producto Renglon 2
+button[26][8]   Nombre de boton Producto 1
+button[27][8]   Nombre de boton Producto 2
+button[28][8]   Nombre de boton Producto 3
+button[29][8]   Nombre de boton Producto 4
+button[30][8]   Nombre de imagen Suba la manija Renglon 1
+button[31][8]   Nombre de imagen Suba la manija Renglon 2
+button[32][8]   Nombre de imagen Esperando Renglon 1
+button[33][8]   Nombre de imagen Esperando Renglon 2
+button[34][8]   Nombre de imagen Error de sistema Renglon 1
+button[35][8]   Nombre de imagen Error de sistema Renglon 2
+button[36][8]   Nombre de imagen Tanqueando Renglon 1
+button[37][8]   Nombre de imagen Tanqueando Renglon 2
+button[38][8]   Nombre de imagen Teclado Placa Renglon 1
+button[39][8]   Nombre de imagen Teclado Placa Renglon 2
+button[40][8]   Nombre de imagen Teclado Kilometraje Renglon 1
+button[41][8]   Nombre de imagen Teclado Kilometraje Renglon 2
+button[42][8]   Nombre de imagen Teclado Nit/CC Renglon 1
+button[43][8]   Nombre de imagen Teclado Nit/CC Renglon 2
+button[44][8]   Nombre de imagen Forma de pago Renglon 1
+button[45][8]   Nombre de imagen Forma de pago Renglon 2
+button[46][8]   Nombre de imagen Forma de pago 1
+button[47][8]   Nombre de imagen Forma de pago 2
+button[48][8]   Nombre de imagen Forma de pago 3
+button[49][8]   Nombre de imagen Forma de pago 4
+button[50][8]   Nombre de imagen Forma de pago 5
+button[51][8]   Nombre de imagen Forma de pago 6
+button[52][8]   Nombre de imagen Forma de pago 7
+button[53][8]   Nombre de imagen Forma de pago 8
+button[54][8]   Nombre de imagen Forma de pago 9
+button[55][8]   Nombre de imagen Forma de pago 10
+button[56][8]   Nombre de imagen Forma de pago 11
+button[57][8]   Nombre de imagen Forma de pago 12
+button[58][8]   Nombre de imagen Forma de pago 13
+button[59][8]   Nombre de imagen Forma de pago 14
+button[60][8]   Nombre de imaen Forma de pago 15
+button[61][8]   Nombre de imagen Forma de pago 16
+button[62][8]   Nombre de imagen Forma de pago 17
+button[63][8]   Nombre de imagen Forma de pago 18
+button[64][8]   Nombre de imagen Forma de pago 19
+button[65][8]   Nombre de imagen Forma de pago 20
+button[66][8]   Nombre de imagen Forma de pago 21
+button[67][8]   Nombre de imagen Forma de pago 22
+button[68][8]   Nombre de imagen Forma de pago 23
+button[69][8]   Nombre de imagen Forma de pago 24
+button[70][8]   Nombre de boton Forma de pago
+button[71][8]   Nombre de imagen Preset
+button[72][8]   Nombre de imagen Tipo de vehiculo Renglon 1
+button[73][8]   Nombre de imagen Tipo de vehiculo Renglon 2
+button[74][8]   Nombre de imagen Tipo de vehiculo 1
+button[75][8]   Nombre de imagen Tipo de vehiculo 2
+button[76][8]   Nombre de imagen Tipo de vehiculo 3
+button[77][8]   Nombre de imagen Tipo de vehiculo 4
+button[78][8]   Nombre de imagen Tipo de vehiculo 5
+button[79][8]   Nombre de imagen Tipo de vehiculo 6
+button[80][8]   Nombre de imagen Gracias Renglon 1
+button[81][8]   Nombre de imagen Serial
+button[82][8]   Nombre de imagen Gracias Renglon 2
+button[83][8]   Nombre de imagen Gracias Renglon 3
+button[84][8]   Nombre de imagen Teclado N° Venta F. de pago Renglon 1
+button[85][8]   Nombre de imagen Teclado N° Venta F. de pago Renglon 2
+button[86][8]   Nombre de imagen Teclado Dinero Venta F. de pago Renglon 1
+button[87][8]   Nombre de imagen Teclado Dinero Venta F. de pago Renglon 2
+button[88][8]   Nombre de imagen Accion anulada Renglon 1
+button[89][8]   Nombre de imagen Accion anulada Renglon 2
+button[90][8]   Nombre de imagen Metodos ID Renglon 1
+button[91][8]   Nombre de imagen Metodos ID Renglon 2
+button[92][8]   Nombre de imagen Tipo de Metodo ID 1
+button[93][8]   Nombre de imagen Tipo de Metodo ID 2
+button[94][8]   Nombre de imagen Tipo de Metodo ID 3
+button[95][8]   Nombre de imagen Tipo de Metodo ID 4
+button[96][8]   Nombre de imagen Tipo de Metodo ID 5
+button[97][8]   Nombre de imagen Tipo de Metodo ID 6
+button[98][8]   Nombre de imagen Esperando
+button[99][8]   Nombre de boton continuar
+button[100][8]   Nombre de imagen canastilla Producto
+button[101][8]   Nombre de imagen canastilla Cantidad
+button[102][8]   Nombre de imagen canastilla Precio
+button[103][8]   Nombre de imagen canastilla Total
+button[104][8]   Nombre de imagen canastilla Ingrese codigo Renglon 1
+button[105][8]   Nombre de imagen canastilla Ingrese codigo Renglon 2
+button[106][8]   Nombre de boton calibrar
+button[107][8]   Nombre de boton imprimir
+button[108][8]   Nombre de imagen elegir impresora Renglon 1
+button[109][8]   Nombre de imagen elegir impresora Renglon 2
+button[110][8]   Nombre de Boton abrir
+button[111][8]   Nombre de Boton cerrar
+button[112][8]   Nombre de imagen Teclado Contraseña Renglon 1
+button[113][8]   Nombre de imagen Teclado Contraseña Renglon 2
+****************************************************
+Estados del MUX
+
+0x10    Error
+0x16    Espera
+0x17    Subio la manija
+0x19    Surtiendo
+0x1A    Fin Venta Combustible
+0x1B    Fin Venta en Cero
+
+0x21    Peticion Venta Seleccionada Forma de Pago
+0x22    Espera de respuesta a Peticion Venta Seleccionada Forma de Pago
+0x23    Espera transaccion Forma de Pago
+0x24    Fin Forma de Pago
+0x25    Espera aceptacion Forma de Pago
+0x26    Peticion Identificacion usuario credito
+0x27    Espera de respuesta a Peticion Identificacion usuario credito
+0x28    Espera transaccion Credito
+0x2A    Espera de respuesta a Peticion Calibracion
+0x2B    Espera de subir la manija en venta autoservicio
+
+0x31    Peticion Identificacion de producto
+0x32    Espera de respuesta a Peticion Identificacion de producto
+0x33    Fin Venta Canasta
+0x34    Recibo de Impresion
+0x35    Peticion Consignacion 
+0x36    Espera de respuesta a Peticion Consignacion
+0x37    Peticion Configurar impresoras
+0x38    Posicion Bloqueada
+0x39    Entra a menu de canasta
+0x3A    Solicitud de Configuraciones
+
+0x40    Pendiente datos turno
+0x41    Peticion Turno Apertura ó Cierre
+0x42    Espera de respuesta a Peticion Turno Apertura ó Cierre

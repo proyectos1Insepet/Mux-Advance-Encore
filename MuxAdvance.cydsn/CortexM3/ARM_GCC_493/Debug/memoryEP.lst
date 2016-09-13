@@ -1,0 +1,3459 @@
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"memoryEP.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.comm	countAnimation1,8,8
+  19              		.comm	countAnimation2,8,8
+  20              		.comm	countBeagleTX,8,8
+  21              		.comm	flowLCD1,4,4
+  22              		.comm	flowLCD2,4,4
+  23              		.comm	digits,1,1
+  24              		.comm	ipAdress,12,4
+  25              		.comm	numberKeys1,1,1
+  26              		.comm	numberKeys2,1,1
+  27              		.comm	flagPoint1,1,1
+  28              		.comm	flagPoint2,1,1
+  29              		.comm	button,960,4
+  30              		.comm	productNumber,1,1
+  31              		.comm	presetFast,30,4
+  32              		.comm	delayPicture1,4,4
+  33              		.comm	delayPicture2,4,4
+  34              		.comm	ppux10,1,1
+  35              		.comm	decimalMoney,1,1
+  36              		.comm	decimalVolume,1,1
+  37              		.comm	symbols,2,4
+  38              		.comm	time,3,4
+  39              		.comm	date,3,4
+  40              		.comm	screen,2,4
+  41              		.comm	residue,14,4
+  42              		.comm	temporal,30,4
+  43              		.comm	turn,1,1
+  44              		.comm	idSeller,25,4
+  45              		.comm	typeIdSeller,1,1
+  46              		.comm	passwordSeller,8,4
+  47              		.comm	flagResetMux,1,1
+  48              		.comm	bufferLCD1,635,4
+  49              		.comm	bufferLCD2,635,4
+  50              		.comm	side,512,4
+  51              		.global	__aeabi_i2d
+  52              		.global	__aeabi_dmul
+  53              		.global	__aeabi_dadd
+  54              		.global	__aeabi_d2uiz
+  55              		.section	.text.write_settings,"ax",%progbits
+  56              		.align	2
+  57              		.global	write_settings
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 2
+
+
+  58              		.thumb
+  59              		.thumb_func
+  60              		.type	write_settings, %function
+  61              	write_settings:
+  62              	.LFB56:
+  63              		.file 1 ".\\memoryEP.c"
+   1:.\memoryEP.c  **** /*
+   2:.\memoryEP.c  **** ***************************************************************************************************
+   3:.\memoryEP.c  **** *                                         MUX ADVANCE CODE
+   4:.\memoryEP.c  **** *
+   5:.\memoryEP.c  **** *                             (c) Copyright 2016; Sistemas Insepet LTDA
+   6:.\memoryEP.c  **** *
+   7:.\memoryEP.c  **** *               All rights reserved.  Protected by international copyright laws.
+   8:.\memoryEP.c  **** *               Knowledge of the source code may NOT be used to develop a similar product.
+   9:.\memoryEP.c  **** *               Please help us continue to provide the Embedded community with the finest
+  10:.\memoryEP.c  **** *               software available.  Your honesty is greatly appreciated.
+  11:.\memoryEP.c  **** ***************************************************************************************************
+  12:.\memoryEP.c  **** */
+  13:.\memoryEP.c  **** 
+  14:.\memoryEP.c  **** /*
+  15:.\memoryEP.c  **** ***************************************************************************************************
+  16:.\memoryEP.c  **** *
+  17:.\memoryEP.c  **** *                                            MUX ADVANCE CODE
+  18:.\memoryEP.c  **** *
+  19:.\memoryEP.c  **** *                                             CYPRESS PSoC5LP
+  20:.\memoryEP.c  **** *                                                with the
+  21:.\memoryEP.c  **** *                                            CY8C5969AXI-LP035
+  22:.\memoryEP.c  **** *
+  23:.\memoryEP.c  **** * Filename      : memoryEP.c
+  24:.\memoryEP.c  **** * Version       : V1.00
+  25:.\memoryEP.c  **** * Programmer(s) : 
+  26:.\memoryEP.c  ****                   
+  27:.\memoryEP.c  **** ***************************************************************************************************
+  28:.\memoryEP.c  **** */
+  29:.\memoryEP.c  **** 
+  30:.\memoryEP.c  **** /*
+  31:.\memoryEP.c  **** ***************************************************************************************************
+  32:.\memoryEP.c  **** *                                             INCLUDE FILES
+  33:.\memoryEP.c  **** ***************************************************************************************************
+  34:.\memoryEP.c  **** */
+  35:.\memoryEP.c  **** 
+  36:.\memoryEP.c  **** #include <device.h>
+  37:.\memoryEP.c  **** #include "variables.h"
+  38:.\memoryEP.c  **** #include <math.h>
+  39:.\memoryEP.c  **** 
+  40:.\memoryEP.c  **** /*
+  41:.\memoryEP.c  **** ***************************************************************************************************
+  42:.\memoryEP.c  **** *                                         void write_settings()
+  43:.\memoryEP.c  **** *
+  44:.\memoryEP.c  **** * Description : 
+  45:.\memoryEP.c  **** *               
+  46:.\memoryEP.c  **** *
+  47:.\memoryEP.c  **** * Argument(s) : none
+  48:.\memoryEP.c  **** *
+  49:.\memoryEP.c  **** * Return(s)   : none
+  50:.\memoryEP.c  **** *
+  51:.\memoryEP.c  **** * Caller(s)   :  
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 3
+
+
+  52:.\memoryEP.c  **** *
+  53:.\memoryEP.c  **** * Note(s)     : none.
+  54:.\memoryEP.c  **** ***************************************************************************************************
+  55:.\memoryEP.c  **** */
+  56:.\memoryEP.c  **** 
+  57:.\memoryEP.c  **** void write_settings(){
+  64              		.loc 1 57 0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 24
+  67              		@ frame_needed = 1, uses_anonymous_args = 0
+  68 0000 B0B5     		push	{r4, r5, r7, lr}
+  69              		.cfi_def_cfa_offset 16
+  70              		.cfi_offset 4, -16
+  71              		.cfi_offset 5, -12
+  72              		.cfi_offset 7, -8
+  73              		.cfi_offset 14, -4
+  74 0002 86B0     		sub	sp, sp, #24
+  75              		.cfi_def_cfa_offset 40
+  76 0004 00AF     		add	r7, sp, #0
+  77              		.cfi_def_cfa_register 7
+  58:.\memoryEP.c  ****     uint8 memoryData[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},x;
+  78              		.loc 1 58 0
+  79 0006 3B46     		mov	r3, r7
+  80 0008 0022     		movs	r2, #0
+  81 000a 1A60     		str	r2, [r3]
+  82 000c 0433     		adds	r3, r3, #4
+  83 000e 0022     		movs	r2, #0
+  84 0010 1A60     		str	r2, [r3]
+  85 0012 0433     		adds	r3, r3, #4
+  86 0014 0022     		movs	r2, #0
+  87 0016 1A60     		str	r2, [r3]
+  88 0018 0433     		adds	r3, r3, #4
+  89 001a 0022     		movs	r2, #0
+  90 001c 1A60     		str	r2, [r3]
+  91 001e 0433     		adds	r3, r3, #4
+  59:.\memoryEP.c  ****     int y;
+  60:.\memoryEP.c  ****     
+  61:.\memoryEP.c  ****     memoryData[0]=digits;
+  92              		.loc 1 61 0
+  93 0020 B34B     		ldr	r3, .L30
+  94 0022 1B78     		ldrb	r3, [r3]
+  95 0024 DBB2     		uxtb	r3, r3
+  96 0026 3B70     		strb	r3, [r7]
+  62:.\memoryEP.c  ****     memoryData[1]=((decimalMoney&0x07)*10)+(decimalVolume&0x07);
+  97              		.loc 1 62 0
+  98 0028 B24B     		ldr	r3, .L30+4
+  99 002a 1B78     		ldrb	r3, [r3]
+ 100 002c DBB2     		uxtb	r3, r3
+ 101 002e 03F00703 		and	r3, r3, #7
+ 102 0032 DBB2     		uxtb	r3, r3
+ 103 0034 1A46     		mov	r2, r3
+ 104 0036 9200     		lsls	r2, r2, #2
+ 105 0038 1344     		add	r3, r3, r2
+ 106 003a 5B00     		lsls	r3, r3, #1
+ 107 003c DAB2     		uxtb	r2, r3
+ 108 003e AE4B     		ldr	r3, .L30+8
+ 109 0040 1B78     		ldrb	r3, [r3]
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 4
+
+
+ 110 0042 DBB2     		uxtb	r3, r3
+ 111 0044 03F00703 		and	r3, r3, #7
+ 112 0048 DBB2     		uxtb	r3, r3
+ 113 004a 1344     		add	r3, r3, r2
+ 114 004c DBB2     		uxtb	r3, r3
+ 115 004e 7B70     		strb	r3, [r7, #1]
+  63:.\memoryEP.c  ****     memoryData[2]=ppux10;
+ 116              		.loc 1 63 0
+ 117 0050 AA4B     		ldr	r3, .L30+12
+ 118 0052 1B78     		ldrb	r3, [r3]
+ 119 0054 DBB2     		uxtb	r3, r3
+ 120 0056 BB70     		strb	r3, [r7, #2]
+  64:.\memoryEP.c  ****     memoryData[3]=productNumber;
+ 121              		.loc 1 64 0
+ 122 0058 A94B     		ldr	r3, .L30+16
+ 123 005a 1B78     		ldrb	r3, [r3]
+ 124 005c DBB2     		uxtb	r3, r3
+ 125 005e FB70     		strb	r3, [r7, #3]
+  65:.\memoryEP.c  ****     memoryData[4]=symbols[0];
+ 126              		.loc 1 65 0
+ 127 0060 A84B     		ldr	r3, .L30+20
+ 128 0062 1B78     		ldrb	r3, [r3]
+ 129 0064 DBB2     		uxtb	r3, r3
+ 130 0066 3B71     		strb	r3, [r7, #4]
+  66:.\memoryEP.c  ****     memoryData[5]=symbols[1];
+ 131              		.loc 1 66 0
+ 132 0068 A64B     		ldr	r3, .L30+20
+ 133 006a 5B78     		ldrb	r3, [r3, #1]
+ 134 006c DBB2     		uxtb	r3, r3
+ 135 006e 7B71     		strb	r3, [r7, #5]
+  67:.\memoryEP.c  ****     for(x=3;x>0;x--){
+ 136              		.loc 1 67 0
+ 137 0070 0323     		movs	r3, #3
+ 138 0072 FB75     		strb	r3, [r7, #23]
+ 139 0074 E2E0     		b	.L2
+ 140              	.L3:
+  68:.\memoryEP.c  ****         memoryData[6]+=((ipAdress[x-1]&0x0f)*pow(10,(3-x)));
+ 141              		.loc 1 68 0 discriminator 3
+ 142 0076 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 143 0078 013B     		subs	r3, r3, #1
+ 144 007a A34A     		ldr	r2, .L30+24
+ 145 007c D35C     		ldrb	r3, [r2, r3]
+ 146 007e DBB2     		uxtb	r3, r3
+ 147 0080 03F00F03 		and	r3, r3, #15
+ 148 0084 1846     		mov	r0, r3
+ 149 0086 FFF7FEFF 		bl	__aeabi_i2d
+ 150 008a 0446     		mov	r4, r0
+ 151 008c 0D46     		mov	r5, r1
+ 152 008e FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 153 0090 C3F10303 		rsb	r3, r3, #3
+ 154 0094 1846     		mov	r0, r3
+ 155 0096 FFF7FEFF 		bl	__aeabi_i2d
+ 156 009a 0246     		mov	r2, r0
+ 157 009c 0B46     		mov	r3, r1
+ 158 009e 4FF00000 		mov	r0, #0
+ 159 00a2 9A49     		ldr	r1, .L30+28
+ 160 00a4 FFF7FEFF 		bl	pow
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 5
+
+
+ 161 00a8 0246     		mov	r2, r0
+ 162 00aa 0B46     		mov	r3, r1
+ 163 00ac 2046     		mov	r0, r4
+ 164 00ae 2946     		mov	r1, r5
+ 165 00b0 FFF7FEFF 		bl	__aeabi_dmul
+ 166 00b4 0246     		mov	r2, r0
+ 167 00b6 0B46     		mov	r3, r1
+ 168 00b8 1446     		mov	r4, r2
+ 169 00ba 1D46     		mov	r5, r3
+ 170 00bc BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 171 00be 1846     		mov	r0, r3
+ 172 00c0 FFF7FEFF 		bl	__aeabi_i2d
+ 173 00c4 0246     		mov	r2, r0
+ 174 00c6 0B46     		mov	r3, r1
+ 175 00c8 1046     		mov	r0, r2
+ 176 00ca 1946     		mov	r1, r3
+ 177 00cc 2246     		mov	r2, r4
+ 178 00ce 2B46     		mov	r3, r5
+ 179 00d0 FFF7FEFF 		bl	__aeabi_dadd
+ 180 00d4 0246     		mov	r2, r0
+ 181 00d6 0B46     		mov	r3, r1
+ 182 00d8 1046     		mov	r0, r2
+ 183 00da 1946     		mov	r1, r3
+ 184 00dc FFF7FEFF 		bl	__aeabi_d2uiz
+ 185 00e0 0346     		mov	r3, r0
+ 186 00e2 DBB2     		uxtb	r3, r3
+ 187 00e4 BB71     		strb	r3, [r7, #6]
+  69:.\memoryEP.c  ****         memoryData[7]+=((ipAdress[x+2]&0x0f)*pow(10,(3-x)));
+ 188              		.loc 1 69 0 discriminator 3
+ 189 00e6 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 190 00e8 0233     		adds	r3, r3, #2
+ 191 00ea 874A     		ldr	r2, .L30+24
+ 192 00ec D35C     		ldrb	r3, [r2, r3]
+ 193 00ee DBB2     		uxtb	r3, r3
+ 194 00f0 03F00F03 		and	r3, r3, #15
+ 195 00f4 1846     		mov	r0, r3
+ 196 00f6 FFF7FEFF 		bl	__aeabi_i2d
+ 197 00fa 0446     		mov	r4, r0
+ 198 00fc 0D46     		mov	r5, r1
+ 199 00fe FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 200 0100 C3F10303 		rsb	r3, r3, #3
+ 201 0104 1846     		mov	r0, r3
+ 202 0106 FFF7FEFF 		bl	__aeabi_i2d
+ 203 010a 0246     		mov	r2, r0
+ 204 010c 0B46     		mov	r3, r1
+ 205 010e 4FF00000 		mov	r0, #0
+ 206 0112 7E49     		ldr	r1, .L30+28
+ 207 0114 FFF7FEFF 		bl	pow
+ 208 0118 0246     		mov	r2, r0
+ 209 011a 0B46     		mov	r3, r1
+ 210 011c 2046     		mov	r0, r4
+ 211 011e 2946     		mov	r1, r5
+ 212 0120 FFF7FEFF 		bl	__aeabi_dmul
+ 213 0124 0246     		mov	r2, r0
+ 214 0126 0B46     		mov	r3, r1
+ 215 0128 1446     		mov	r4, r2
+ 216 012a 1D46     		mov	r5, r3
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 6
+
+
+ 217 012c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 218 012e 1846     		mov	r0, r3
+ 219 0130 FFF7FEFF 		bl	__aeabi_i2d
+ 220 0134 0246     		mov	r2, r0
+ 221 0136 0B46     		mov	r3, r1
+ 222 0138 1046     		mov	r0, r2
+ 223 013a 1946     		mov	r1, r3
+ 224 013c 2246     		mov	r2, r4
+ 225 013e 2B46     		mov	r3, r5
+ 226 0140 FFF7FEFF 		bl	__aeabi_dadd
+ 227 0144 0246     		mov	r2, r0
+ 228 0146 0B46     		mov	r3, r1
+ 229 0148 1046     		mov	r0, r2
+ 230 014a 1946     		mov	r1, r3
+ 231 014c FFF7FEFF 		bl	__aeabi_d2uiz
+ 232 0150 0346     		mov	r3, r0
+ 233 0152 DBB2     		uxtb	r3, r3
+ 234 0154 FB71     		strb	r3, [r7, #7]
+  70:.\memoryEP.c  ****         memoryData[8]+=((ipAdress[x+5]&0x0f)*pow(10,(3-x)));
+ 235              		.loc 1 70 0 discriminator 3
+ 236 0156 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 237 0158 0533     		adds	r3, r3, #5
+ 238 015a 6B4A     		ldr	r2, .L30+24
+ 239 015c D35C     		ldrb	r3, [r2, r3]
+ 240 015e DBB2     		uxtb	r3, r3
+ 241 0160 03F00F03 		and	r3, r3, #15
+ 242 0164 1846     		mov	r0, r3
+ 243 0166 FFF7FEFF 		bl	__aeabi_i2d
+ 244 016a 0446     		mov	r4, r0
+ 245 016c 0D46     		mov	r5, r1
+ 246 016e FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 247 0170 C3F10303 		rsb	r3, r3, #3
+ 248 0174 1846     		mov	r0, r3
+ 249 0176 FFF7FEFF 		bl	__aeabi_i2d
+ 250 017a 0246     		mov	r2, r0
+ 251 017c 0B46     		mov	r3, r1
+ 252 017e 4FF00000 		mov	r0, #0
+ 253 0182 6249     		ldr	r1, .L30+28
+ 254 0184 FFF7FEFF 		bl	pow
+ 255 0188 0246     		mov	r2, r0
+ 256 018a 0B46     		mov	r3, r1
+ 257 018c 2046     		mov	r0, r4
+ 258 018e 2946     		mov	r1, r5
+ 259 0190 FFF7FEFF 		bl	__aeabi_dmul
+ 260 0194 0246     		mov	r2, r0
+ 261 0196 0B46     		mov	r3, r1
+ 262 0198 1446     		mov	r4, r2
+ 263 019a 1D46     		mov	r5, r3
+ 264 019c 3B7A     		ldrb	r3, [r7, #8]	@ zero_extendqisi2
+ 265 019e 1846     		mov	r0, r3
+ 266 01a0 FFF7FEFF 		bl	__aeabi_i2d
+ 267 01a4 0246     		mov	r2, r0
+ 268 01a6 0B46     		mov	r3, r1
+ 269 01a8 1046     		mov	r0, r2
+ 270 01aa 1946     		mov	r1, r3
+ 271 01ac 2246     		mov	r2, r4
+ 272 01ae 2B46     		mov	r3, r5
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 7
+
+
+ 273 01b0 FFF7FEFF 		bl	__aeabi_dadd
+ 274 01b4 0246     		mov	r2, r0
+ 275 01b6 0B46     		mov	r3, r1
+ 276 01b8 1046     		mov	r0, r2
+ 277 01ba 1946     		mov	r1, r3
+ 278 01bc FFF7FEFF 		bl	__aeabi_d2uiz
+ 279 01c0 0346     		mov	r3, r0
+ 280 01c2 DBB2     		uxtb	r3, r3
+ 281 01c4 3B72     		strb	r3, [r7, #8]
+  71:.\memoryEP.c  ****         memoryData[9]+=((ipAdress[x+8]&0x0f)*pow(10,(3-x)));
+ 282              		.loc 1 71 0 discriminator 3
+ 283 01c6 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 284 01c8 0833     		adds	r3, r3, #8
+ 285 01ca 4F4A     		ldr	r2, .L30+24
+ 286 01cc D35C     		ldrb	r3, [r2, r3]
+ 287 01ce DBB2     		uxtb	r3, r3
+ 288 01d0 03F00F03 		and	r3, r3, #15
+ 289 01d4 1846     		mov	r0, r3
+ 290 01d6 FFF7FEFF 		bl	__aeabi_i2d
+ 291 01da 0446     		mov	r4, r0
+ 292 01dc 0D46     		mov	r5, r1
+ 293 01de FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 294 01e0 C3F10303 		rsb	r3, r3, #3
+ 295 01e4 1846     		mov	r0, r3
+ 296 01e6 FFF7FEFF 		bl	__aeabi_i2d
+ 297 01ea 0246     		mov	r2, r0
+ 298 01ec 0B46     		mov	r3, r1
+ 299 01ee 4FF00000 		mov	r0, #0
+ 300 01f2 4649     		ldr	r1, .L30+28
+ 301 01f4 FFF7FEFF 		bl	pow
+ 302 01f8 0246     		mov	r2, r0
+ 303 01fa 0B46     		mov	r3, r1
+ 304 01fc 2046     		mov	r0, r4
+ 305 01fe 2946     		mov	r1, r5
+ 306 0200 FFF7FEFF 		bl	__aeabi_dmul
+ 307 0204 0246     		mov	r2, r0
+ 308 0206 0B46     		mov	r3, r1
+ 309 0208 1446     		mov	r4, r2
+ 310 020a 1D46     		mov	r5, r3
+ 311 020c 7B7A     		ldrb	r3, [r7, #9]	@ zero_extendqisi2
+ 312 020e 1846     		mov	r0, r3
+ 313 0210 FFF7FEFF 		bl	__aeabi_i2d
+ 314 0214 0246     		mov	r2, r0
+ 315 0216 0B46     		mov	r3, r1
+ 316 0218 1046     		mov	r0, r2
+ 317 021a 1946     		mov	r1, r3
+ 318 021c 2246     		mov	r2, r4
+ 319 021e 2B46     		mov	r3, r5
+ 320 0220 FFF7FEFF 		bl	__aeabi_dadd
+ 321 0224 0246     		mov	r2, r0
+ 322 0226 0B46     		mov	r3, r1
+ 323 0228 1046     		mov	r0, r2
+ 324 022a 1946     		mov	r1, r3
+ 325 022c FFF7FEFF 		bl	__aeabi_d2uiz
+ 326 0230 0346     		mov	r3, r0
+ 327 0232 DBB2     		uxtb	r3, r3
+ 328 0234 7B72     		strb	r3, [r7, #9]
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 8
+
+
+  67:.\memoryEP.c  ****         memoryData[6]+=((ipAdress[x-1]&0x0f)*pow(10,(3-x)));
+ 329              		.loc 1 67 0 discriminator 3
+ 330 0236 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 331 0238 013B     		subs	r3, r3, #1
+ 332 023a FB75     		strb	r3, [r7, #23]
+ 333              	.L2:
+  67:.\memoryEP.c  ****         memoryData[6]+=((ipAdress[x-1]&0x0f)*pow(10,(3-x)));
+ 334              		.loc 1 67 0 is_stmt 0 discriminator 1
+ 335 023c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 336 023e 002B     		cmp	r3, #0
+ 337 0240 7FF419AF 		bne	.L3
+  72:.\memoryEP.c  ****     }
+  73:.\memoryEP.c  ****     memoryData[10]=turn;
+ 338              		.loc 1 73 0 is_stmt 1
+ 339 0244 324B     		ldr	r3, .L30+32
+ 340 0246 1B78     		ldrb	r3, [r3]
+ 341 0248 DBB2     		uxtb	r3, r3
+ 342 024a BB72     		strb	r3, [r7, #10]
+  74:.\memoryEP.c  ****     memoryData[11]=typeIdSeller;
+ 343              		.loc 1 74 0
+ 344 024c 314B     		ldr	r3, .L30+36
+ 345 024e 1B78     		ldrb	r3, [r3]
+ 346 0250 DBB2     		uxtb	r3, r3
+ 347 0252 FB72     		strb	r3, [r7, #11]
+  75:.\memoryEP.c  ****     if((y=idSeller[0])==0){
+ 348              		.loc 1 75 0
+ 349 0254 304B     		ldr	r3, .L30+40
+ 350 0256 1B78     		ldrb	r3, [r3]
+ 351 0258 DBB2     		uxtb	r3, r3
+ 352 025a 3B61     		str	r3, [r7, #16]
+ 353 025c 3B69     		ldr	r3, [r7, #16]
+ 354 025e 002B     		cmp	r3, #0
+ 355 0260 04D1     		bne	.L4
+  76:.\memoryEP.c  ****         y=1;
+ 356              		.loc 1 76 0
+ 357 0262 0123     		movs	r3, #1
+ 358 0264 3B61     		str	r3, [r7, #16]
+  77:.\memoryEP.c  ****         idSeller[1]='0';
+ 359              		.loc 1 77 0
+ 360 0266 2C4B     		ldr	r3, .L30+40
+ 361 0268 3022     		movs	r2, #48
+ 362 026a 5A70     		strb	r2, [r3, #1]
+ 363              	.L4:
+  78:.\memoryEP.c  ****     }
+  79:.\memoryEP.c  ****     if(y<20){
+ 364              		.loc 1 79 0
+ 365 026c 3B69     		ldr	r3, [r7, #16]
+ 366 026e 132B     		cmp	r3, #19
+ 367 0270 22DC     		bgt	.L5
+  80:.\memoryEP.c  ****         for(x=20;x>0;x--){
+ 368              		.loc 1 80 0
+ 369 0272 1423     		movs	r3, #20
+ 370 0274 FB75     		strb	r3, [r7, #23]
+ 371 0276 1CE0     		b	.L6
+ 372              	.L10:
+  81:.\memoryEP.c  ****             idSeller[x]=idSeller[y];
+ 373              		.loc 1 81 0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 9
+
+
+ 374 0278 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 375 027a 2749     		ldr	r1, .L30+40
+ 376 027c 3A69     		ldr	r2, [r7, #16]
+ 377 027e 0A44     		add	r2, r2, r1
+ 378 0280 1278     		ldrb	r2, [r2]
+ 379 0282 D1B2     		uxtb	r1, r2
+ 380 0284 244A     		ldr	r2, .L30+40
+ 381 0286 D154     		strb	r1, [r2, r3]
+  82:.\memoryEP.c  ****             y--;
+ 382              		.loc 1 82 0
+ 383 0288 3B69     		ldr	r3, [r7, #16]
+ 384 028a 013B     		subs	r3, r3, #1
+ 385 028c 3B61     		str	r3, [r7, #16]
+  83:.\memoryEP.c  ****             if(y<=0){
+ 386              		.loc 1 83 0
+ 387 028e 3B69     		ldr	r3, [r7, #16]
+ 388 0290 002B     		cmp	r3, #0
+ 389 0292 0BDC     		bgt	.L7
+  84:.\memoryEP.c  ****                 while(x>1){
+ 390              		.loc 1 84 0
+ 391 0294 06E0     		b	.L8
+ 392              	.L9:
+  85:.\memoryEP.c  ****                     x--;
+ 393              		.loc 1 85 0
+ 394 0296 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 395 0298 013B     		subs	r3, r3, #1
+ 396 029a FB75     		strb	r3, [r7, #23]
+  86:.\memoryEP.c  ****                     idSeller[x]='0';
+ 397              		.loc 1 86 0
+ 398 029c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 399 029e 1E4A     		ldr	r2, .L30+40
+ 400 02a0 3021     		movs	r1, #48
+ 401 02a2 D154     		strb	r1, [r2, r3]
+ 402              	.L8:
+  84:.\memoryEP.c  ****                 while(x>1){
+ 403              		.loc 1 84 0
+ 404 02a4 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 405 02a6 012B     		cmp	r3, #1
+ 406 02a8 F5D8     		bhi	.L9
+  87:.\memoryEP.c  ****                 }
+  88:.\memoryEP.c  ****                 break;
+ 407              		.loc 1 88 0
+ 408 02aa 05E0     		b	.L5
+ 409              	.L7:
+  80:.\memoryEP.c  ****             idSeller[x]=idSeller[y];
+ 410              		.loc 1 80 0 discriminator 2
+ 411 02ac FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 412 02ae 013B     		subs	r3, r3, #1
+ 413 02b0 FB75     		strb	r3, [r7, #23]
+ 414              	.L6:
+  80:.\memoryEP.c  ****             idSeller[x]=idSeller[y];
+ 415              		.loc 1 80 0 is_stmt 0 discriminator 1
+ 416 02b2 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 417 02b4 002B     		cmp	r3, #0
+ 418 02b6 DFD1     		bne	.L10
+ 419              	.L5:
+  89:.\memoryEP.c  ****             }
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 10
+
+
+  90:.\memoryEP.c  ****         }
+  91:.\memoryEP.c  ****     }
+  92:.\memoryEP.c  ****     idSeller[0]=20;
+ 420              		.loc 1 92 0 is_stmt 1
+ 421 02b8 174B     		ldr	r3, .L30+40
+ 422 02ba 1422     		movs	r2, #20
+ 423 02bc 1A70     		strb	r2, [r3]
+  93:.\memoryEP.c  ****     memoryData[12]=idSeller[1];
+ 424              		.loc 1 93 0
+ 425 02be 164B     		ldr	r3, .L30+40
+ 426 02c0 5B78     		ldrb	r3, [r3, #1]
+ 427 02c2 DBB2     		uxtb	r3, r3
+ 428 02c4 3B73     		strb	r3, [r7, #12]
+  94:.\memoryEP.c  ****     memoryData[13]=idSeller[2];
+ 429              		.loc 1 94 0
+ 430 02c6 144B     		ldr	r3, .L30+40
+ 431 02c8 9B78     		ldrb	r3, [r3, #2]
+ 432 02ca DBB2     		uxtb	r3, r3
+ 433 02cc 7B73     		strb	r3, [r7, #13]
+  95:.\memoryEP.c  ****     memoryData[14]=idSeller[3];
+ 434              		.loc 1 95 0
+ 435 02ce 124B     		ldr	r3, .L30+40
+ 436 02d0 DB78     		ldrb	r3, [r3, #3]
+ 437 02d2 DBB2     		uxtb	r3, r3
+ 438 02d4 BB73     		strb	r3, [r7, #14]
+  96:.\memoryEP.c  ****     memoryData[15]=idSeller[4];
+ 439              		.loc 1 96 0
+ 440 02d6 104B     		ldr	r3, .L30+40
+ 441 02d8 1B79     		ldrb	r3, [r3, #4]
+ 442 02da DBB2     		uxtb	r3, r3
+ 443 02dc FB73     		strb	r3, [r7, #15]
+  97:.\memoryEP.c  ****     EEPROM_1_Write(memoryData,59);
+ 444              		.loc 1 97 0
+ 445 02de 3B46     		mov	r3, r7
+ 446 02e0 1846     		mov	r0, r3
+ 447 02e2 3B21     		movs	r1, #59
+ 448 02e4 FFF7FEFF 		bl	EEPROM_1_Write
+  98:.\memoryEP.c  ****     for(x=0;x<16;x++){
+ 449              		.loc 1 98 0
+ 450 02e8 0023     		movs	r3, #0
+ 451 02ea FB75     		strb	r3, [r7, #23]
+ 452 02ec 24E0     		b	.L11
+ 453              	.L31:
+ 454 02ee 00BF     		.align	2
+ 455              	.L30:
+ 456 02f0 00000000 		.word	digits
+ 457 02f4 00000000 		.word	decimalMoney
+ 458 02f8 00000000 		.word	decimalVolume
+ 459 02fc 00000000 		.word	ppux10
+ 460 0300 00000000 		.word	productNumber
+ 461 0304 00000000 		.word	symbols
+ 462 0308 00000000 		.word	ipAdress
+ 463 030c 00002440 		.word	1076101120
+ 464 0310 00000000 		.word	turn
+ 465 0314 00000000 		.word	typeIdSeller
+ 466 0318 00000000 		.word	idSeller
+ 467              	.L12:
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 11
+
+
+  99:.\memoryEP.c  ****         memoryData[x]=idSeller[5+x];
+ 468              		.loc 1 99 0 discriminator 3
+ 469 031c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 470 031e FA7D     		ldrb	r2, [r7, #23]	@ zero_extendqisi2
+ 471 0320 0532     		adds	r2, r2, #5
+ 472 0322 5249     		ldr	r1, .L32
+ 473 0324 8A5C     		ldrb	r2, [r1, r2]
+ 474 0326 D2B2     		uxtb	r2, r2
+ 475 0328 07F11801 		add	r1, r7, #24
+ 476 032c 0B44     		add	r3, r3, r1
+ 477 032e 03F8182C 		strb	r2, [r3, #-24]
+  98:.\memoryEP.c  ****     for(x=0;x<16;x++){
+ 478              		.loc 1 98 0 discriminator 3
+ 479 0332 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 480 0334 0133     		adds	r3, r3, #1
+ 481 0336 FB75     		strb	r3, [r7, #23]
+ 482              	.L11:
+  98:.\memoryEP.c  ****     for(x=0;x<16;x++){
+ 483              		.loc 1 98 0 is_stmt 0 discriminator 1
+ 484 0338 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 485 033a 0F2B     		cmp	r3, #15
+ 486 033c EED9     		bls	.L12
+ 100:.\memoryEP.c  ****     }
+ 101:.\memoryEP.c  ****     EEPROM_1_Write(memoryData,60);
+ 487              		.loc 1 101 0 is_stmt 1
+ 488 033e 3B46     		mov	r3, r7
+ 489 0340 1846     		mov	r0, r3
+ 490 0342 3C21     		movs	r1, #60
+ 491 0344 FFF7FEFF 		bl	EEPROM_1_Write
+ 102:.\memoryEP.c  ****     y=presetFast[0][0];
+ 492              		.loc 1 102 0
+ 493 0348 494B     		ldr	r3, .L32+4
+ 494 034a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 495 034c 3B61     		str	r3, [r7, #16]
+ 103:.\memoryEP.c  ****     for(x=7;x>=0;x--){
+ 496              		.loc 1 103 0
+ 497 034e 0723     		movs	r3, #7
+ 498 0350 FB75     		strb	r3, [r7, #23]
+ 499              	.L17:
+ 104:.\memoryEP.c  ****         memoryData[x]=presetFast[0][y];
+ 500              		.loc 1 104 0
+ 501 0352 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 502 0354 4649     		ldr	r1, .L32+4
+ 503 0356 3A69     		ldr	r2, [r7, #16]
+ 504 0358 0A44     		add	r2, r2, r1
+ 505 035a 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 506 035c 07F11801 		add	r1, r7, #24
+ 507 0360 0B44     		add	r3, r3, r1
+ 508 0362 03F8182C 		strb	r2, [r3, #-24]
+ 105:.\memoryEP.c  ****         y--;
+ 509              		.loc 1 105 0
+ 510 0366 3B69     		ldr	r3, [r7, #16]
+ 511 0368 013B     		subs	r3, r3, #1
+ 512 036a 3B61     		str	r3, [r7, #16]
+ 106:.\memoryEP.c  ****         if(y<=0){
+ 513              		.loc 1 106 0
+ 514 036c 3B69     		ldr	r3, [r7, #16]
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 12
+
+
+ 515 036e 002B     		cmp	r3, #0
+ 516 0370 14DC     		bgt	.L13
+ 107:.\memoryEP.c  ****             while(x>0){
+ 517              		.loc 1 107 0
+ 518 0372 09E0     		b	.L14
+ 519              	.L15:
+ 108:.\memoryEP.c  ****                 x--;
+ 520              		.loc 1 108 0
+ 521 0374 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 522 0376 013B     		subs	r3, r3, #1
+ 523 0378 FB75     		strb	r3, [r7, #23]
+ 109:.\memoryEP.c  ****                 memoryData[x]='0';
+ 524              		.loc 1 109 0
+ 525 037a FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 526 037c 07F11802 		add	r2, r7, #24
+ 527 0380 1344     		add	r3, r3, r2
+ 528 0382 3022     		movs	r2, #48
+ 529 0384 03F8182C 		strb	r2, [r3, #-24]
+ 530              	.L14:
+ 107:.\memoryEP.c  ****             while(x>0){
+ 531              		.loc 1 107 0
+ 532 0388 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 533 038a 002B     		cmp	r3, #0
+ 534 038c F2D1     		bne	.L15
+ 110:.\memoryEP.c  ****             }
+ 111:.\memoryEP.c  ****             break;
+ 535              		.loc 1 111 0
+ 536 038e 00BF     		nop
+ 112:.\memoryEP.c  ****         }
+ 113:.\memoryEP.c  ****     }
+ 114:.\memoryEP.c  ****     y=presetFast[1][0];
+ 537              		.loc 1 114 0
+ 538 0390 374B     		ldr	r3, .L32+4
+ 539 0392 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
+ 540 0394 3B61     		str	r3, [r7, #16]
+ 115:.\memoryEP.c  ****     for(x=15;x>=8;x--){
+ 541              		.loc 1 115 0
+ 542 0396 0F23     		movs	r3, #15
+ 543 0398 FB75     		strb	r3, [r7, #23]
+ 544 039a 26E0     		b	.L18
+ 545              	.L13:
+ 103:.\memoryEP.c  ****         memoryData[x]=presetFast[0][y];
+ 546              		.loc 1 103 0
+ 547 039c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 548 039e 013B     		subs	r3, r3, #1
+ 549 03a0 FB75     		strb	r3, [r7, #23]
+ 113:.\memoryEP.c  ****     y=presetFast[1][0];
+ 550              		.loc 1 113 0
+ 551 03a2 D6E7     		b	.L17
+ 552              	.L23:
+ 116:.\memoryEP.c  ****         memoryData[x]=presetFast[1][y];
+ 553              		.loc 1 116 0
+ 554 03a4 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 555 03a6 3249     		ldr	r1, .L32+4
+ 556 03a8 3A69     		ldr	r2, [r7, #16]
+ 557 03aa 0A44     		add	r2, r2, r1
+ 558 03ac 0A32     		adds	r2, r2, #10
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 13
+
+
+ 559 03ae 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 560 03b0 07F11801 		add	r1, r7, #24
+ 561 03b4 0B44     		add	r3, r3, r1
+ 562 03b6 03F8182C 		strb	r2, [r3, #-24]
+ 117:.\memoryEP.c  ****         y--;
+ 563              		.loc 1 117 0
+ 564 03ba 3B69     		ldr	r3, [r7, #16]
+ 565 03bc 013B     		subs	r3, r3, #1
+ 566 03be 3B61     		str	r3, [r7, #16]
+ 118:.\memoryEP.c  ****         if(y<=0){
+ 567              		.loc 1 118 0
+ 568 03c0 3B69     		ldr	r3, [r7, #16]
+ 569 03c2 002B     		cmp	r3, #0
+ 570 03c4 0EDC     		bgt	.L19
+ 119:.\memoryEP.c  ****             while(x>8){
+ 571              		.loc 1 119 0
+ 572 03c6 09E0     		b	.L20
+ 573              	.L21:
+ 120:.\memoryEP.c  ****                 x--;
+ 574              		.loc 1 120 0
+ 575 03c8 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 576 03ca 013B     		subs	r3, r3, #1
+ 577 03cc FB75     		strb	r3, [r7, #23]
+ 121:.\memoryEP.c  ****                 memoryData[x]='0';
+ 578              		.loc 1 121 0
+ 579 03ce FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 580 03d0 07F11802 		add	r2, r7, #24
+ 581 03d4 1344     		add	r3, r3, r2
+ 582 03d6 3022     		movs	r2, #48
+ 583 03d8 03F8182C 		strb	r2, [r3, #-24]
+ 584              	.L20:
+ 119:.\memoryEP.c  ****             while(x>8){
+ 585              		.loc 1 119 0
+ 586 03dc FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 587 03de 082B     		cmp	r3, #8
+ 588 03e0 F2D8     		bhi	.L21
+ 122:.\memoryEP.c  ****             }
+ 123:.\memoryEP.c  ****             break;
+ 589              		.loc 1 123 0
+ 590 03e2 05E0     		b	.L22
+ 591              	.L19:
+ 115:.\memoryEP.c  ****         memoryData[x]=presetFast[1][y];
+ 592              		.loc 1 115 0 discriminator 2
+ 593 03e4 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 594 03e6 013B     		subs	r3, r3, #1
+ 595 03e8 FB75     		strb	r3, [r7, #23]
+ 596              	.L18:
+ 115:.\memoryEP.c  ****         memoryData[x]=presetFast[1][y];
+ 597              		.loc 1 115 0 is_stmt 0 discriminator 1
+ 598 03ea FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 599 03ec 072B     		cmp	r3, #7
+ 600 03ee D9D8     		bhi	.L23
+ 601              	.L22:
+ 124:.\memoryEP.c  ****         }
+ 125:.\memoryEP.c  ****     }
+ 126:.\memoryEP.c  ****     EEPROM_1_Write(memoryData,57);
+ 602              		.loc 1 126 0 is_stmt 1
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 14
+
+
+ 603 03f0 3B46     		mov	r3, r7
+ 604 03f2 1846     		mov	r0, r3
+ 605 03f4 3921     		movs	r1, #57
+ 606 03f6 FFF7FEFF 		bl	EEPROM_1_Write
+ 127:.\memoryEP.c  ****     y=presetFast[2][0];
+ 607              		.loc 1 127 0
+ 608 03fa 1D4B     		ldr	r3, .L32+4
+ 609 03fc 1B7D     		ldrb	r3, [r3, #20]	@ zero_extendqisi2
+ 610 03fe 3B61     		str	r3, [r7, #16]
+ 128:.\memoryEP.c  ****     for(x=7;x>=0;x--){
+ 611              		.loc 1 128 0
+ 612 0400 0723     		movs	r3, #7
+ 613 0402 FB75     		strb	r3, [r7, #23]
+ 614              	.L28:
+ 129:.\memoryEP.c  ****         memoryData[x]=presetFast[2][y];
+ 615              		.loc 1 129 0
+ 616 0404 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 617 0406 1A49     		ldr	r1, .L32+4
+ 618 0408 3A69     		ldr	r2, [r7, #16]
+ 619 040a 0A44     		add	r2, r2, r1
+ 620 040c 1432     		adds	r2, r2, #20
+ 621 040e 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 622 0410 07F11801 		add	r1, r7, #24
+ 623 0414 0B44     		add	r3, r3, r1
+ 624 0416 03F8182C 		strb	r2, [r3, #-24]
+ 130:.\memoryEP.c  ****         y--;
+ 625              		.loc 1 130 0
+ 626 041a 3B69     		ldr	r3, [r7, #16]
+ 627 041c 013B     		subs	r3, r3, #1
+ 628 041e 3B61     		str	r3, [r7, #16]
+ 131:.\memoryEP.c  ****         if(y<=0){
+ 629              		.loc 1 131 0
+ 630 0420 3B69     		ldr	r3, [r7, #16]
+ 631 0422 002B     		cmp	r3, #0
+ 632 0424 0EDC     		bgt	.L24
+ 132:.\memoryEP.c  ****             while(x>0){
+ 633              		.loc 1 132 0
+ 634 0426 09E0     		b	.L25
+ 635              	.L26:
+ 133:.\memoryEP.c  ****                 x--;
+ 636              		.loc 1 133 0
+ 637 0428 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 638 042a 013B     		subs	r3, r3, #1
+ 639 042c FB75     		strb	r3, [r7, #23]
+ 134:.\memoryEP.c  ****                 memoryData[x]='0';
+ 640              		.loc 1 134 0
+ 641 042e FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 642 0430 07F11802 		add	r2, r7, #24
+ 643 0434 1344     		add	r3, r3, r2
+ 644 0436 3022     		movs	r2, #48
+ 645 0438 03F8182C 		strb	r2, [r3, #-24]
+ 646              	.L25:
+ 132:.\memoryEP.c  ****             while(x>0){
+ 647              		.loc 1 132 0
+ 648 043c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 649 043e 002B     		cmp	r3, #0
+ 650 0440 F2D1     		bne	.L26
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 15
+
+
+ 135:.\memoryEP.c  ****             }
+ 136:.\memoryEP.c  ****             break;
+ 651              		.loc 1 136 0
+ 652 0442 03E0     		b	.L29
+ 653              	.L24:
+ 128:.\memoryEP.c  ****         memoryData[x]=presetFast[2][y];
+ 654              		.loc 1 128 0
+ 655 0444 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 656 0446 013B     		subs	r3, r3, #1
+ 657 0448 FB75     		strb	r3, [r7, #23]
+ 137:.\memoryEP.c  ****         }
+ 138:.\memoryEP.c  ****     }
+ 658              		.loc 1 138 0
+ 659 044a DBE7     		b	.L28
+ 660              	.L29:
+ 139:.\memoryEP.c  ****     memoryData[8]=screen[0];
+ 661              		.loc 1 139 0
+ 662 044c 094B     		ldr	r3, .L32+8
+ 663 044e 1B78     		ldrb	r3, [r3]
+ 664 0450 DBB2     		uxtb	r3, r3
+ 665 0452 3B72     		strb	r3, [r7, #8]
+ 140:.\memoryEP.c  ****     memoryData[9]=screen[1];
+ 666              		.loc 1 140 0
+ 667 0454 074B     		ldr	r3, .L32+8
+ 668 0456 5B78     		ldrb	r3, [r3, #1]
+ 669 0458 DBB2     		uxtb	r3, r3
+ 670 045a 7B72     		strb	r3, [r7, #9]
+ 141:.\memoryEP.c  ****     EEPROM_1_Write(memoryData,58);
+ 671              		.loc 1 141 0
+ 672 045c 3B46     		mov	r3, r7
+ 673 045e 1846     		mov	r0, r3
+ 674 0460 3A21     		movs	r1, #58
+ 675 0462 FFF7FEFF 		bl	EEPROM_1_Write
+ 142:.\memoryEP.c  **** }
+ 676              		.loc 1 142 0
+ 677 0466 1837     		adds	r7, r7, #24
+ 678              		.cfi_def_cfa_offset 16
+ 679 0468 BD46     		mov	sp, r7
+ 680              		.cfi_def_cfa_register 13
+ 681              		@ sp needed
+ 682 046a B0BD     		pop	{r4, r5, r7, pc}
+ 683              	.L33:
+ 684              		.align	2
+ 685              	.L32:
+ 686 046c 00000000 		.word	idSeller
+ 687 0470 00000000 		.word	presetFast
+ 688 0474 00000000 		.word	screen
+ 689              		.cfi_endproc
+ 690              	.LFE56:
+ 691              		.size	write_settings, .-write_settings
+ 692              		.section	.text.write_ppus,"ax",%progbits
+ 693              		.align	2
+ 694              		.global	write_ppus
+ 695              		.thumb
+ 696              		.thumb_func
+ 697              		.type	write_ppus, %function
+ 698              	write_ppus:
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 16
+
+
+ 699              	.LFB57:
+ 143:.\memoryEP.c  **** 
+ 144:.\memoryEP.c  **** /*
+ 145:.\memoryEP.c  **** ***************************************************************************************************
+ 146:.\memoryEP.c  **** *                                         void write_ppus()
+ 147:.\memoryEP.c  **** *
+ 148:.\memoryEP.c  **** * Description : 
+ 149:.\memoryEP.c  **** *               
+ 150:.\memoryEP.c  **** *
+ 151:.\memoryEP.c  **** * Argument(s) : none
+ 152:.\memoryEP.c  **** *
+ 153:.\memoryEP.c  **** * Return(s)   : none
+ 154:.\memoryEP.c  **** *
+ 155:.\memoryEP.c  **** * Caller(s)   :  
+ 156:.\memoryEP.c  **** *
+ 157:.\memoryEP.c  **** * Note(s)     : none.
+ 158:.\memoryEP.c  **** ***************************************************************************************************
+ 159:.\memoryEP.c  **** */
+ 160:.\memoryEP.c  **** 
+ 161:.\memoryEP.c  **** void write_ppus(){
+ 700              		.loc 1 161 0
+ 701              		.cfi_startproc
+ 702              		@ args = 0, pretend = 0, frame = 24
+ 703              		@ frame_needed = 1, uses_anonymous_args = 0
+ 704 0000 80B5     		push	{r7, lr}
+ 705              		.cfi_def_cfa_offset 8
+ 706              		.cfi_offset 7, -8
+ 707              		.cfi_offset 14, -4
+ 708 0002 86B0     		sub	sp, sp, #24
+ 709              		.cfi_def_cfa_offset 32
+ 710 0004 00AF     		add	r7, sp, #0
+ 711              		.cfi_def_cfa_register 7
+ 162:.\memoryEP.c  ****     uint8 memoryData[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},x,y;
+ 712              		.loc 1 162 0
+ 713 0006 3B1D     		adds	r3, r7, #4
+ 714 0008 0022     		movs	r2, #0
+ 715 000a 1A60     		str	r2, [r3]
+ 716 000c 0433     		adds	r3, r3, #4
+ 717 000e 0022     		movs	r2, #0
+ 718 0010 1A60     		str	r2, [r3]
+ 719 0012 0433     		adds	r3, r3, #4
+ 720 0014 0022     		movs	r2, #0
+ 721 0016 1A60     		str	r2, [r3]
+ 722 0018 0433     		adds	r3, r3, #4
+ 723 001a 0022     		movs	r2, #0
+ 724 001c 1A60     		str	r2, [r3]
+ 725 001e 0433     		adds	r3, r3, #4
+ 163:.\memoryEP.c  **** 
+ 164:.\memoryEP.c  ****     y=1;
+ 726              		.loc 1 164 0
+ 727 0020 0123     		movs	r3, #1
+ 728 0022 BB75     		strb	r3, [r7, #22]
+ 165:.\memoryEP.c  ****     for(x=0;x<6;x++){
+ 729              		.loc 1 165 0
+ 730 0024 0023     		movs	r3, #0
+ 731 0026 FB75     		strb	r3, [r7, #23]
+ 732 0028 10E0     		b	.L35
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 17
+
+
+ 733              	.L36:
+ 166:.\memoryEP.c  ****         memoryData[x]=side.a.ppuAuthorized[0][y];
+ 734              		.loc 1 166 0 discriminator 3
+ 735 002a FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 736 002c BA7D     		ldrb	r2, [r7, #22]	@ zero_extendqisi2
+ 737 002e 7149     		ldr	r1, .L51
+ 738 0030 0A44     		add	r2, r2, r1
+ 739 0032 92F8B520 		ldrb	r2, [r2, #181]	@ zero_extendqisi2
+ 740 0036 07F11801 		add	r1, r7, #24
+ 741 003a 0B44     		add	r3, r3, r1
+ 742 003c 03F8142C 		strb	r2, [r3, #-20]
+ 167:.\memoryEP.c  ****         y++;
+ 743              		.loc 1 167 0 discriminator 3
+ 744 0040 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 745 0042 0133     		adds	r3, r3, #1
+ 746 0044 BB75     		strb	r3, [r7, #22]
+ 165:.\memoryEP.c  ****     for(x=0;x<6;x++){
+ 747              		.loc 1 165 0 discriminator 3
+ 748 0046 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 749 0048 0133     		adds	r3, r3, #1
+ 750 004a FB75     		strb	r3, [r7, #23]
+ 751              	.L35:
+ 165:.\memoryEP.c  ****     for(x=0;x<6;x++){
+ 752              		.loc 1 165 0 is_stmt 0 discriminator 1
+ 753 004c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 754 004e 052B     		cmp	r3, #5
+ 755 0050 EBD9     		bls	.L36
+ 168:.\memoryEP.c  ****     }
+ 169:.\memoryEP.c  ****     y=1;
+ 756              		.loc 1 169 0 is_stmt 1
+ 757 0052 0123     		movs	r3, #1
+ 758 0054 BB75     		strb	r3, [r7, #22]
+ 170:.\memoryEP.c  ****     for(x=6;x<12;x++){
+ 759              		.loc 1 170 0
+ 760 0056 0623     		movs	r3, #6
+ 761 0058 FB75     		strb	r3, [r7, #23]
+ 762 005a 10E0     		b	.L37
+ 763              	.L38:
+ 171:.\memoryEP.c  ****         memoryData[x]=side.a.ppuAuthorized[1][y];
+ 764              		.loc 1 171 0 discriminator 3
+ 765 005c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 766 005e BA7D     		ldrb	r2, [r7, #22]	@ zero_extendqisi2
+ 767 0060 6449     		ldr	r1, .L51
+ 768 0062 0A44     		add	r2, r2, r1
+ 769 0064 92F8BD20 		ldrb	r2, [r2, #189]	@ zero_extendqisi2
+ 770 0068 07F11801 		add	r1, r7, #24
+ 771 006c 0B44     		add	r3, r3, r1
+ 772 006e 03F8142C 		strb	r2, [r3, #-20]
+ 172:.\memoryEP.c  ****         y++;
+ 773              		.loc 1 172 0 discriminator 3
+ 774 0072 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 775 0074 0133     		adds	r3, r3, #1
+ 776 0076 BB75     		strb	r3, [r7, #22]
+ 170:.\memoryEP.c  ****     for(x=6;x<12;x++){
+ 777              		.loc 1 170 0 discriminator 3
+ 778 0078 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 779 007a 0133     		adds	r3, r3, #1
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 18
+
+
+ 780 007c FB75     		strb	r3, [r7, #23]
+ 781              	.L37:
+ 170:.\memoryEP.c  ****     for(x=6;x<12;x++){
+ 782              		.loc 1 170 0 is_stmt 0 discriminator 1
+ 783 007e FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 784 0080 0B2B     		cmp	r3, #11
+ 785 0082 EBD9     		bls	.L38
+ 173:.\memoryEP.c  ****     }
+ 174:.\memoryEP.c  ****     y=1;
+ 786              		.loc 1 174 0 is_stmt 1
+ 787 0084 0123     		movs	r3, #1
+ 788 0086 BB75     		strb	r3, [r7, #22]
+ 175:.\memoryEP.c  ****     for(x=12;x<16;x++){
+ 789              		.loc 1 175 0
+ 790 0088 0C23     		movs	r3, #12
+ 791 008a FB75     		strb	r3, [r7, #23]
+ 792 008c 10E0     		b	.L39
+ 793              	.L40:
+ 176:.\memoryEP.c  ****         memoryData[x]=side.a.ppuAuthorized[2][y];
+ 794              		.loc 1 176 0 discriminator 3
+ 795 008e FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 796 0090 BA7D     		ldrb	r2, [r7, #22]	@ zero_extendqisi2
+ 797 0092 5849     		ldr	r1, .L51
+ 798 0094 0A44     		add	r2, r2, r1
+ 799 0096 92F8C520 		ldrb	r2, [r2, #197]	@ zero_extendqisi2
+ 800 009a 07F11801 		add	r1, r7, #24
+ 801 009e 0B44     		add	r3, r3, r1
+ 802 00a0 03F8142C 		strb	r2, [r3, #-20]
+ 177:.\memoryEP.c  ****         y++;
+ 803              		.loc 1 177 0 discriminator 3
+ 804 00a4 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 805 00a6 0133     		adds	r3, r3, #1
+ 806 00a8 BB75     		strb	r3, [r7, #22]
+ 175:.\memoryEP.c  ****     for(x=12;x<16;x++){
+ 807              		.loc 1 175 0 discriminator 3
+ 808 00aa FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 809 00ac 0133     		adds	r3, r3, #1
+ 810 00ae FB75     		strb	r3, [r7, #23]
+ 811              	.L39:
+ 175:.\memoryEP.c  ****     for(x=12;x<16;x++){
+ 812              		.loc 1 175 0 is_stmt 0 discriminator 1
+ 813 00b0 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 814 00b2 0F2B     		cmp	r3, #15
+ 815 00b4 EBD9     		bls	.L40
+ 178:.\memoryEP.c  ****     }
+ 179:.\memoryEP.c  ****     EEPROM_1_Write(memoryData,61);
+ 816              		.loc 1 179 0 is_stmt 1
+ 817 00b6 3B1D     		adds	r3, r7, #4
+ 818 00b8 1846     		mov	r0, r3
+ 819 00ba 3D21     		movs	r1, #61
+ 820 00bc FFF7FEFF 		bl	EEPROM_1_Write
+ 180:.\memoryEP.c  ****     memoryData[0]=side.a.ppuAuthorized[2][5];
+ 821              		.loc 1 180 0
+ 822 00c0 4C4B     		ldr	r3, .L51
+ 823 00c2 93F8CA30 		ldrb	r3, [r3, #202]	@ zero_extendqisi2
+ 824 00c6 3B71     		strb	r3, [r7, #4]
+ 181:.\memoryEP.c  ****     memoryData[1]=side.a.ppuAuthorized[2][6];
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 19
+
+
+ 825              		.loc 1 181 0
+ 826 00c8 4A4B     		ldr	r3, .L51
+ 827 00ca 93F8CB30 		ldrb	r3, [r3, #203]	@ zero_extendqisi2
+ 828 00ce 7B71     		strb	r3, [r7, #5]
+ 182:.\memoryEP.c  ****     y=1;
+ 829              		.loc 1 182 0
+ 830 00d0 0123     		movs	r3, #1
+ 831 00d2 BB75     		strb	r3, [r7, #22]
+ 183:.\memoryEP.c  ****     for(x=2;x<8;x++){
+ 832              		.loc 1 183 0
+ 833 00d4 0223     		movs	r3, #2
+ 834 00d6 FB75     		strb	r3, [r7, #23]
+ 835 00d8 10E0     		b	.L41
+ 836              	.L42:
+ 184:.\memoryEP.c  ****         memoryData[x]=side.a.ppuAuthorized[3][y];
+ 837              		.loc 1 184 0 discriminator 3
+ 838 00da FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 839 00dc BA7D     		ldrb	r2, [r7, #22]	@ zero_extendqisi2
+ 840 00de 4549     		ldr	r1, .L51
+ 841 00e0 0A44     		add	r2, r2, r1
+ 842 00e2 92F8CD20 		ldrb	r2, [r2, #205]	@ zero_extendqisi2
+ 843 00e6 07F11801 		add	r1, r7, #24
+ 844 00ea 0B44     		add	r3, r3, r1
+ 845 00ec 03F8142C 		strb	r2, [r3, #-20]
+ 185:.\memoryEP.c  ****         y++;
+ 846              		.loc 1 185 0 discriminator 3
+ 847 00f0 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 848 00f2 0133     		adds	r3, r3, #1
+ 849 00f4 BB75     		strb	r3, [r7, #22]
+ 183:.\memoryEP.c  ****     for(x=2;x<8;x++){
+ 850              		.loc 1 183 0 discriminator 3
+ 851 00f6 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 852 00f8 0133     		adds	r3, r3, #1
+ 853 00fa FB75     		strb	r3, [r7, #23]
+ 854              	.L41:
+ 183:.\memoryEP.c  ****     for(x=2;x<8;x++){
+ 855              		.loc 1 183 0 is_stmt 0 discriminator 1
+ 856 00fc FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 857 00fe 072B     		cmp	r3, #7
+ 858 0100 EBD9     		bls	.L42
+ 186:.\memoryEP.c  ****     }
+ 187:.\memoryEP.c  ****     y=1;
+ 859              		.loc 1 187 0 is_stmt 1
+ 860 0102 0123     		movs	r3, #1
+ 861 0104 BB75     		strb	r3, [r7, #22]
+ 188:.\memoryEP.c  ****     for(x=8;x<14;x++){
+ 862              		.loc 1 188 0
+ 863 0106 0823     		movs	r3, #8
+ 864 0108 FB75     		strb	r3, [r7, #23]
+ 865 010a 10E0     		b	.L43
+ 866              	.L44:
+ 189:.\memoryEP.c  ****         memoryData[x]=side.b.ppuAuthorized[0][y];
+ 867              		.loc 1 189 0 discriminator 3
+ 868 010c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 869 010e BA7D     		ldrb	r2, [r7, #22]	@ zero_extendqisi2
+ 870 0110 3849     		ldr	r1, .L51
+ 871 0112 0A44     		add	r2, r2, r1
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 20
+
+
+ 872 0114 92F8B521 		ldrb	r2, [r2, #437]	@ zero_extendqisi2
+ 873 0118 07F11801 		add	r1, r7, #24
+ 874 011c 0B44     		add	r3, r3, r1
+ 875 011e 03F8142C 		strb	r2, [r3, #-20]
+ 190:.\memoryEP.c  ****         y++;
+ 876              		.loc 1 190 0 discriminator 3
+ 877 0122 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 878 0124 0133     		adds	r3, r3, #1
+ 879 0126 BB75     		strb	r3, [r7, #22]
+ 188:.\memoryEP.c  ****     for(x=8;x<14;x++){
+ 880              		.loc 1 188 0 discriminator 3
+ 881 0128 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 882 012a 0133     		adds	r3, r3, #1
+ 883 012c FB75     		strb	r3, [r7, #23]
+ 884              	.L43:
+ 188:.\memoryEP.c  ****     for(x=8;x<14;x++){
+ 885              		.loc 1 188 0 is_stmt 0 discriminator 1
+ 886 012e FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 887 0130 0D2B     		cmp	r3, #13
+ 888 0132 EBD9     		bls	.L44
+ 191:.\memoryEP.c  ****     }
+ 192:.\memoryEP.c  ****     memoryData[14]=side.b.ppuAuthorized[1][1];
+ 889              		.loc 1 192 0 is_stmt 1
+ 890 0134 2F4B     		ldr	r3, .L51
+ 891 0136 93F8BE31 		ldrb	r3, [r3, #446]	@ zero_extendqisi2
+ 892 013a BB74     		strb	r3, [r7, #18]
+ 193:.\memoryEP.c  ****     memoryData[15]=side.b.ppuAuthorized[1][2];
+ 893              		.loc 1 193 0
+ 894 013c 2D4B     		ldr	r3, .L51
+ 895 013e 93F8BF31 		ldrb	r3, [r3, #447]	@ zero_extendqisi2
+ 896 0142 FB74     		strb	r3, [r7, #19]
+ 194:.\memoryEP.c  ****     EEPROM_1_Write(memoryData,62);
+ 897              		.loc 1 194 0
+ 898 0144 3B1D     		adds	r3, r7, #4
+ 899 0146 1846     		mov	r0, r3
+ 900 0148 3E21     		movs	r1, #62
+ 901 014a FFF7FEFF 		bl	EEPROM_1_Write
+ 195:.\memoryEP.c  ****     y=3;
+ 902              		.loc 1 195 0
+ 903 014e 0323     		movs	r3, #3
+ 904 0150 BB75     		strb	r3, [r7, #22]
+ 196:.\memoryEP.c  ****     for(x=0;x<4;x++){
+ 905              		.loc 1 196 0
+ 906 0152 0023     		movs	r3, #0
+ 907 0154 FB75     		strb	r3, [r7, #23]
+ 908 0156 10E0     		b	.L45
+ 909              	.L46:
+ 197:.\memoryEP.c  ****         memoryData[x]=side.b.ppuAuthorized[1][y];
+ 910              		.loc 1 197 0 discriminator 3
+ 911 0158 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 912 015a BA7D     		ldrb	r2, [r7, #22]	@ zero_extendqisi2
+ 913 015c 2549     		ldr	r1, .L51
+ 914 015e 0A44     		add	r2, r2, r1
+ 915 0160 92F8BD21 		ldrb	r2, [r2, #445]	@ zero_extendqisi2
+ 916 0164 07F11801 		add	r1, r7, #24
+ 917 0168 0B44     		add	r3, r3, r1
+ 918 016a 03F8142C 		strb	r2, [r3, #-20]
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 21
+
+
+ 198:.\memoryEP.c  ****         y++;
+ 919              		.loc 1 198 0 discriminator 3
+ 920 016e BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 921 0170 0133     		adds	r3, r3, #1
+ 922 0172 BB75     		strb	r3, [r7, #22]
+ 196:.\memoryEP.c  ****     for(x=0;x<4;x++){
+ 923              		.loc 1 196 0 discriminator 3
+ 924 0174 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 925 0176 0133     		adds	r3, r3, #1
+ 926 0178 FB75     		strb	r3, [r7, #23]
+ 927              	.L45:
+ 196:.\memoryEP.c  ****     for(x=0;x<4;x++){
+ 928              		.loc 1 196 0 is_stmt 0 discriminator 1
+ 929 017a FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 930 017c 032B     		cmp	r3, #3
+ 931 017e EBD9     		bls	.L46
+ 199:.\memoryEP.c  ****     }
+ 200:.\memoryEP.c  ****     y=1;
+ 932              		.loc 1 200 0 is_stmt 1
+ 933 0180 0123     		movs	r3, #1
+ 934 0182 BB75     		strb	r3, [r7, #22]
+ 201:.\memoryEP.c  ****     for(x=4;x<10;x++){
+ 935              		.loc 1 201 0
+ 936 0184 0423     		movs	r3, #4
+ 937 0186 FB75     		strb	r3, [r7, #23]
+ 938 0188 10E0     		b	.L47
+ 939              	.L48:
+ 202:.\memoryEP.c  ****         memoryData[x]=side.b.ppuAuthorized[2][y];
+ 940              		.loc 1 202 0 discriminator 3
+ 941 018a FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 942 018c BA7D     		ldrb	r2, [r7, #22]	@ zero_extendqisi2
+ 943 018e 1949     		ldr	r1, .L51
+ 944 0190 0A44     		add	r2, r2, r1
+ 945 0192 92F8C521 		ldrb	r2, [r2, #453]	@ zero_extendqisi2
+ 946 0196 07F11801 		add	r1, r7, #24
+ 947 019a 0B44     		add	r3, r3, r1
+ 948 019c 03F8142C 		strb	r2, [r3, #-20]
+ 203:.\memoryEP.c  ****         y++;
+ 949              		.loc 1 203 0 discriminator 3
+ 950 01a0 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 951 01a2 0133     		adds	r3, r3, #1
+ 952 01a4 BB75     		strb	r3, [r7, #22]
+ 201:.\memoryEP.c  ****     for(x=4;x<10;x++){
+ 953              		.loc 1 201 0 discriminator 3
+ 954 01a6 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 955 01a8 0133     		adds	r3, r3, #1
+ 956 01aa FB75     		strb	r3, [r7, #23]
+ 957              	.L47:
+ 201:.\memoryEP.c  ****     for(x=4;x<10;x++){
+ 958              		.loc 1 201 0 is_stmt 0 discriminator 1
+ 959 01ac FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 960 01ae 092B     		cmp	r3, #9
+ 961 01b0 EBD9     		bls	.L48
+ 204:.\memoryEP.c  ****     }
+ 205:.\memoryEP.c  ****     y=1;
+ 962              		.loc 1 205 0 is_stmt 1
+ 963 01b2 0123     		movs	r3, #1
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 22
+
+
+ 964 01b4 BB75     		strb	r3, [r7, #22]
+ 206:.\memoryEP.c  ****     for(x=10;x<16;x++){
+ 965              		.loc 1 206 0
+ 966 01b6 0A23     		movs	r3, #10
+ 967 01b8 FB75     		strb	r3, [r7, #23]
+ 968 01ba 10E0     		b	.L49
+ 969              	.L50:
+ 207:.\memoryEP.c  ****         memoryData[x]=side.b.ppuAuthorized[3][y];
+ 970              		.loc 1 207 0 discriminator 3
+ 971 01bc FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 972 01be BA7D     		ldrb	r2, [r7, #22]	@ zero_extendqisi2
+ 973 01c0 0C49     		ldr	r1, .L51
+ 974 01c2 0A44     		add	r2, r2, r1
+ 975 01c4 92F8CD21 		ldrb	r2, [r2, #461]	@ zero_extendqisi2
+ 976 01c8 07F11801 		add	r1, r7, #24
+ 977 01cc 0B44     		add	r3, r3, r1
+ 978 01ce 03F8142C 		strb	r2, [r3, #-20]
+ 208:.\memoryEP.c  ****         y++;
+ 979              		.loc 1 208 0 discriminator 3
+ 980 01d2 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 981 01d4 0133     		adds	r3, r3, #1
+ 982 01d6 BB75     		strb	r3, [r7, #22]
+ 206:.\memoryEP.c  ****     for(x=10;x<16;x++){
+ 983              		.loc 1 206 0 discriminator 3
+ 984 01d8 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 985 01da 0133     		adds	r3, r3, #1
+ 986 01dc FB75     		strb	r3, [r7, #23]
+ 987              	.L49:
+ 206:.\memoryEP.c  ****     for(x=10;x<16;x++){
+ 988              		.loc 1 206 0 is_stmt 0 discriminator 1
+ 989 01de FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 990 01e0 0F2B     		cmp	r3, #15
+ 991 01e2 EBD9     		bls	.L50
+ 209:.\memoryEP.c  ****     }
+ 210:.\memoryEP.c  ****     EEPROM_1_Write(memoryData,63);
+ 992              		.loc 1 210 0 is_stmt 1
+ 993 01e4 3B1D     		adds	r3, r7, #4
+ 994 01e6 1846     		mov	r0, r3
+ 995 01e8 3F21     		movs	r1, #63
+ 996 01ea FFF7FEFF 		bl	EEPROM_1_Write
+ 211:.\memoryEP.c  **** }
+ 997              		.loc 1 211 0
+ 998 01ee 1837     		adds	r7, r7, #24
+ 999              		.cfi_def_cfa_offset 8
+ 1000 01f0 BD46     		mov	sp, r7
+ 1001              		.cfi_def_cfa_register 13
+ 1002              		@ sp needed
+ 1003 01f2 80BD     		pop	{r7, pc}
+ 1004              	.L52:
+ 1005              		.align	2
+ 1006              	.L51:
+ 1007 01f4 00000000 		.word	side
+ 1008              		.cfi_endproc
+ 1009              	.LFE57:
+ 1010              		.size	write_ppus, .-write_ppus
+ 1011              		.section	.text.write_buttons,"ax",%progbits
+ 1012              		.align	2
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 23
+
+
+ 1013              		.global	write_buttons
+ 1014              		.thumb
+ 1015              		.thumb_func
+ 1016              		.type	write_buttons, %function
+ 1017              	write_buttons:
+ 1018              	.LFB58:
+ 212:.\memoryEP.c  **** 
+ 213:.\memoryEP.c  **** /*
+ 214:.\memoryEP.c  **** ***************************************************************************************************
+ 215:.\memoryEP.c  **** *                                         void write_buttons()
+ 216:.\memoryEP.c  **** *
+ 217:.\memoryEP.c  **** * Description : 
+ 218:.\memoryEP.c  **** *               
+ 219:.\memoryEP.c  **** *
+ 220:.\memoryEP.c  **** * Argument(s) : none
+ 221:.\memoryEP.c  **** *
+ 222:.\memoryEP.c  **** * Return(s)   : none
+ 223:.\memoryEP.c  **** *
+ 224:.\memoryEP.c  **** * Caller(s)   :  
+ 225:.\memoryEP.c  **** *
+ 226:.\memoryEP.c  **** * Note(s)     : none.
+ 227:.\memoryEP.c  **** ***************************************************************************************************
+ 228:.\memoryEP.c  **** */
+ 229:.\memoryEP.c  **** 
+ 230:.\memoryEP.c  **** void write_buttons(){
+ 1019              		.loc 1 230 0
+ 1020              		.cfi_startproc
+ 1021              		@ args = 0, pretend = 0, frame = 24
+ 1022              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1023 0000 80B5     		push	{r7, lr}
+ 1024              		.cfi_def_cfa_offset 8
+ 1025              		.cfi_offset 7, -8
+ 1026              		.cfi_offset 14, -4
+ 1027 0002 86B0     		sub	sp, sp, #24
+ 1028              		.cfi_def_cfa_offset 32
+ 1029 0004 00AF     		add	r7, sp, #0
+ 1030              		.cfi_def_cfa_register 7
+ 231:.\memoryEP.c  ****     uint8 memoryData[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},x,y,z;
+ 1031              		.loc 1 231 0
+ 1032 0006 3B1D     		adds	r3, r7, #4
+ 1033 0008 0022     		movs	r2, #0
+ 1034 000a 1A60     		str	r2, [r3]
+ 1035 000c 0433     		adds	r3, r3, #4
+ 1036 000e 0022     		movs	r2, #0
+ 1037 0010 1A60     		str	r2, [r3]
+ 1038 0012 0433     		adds	r3, r3, #4
+ 1039 0014 0022     		movs	r2, #0
+ 1040 0016 1A60     		str	r2, [r3]
+ 1041 0018 0433     		adds	r3, r3, #4
+ 1042 001a 0022     		movs	r2, #0
+ 1043 001c 1A60     		str	r2, [r3]
+ 1044 001e 0433     		adds	r3, r3, #4
+ 232:.\memoryEP.c  ****     z=0;
+ 1045              		.loc 1 232 0
+ 1046 0020 0023     		movs	r3, #0
+ 1047 0022 7B75     		strb	r3, [r7, #21]
+ 233:.\memoryEP.c  ****     for(y=0;y<=113;y++){
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 24
+
+
+ 1048              		.loc 1 233 0
+ 1049 0024 0023     		movs	r3, #0
+ 1050 0026 BB75     		strb	r3, [r7, #22]
+ 1051 0028 3DE0     		b	.L54
+ 1052              	.L59:
+ 234:.\memoryEP.c  ****         for(x=0;x<8;x++){
+ 1053              		.loc 1 234 0
+ 1054 002a 0023     		movs	r3, #0
+ 1055 002c FB75     		strb	r3, [r7, #23]
+ 1056 002e 10E0     		b	.L55
+ 1057              	.L56:
+ 235:.\memoryEP.c  ****             memoryData[x]= button[y][x];
+ 1058              		.loc 1 235 0 discriminator 3
+ 1059 0030 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1060 0032 B97D     		ldrb	r1, [r7, #22]	@ zero_extendqisi2
+ 1061 0034 FA7D     		ldrb	r2, [r7, #23]	@ zero_extendqisi2
+ 1062 0036 1F48     		ldr	r0, .L60
+ 1063 0038 C900     		lsls	r1, r1, #3
+ 1064 003a 0A44     		add	r2, r2, r1
+ 1065 003c 0244     		add	r2, r2, r0
+ 1066 003e 1278     		ldrb	r2, [r2]
+ 1067 0040 D2B2     		uxtb	r2, r2
+ 1068 0042 07F11801 		add	r1, r7, #24
+ 1069 0046 0B44     		add	r3, r3, r1
+ 1070 0048 03F8142C 		strb	r2, [r3, #-20]
+ 234:.\memoryEP.c  ****         for(x=0;x<8;x++){
+ 1071              		.loc 1 234 0 discriminator 3
+ 1072 004c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1073 004e 0133     		adds	r3, r3, #1
+ 1074 0050 FB75     		strb	r3, [r7, #23]
+ 1075              	.L55:
+ 234:.\memoryEP.c  ****         for(x=0;x<8;x++){
+ 1076              		.loc 1 234 0 is_stmt 0 discriminator 1
+ 1077 0052 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1078 0054 072B     		cmp	r3, #7
+ 1079 0056 EBD9     		bls	.L56
+ 236:.\memoryEP.c  ****         }
+ 237:.\memoryEP.c  ****         y++;
+ 1080              		.loc 1 237 0 is_stmt 1
+ 1081 0058 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 1082 005a 0133     		adds	r3, r3, #1
+ 1083 005c BB75     		strb	r3, [r7, #22]
+ 238:.\memoryEP.c  ****         for(x=8;x<16;x++){
+ 1084              		.loc 1 238 0
+ 1085 005e 0823     		movs	r3, #8
+ 1086 0060 FB75     		strb	r3, [r7, #23]
+ 1087 0062 11E0     		b	.L57
+ 1088              	.L58:
+ 239:.\memoryEP.c  ****             memoryData[x]= button[y][x-8];
+ 1089              		.loc 1 239 0 discriminator 3
+ 1090 0064 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1091 0066 B97D     		ldrb	r1, [r7, #22]	@ zero_extendqisi2
+ 1092 0068 FA7D     		ldrb	r2, [r7, #23]	@ zero_extendqisi2
+ 1093 006a 083A     		subs	r2, r2, #8
+ 1094 006c 1148     		ldr	r0, .L60
+ 1095 006e C900     		lsls	r1, r1, #3
+ 1096 0070 0A44     		add	r2, r2, r1
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 25
+
+
+ 1097 0072 0244     		add	r2, r2, r0
+ 1098 0074 1278     		ldrb	r2, [r2]
+ 1099 0076 D2B2     		uxtb	r2, r2
+ 1100 0078 07F11801 		add	r1, r7, #24
+ 1101 007c 0B44     		add	r3, r3, r1
+ 1102 007e 03F8142C 		strb	r2, [r3, #-20]
+ 238:.\memoryEP.c  ****         for(x=8;x<16;x++){
+ 1103              		.loc 1 238 0 discriminator 3
+ 1104 0082 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1105 0084 0133     		adds	r3, r3, #1
+ 1106 0086 FB75     		strb	r3, [r7, #23]
+ 1107              	.L57:
+ 238:.\memoryEP.c  ****         for(x=8;x<16;x++){
+ 1108              		.loc 1 238 0 is_stmt 0 discriminator 1
+ 1109 0088 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1110 008a 0F2B     		cmp	r3, #15
+ 1111 008c EAD9     		bls	.L58
+ 240:.\memoryEP.c  ****         }
+ 241:.\memoryEP.c  ****         EEPROM_1_Write(memoryData,z);
+ 1112              		.loc 1 241 0 is_stmt 1 discriminator 2
+ 1113 008e 3A1D     		adds	r2, r7, #4
+ 1114 0090 7B7D     		ldrb	r3, [r7, #21]	@ zero_extendqisi2
+ 1115 0092 1046     		mov	r0, r2
+ 1116 0094 1946     		mov	r1, r3
+ 1117 0096 FFF7FEFF 		bl	EEPROM_1_Write
+ 242:.\memoryEP.c  ****         z++;
+ 1118              		.loc 1 242 0 discriminator 2
+ 1119 009a 7B7D     		ldrb	r3, [r7, #21]	@ zero_extendqisi2
+ 1120 009c 0133     		adds	r3, r3, #1
+ 1121 009e 7B75     		strb	r3, [r7, #21]
+ 233:.\memoryEP.c  ****         for(x=0;x<8;x++){
+ 1122              		.loc 1 233 0 discriminator 2
+ 1123 00a0 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 1124 00a2 0133     		adds	r3, r3, #1
+ 1125 00a4 BB75     		strb	r3, [r7, #22]
+ 1126              	.L54:
+ 233:.\memoryEP.c  ****         for(x=0;x<8;x++){
+ 1127              		.loc 1 233 0 is_stmt 0 discriminator 1
+ 1128 00a6 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 1129 00a8 712B     		cmp	r3, #113
+ 1130 00aa BED9     		bls	.L59
+ 243:.\memoryEP.c  ****     }
+ 244:.\memoryEP.c  **** }...
+ 1131              		.loc 1 244 0 is_stmt 1
+ 1132 00ac 1837     		adds	r7, r7, #24
+ 1133              		.cfi_def_cfa_offset 8
+ 1134 00ae BD46     		mov	sp, r7
+ 1135              		.cfi_def_cfa_register 13
+ 1136              		@ sp needed
+ 1137 00b0 80BD     		pop	{r7, pc}
+ 1138              	.L61:
+ 1139 00b2 00BF     		.align	2
+ 1140              	.L60:
+ 1141 00b4 00000000 		.word	button
+ 1142              		.cfi_endproc
+ 1143              	.LFE58:
+ 1144              		.size	write_buttons, .-write_buttons
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 26
+
+
+ 1145              		.text
+ 1146              	.Letext0:
+ 1147              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 1148              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 1149              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 1150              		.file 5 ".\\variables.h"
+ 1151              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+ 1152              		.section	.debug_info,"",%progbits
+ 1153              	.Ldebug_info0:
+ 1154 0000 77080000 		.4byte	0x877
+ 1155 0004 0400     		.2byte	0x4
+ 1156 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1157 000a 04       		.byte	0x4
+ 1158 000b 01       		.uleb128 0x1
+ 1159 000c A3010000 		.4byte	.LASF114
+ 1160 0010 01       		.byte	0x1
+ 1161 0011 EC030000 		.4byte	.LASF115
+ 1162 0015 DF020000 		.4byte	.LASF116
+ 1163 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1164 001d 00000000 		.4byte	0
+ 1165 0021 00000000 		.4byte	.Ldebug_line0
+ 1166 0025 02       		.uleb128 0x2
+ 1167 0026 01       		.byte	0x1
+ 1168 0027 06       		.byte	0x6
+ 1169 0028 33010000 		.4byte	.LASF0
+ 1170 002c 02       		.uleb128 0x2
+ 1171 002d 01       		.byte	0x1
+ 1172 002e 08       		.byte	0x8
+ 1173 002f B9020000 		.4byte	.LASF1
+ 1174 0033 02       		.uleb128 0x2
+ 1175 0034 02       		.byte	0x2
+ 1176 0035 05       		.byte	0x5
+ 1177 0036 41000000 		.4byte	.LASF2
+ 1178 003a 02       		.uleb128 0x2
+ 1179 003b 02       		.byte	0x2
+ 1180 003c 07       		.byte	0x7
+ 1181 003d F2040000 		.4byte	.LASF3
+ 1182 0041 03       		.uleb128 0x3
+ 1183 0042 92050000 		.4byte	.LASF9
+ 1184 0046 02       		.byte	0x2
+ 1185 0047 3F       		.byte	0x3f
+ 1186 0048 4C000000 		.4byte	0x4c
+ 1187 004c 02       		.uleb128 0x2
+ 1188 004d 04       		.byte	0x4
+ 1189 004e 05       		.byte	0x5
+ 1190 004f A3040000 		.4byte	.LASF4
+ 1191 0053 02       		.uleb128 0x2
+ 1192 0054 04       		.byte	0x4
+ 1193 0055 07       		.byte	0x7
+ 1194 0056 17000000 		.4byte	.LASF5
+ 1195 005a 02       		.uleb128 0x2
+ 1196 005b 08       		.byte	0x8
+ 1197 005c 05       		.byte	0x5
+ 1198 005d 75010000 		.4byte	.LASF6
+ 1199 0061 02       		.uleb128 0x2
+ 1200 0062 08       		.byte	0x8
+ 1201 0063 07       		.byte	0x7
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 27
+
+
+ 1202 0064 CE030000 		.4byte	.LASF7
+ 1203 0068 04       		.uleb128 0x4
+ 1204 0069 04       		.byte	0x4
+ 1205 006a 05       		.byte	0x5
+ 1206 006b 696E7400 		.ascii	"int\000"
+ 1207 006f 02       		.uleb128 0x2
+ 1208 0070 04       		.byte	0x4
+ 1209 0071 07       		.byte	0x7
+ 1210 0072 F9030000 		.4byte	.LASF8
+ 1211 0076 03       		.uleb128 0x3
+ 1212 0077 C6030000 		.4byte	.LASF10
+ 1213 007b 03       		.byte	0x3
+ 1214 007c 2C       		.byte	0x2c
+ 1215 007d 41000000 		.4byte	0x41
+ 1216 0081 03       		.uleb128 0x3
+ 1217 0082 24010000 		.4byte	.LASF11
+ 1218 0086 04       		.byte	0x4
+ 1219 0087 A1       		.byte	0xa1
+ 1220 0088 2C000000 		.4byte	0x2c
+ 1221 008c 03       		.uleb128 0x3
+ 1222 008d 10050000 		.4byte	.LASF12
+ 1223 0091 04       		.byte	0x4
+ 1224 0092 A3       		.byte	0xa3
+ 1225 0093 53000000 		.4byte	0x53
+ 1226 0097 02       		.uleb128 0x2
+ 1227 0098 04       		.byte	0x4
+ 1228 0099 04       		.byte	0x4
+ 1229 009a 4C010000 		.4byte	.LASF13
+ 1230 009e 02       		.uleb128 0x2
+ 1231 009f 08       		.byte	0x8
+ 1232 00a0 04       		.byte	0x4
+ 1233 00a1 ED050000 		.4byte	.LASF14
+ 1234 00a5 03       		.uleb128 0x3
+ 1235 00a6 31020000 		.4byte	.LASF15
+ 1236 00aa 04       		.byte	0x4
+ 1237 00ab AD       		.byte	0xad
+ 1238 00ac 61000000 		.4byte	0x61
+ 1239 00b0 02       		.uleb128 0x2
+ 1240 00b1 01       		.byte	0x1
+ 1241 00b2 08       		.byte	0x8
+ 1242 00b3 96040000 		.4byte	.LASF16
+ 1243 00b7 05       		.uleb128 0x5
+ 1244 00b8 81000000 		.4byte	0x81
+ 1245 00bc 05       		.uleb128 0x5
+ 1246 00bd 8C000000 		.4byte	0x8c
+ 1247 00c1 02       		.uleb128 0x2
+ 1248 00c2 04       		.byte	0x4
+ 1249 00c3 07       		.byte	0x7
+ 1250 00c4 63000000 		.4byte	.LASF17
+ 1251 00c8 06       		.uleb128 0x6
+ 1252 00c9 EB040000 		.4byte	.LASF66
+ 1253 00cd 7B02     		.2byte	0x27b
+ 1254 00cf 05       		.byte	0x5
+ 1255 00d0 52       		.byte	0x52
+ 1256 00d1 2A030000 		.4byte	0x32a
+ 1257 00d5 07       		.uleb128 0x7
+ 1258 00d6 1D010000 		.4byte	.LASF18
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 28
+
+
+ 1259 00da 05       		.byte	0x5
+ 1260 00db 53       		.byte	0x53
+ 1261 00dc 81000000 		.4byte	0x81
+ 1262 00e0 00       		.byte	0
+ 1263 00e1 07       		.uleb128 0x7
+ 1264 00e2 38000000 		.4byte	.LASF19
+ 1265 00e6 05       		.byte	0x5
+ 1266 00e7 54       		.byte	0x54
+ 1267 00e8 2A030000 		.4byte	0x32a
+ 1268 00ec 01       		.byte	0x1
+ 1269 00ed 07       		.uleb128 0x7
+ 1270 00ee E9000000 		.4byte	.LASF20
+ 1271 00f2 05       		.byte	0x5
+ 1272 00f3 55       		.byte	0x55
+ 1273 00f4 81000000 		.4byte	0x81
+ 1274 00f8 1A       		.byte	0x1a
+ 1275 00f9 07       		.uleb128 0x7
+ 1276 00fa 85050000 		.4byte	.LASF21
+ 1277 00fe 05       		.byte	0x5
+ 1278 00ff 56       		.byte	0x56
+ 1279 0100 3A030000 		.4byte	0x33a
+ 1280 0104 1B       		.byte	0x1b
+ 1281 0105 07       		.uleb128 0x7
+ 1282 0106 73030000 		.4byte	.LASF22
+ 1283 010a 05       		.byte	0x5
+ 1284 010b 57       		.byte	0x57
+ 1285 010c 3A030000 		.4byte	0x33a
+ 1286 0110 25       		.byte	0x25
+ 1287 0111 07       		.uleb128 0x7
+ 1288 0112 92000000 		.4byte	.LASF23
+ 1289 0116 05       		.byte	0x5
+ 1290 0117 58       		.byte	0x58
+ 1291 0118 2A030000 		.4byte	0x32a
+ 1292 011c 2F       		.byte	0x2f
+ 1293 011d 07       		.uleb128 0x7
+ 1294 011e 92010000 		.4byte	.LASF24
+ 1295 0122 05       		.byte	0x5
+ 1296 0123 59       		.byte	0x59
+ 1297 0124 81000000 		.4byte	0x81
+ 1298 0128 48       		.byte	0x48
+ 1299 0129 07       		.uleb128 0x7
+ 1300 012a 9C050000 		.4byte	.LASF25
+ 1301 012e 05       		.byte	0x5
+ 1302 012f 5A       		.byte	0x5a
+ 1303 0130 81000000 		.4byte	0x81
+ 1304 0134 49       		.byte	0x49
+ 1305 0135 07       		.uleb128 0x7
+ 1306 0136 7E020000 		.4byte	.LASF26
+ 1307 013a 05       		.byte	0x5
+ 1308 013b 5B       		.byte	0x5b
+ 1309 013c 4A030000 		.4byte	0x34a
+ 1310 0140 4A       		.byte	0x4a
+ 1311 0141 07       		.uleb128 0x7
+ 1312 0142 17050000 		.4byte	.LASF27
+ 1313 0146 05       		.byte	0x5
+ 1314 0147 5C       		.byte	0x5c
+ 1315 0148 81000000 		.4byte	0x81
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 29
+
+
+ 1316 014c 5F       		.byte	0x5f
+ 1317 014d 07       		.uleb128 0x7
+ 1318 014e 80000000 		.4byte	.LASF28
+ 1319 0152 05       		.byte	0x5
+ 1320 0153 5D       		.byte	0x5d
+ 1321 0154 81000000 		.4byte	0x81
+ 1322 0158 60       		.byte	0x60
+ 1323 0159 07       		.uleb128 0x7
+ 1324 015a 05010000 		.4byte	.LASF29
+ 1325 015e 05       		.byte	0x5
+ 1326 015f 5E       		.byte	0x5e
+ 1327 0160 81000000 		.4byte	0x81
+ 1328 0164 61       		.byte	0x61
+ 1329 0165 07       		.uleb128 0x7
+ 1330 0166 41030000 		.4byte	.LASF30
+ 1331 016a 05       		.byte	0x5
+ 1332 016b 5F       		.byte	0x5f
+ 1333 016c 5A030000 		.4byte	0x35a
+ 1334 0170 62       		.byte	0x62
+ 1335 0171 07       		.uleb128 0x7
+ 1336 0172 DD000000 		.4byte	.LASF31
+ 1337 0176 05       		.byte	0x5
+ 1338 0177 60       		.byte	0x60
+ 1339 0178 6A030000 		.4byte	0x36a
+ 1340 017c 64       		.byte	0x64
+ 1341 017d 07       		.uleb128 0x7
+ 1342 017e 0B000000 		.4byte	.LASF32
+ 1343 0182 05       		.byte	0x5
+ 1344 0183 61       		.byte	0x61
+ 1345 0184 81000000 		.4byte	0x81
+ 1346 0188 78       		.byte	0x78
+ 1347 0189 07       		.uleb128 0x7
+ 1348 018a 77000000 		.4byte	.LASF33
+ 1349 018e 05       		.byte	0x5
+ 1350 018f 62       		.byte	0x62
+ 1351 0190 80030000 		.4byte	0x380
+ 1352 0194 79       		.byte	0x79
+ 1353 0195 07       		.uleb128 0x7
+ 1354 0196 29000000 		.4byte	.LASF34
+ 1355 019a 05       		.byte	0x5
+ 1356 019b 63       		.byte	0x63
+ 1357 019c 90030000 		.4byte	0x390
+ 1358 01a0 7E       		.byte	0x7e
+ 1359 01a1 07       		.uleb128 0x7
+ 1360 01a2 D7040000 		.4byte	.LASF35
+ 1361 01a6 05       		.byte	0x5
+ 1362 01a7 64       		.byte	0x64
+ 1363 01a8 90030000 		.4byte	0x390
+ 1364 01ac 84       		.byte	0x84
+ 1365 01ad 07       		.uleb128 0x7
+ 1366 01ae B1040000 		.4byte	.LASF36
+ 1367 01b2 05       		.byte	0x5
+ 1368 01b3 65       		.byte	0x65
+ 1369 01b4 90030000 		.4byte	0x390
+ 1370 01b8 8A       		.byte	0x8a
+ 1371 01b9 07       		.uleb128 0x7
+ 1372 01ba 2B050000 		.4byte	.LASF37
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 30
+
+
+ 1373 01be 05       		.byte	0x5
+ 1374 01bf 66       		.byte	0x66
+ 1375 01c0 90030000 		.4byte	0x390
+ 1376 01c4 90       		.byte	0x90
+ 1377 01c5 07       		.uleb128 0x7
+ 1378 01c6 F2000000 		.4byte	.LASF38
+ 1379 01ca 05       		.byte	0x5
+ 1380 01cb 67       		.byte	0x67
+ 1381 01cc A0030000 		.4byte	0x3a0
+ 1382 01d0 96       		.byte	0x96
+ 1383 01d1 07       		.uleb128 0x7
+ 1384 01d2 6A020000 		.4byte	.LASF39
+ 1385 01d6 05       		.byte	0x5
+ 1386 01d7 68       		.byte	0x68
+ 1387 01d8 A0030000 		.4byte	0x3a0
+ 1388 01dc A4       		.byte	0xa4
+ 1389 01dd 07       		.uleb128 0x7
+ 1390 01de DC050000 		.4byte	.LASF40
+ 1391 01e2 05       		.byte	0x5
+ 1392 01e3 69       		.byte	0x69
+ 1393 01e4 A0030000 		.4byte	0x3a0
+ 1394 01e8 B2       		.byte	0xb2
+ 1395 01e9 07       		.uleb128 0x7
+ 1396 01ea A9020000 		.4byte	.LASF41
+ 1397 01ee 05       		.byte	0x5
+ 1398 01ef 6A       		.byte	0x6a
+ 1399 01f0 A0030000 		.4byte	0x3a0
+ 1400 01f4 C0       		.byte	0xc0
+ 1401 01f5 07       		.uleb128 0x7
+ 1402 01f6 2E040000 		.4byte	.LASF42
+ 1403 01fa 05       		.byte	0x5
+ 1404 01fb 6B       		.byte	0x6b
+ 1405 01fc A0030000 		.4byte	0x3a0
+ 1406 0200 CE       		.byte	0xce
+ 1407 0201 07       		.uleb128 0x7
+ 1408 0202 C0040000 		.4byte	.LASF43
+ 1409 0206 05       		.byte	0x5
+ 1410 0207 6C       		.byte	0x6c
+ 1411 0208 A0030000 		.4byte	0x3a0
+ 1412 020c DC       		.byte	0xdc
+ 1413 020d 07       		.uleb128 0x7
+ 1414 020e 4B000000 		.4byte	.LASF44
+ 1415 0212 05       		.byte	0x5
+ 1416 0213 6D       		.byte	0x6d
+ 1417 0214 B0030000 		.4byte	0x3b0
+ 1418 0218 EA       		.byte	0xea
+ 1419 0219 07       		.uleb128 0x7
+ 1420 021a 11010000 		.4byte	.LASF45
+ 1421 021e 05       		.byte	0x5
+ 1422 021f 6E       		.byte	0x6e
+ 1423 0220 B0030000 		.4byte	0x3b0
+ 1424 0224 F5       		.byte	0xf5
+ 1425 0225 08       		.uleb128 0x8
+ 1426 0226 0E040000 		.4byte	.LASF46
+ 1427 022a 05       		.byte	0x5
+ 1428 022b 6F       		.byte	0x6f
+ 1429 022c B0030000 		.4byte	0x3b0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 31
+
+
+ 1430 0230 0001     		.2byte	0x100
+ 1431 0232 08       		.uleb128 0x8
+ 1432 0233 4C030000 		.4byte	.LASF47
+ 1433 0237 05       		.byte	0x5
+ 1434 0238 70       		.byte	0x70
+ 1435 0239 81000000 		.4byte	0x81
+ 1436 023d 0B01     		.2byte	0x10b
+ 1437 023f 08       		.uleb128 0x8
+ 1438 0240 80040000 		.4byte	.LASF48
+ 1439 0244 05       		.byte	0x5
+ 1440 0245 71       		.byte	0x71
+ 1441 0246 81000000 		.4byte	0x81
+ 1442 024a 0C01     		.2byte	0x10c
+ 1443 024c 08       		.uleb128 0x8
+ 1444 024d 5B020000 		.4byte	.LASF49
+ 1445 0251 05       		.byte	0x5
+ 1446 0252 72       		.byte	0x72
+ 1447 0253 81000000 		.4byte	0x81
+ 1448 0257 0D01     		.2byte	0x10d
+ 1449 0259 08       		.uleb128 0x8
+ 1450 025a 8F020000 		.4byte	.LASF50
+ 1451 025e 05       		.byte	0x5
+ 1452 025f 73       		.byte	0x73
+ 1453 0260 81000000 		.4byte	0x81
+ 1454 0264 0E01     		.2byte	0x10e
+ 1455 0266 08       		.uleb128 0x8
+ 1456 0267 23050000 		.4byte	.LASF51
+ 1457 026b 05       		.byte	0x5
+ 1458 026c 74       		.byte	0x74
+ 1459 026d C0030000 		.4byte	0x3c0
+ 1460 0271 0F01     		.2byte	0x10f
+ 1461 0273 08       		.uleb128 0x8
+ 1462 0274 00000000 		.4byte	.LASF52
+ 1463 0278 05       		.byte	0x5
+ 1464 0279 75       		.byte	0x75
+ 1465 027a 3A030000 		.4byte	0x33a
+ 1466 027e 5001     		.2byte	0x150
+ 1467 0280 08       		.uleb128 0x8
+ 1468 0281 74040000 		.4byte	.LASF53
+ 1469 0285 05       		.byte	0x5
+ 1470 0286 76       		.byte	0x76
+ 1471 0287 3A030000 		.4byte	0x33a
+ 1472 028b 5A01     		.2byte	0x15a
+ 1473 028d 08       		.uleb128 0x8
+ 1474 028e BC000000 		.4byte	.LASF54
+ 1475 0292 05       		.byte	0x5
+ 1476 0293 77       		.byte	0x77
+ 1477 0294 3A030000 		.4byte	0x33a
+ 1478 0298 6401     		.2byte	0x164
+ 1479 029a 08       		.uleb128 0x8
+ 1480 029b B9030000 		.4byte	.LASF55
+ 1481 029f 05       		.byte	0x5
+ 1482 02a0 78       		.byte	0x78
+ 1483 02a1 D0030000 		.4byte	0x3d0
+ 1484 02a5 6E01     		.2byte	0x16e
+ 1485 02a7 08       		.uleb128 0x8
+ 1486 02a8 5B040000 		.4byte	.LASF56
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 32
+
+
+ 1487 02ac 05       		.byte	0x5
+ 1488 02ad 79       		.byte	0x79
+ 1489 02ae D0030000 		.4byte	0x3d0
+ 1490 02b2 B901     		.2byte	0x1b9
+ 1491 02b4 08       		.uleb128 0x8
+ 1492 02b5 64030000 		.4byte	.LASF57
+ 1493 02b9 05       		.byte	0x5
+ 1494 02ba 7A       		.byte	0x7a
+ 1495 02bb E6030000 		.4byte	0x3e6
+ 1496 02bf 0402     		.2byte	0x204
+ 1497 02c1 08       		.uleb128 0x8
+ 1498 02c2 98030000 		.4byte	.LASF58
+ 1499 02c6 05       		.byte	0x5
+ 1500 02c7 7B       		.byte	0x7b
+ 1501 02c8 E6030000 		.4byte	0x3e6
+ 1502 02cc 1302     		.2byte	0x213
+ 1503 02ce 08       		.uleb128 0x8
+ 1504 02cf 29060000 		.4byte	.LASF59
+ 1505 02d3 05       		.byte	0x5
+ 1506 02d4 7C       		.byte	0x7c
+ 1507 02d5 FC030000 		.4byte	0x3fc
+ 1508 02d9 2202     		.2byte	0x222
+ 1509 02db 08       		.uleb128 0x8
+ 1510 02dc 19040000 		.4byte	.LASF60
+ 1511 02e0 05       		.byte	0x5
+ 1512 02e1 7D       		.byte	0x7d
+ 1513 02e2 FC030000 		.4byte	0x3fc
+ 1514 02e6 4002     		.2byte	0x240
+ 1515 02e8 08       		.uleb128 0x8
+ 1516 02e9 3A060000 		.4byte	.LASF61
+ 1517 02ed 05       		.byte	0x5
+ 1518 02ee 7E       		.byte	0x7e
+ 1519 02ef 3A030000 		.4byte	0x33a
+ 1520 02f3 5E02     		.2byte	0x25e
+ 1521 02f5 08       		.uleb128 0x8
+ 1522 02f6 58050000 		.4byte	.LASF62
+ 1523 02fa 05       		.byte	0x5
+ 1524 02fb 7F       		.byte	0x7f
+ 1525 02fc 81000000 		.4byte	0x81
+ 1526 0300 6802     		.2byte	0x268
+ 1527 0302 08       		.uleb128 0x8
+ 1528 0303 6A050000 		.4byte	.LASF63
+ 1529 0307 05       		.byte	0x5
+ 1530 0308 80       		.byte	0x80
+ 1531 0309 12040000 		.4byte	0x412
+ 1532 030d 6902     		.2byte	0x269
+ 1533 030f 08       		.uleb128 0x8
+ 1534 0310 89000000 		.4byte	.LASF64
+ 1535 0314 05       		.byte	0x5
+ 1536 0315 81       		.byte	0x81
+ 1537 0316 5A030000 		.4byte	0x35a
+ 1538 031a 7802     		.2byte	0x278
+ 1539 031c 08       		.uleb128 0x8
+ 1540 031d 77050000 		.4byte	.LASF65
+ 1541 0321 05       		.byte	0x5
+ 1542 0322 82       		.byte	0x82
+ 1543 0323 81000000 		.4byte	0x81
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 33
+
+
+ 1544 0327 7A02     		.2byte	0x27a
+ 1545 0329 00       		.byte	0
+ 1546 032a 09       		.uleb128 0x9
+ 1547 032b 81000000 		.4byte	0x81
+ 1548 032f 3A030000 		.4byte	0x33a
+ 1549 0333 0A       		.uleb128 0xa
+ 1550 0334 C1000000 		.4byte	0xc1
+ 1551 0338 18       		.byte	0x18
+ 1552 0339 00       		.byte	0
+ 1553 033a 09       		.uleb128 0x9
+ 1554 033b 81000000 		.4byte	0x81
+ 1555 033f 4A030000 		.4byte	0x34a
+ 1556 0343 0A       		.uleb128 0xa
+ 1557 0344 C1000000 		.4byte	0xc1
+ 1558 0348 09       		.byte	0x9
+ 1559 0349 00       		.byte	0
+ 1560 034a 09       		.uleb128 0x9
+ 1561 034b 81000000 		.4byte	0x81
+ 1562 034f 5A030000 		.4byte	0x35a
+ 1563 0353 0A       		.uleb128 0xa
+ 1564 0354 C1000000 		.4byte	0xc1
+ 1565 0358 14       		.byte	0x14
+ 1566 0359 00       		.byte	0
+ 1567 035a 09       		.uleb128 0x9
+ 1568 035b 81000000 		.4byte	0x81
+ 1569 035f 6A030000 		.4byte	0x36a
+ 1570 0363 0A       		.uleb128 0xa
+ 1571 0364 C1000000 		.4byte	0xc1
+ 1572 0368 01       		.byte	0x1
+ 1573 0369 00       		.byte	0
+ 1574 036a 09       		.uleb128 0x9
+ 1575 036b 81000000 		.4byte	0x81
+ 1576 036f 80030000 		.4byte	0x380
+ 1577 0373 0A       		.uleb128 0xa
+ 1578 0374 C1000000 		.4byte	0xc1
+ 1579 0378 01       		.byte	0x1
+ 1580 0379 0A       		.uleb128 0xa
+ 1581 037a C1000000 		.4byte	0xc1
+ 1582 037e 09       		.byte	0x9
+ 1583 037f 00       		.byte	0
+ 1584 0380 09       		.uleb128 0x9
+ 1585 0381 81000000 		.4byte	0x81
+ 1586 0385 90030000 		.4byte	0x390
+ 1587 0389 0A       		.uleb128 0xa
+ 1588 038a C1000000 		.4byte	0xc1
+ 1589 038e 04       		.byte	0x4
+ 1590 038f 00       		.byte	0
+ 1591 0390 09       		.uleb128 0x9
+ 1592 0391 81000000 		.4byte	0x81
+ 1593 0395 A0030000 		.4byte	0x3a0
+ 1594 0399 0A       		.uleb128 0xa
+ 1595 039a C1000000 		.4byte	0xc1
+ 1596 039e 05       		.byte	0x5
+ 1597 039f 00       		.byte	0
+ 1598 03a0 09       		.uleb128 0x9
+ 1599 03a1 81000000 		.4byte	0x81
+ 1600 03a5 B0030000 		.4byte	0x3b0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 34
+
+
+ 1601 03a9 0A       		.uleb128 0xa
+ 1602 03aa C1000000 		.4byte	0xc1
+ 1603 03ae 0D       		.byte	0xd
+ 1604 03af 00       		.byte	0
+ 1605 03b0 09       		.uleb128 0x9
+ 1606 03b1 81000000 		.4byte	0x81
+ 1607 03b5 C0030000 		.4byte	0x3c0
+ 1608 03b9 0A       		.uleb128 0xa
+ 1609 03ba C1000000 		.4byte	0xc1
+ 1610 03be 0A       		.byte	0xa
+ 1611 03bf 00       		.byte	0
+ 1612 03c0 09       		.uleb128 0x9
+ 1613 03c1 81000000 		.4byte	0x81
+ 1614 03c5 D0030000 		.4byte	0x3d0
+ 1615 03c9 0A       		.uleb128 0xa
+ 1616 03ca C1000000 		.4byte	0xc1
+ 1617 03ce 40       		.byte	0x40
+ 1618 03cf 00       		.byte	0
+ 1619 03d0 09       		.uleb128 0x9
+ 1620 03d1 81000000 		.4byte	0x81
+ 1621 03d5 E6030000 		.4byte	0x3e6
+ 1622 03d9 0A       		.uleb128 0xa
+ 1623 03da C1000000 		.4byte	0xc1
+ 1624 03de 02       		.byte	0x2
+ 1625 03df 0A       		.uleb128 0xa
+ 1626 03e0 C1000000 		.4byte	0xc1
+ 1627 03e4 18       		.byte	0x18
+ 1628 03e5 00       		.byte	0
+ 1629 03e6 09       		.uleb128 0x9
+ 1630 03e7 81000000 		.4byte	0x81
+ 1631 03eb FC030000 		.4byte	0x3fc
+ 1632 03ef 0A       		.uleb128 0xa
+ 1633 03f0 C1000000 		.4byte	0xc1
+ 1634 03f4 02       		.byte	0x2
+ 1635 03f5 0A       		.uleb128 0xa
+ 1636 03f6 C1000000 		.4byte	0xc1
+ 1637 03fa 04       		.byte	0x4
+ 1638 03fb 00       		.byte	0
+ 1639 03fc 09       		.uleb128 0x9
+ 1640 03fd 81000000 		.4byte	0x81
+ 1641 0401 12040000 		.4byte	0x412
+ 1642 0405 0A       		.uleb128 0xa
+ 1643 0406 C1000000 		.4byte	0xc1
+ 1644 040a 02       		.byte	0x2
+ 1645 040b 0A       		.uleb128 0xa
+ 1646 040c C1000000 		.4byte	0xc1
+ 1647 0410 09       		.byte	0x9
+ 1648 0411 00       		.byte	0
+ 1649 0412 09       		.uleb128 0x9
+ 1650 0413 81000000 		.4byte	0x81
+ 1651 0417 22040000 		.4byte	0x422
+ 1652 041b 0A       		.uleb128 0xa
+ 1653 041c C1000000 		.4byte	0xc1
+ 1654 0420 0E       		.byte	0xe
+ 1655 0421 00       		.byte	0
+ 1656 0422 06       		.uleb128 0x6
+ 1657 0423 C5000000 		.4byte	.LASF67
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 35
+
+
+ 1658 0427 0001     		.2byte	0x100
+ 1659 0429 05       		.byte	0x5
+ 1660 042a 90       		.byte	0x90
+ 1661 042b 84040000 		.4byte	0x484
+ 1662 042f 0B       		.uleb128 0xb
+ 1663 0430 64697200 		.ascii	"dir\000"
+ 1664 0434 05       		.byte	0x5
+ 1665 0435 91       		.byte	0x91
+ 1666 0436 81000000 		.4byte	0x81
+ 1667 043a 00       		.byte	0
+ 1668 043b 07       		.uleb128 0x7
+ 1669 043c 3F010000 		.4byte	.LASF68
+ 1670 0440 05       		.byte	0x5
+ 1671 0441 92       		.byte	0x92
+ 1672 0442 84040000 		.4byte	0x484
+ 1673 0446 01       		.byte	0x1
+ 1674 0447 07       		.uleb128 0x7
+ 1675 0448 9B020000 		.4byte	.LASF69
+ 1676 044c 05       		.byte	0x5
+ 1677 044d 93       		.byte	0x93
+ 1678 044e A0040000 		.4byte	0x4a0
+ 1679 0452 B5       		.byte	0xb5
+ 1680 0453 07       		.uleb128 0x7
+ 1681 0454 8C040000 		.4byte	.LASF70
+ 1682 0458 05       		.byte	0x5
+ 1683 0459 94       		.byte	0x94
+ 1684 045a A0030000 		.4byte	0x3a0
+ 1685 045e D5       		.byte	0xd5
+ 1686 045f 07       		.uleb128 0x7
+ 1687 0460 69040000 		.4byte	.LASF71
+ 1688 0464 05       		.byte	0x5
+ 1689 0465 95       		.byte	0x95
+ 1690 0466 A0030000 		.4byte	0x3a0
+ 1691 046a E3       		.byte	0xe3
+ 1692 046b 07       		.uleb128 0x7
+ 1693 046c 06040000 		.4byte	.LASF72
+ 1694 0470 05       		.byte	0x5
+ 1695 0471 96       		.byte	0x96
+ 1696 0472 A0030000 		.4byte	0x3a0
+ 1697 0476 F1       		.byte	0xf1
+ 1698 0477 07       		.uleb128 0x7
+ 1699 0478 C7020000 		.4byte	.LASF73
+ 1700 047c 05       		.byte	0x5
+ 1701 047d 97       		.byte	0x97
+ 1702 047e 81000000 		.4byte	0x81
+ 1703 0482 FF       		.byte	0xff
+ 1704 0483 00       		.byte	0
+ 1705 0484 09       		.uleb128 0x9
+ 1706 0485 81000000 		.4byte	0x81
+ 1707 0489 A0040000 		.4byte	0x4a0
+ 1708 048d 0A       		.uleb128 0xa
+ 1709 048e C1000000 		.4byte	0xc1
+ 1710 0492 03       		.byte	0x3
+ 1711 0493 0A       		.uleb128 0xa
+ 1712 0494 C1000000 		.4byte	0xc1
+ 1713 0498 02       		.byte	0x2
+ 1714 0499 0A       		.uleb128 0xa
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 36
+
+
+ 1715 049a C1000000 		.4byte	0xc1
+ 1716 049e 0E       		.byte	0xe
+ 1717 049f 00       		.byte	0
+ 1718 04a0 09       		.uleb128 0x9
+ 1719 04a1 81000000 		.4byte	0x81
+ 1720 04a5 B6040000 		.4byte	0x4b6
+ 1721 04a9 0A       		.uleb128 0xa
+ 1722 04aa C1000000 		.4byte	0xc1
+ 1723 04ae 03       		.byte	0x3
+ 1724 04af 0A       		.uleb128 0xa
+ 1725 04b0 C1000000 		.4byte	0xc1
+ 1726 04b4 07       		.byte	0x7
+ 1727 04b5 00       		.byte	0
+ 1728 04b6 06       		.uleb128 0x6
+ 1729 04b7 E6040000 		.4byte	.LASF74
+ 1730 04bb 0002     		.2byte	0x200
+ 1731 04bd 05       		.byte	0x5
+ 1732 04be 9A       		.byte	0x9a
+ 1733 04bf D9040000 		.4byte	0x4d9
+ 1734 04c3 0B       		.uleb128 0xb
+ 1735 04c4 6100     		.ascii	"a\000"
+ 1736 04c6 05       		.byte	0x5
+ 1737 04c7 9B       		.byte	0x9b
+ 1738 04c8 22040000 		.4byte	0x422
+ 1739 04cc 00       		.byte	0
+ 1740 04cd 0C       		.uleb128 0xc
+ 1741 04ce 6200     		.ascii	"b\000"
+ 1742 04d0 05       		.byte	0x5
+ 1743 04d1 9C       		.byte	0x9c
+ 1744 04d2 22040000 		.4byte	0x422
+ 1745 04d6 0001     		.2byte	0x100
+ 1746 04d8 00       		.byte	0
+ 1747 04d9 02       		.uleb128 0x2
+ 1748 04da 08       		.byte	0x8
+ 1749 04db 04       		.byte	0x4
+ 1750 04dc D3020000 		.4byte	.LASF75
+ 1751 04e0 0D       		.uleb128 0xd
+ 1752 04e1 CE000000 		.4byte	.LASF77
+ 1753 04e5 01       		.byte	0x1
+ 1754 04e6 39       		.byte	0x39
+ 1755 04e7 00000000 		.4byte	.LFB56
+ 1756 04eb 78040000 		.4byte	.LFE56-.LFB56
+ 1757 04ef 01       		.uleb128 0x1
+ 1758 04f0 9C       		.byte	0x9c
+ 1759 04f1 1C050000 		.4byte	0x51c
+ 1760 04f5 0E       		.uleb128 0xe
+ 1761 04f6 05050000 		.4byte	.LASF76
+ 1762 04fa 01       		.byte	0x1
+ 1763 04fb 3A       		.byte	0x3a
+ 1764 04fc 1C050000 		.4byte	0x51c
+ 1765 0500 02       		.uleb128 0x2
+ 1766 0501 91       		.byte	0x91
+ 1767 0502 58       		.sleb128 -40
+ 1768 0503 0F       		.uleb128 0xf
+ 1769 0504 7800     		.ascii	"x\000"
+ 1770 0506 01       		.byte	0x1
+ 1771 0507 3A       		.byte	0x3a
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 37
+
+
+ 1772 0508 81000000 		.4byte	0x81
+ 1773 050c 02       		.uleb128 0x2
+ 1774 050d 91       		.byte	0x91
+ 1775 050e 6F       		.sleb128 -17
+ 1776 050f 0F       		.uleb128 0xf
+ 1777 0510 7900     		.ascii	"y\000"
+ 1778 0512 01       		.byte	0x1
+ 1779 0513 3B       		.byte	0x3b
+ 1780 0514 68000000 		.4byte	0x68
+ 1781 0518 02       		.uleb128 0x2
+ 1782 0519 91       		.byte	0x91
+ 1783 051a 68       		.sleb128 -24
+ 1784 051b 00       		.byte	0
+ 1785 051c 09       		.uleb128 0x9
+ 1786 051d 81000000 		.4byte	0x81
+ 1787 0521 2C050000 		.4byte	0x52c
+ 1788 0525 0A       		.uleb128 0xa
+ 1789 0526 C1000000 		.4byte	0xc1
+ 1790 052a 0F       		.byte	0xf
+ 1791 052b 00       		.byte	0
+ 1792 052c 0D       		.uleb128 0xd
+ 1793 052d 6C000000 		.4byte	.LASF78
+ 1794 0531 01       		.byte	0x1
+ 1795 0532 A1       		.byte	0xa1
+ 1796 0533 00000000 		.4byte	.LFB57
+ 1797 0537 F8010000 		.4byte	.LFE57-.LFB57
+ 1798 053b 01       		.uleb128 0x1
+ 1799 053c 9C       		.byte	0x9c
+ 1800 053d 68050000 		.4byte	0x568
+ 1801 0541 0E       		.uleb128 0xe
+ 1802 0542 05050000 		.4byte	.LASF76
+ 1803 0546 01       		.byte	0x1
+ 1804 0547 A2       		.byte	0xa2
+ 1805 0548 1C050000 		.4byte	0x51c
+ 1806 054c 02       		.uleb128 0x2
+ 1807 054d 91       		.byte	0x91
+ 1808 054e 64       		.sleb128 -28
+ 1809 054f 0F       		.uleb128 0xf
+ 1810 0550 7800     		.ascii	"x\000"
+ 1811 0552 01       		.byte	0x1
+ 1812 0553 A2       		.byte	0xa2
+ 1813 0554 81000000 		.4byte	0x81
+ 1814 0558 02       		.uleb128 0x2
+ 1815 0559 91       		.byte	0x91
+ 1816 055a 77       		.sleb128 -9
+ 1817 055b 0F       		.uleb128 0xf
+ 1818 055c 7900     		.ascii	"y\000"
+ 1819 055e 01       		.byte	0x1
+ 1820 055f A2       		.byte	0xa2
+ 1821 0560 81000000 		.4byte	0x81
+ 1822 0564 02       		.uleb128 0x2
+ 1823 0565 91       		.byte	0x91
+ 1824 0566 76       		.sleb128 -10
+ 1825 0567 00       		.byte	0
+ 1826 0568 0D       		.uleb128 0xd
+ 1827 0569 4D040000 		.4byte	.LASF79
+ 1828 056d 01       		.byte	0x1
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 38
+
+
+ 1829 056e E6       		.byte	0xe6
+ 1830 056f 00000000 		.4byte	.LFB58
+ 1831 0573 B8000000 		.4byte	.LFE58-.LFB58
+ 1832 0577 01       		.uleb128 0x1
+ 1833 0578 9C       		.byte	0x9c
+ 1834 0579 B0050000 		.4byte	0x5b0
+ 1835 057d 0E       		.uleb128 0xe
+ 1836 057e 05050000 		.4byte	.LASF76
+ 1837 0582 01       		.byte	0x1
+ 1838 0583 E7       		.byte	0xe7
+ 1839 0584 1C050000 		.4byte	0x51c
+ 1840 0588 02       		.uleb128 0x2
+ 1841 0589 91       		.byte	0x91
+ 1842 058a 64       		.sleb128 -28
+ 1843 058b 0F       		.uleb128 0xf
+ 1844 058c 7800     		.ascii	"x\000"
+ 1845 058e 01       		.byte	0x1
+ 1846 058f E7       		.byte	0xe7
+ 1847 0590 81000000 		.4byte	0x81
+ 1848 0594 02       		.uleb128 0x2
+ 1849 0595 91       		.byte	0x91
+ 1850 0596 77       		.sleb128 -9
+ 1851 0597 0F       		.uleb128 0xf
+ 1852 0598 7900     		.ascii	"y\000"
+ 1853 059a 01       		.byte	0x1
+ 1854 059b E7       		.byte	0xe7
+ 1855 059c 81000000 		.4byte	0x81
+ 1856 05a0 02       		.uleb128 0x2
+ 1857 05a1 91       		.byte	0x91
+ 1858 05a2 76       		.sleb128 -10
+ 1859 05a3 0F       		.uleb128 0xf
+ 1860 05a4 7A00     		.ascii	"z\000"
+ 1861 05a6 01       		.byte	0x1
+ 1862 05a7 E7       		.byte	0xe7
+ 1863 05a8 81000000 		.4byte	0x81
+ 1864 05ac 02       		.uleb128 0x2
+ 1865 05ad 91       		.byte	0x91
+ 1866 05ae 75       		.sleb128 -11
+ 1867 05af 00       		.byte	0
+ 1868 05b0 10       		.uleb128 0x10
+ 1869 05b1 F9050000 		.4byte	.LASF80
+ 1870 05b5 06       		.byte	0x6
+ 1871 05b6 1606     		.2byte	0x616
+ 1872 05b8 BC050000 		.4byte	0x5bc
+ 1873 05bc 05       		.uleb128 0x5
+ 1874 05bd 76000000 		.4byte	0x76
+ 1875 05c1 11       		.uleb128 0x11
+ 1876 05c2 BC050000 		.4byte	.LASF81
+ 1877 05c6 05       		.byte	0x5
+ 1878 05c7 2C       		.byte	0x2c
+ 1879 05c8 D2050000 		.4byte	0x5d2
+ 1880 05cc 05       		.uleb128 0x5
+ 1881 05cd 03       		.byte	0x3
+ 1882 05ce 00000000 		.4byte	countAnimation1
+ 1883 05d2 05       		.uleb128 0x5
+ 1884 05d3 A5000000 		.4byte	0xa5
+ 1885 05d7 11       		.uleb128 0x11
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 39
+
+
+ 1886 05d8 CC050000 		.4byte	.LASF82
+ 1887 05dc 05       		.byte	0x5
+ 1888 05dd 2D       		.byte	0x2d
+ 1889 05de D2050000 		.4byte	0x5d2
+ 1890 05e2 05       		.uleb128 0x5
+ 1891 05e3 03       		.byte	0x3
+ 1892 05e4 00000000 		.4byte	countAnimation2
+ 1893 05e8 11       		.uleb128 0x11
+ 1894 05e9 AE000000 		.4byte	.LASF83
+ 1895 05ed 05       		.byte	0x5
+ 1896 05ee 2E       		.byte	0x2e
+ 1897 05ef D2050000 		.4byte	0x5d2
+ 1898 05f3 05       		.uleb128 0x5
+ 1899 05f4 03       		.byte	0x3
+ 1900 05f5 00000000 		.4byte	countBeagleTX
+ 1901 05f9 11       		.uleb128 0x11
+ 1902 05fa 3F040000 		.4byte	.LASF84
+ 1903 05fe 05       		.byte	0x5
+ 1904 05ff 2F       		.byte	0x2f
+ 1905 0600 BC000000 		.4byte	0xbc
+ 1906 0604 05       		.uleb128 0x5
+ 1907 0605 03       		.byte	0x3
+ 1908 0606 00000000 		.4byte	flowLCD1
+ 1909 060a 11       		.uleb128 0x11
+ 1910 060b CE040000 		.4byte	.LASF85
+ 1911 060f 05       		.byte	0x5
+ 1912 0610 30       		.byte	0x30
+ 1913 0611 BC000000 		.4byte	0xbc
+ 1914 0615 05       		.uleb128 0x5
+ 1915 0616 03       		.byte	0x3
+ 1916 0617 00000000 		.4byte	flowLCD2
+ 1917 061b 11       		.uleb128 0x11
+ 1918 061c 88020000 		.4byte	.LASF86
+ 1919 0620 05       		.byte	0x5
+ 1920 0621 31       		.byte	0x31
+ 1921 0622 B7000000 		.4byte	0xb7
+ 1922 0626 05       		.uleb128 0x5
+ 1923 0627 03       		.byte	0x3
+ 1924 0628 00000000 		.4byte	digits
+ 1925 062c 09       		.uleb128 0x9
+ 1926 062d 81000000 		.4byte	0x81
+ 1927 0631 3C060000 		.4byte	0x63c
+ 1928 0635 0A       		.uleb128 0xa
+ 1929 0636 C1000000 		.4byte	0xc1
+ 1930 063a 0B       		.byte	0xb
+ 1931 063b 00       		.byte	0
+ 1932 063c 11       		.uleb128 0x11
+ 1933 063d A5000000 		.4byte	.LASF87
+ 1934 0641 05       		.byte	0x5
+ 1935 0642 32       		.byte	0x32
+ 1936 0643 4D060000 		.4byte	0x64d
+ 1937 0647 05       		.uleb128 0x5
+ 1938 0648 03       		.byte	0x3
+ 1939 0649 00000000 		.4byte	ipAdress
+ 1940 064d 05       		.uleb128 0x5
+ 1941 064e 2C060000 		.4byte	0x62c
+ 1942 0652 11       		.uleb128 0x11
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 40
+
+
+ 1943 0653 85030000 		.4byte	.LASF88
+ 1944 0657 05       		.byte	0x5
+ 1945 0658 33       		.byte	0x33
+ 1946 0659 B7000000 		.4byte	0xb7
+ 1947 065d 05       		.uleb128 0x5
+ 1948 065e 03       		.byte	0x3
+ 1949 065f 00000000 		.4byte	numberKeys1
+ 1950 0663 11       		.uleb128 0x11
+ 1951 0664 57000000 		.4byte	.LASF89
+ 1952 0668 05       		.byte	0x5
+ 1953 0669 34       		.byte	0x34
+ 1954 066a B7000000 		.4byte	0xb7
+ 1955 066e 05       		.uleb128 0x5
+ 1956 066f 03       		.byte	0x3
+ 1957 0670 00000000 		.4byte	numberKeys2
+ 1958 0674 11       		.uleb128 0x11
+ 1959 0675 5F010000 		.4byte	.LASF90
+ 1960 0679 05       		.byte	0x5
+ 1961 067a 35       		.byte	0x35
+ 1962 067b B7000000 		.4byte	0xb7
+ 1963 067f 05       		.uleb128 0x5
+ 1964 0680 03       		.byte	0x3
+ 1965 0681 00000000 		.4byte	flagPoint1
+ 1966 0685 11       		.uleb128 0x11
+ 1967 0686 6A010000 		.4byte	.LASF91
+ 1968 068a 05       		.byte	0x5
+ 1969 068b 36       		.byte	0x36
+ 1970 068c B7000000 		.4byte	0xb7
+ 1971 0690 05       		.uleb128 0x5
+ 1972 0691 03       		.byte	0x3
+ 1973 0692 00000000 		.4byte	flagPoint2
+ 1974 0696 09       		.uleb128 0x9
+ 1975 0697 81000000 		.4byte	0x81
+ 1976 069b AC060000 		.4byte	0x6ac
+ 1977 069f 0A       		.uleb128 0xa
+ 1978 06a0 C1000000 		.4byte	0xc1
+ 1979 06a4 77       		.byte	0x77
+ 1980 06a5 0A       		.uleb128 0xa
+ 1981 06a6 C1000000 		.4byte	0xc1
+ 1982 06aa 07       		.byte	0x7
+ 1983 06ab 00       		.byte	0
+ 1984 06ac 11       		.uleb128 0x11
+ 1985 06ad 38020000 		.4byte	.LASF92
+ 1986 06b1 05       		.byte	0x5
+ 1987 06b2 37       		.byte	0x37
+ 1988 06b3 BD060000 		.4byte	0x6bd
+ 1989 06b7 05       		.uleb128 0x5
+ 1990 06b8 03       		.byte	0x3
+ 1991 06b9 00000000 		.4byte	button
+ 1992 06bd 05       		.uleb128 0x5
+ 1993 06be 96060000 		.4byte	0x696
+ 1994 06c2 11       		.uleb128 0x11
+ 1995 06c3 AE050000 		.4byte	.LASF93
+ 1996 06c7 05       		.byte	0x5
+ 1997 06c8 38       		.byte	0x38
+ 1998 06c9 B7000000 		.4byte	0xb7
+ 1999 06cd 05       		.uleb128 0x5
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 41
+
+
+ 2000 06ce 03       		.byte	0x3
+ 2001 06cf 00000000 		.4byte	productNumber
+ 2002 06d3 11       		.uleb128 0x11
+ 2003 06d4 59030000 		.4byte	.LASF94
+ 2004 06d8 05       		.byte	0x5
+ 2005 06d9 39       		.byte	0x39
+ 2006 06da FC030000 		.4byte	0x3fc
+ 2007 06de 05       		.uleb128 0x5
+ 2008 06df 03       		.byte	0x3
+ 2009 06e0 00000000 		.4byte	presetFast
+ 2010 06e4 11       		.uleb128 0x11
+ 2011 06e5 3F020000 		.4byte	.LASF95
+ 2012 06e9 05       		.byte	0x5
+ 2013 06ea 3A       		.byte	0x3a
+ 2014 06eb BC000000 		.4byte	0xbc
+ 2015 06ef 05       		.uleb128 0x5
+ 2016 06f0 03       		.byte	0x3
+ 2017 06f1 00000000 		.4byte	delayPicture1
+ 2018 06f5 11       		.uleb128 0x11
+ 2019 06f6 4D020000 		.4byte	.LASF96
+ 2020 06fa 05       		.byte	0x5
+ 2021 06fb 3B       		.byte	0x3b
+ 2022 06fc BC000000 		.4byte	0xbc
+ 2023 0700 05       		.uleb128 0x5
+ 2024 0701 03       		.byte	0x3
+ 2025 0702 00000000 		.4byte	delayPicture2
+ 2026 0706 11       		.uleb128 0x11
+ 2027 0707 E5030000 		.4byte	.LASF97
+ 2028 070b 05       		.byte	0x5
+ 2029 070c 3C       		.byte	0x3c
+ 2030 070d B7000000 		.4byte	0xb7
+ 2031 0711 05       		.uleb128 0x5
+ 2032 0712 03       		.byte	0x3
+ 2033 0713 00000000 		.4byte	ppux10
+ 2034 0717 11       		.uleb128 0x11
+ 2035 0718 52010000 		.4byte	.LASF98
+ 2036 071c 05       		.byte	0x5
+ 2037 071d 3D       		.byte	0x3d
+ 2038 071e B7000000 		.4byte	0xb7
+ 2039 0722 05       		.uleb128 0x5
+ 2040 0723 03       		.byte	0x3
+ 2041 0724 00000000 		.4byte	decimalMoney
+ 2042 0728 11       		.uleb128 0x11
+ 2043 0729 AB030000 		.4byte	.LASF99
+ 2044 072d 05       		.byte	0x5
+ 2045 072e 3E       		.byte	0x3e
+ 2046 072f B7000000 		.4byte	0xb7
+ 2047 0733 05       		.uleb128 0x5
+ 2048 0734 03       		.byte	0x3
+ 2049 0735 00000000 		.4byte	decimalVolume
+ 2050 0739 11       		.uleb128 0x11
+ 2051 073a 9B040000 		.4byte	.LASF100
+ 2052 073e 05       		.byte	0x5
+ 2053 073f 3F       		.byte	0x3f
+ 2054 0740 4A070000 		.4byte	0x74a
+ 2055 0744 05       		.uleb128 0x5
+ 2056 0745 03       		.byte	0x3
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 42
+
+
+ 2057 0746 00000000 		.4byte	symbols
+ 2058 074a 05       		.uleb128 0x5
+ 2059 074b 5A030000 		.4byte	0x35a
+ 2060 074f 09       		.uleb128 0x9
+ 2061 0750 81000000 		.4byte	0x81
+ 2062 0754 5F070000 		.4byte	0x75f
+ 2063 0758 0A       		.uleb128 0xa
+ 2064 0759 C1000000 		.4byte	0xc1
+ 2065 075d 02       		.byte	0x2
+ 2066 075e 00       		.byte	0
+ 2067 075f 11       		.uleb128 0x11
+ 2068 0760 48040000 		.4byte	.LASF101
+ 2069 0764 05       		.byte	0x5
+ 2070 0765 40       		.byte	0x40
+ 2071 0766 70070000 		.4byte	0x770
+ 2072 076a 05       		.uleb128 0x5
+ 2073 076b 03       		.byte	0x3
+ 2074 076c 00000000 		.4byte	time
+ 2075 0770 05       		.uleb128 0x5
+ 2076 0771 4F070000 		.4byte	0x74f
+ 2077 0775 11       		.uleb128 0x11
+ 2078 0776 AC040000 		.4byte	.LASF102
+ 2079 077a 05       		.byte	0x5
+ 2080 077b 41       		.byte	0x41
+ 2081 077c 86070000 		.4byte	0x786
+ 2082 0780 05       		.uleb128 0x5
+ 2083 0781 03       		.byte	0x3
+ 2084 0782 00000000 		.4byte	date
+ 2085 0786 05       		.uleb128 0x5
+ 2086 0787 4F070000 		.4byte	0x74f
+ 2087 078b 11       		.uleb128 0x11
+ 2088 078c 91030000 		.4byte	.LASF103
+ 2089 0790 05       		.byte	0x5
+ 2090 0791 42       		.byte	0x42
+ 2091 0792 9C070000 		.4byte	0x79c
+ 2092 0796 05       		.uleb128 0x5
+ 2093 0797 03       		.byte	0x3
+ 2094 0798 00000000 		.4byte	screen
+ 2095 079c 05       		.uleb128 0x5
+ 2096 079d 5A030000 		.4byte	0x35a
+ 2097 07a1 11       		.uleb128 0x11
+ 2098 07a2 50050000 		.4byte	.LASF104
+ 2099 07a6 05       		.byte	0x5
+ 2100 07a7 43       		.byte	0x43
+ 2101 07a8 B2070000 		.4byte	0x7b2
+ 2102 07ac 05       		.uleb128 0x5
+ 2103 07ad 03       		.byte	0x3
+ 2104 07ae 00000000 		.4byte	residue
+ 2105 07b2 05       		.uleb128 0x5
+ 2106 07b3 A0030000 		.4byte	0x3a0
+ 2107 07b7 09       		.uleb128 0x9
+ 2108 07b8 81000000 		.4byte	0x81
+ 2109 07bc C7070000 		.4byte	0x7c7
+ 2110 07c0 0A       		.uleb128 0xa
+ 2111 07c1 C1000000 		.4byte	0xc1
+ 2112 07c5 1D       		.byte	0x1d
+ 2113 07c6 00       		.byte	0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 43
+
+
+ 2114 07c7 11       		.uleb128 0x11
+ 2115 07c8 13060000 		.4byte	.LASF105
+ 2116 07cc 05       		.byte	0x5
+ 2117 07cd 44       		.byte	0x44
+ 2118 07ce B7070000 		.4byte	0x7b7
+ 2119 07d2 05       		.uleb128 0x5
+ 2120 07d3 03       		.byte	0x3
+ 2121 07d4 00000000 		.4byte	temporal
+ 2122 07d8 11       		.uleb128 0x11
+ 2123 07d9 29040000 		.4byte	.LASF106
+ 2124 07dd 05       		.byte	0x5
+ 2125 07de 45       		.byte	0x45
+ 2126 07df B7000000 		.4byte	0xb7
+ 2127 07e3 05       		.uleb128 0x5
+ 2128 07e4 03       		.byte	0x3
+ 2129 07e5 00000000 		.4byte	turn
+ 2130 07e9 11       		.uleb128 0x11
+ 2131 07ea 2A010000 		.4byte	.LASF107
+ 2132 07ee 05       		.byte	0x5
+ 2133 07ef 46       		.byte	0x46
+ 2134 07f0 FA070000 		.4byte	0x7fa
+ 2135 07f4 05       		.uleb128 0x5
+ 2136 07f5 03       		.byte	0x3
+ 2137 07f6 00000000 		.4byte	idSeller
+ 2138 07fa 05       		.uleb128 0x5
+ 2139 07fb 2A030000 		.4byte	0x32a
+ 2140 07ff 11       		.uleb128 0x11
+ 2141 0800 06060000 		.4byte	.LASF108
+ 2142 0804 05       		.byte	0x5
+ 2143 0805 47       		.byte	0x47
+ 2144 0806 B7000000 		.4byte	0xb7
+ 2145 080a 05       		.uleb128 0x5
+ 2146 080b 03       		.byte	0x3
+ 2147 080c 00000000 		.4byte	typeIdSeller
+ 2148 0810 09       		.uleb128 0x9
+ 2149 0811 81000000 		.4byte	0x81
+ 2150 0815 20080000 		.4byte	0x820
+ 2151 0819 0A       		.uleb128 0xa
+ 2152 081a C1000000 		.4byte	0xc1
+ 2153 081e 07       		.byte	0x7
+ 2154 081f 00       		.byte	0
+ 2155 0820 11       		.uleb128 0x11
+ 2156 0821 83010000 		.4byte	.LASF109
+ 2157 0825 05       		.byte	0x5
+ 2158 0826 48       		.byte	0x48
+ 2159 0827 31080000 		.4byte	0x831
+ 2160 082b 05       		.uleb128 0x5
+ 2161 082c 03       		.byte	0x3
+ 2162 082d 00000000 		.4byte	passwordSeller
+ 2163 0831 05       		.uleb128 0x5
+ 2164 0832 10080000 		.4byte	0x810
+ 2165 0836 11       		.uleb128 0x11
+ 2166 0837 1C060000 		.4byte	.LASF110
+ 2167 083b 05       		.byte	0x5
+ 2168 083c 49       		.byte	0x49
+ 2169 083d B7000000 		.4byte	0xb7
+ 2170 0841 05       		.uleb128 0x5
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 44
+
+
+ 2171 0842 03       		.byte	0x3
+ 2172 0843 00000000 		.4byte	flagResetMux
+ 2173 0847 11       		.uleb128 0x11
+ 2174 0848 3A050000 		.4byte	.LASF111
+ 2175 084c 05       		.byte	0x5
+ 2176 084d 85       		.byte	0x85
+ 2177 084e C8000000 		.4byte	0xc8
+ 2178 0852 05       		.uleb128 0x5
+ 2179 0853 03       		.byte	0x3
+ 2180 0854 00000000 		.4byte	bufferLCD1
+ 2181 0858 11       		.uleb128 0x11
+ 2182 0859 45050000 		.4byte	.LASF112
+ 2183 085d 05       		.byte	0x5
+ 2184 085e 86       		.byte	0x86
+ 2185 085f C8000000 		.4byte	0xc8
+ 2186 0863 05       		.uleb128 0x5
+ 2187 0864 03       		.byte	0x3
+ 2188 0865 00000000 		.4byte	bufferLCD2
+ 2189 0869 11       		.uleb128 0x11
+ 2190 086a F4050000 		.4byte	.LASF113
+ 2191 086e 05       		.byte	0x5
+ 2192 086f 9F       		.byte	0x9f
+ 2193 0870 B6040000 		.4byte	0x4b6
+ 2194 0874 05       		.uleb128 0x5
+ 2195 0875 03       		.byte	0x3
+ 2196 0876 00000000 		.4byte	side
+ 2197 087a 00       		.byte	0
+ 2198              		.section	.debug_abbrev,"",%progbits
+ 2199              	.Ldebug_abbrev0:
+ 2200 0000 01       		.uleb128 0x1
+ 2201 0001 11       		.uleb128 0x11
+ 2202 0002 01       		.byte	0x1
+ 2203 0003 25       		.uleb128 0x25
+ 2204 0004 0E       		.uleb128 0xe
+ 2205 0005 13       		.uleb128 0x13
+ 2206 0006 0B       		.uleb128 0xb
+ 2207 0007 03       		.uleb128 0x3
+ 2208 0008 0E       		.uleb128 0xe
+ 2209 0009 1B       		.uleb128 0x1b
+ 2210 000a 0E       		.uleb128 0xe
+ 2211 000b 55       		.uleb128 0x55
+ 2212 000c 17       		.uleb128 0x17
+ 2213 000d 11       		.uleb128 0x11
+ 2214 000e 01       		.uleb128 0x1
+ 2215 000f 10       		.uleb128 0x10
+ 2216 0010 17       		.uleb128 0x17
+ 2217 0011 00       		.byte	0
+ 2218 0012 00       		.byte	0
+ 2219 0013 02       		.uleb128 0x2
+ 2220 0014 24       		.uleb128 0x24
+ 2221 0015 00       		.byte	0
+ 2222 0016 0B       		.uleb128 0xb
+ 2223 0017 0B       		.uleb128 0xb
+ 2224 0018 3E       		.uleb128 0x3e
+ 2225 0019 0B       		.uleb128 0xb
+ 2226 001a 03       		.uleb128 0x3
+ 2227 001b 0E       		.uleb128 0xe
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 45
+
+
+ 2228 001c 00       		.byte	0
+ 2229 001d 00       		.byte	0
+ 2230 001e 03       		.uleb128 0x3
+ 2231 001f 16       		.uleb128 0x16
+ 2232 0020 00       		.byte	0
+ 2233 0021 03       		.uleb128 0x3
+ 2234 0022 0E       		.uleb128 0xe
+ 2235 0023 3A       		.uleb128 0x3a
+ 2236 0024 0B       		.uleb128 0xb
+ 2237 0025 3B       		.uleb128 0x3b
+ 2238 0026 0B       		.uleb128 0xb
+ 2239 0027 49       		.uleb128 0x49
+ 2240 0028 13       		.uleb128 0x13
+ 2241 0029 00       		.byte	0
+ 2242 002a 00       		.byte	0
+ 2243 002b 04       		.uleb128 0x4
+ 2244 002c 24       		.uleb128 0x24
+ 2245 002d 00       		.byte	0
+ 2246 002e 0B       		.uleb128 0xb
+ 2247 002f 0B       		.uleb128 0xb
+ 2248 0030 3E       		.uleb128 0x3e
+ 2249 0031 0B       		.uleb128 0xb
+ 2250 0032 03       		.uleb128 0x3
+ 2251 0033 08       		.uleb128 0x8
+ 2252 0034 00       		.byte	0
+ 2253 0035 00       		.byte	0
+ 2254 0036 05       		.uleb128 0x5
+ 2255 0037 35       		.uleb128 0x35
+ 2256 0038 00       		.byte	0
+ 2257 0039 49       		.uleb128 0x49
+ 2258 003a 13       		.uleb128 0x13
+ 2259 003b 00       		.byte	0
+ 2260 003c 00       		.byte	0
+ 2261 003d 06       		.uleb128 0x6
+ 2262 003e 13       		.uleb128 0x13
+ 2263 003f 01       		.byte	0x1
+ 2264 0040 03       		.uleb128 0x3
+ 2265 0041 0E       		.uleb128 0xe
+ 2266 0042 0B       		.uleb128 0xb
+ 2267 0043 05       		.uleb128 0x5
+ 2268 0044 3A       		.uleb128 0x3a
+ 2269 0045 0B       		.uleb128 0xb
+ 2270 0046 3B       		.uleb128 0x3b
+ 2271 0047 0B       		.uleb128 0xb
+ 2272 0048 01       		.uleb128 0x1
+ 2273 0049 13       		.uleb128 0x13
+ 2274 004a 00       		.byte	0
+ 2275 004b 00       		.byte	0
+ 2276 004c 07       		.uleb128 0x7
+ 2277 004d 0D       		.uleb128 0xd
+ 2278 004e 00       		.byte	0
+ 2279 004f 03       		.uleb128 0x3
+ 2280 0050 0E       		.uleb128 0xe
+ 2281 0051 3A       		.uleb128 0x3a
+ 2282 0052 0B       		.uleb128 0xb
+ 2283 0053 3B       		.uleb128 0x3b
+ 2284 0054 0B       		.uleb128 0xb
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 46
+
+
+ 2285 0055 49       		.uleb128 0x49
+ 2286 0056 13       		.uleb128 0x13
+ 2287 0057 38       		.uleb128 0x38
+ 2288 0058 0B       		.uleb128 0xb
+ 2289 0059 00       		.byte	0
+ 2290 005a 00       		.byte	0
+ 2291 005b 08       		.uleb128 0x8
+ 2292 005c 0D       		.uleb128 0xd
+ 2293 005d 00       		.byte	0
+ 2294 005e 03       		.uleb128 0x3
+ 2295 005f 0E       		.uleb128 0xe
+ 2296 0060 3A       		.uleb128 0x3a
+ 2297 0061 0B       		.uleb128 0xb
+ 2298 0062 3B       		.uleb128 0x3b
+ 2299 0063 0B       		.uleb128 0xb
+ 2300 0064 49       		.uleb128 0x49
+ 2301 0065 13       		.uleb128 0x13
+ 2302 0066 38       		.uleb128 0x38
+ 2303 0067 05       		.uleb128 0x5
+ 2304 0068 00       		.byte	0
+ 2305 0069 00       		.byte	0
+ 2306 006a 09       		.uleb128 0x9
+ 2307 006b 01       		.uleb128 0x1
+ 2308 006c 01       		.byte	0x1
+ 2309 006d 49       		.uleb128 0x49
+ 2310 006e 13       		.uleb128 0x13
+ 2311 006f 01       		.uleb128 0x1
+ 2312 0070 13       		.uleb128 0x13
+ 2313 0071 00       		.byte	0
+ 2314 0072 00       		.byte	0
+ 2315 0073 0A       		.uleb128 0xa
+ 2316 0074 21       		.uleb128 0x21
+ 2317 0075 00       		.byte	0
+ 2318 0076 49       		.uleb128 0x49
+ 2319 0077 13       		.uleb128 0x13
+ 2320 0078 2F       		.uleb128 0x2f
+ 2321 0079 0B       		.uleb128 0xb
+ 2322 007a 00       		.byte	0
+ 2323 007b 00       		.byte	0
+ 2324 007c 0B       		.uleb128 0xb
+ 2325 007d 0D       		.uleb128 0xd
+ 2326 007e 00       		.byte	0
+ 2327 007f 03       		.uleb128 0x3
+ 2328 0080 08       		.uleb128 0x8
+ 2329 0081 3A       		.uleb128 0x3a
+ 2330 0082 0B       		.uleb128 0xb
+ 2331 0083 3B       		.uleb128 0x3b
+ 2332 0084 0B       		.uleb128 0xb
+ 2333 0085 49       		.uleb128 0x49
+ 2334 0086 13       		.uleb128 0x13
+ 2335 0087 38       		.uleb128 0x38
+ 2336 0088 0B       		.uleb128 0xb
+ 2337 0089 00       		.byte	0
+ 2338 008a 00       		.byte	0
+ 2339 008b 0C       		.uleb128 0xc
+ 2340 008c 0D       		.uleb128 0xd
+ 2341 008d 00       		.byte	0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 47
+
+
+ 2342 008e 03       		.uleb128 0x3
+ 2343 008f 08       		.uleb128 0x8
+ 2344 0090 3A       		.uleb128 0x3a
+ 2345 0091 0B       		.uleb128 0xb
+ 2346 0092 3B       		.uleb128 0x3b
+ 2347 0093 0B       		.uleb128 0xb
+ 2348 0094 49       		.uleb128 0x49
+ 2349 0095 13       		.uleb128 0x13
+ 2350 0096 38       		.uleb128 0x38
+ 2351 0097 05       		.uleb128 0x5
+ 2352 0098 00       		.byte	0
+ 2353 0099 00       		.byte	0
+ 2354 009a 0D       		.uleb128 0xd
+ 2355 009b 2E       		.uleb128 0x2e
+ 2356 009c 01       		.byte	0x1
+ 2357 009d 3F       		.uleb128 0x3f
+ 2358 009e 19       		.uleb128 0x19
+ 2359 009f 03       		.uleb128 0x3
+ 2360 00a0 0E       		.uleb128 0xe
+ 2361 00a1 3A       		.uleb128 0x3a
+ 2362 00a2 0B       		.uleb128 0xb
+ 2363 00a3 3B       		.uleb128 0x3b
+ 2364 00a4 0B       		.uleb128 0xb
+ 2365 00a5 11       		.uleb128 0x11
+ 2366 00a6 01       		.uleb128 0x1
+ 2367 00a7 12       		.uleb128 0x12
+ 2368 00a8 06       		.uleb128 0x6
+ 2369 00a9 40       		.uleb128 0x40
+ 2370 00aa 18       		.uleb128 0x18
+ 2371 00ab 9642     		.uleb128 0x2116
+ 2372 00ad 19       		.uleb128 0x19
+ 2373 00ae 01       		.uleb128 0x1
+ 2374 00af 13       		.uleb128 0x13
+ 2375 00b0 00       		.byte	0
+ 2376 00b1 00       		.byte	0
+ 2377 00b2 0E       		.uleb128 0xe
+ 2378 00b3 34       		.uleb128 0x34
+ 2379 00b4 00       		.byte	0
+ 2380 00b5 03       		.uleb128 0x3
+ 2381 00b6 0E       		.uleb128 0xe
+ 2382 00b7 3A       		.uleb128 0x3a
+ 2383 00b8 0B       		.uleb128 0xb
+ 2384 00b9 3B       		.uleb128 0x3b
+ 2385 00ba 0B       		.uleb128 0xb
+ 2386 00bb 49       		.uleb128 0x49
+ 2387 00bc 13       		.uleb128 0x13
+ 2388 00bd 02       		.uleb128 0x2
+ 2389 00be 18       		.uleb128 0x18
+ 2390 00bf 00       		.byte	0
+ 2391 00c0 00       		.byte	0
+ 2392 00c1 0F       		.uleb128 0xf
+ 2393 00c2 34       		.uleb128 0x34
+ 2394 00c3 00       		.byte	0
+ 2395 00c4 03       		.uleb128 0x3
+ 2396 00c5 08       		.uleb128 0x8
+ 2397 00c6 3A       		.uleb128 0x3a
+ 2398 00c7 0B       		.uleb128 0xb
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 48
+
+
+ 2399 00c8 3B       		.uleb128 0x3b
+ 2400 00c9 0B       		.uleb128 0xb
+ 2401 00ca 49       		.uleb128 0x49
+ 2402 00cb 13       		.uleb128 0x13
+ 2403 00cc 02       		.uleb128 0x2
+ 2404 00cd 18       		.uleb128 0x18
+ 2405 00ce 00       		.byte	0
+ 2406 00cf 00       		.byte	0
+ 2407 00d0 10       		.uleb128 0x10
+ 2408 00d1 34       		.uleb128 0x34
+ 2409 00d2 00       		.byte	0
+ 2410 00d3 03       		.uleb128 0x3
+ 2411 00d4 0E       		.uleb128 0xe
+ 2412 00d5 3A       		.uleb128 0x3a
+ 2413 00d6 0B       		.uleb128 0xb
+ 2414 00d7 3B       		.uleb128 0x3b
+ 2415 00d8 05       		.uleb128 0x5
+ 2416 00d9 49       		.uleb128 0x49
+ 2417 00da 13       		.uleb128 0x13
+ 2418 00db 3F       		.uleb128 0x3f
+ 2419 00dc 19       		.uleb128 0x19
+ 2420 00dd 3C       		.uleb128 0x3c
+ 2421 00de 19       		.uleb128 0x19
+ 2422 00df 00       		.byte	0
+ 2423 00e0 00       		.byte	0
+ 2424 00e1 11       		.uleb128 0x11
+ 2425 00e2 34       		.uleb128 0x34
+ 2426 00e3 00       		.byte	0
+ 2427 00e4 03       		.uleb128 0x3
+ 2428 00e5 0E       		.uleb128 0xe
+ 2429 00e6 3A       		.uleb128 0x3a
+ 2430 00e7 0B       		.uleb128 0xb
+ 2431 00e8 3B       		.uleb128 0x3b
+ 2432 00e9 0B       		.uleb128 0xb
+ 2433 00ea 49       		.uleb128 0x49
+ 2434 00eb 13       		.uleb128 0x13
+ 2435 00ec 3F       		.uleb128 0x3f
+ 2436 00ed 19       		.uleb128 0x19
+ 2437 00ee 02       		.uleb128 0x2
+ 2438 00ef 18       		.uleb128 0x18
+ 2439 00f0 00       		.byte	0
+ 2440 00f1 00       		.byte	0
+ 2441 00f2 00       		.byte	0
+ 2442              		.section	.debug_aranges,"",%progbits
+ 2443 0000 2C000000 		.4byte	0x2c
+ 2444 0004 0200     		.2byte	0x2
+ 2445 0006 00000000 		.4byte	.Ldebug_info0
+ 2446 000a 04       		.byte	0x4
+ 2447 000b 00       		.byte	0
+ 2448 000c 0000     		.2byte	0
+ 2449 000e 0000     		.2byte	0
+ 2450 0010 00000000 		.4byte	.LFB56
+ 2451 0014 78040000 		.4byte	.LFE56-.LFB56
+ 2452 0018 00000000 		.4byte	.LFB57
+ 2453 001c F8010000 		.4byte	.LFE57-.LFB57
+ 2454 0020 00000000 		.4byte	.LFB58
+ 2455 0024 B8000000 		.4byte	.LFE58-.LFB58
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 49
+
+
+ 2456 0028 00000000 		.4byte	0
+ 2457 002c 00000000 		.4byte	0
+ 2458              		.section	.debug_ranges,"",%progbits
+ 2459              	.Ldebug_ranges0:
+ 2460 0000 00000000 		.4byte	.LFB56
+ 2461 0004 78040000 		.4byte	.LFE56
+ 2462 0008 00000000 		.4byte	.LFB57
+ 2463 000c F8010000 		.4byte	.LFE57
+ 2464 0010 00000000 		.4byte	.LFB58
+ 2465 0014 B8000000 		.4byte	.LFE58
+ 2466 0018 00000000 		.4byte	0
+ 2467 001c 00000000 		.4byte	0
+ 2468              		.section	.debug_line,"",%progbits
+ 2469              	.Ldebug_line0:
+ 2470 0000 48030000 		.section	.debug_str,"MS",%progbits,1
+ 2470      02005E01 
+ 2470      00000201 
+ 2470      FB0E0D00 
+ 2470      01010101 
+ 2471              	.LASF52:
+ 2472 0000 6D6F6E65 		.ascii	"moneyQuota\000"
+ 2472      7951756F 
+ 2472      746100
+ 2473              	.LASF32:
+ 2474 000b 70726F64 		.ascii	"productType\000"
+ 2474      75637454 
+ 2474      79706500 
+ 2475              	.LASF5:
+ 2476 0017 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2476      20756E73 
+ 2476      69676E65 
+ 2476      6420696E 
+ 2476      7400
+ 2477              	.LASF34:
+ 2478 0029 64617465 		.ascii	"dateLiftHandle\000"
+ 2478      4C696674 
+ 2478      48616E64 
+ 2478      6C6500
+ 2479              	.LASF19:
+ 2480 0038 69645365 		.ascii	"idSerial\000"
+ 2480      7269616C 
+ 2480      00
+ 2481              	.LASF2:
+ 2482 0041 73686F72 		.ascii	"short int\000"
+ 2482      7420696E 
+ 2482      7400
+ 2483              	.LASF44:
+ 2484 004b 6C696365 		.ascii	"licenceSale\000"
+ 2484      6E636553 
+ 2484      616C6500 
+ 2485              	.LASF89:
+ 2486 0057 6E756D62 		.ascii	"numberKeys2\000"
+ 2486      65724B65 
+ 2486      79733200 
+ 2487              	.LASF17:
+ 2488 0063 73697A65 		.ascii	"sizetype\000"
+ 2488      74797065 
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 50
+
+
+ 2488      00
+ 2489              	.LASF78:
+ 2490 006c 77726974 		.ascii	"write_ppus\000"
+ 2490      655F7070 
+ 2490      757300
+ 2491              	.LASF33:
+ 2492 0077 73746174 		.ascii	"stateMux\000"
+ 2492      654D7578 
+ 2492      00
+ 2493              	.LASF28:
+ 2494 0080 73616C65 		.ascii	"saleType\000"
+ 2494      54797065 
+ 2494      00
+ 2495              	.LASF64:
+ 2496 0089 7072696E 		.ascii	"printers\000"
+ 2496      74657273 
+ 2496      00
+ 2497              	.LASF23:
+ 2498 0092 73657269 		.ascii	"serialSelectedSale\000"
+ 2498      616C5365 
+ 2498      6C656374 
+ 2498      65645361 
+ 2498      6C6500
+ 2499              	.LASF87:
+ 2500 00a5 69704164 		.ascii	"ipAdress\000"
+ 2500      72657373 
+ 2500      00
+ 2501              	.LASF83:
+ 2502 00ae 636F756E 		.ascii	"countBeagleTX\000"
+ 2502      74426561 
+ 2502      676C6554 
+ 2502      5800
+ 2503              	.LASF54:
+ 2504 00bc 70707551 		.ascii	"ppuQuota\000"
+ 2504      756F7461 
+ 2504      00
+ 2505              	.LASF67:
+ 2506 00c5 706F7369 		.ascii	"position\000"
+ 2506      74696F6E 
+ 2506      00
+ 2507              	.LASF77:
+ 2508 00ce 77726974 		.ascii	"write_settings\000"
+ 2508      655F7365 
+ 2508      7474696E 
+ 2508      677300
+ 2509              	.LASF31:
+ 2510 00dd 70726573 		.ascii	"presetValue\000"
+ 2510      65745661 
+ 2510      6C756500 
+ 2511              	.LASF20:
+ 2512 00e9 77617954 		.ascii	"wayToPay\000"
+ 2512      6F506179 
+ 2512      00
+ 2513              	.LASF38:
+ 2514 00f2 746F7461 		.ascii	"totalMoneyPrevious\000"
+ 2514      6C4D6F6E 
+ 2514      65795072 
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 51
+
+
+ 2514      6576696F 
+ 2514      757300
+ 2515              	.LASF29:
+ 2516 0105 73616C65 		.ascii	"salePerform\000"
+ 2516      50657266 
+ 2516      6F726D00 
+ 2517              	.LASF45:
+ 2518 0111 6D696C65 		.ascii	"mileageSale\000"
+ 2518      61676553 
+ 2518      616C6500 
+ 2519              	.LASF18:
+ 2520 011d 69645479 		.ascii	"idType\000"
+ 2520      706500
+ 2521              	.LASF11:
+ 2522 0124 75696E74 		.ascii	"uint8\000"
+ 2522      3800
+ 2523              	.LASF107:
+ 2524 012a 69645365 		.ascii	"idSeller\000"
+ 2524      6C6C6572 
+ 2524      00
+ 2525              	.LASF0:
+ 2526 0133 7369676E 		.ascii	"signed char\000"
+ 2526      65642063 
+ 2526      68617200 
+ 2527              	.LASF68:
+ 2528 013f 746F7461 		.ascii	"totalsHandle\000"
+ 2528      6C734861 
+ 2528      6E646C65 
+ 2528      00
+ 2529              	.LASF13:
+ 2530 014c 666C6F61 		.ascii	"float\000"
+ 2530      7400
+ 2531              	.LASF98:
+ 2532 0152 64656369 		.ascii	"decimalMoney\000"
+ 2532      6D616C4D 
+ 2532      6F6E6579 
+ 2532      00
+ 2533              	.LASF90:
+ 2534 015f 666C6167 		.ascii	"flagPoint1\000"
+ 2534      506F696E 
+ 2534      743100
+ 2535              	.LASF91:
+ 2536 016a 666C6167 		.ascii	"flagPoint2\000"
+ 2536      506F696E 
+ 2536      743200
+ 2537              	.LASF6:
+ 2538 0175 6C6F6E67 		.ascii	"long long int\000"
+ 2538      206C6F6E 
+ 2538      6720696E 
+ 2538      7400
+ 2539              	.LASF109:
+ 2540 0183 70617373 		.ascii	"passwordSeller\000"
+ 2540      776F7264 
+ 2540      53656C6C 
+ 2540      657200
+ 2541              	.LASF24:
+ 2542 0192 6B657962 		.ascii	"keyboardWayToPay\000"
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 52
+
+
+ 2542      6F617264 
+ 2542      57617954 
+ 2542      6F506179 
+ 2542      00
+ 2543              	.LASF114:
+ 2544 01a3 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 2544      4320342E 
+ 2544      392E3320 
+ 2544      32303135 
+ 2544      30333033 
+ 2545 01d6 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 2545      20726576 
+ 2545      6973696F 
+ 2545      6E203232 
+ 2545      31323230 
+ 2546 0209 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 2546      66756E63 
+ 2546      74696F6E 
+ 2546      2D736563 
+ 2546      74696F6E 
+ 2547              	.LASF15:
+ 2548 0231 75696E74 		.ascii	"uint64\000"
+ 2548      363400
+ 2549              	.LASF92:
+ 2550 0238 62757474 		.ascii	"button\000"
+ 2550      6F6E00
+ 2551              	.LASF95:
+ 2552 023f 64656C61 		.ascii	"delayPicture1\000"
+ 2552      79506963 
+ 2552      74757265 
+ 2552      3100
+ 2553              	.LASF96:
+ 2554 024d 64656C61 		.ascii	"delayPicture2\000"
+ 2554      79506963 
+ 2554      74757265 
+ 2554      3200
+ 2555              	.LASF49:
+ 2556 025b 666C6167 		.ascii	"flagLiftHandle\000"
+ 2556      4C696674 
+ 2556      48616E64 
+ 2556      6C6500
+ 2557              	.LASF39:
+ 2558 026a 746F7461 		.ascii	"totalVolumePrevious\000"
+ 2558      6C566F6C 
+ 2558      756D6550 
+ 2558      72657669 
+ 2558      6F757300 
+ 2559              	.LASF26:
+ 2560 027e 76616C75 		.ascii	"valueKeys\000"
+ 2560      654B6579 
+ 2560      7300
+ 2561              	.LASF86:
+ 2562 0288 64696769 		.ascii	"digits\000"
+ 2562      747300
+ 2563              	.LASF50:
+ 2564 028f 666C6167 		.ascii	"flagEndSale\000"
+ 2564      456E6453 
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 53
+
+
+ 2564      616C6500 
+ 2565              	.LASF69:
+ 2566 029b 70707541 		.ascii	"ppuAuthorized\000"
+ 2566      7574686F 
+ 2566      72697A65 
+ 2566      6400
+ 2567              	.LASF41:
+ 2568 02a9 746F7461 		.ascii	"totalMoneyAfter\000"
+ 2568      6C4D6F6E 
+ 2568      65794166 
+ 2568      74657200 
+ 2569              	.LASF1:
+ 2570 02b9 756E7369 		.ascii	"unsigned char\000"
+ 2570      676E6564 
+ 2570      20636861 
+ 2570      7200
+ 2571              	.LASF73:
+ 2572 02c7 70726F64 		.ascii	"productSale\000"
+ 2572      75637453 
+ 2572      616C6500 
+ 2573              	.LASF75:
+ 2574 02d3 6C6F6E67 		.ascii	"long double\000"
+ 2574      20646F75 
+ 2574      626C6500 
+ 2575              	.LASF116:
+ 2576 02df 433A5C55 		.ascii	"C:\\Users\\Proyectos_Hardware\\Dropbox\\Proyecto Co"
+ 2576      73657273 
+ 2576      5C50726F 
+ 2576      79656374 
+ 2576      6F735F48 
+ 2577 030e 6E74726F 		.ascii	"ntroller\\Mux Advance Encore V5_00\\MuxAdvance.cyds"
+ 2577      6C6C6572 
+ 2577      5C4D7578 
+ 2577      20416476 
+ 2577      616E6365 
+ 2578 033f 6E00     		.ascii	"n\000"
+ 2579              	.LASF30:
+ 2580 0341 70726573 		.ascii	"presetType\000"
+ 2580      65745479 
+ 2580      706500
+ 2581              	.LASF47:
+ 2582 034c 666C6167 		.ascii	"flagKeyboard\000"
+ 2582      4B657962 
+ 2582      6F617264 
+ 2582      00
+ 2583              	.LASF94:
+ 2584 0359 70726573 		.ascii	"presetFast\000"
+ 2584      65744661 
+ 2584      737400
+ 2585              	.LASF57:
+ 2586 0364 7175616E 		.ascii	"quantityMarket\000"
+ 2586      74697479 
+ 2586      4D61726B 
+ 2586      657400
+ 2587              	.LASF22:
+ 2588 0373 6D6F6E65 		.ascii	"moneySelectedSale\000"
+ 2588      7953656C 
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 54
+
+
+ 2588      65637465 
+ 2588      6453616C 
+ 2588      6500
+ 2589              	.LASF88:
+ 2590 0385 6E756D62 		.ascii	"numberKeys1\000"
+ 2590      65724B65 
+ 2590      79733100 
+ 2591              	.LASF103:
+ 2592 0391 73637265 		.ascii	"screen\000"
+ 2592      656E00
+ 2593              	.LASF58:
+ 2594 0398 7175616E 		.ascii	"quantAvailableMark\000"
+ 2594      74417661 
+ 2594      696C6162 
+ 2594      6C654D61 
+ 2594      726B00
+ 2595              	.LASF99:
+ 2596 03ab 64656369 		.ascii	"decimalVolume\000"
+ 2596      6D616C56 
+ 2596      6F6C756D 
+ 2596      6500
+ 2597              	.LASF55:
+ 2598 03b9 73657269 		.ascii	"serialMarket\000"
+ 2598      616C4D61 
+ 2598      726B6574 
+ 2598      00
+ 2599              	.LASF10:
+ 2600 03c6 696E7433 		.ascii	"int32_t\000"
+ 2600      325F7400 
+ 2601              	.LASF7:
+ 2602 03ce 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2602      206C6F6E 
+ 2602      6720756E 
+ 2602      7369676E 
+ 2602      65642069 
+ 2603              	.LASF97:
+ 2604 03e5 70707578 		.ascii	"ppux10\000"
+ 2604      313000
+ 2605              	.LASF115:
+ 2606 03ec 2E5C6D65 		.ascii	".\\memoryEP.c\000"
+ 2606      6D6F7279 
+ 2606      45502E63 
+ 2606      00
+ 2607              	.LASF8:
+ 2608 03f9 756E7369 		.ascii	"unsigned int\000"
+ 2608      676E6564 
+ 2608      20696E74 
+ 2608      00
+ 2609              	.LASF72:
+ 2610 0406 70707553 		.ascii	"ppuSale\000"
+ 2610      616C6500 
+ 2611              	.LASF46:
+ 2612 040e 6964656E 		.ascii	"identySale\000"
+ 2612      74795361 
+ 2612      6C6500
+ 2613              	.LASF60:
+ 2614 0419 70726963 		.ascii	"priceUnitMarket\000"
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 55
+
+
+ 2614      65556E69 
+ 2614      744D6172 
+ 2614      6B657400 
+ 2615              	.LASF106:
+ 2616 0429 7475726E 		.ascii	"turn\000"
+ 2616      00
+ 2617              	.LASF42:
+ 2618 042e 746F7461 		.ascii	"totalVolumeAfter\000"
+ 2618      6C566F6C 
+ 2618      756D6541 
+ 2618      66746572 
+ 2618      00
+ 2619              	.LASF84:
+ 2620 043f 666C6F77 		.ascii	"flowLCD1\000"
+ 2620      4C434431 
+ 2620      00
+ 2621              	.LASF101:
+ 2622 0448 74696D65 		.ascii	"time\000"
+ 2622      00
+ 2623              	.LASF79:
+ 2624 044d 77726974 		.ascii	"write_buttons\000"
+ 2624      655F6275 
+ 2624      74746F6E 
+ 2624      7300
+ 2625              	.LASF56:
+ 2626 045b 70726F64 		.ascii	"productMarket\000"
+ 2626      7563744D 
+ 2626      61726B65 
+ 2626      7400
+ 2627              	.LASF71:
+ 2628 0469 766F6C75 		.ascii	"volumeSale\000"
+ 2628      6D655361 
+ 2628      6C6500
+ 2629              	.LASF53:
+ 2630 0474 766F6C75 		.ascii	"volumeQuota\000"
+ 2630      6D655175 
+ 2630      6F746100 
+ 2631              	.LASF48:
+ 2632 0480 666C6167 		.ascii	"flagPayment\000"
+ 2632      5061796D 
+ 2632      656E7400 
+ 2633              	.LASF70:
+ 2634 048c 6D6F6E65 		.ascii	"moneySale\000"
+ 2634      7953616C 
+ 2634      6500
+ 2635              	.LASF16:
+ 2636 0496 63686172 		.ascii	"char\000"
+ 2636      00
+ 2637              	.LASF100:
+ 2638 049b 73796D62 		.ascii	"symbols\000"
+ 2638      6F6C7300 
+ 2639              	.LASF4:
+ 2640 04a3 6C6F6E67 		.ascii	"long int\000"
+ 2640      20696E74 
+ 2640      00
+ 2641              	.LASF102:
+ 2642 04ac 64617465 		.ascii	"date\000"
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 56
+
+
+ 2642      00
+ 2643              	.LASF36:
+ 2644 04b1 74696D65 		.ascii	"timeLiftHandle\000"
+ 2644      4C696674 
+ 2644      48616E64 
+ 2644      6C6500
+ 2645              	.LASF43:
+ 2646 04c0 746F7461 		.ascii	"totalPPUAfter\000"
+ 2646      6C505055 
+ 2646      41667465 
+ 2646      7200
+ 2647              	.LASF85:
+ 2648 04ce 666C6F77 		.ascii	"flowLCD2\000"
+ 2648      4C434432 
+ 2648      00
+ 2649              	.LASF35:
+ 2650 04d7 64617465 		.ascii	"dateDownHandle\000"
+ 2650      446F776E 
+ 2650      48616E64 
+ 2650      6C6500
+ 2651              	.LASF74:
+ 2652 04e6 70756D70 		.ascii	"pump\000"
+ 2652      00
+ 2653              	.LASF66:
+ 2654 04eb 62756666 		.ascii	"buffer\000"
+ 2654      657200
+ 2655              	.LASF3:
+ 2656 04f2 73686F72 		.ascii	"short unsigned int\000"
+ 2656      7420756E 
+ 2656      7369676E 
+ 2656      65642069 
+ 2656      6E7400
+ 2657              	.LASF76:
+ 2658 0505 6D656D6F 		.ascii	"memoryData\000"
+ 2658      72794461 
+ 2658      746100
+ 2659              	.LASF12:
+ 2660 0510 75696E74 		.ascii	"uint32\000"
+ 2660      333200
+ 2661              	.LASF27:
+ 2662 0517 76656869 		.ascii	"vehicleType\000"
+ 2662      636C6554 
+ 2662      79706500 
+ 2663              	.LASF51:
+ 2664 0523 6D657373 		.ascii	"message\000"
+ 2664      61676500 
+ 2665              	.LASF37:
+ 2666 052b 74696D65 		.ascii	"timeDownHandle\000"
+ 2666      446F776E 
+ 2666      48616E64 
+ 2666      6C6500
+ 2667              	.LASF111:
+ 2668 053a 62756666 		.ascii	"bufferLCD1\000"
+ 2668      65724C43 
+ 2668      443100
+ 2669              	.LASF112:
+ 2670 0545 62756666 		.ascii	"bufferLCD2\000"
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 57
+
+
+ 2670      65724C43 
+ 2670      443200
+ 2671              	.LASF104:
+ 2672 0550 72657369 		.ascii	"residue\000"
+ 2672      64756500 
+ 2673              	.LASF62:
+ 2674 0558 666C6167 		.ascii	"flagProductmarket\000"
+ 2674      50726F64 
+ 2674      7563746D 
+ 2674      61726B65 
+ 2674      7400
+ 2675              	.LASF63:
+ 2676 056a 70726963 		.ascii	"priceConsign\000"
+ 2676      65436F6E 
+ 2676      7369676E 
+ 2676      00
+ 2677              	.LASF65:
+ 2678 0577 666C6167 		.ascii	"flagChangePPU\000"
+ 2678      4368616E 
+ 2678      67655050 
+ 2678      5500
+ 2679              	.LASF21:
+ 2680 0585 73656C65 		.ascii	"selectedSale\000"
+ 2680      63746564 
+ 2680      53616C65 
+ 2680      00
+ 2681              	.LASF9:
+ 2682 0592 5F5F696E 		.ascii	"__int32_t\000"
+ 2682      7433325F 
+ 2682      7400
+ 2683              	.LASF25:
+ 2684 059c 61757468 		.ascii	"authorizationFlag\000"
+ 2684      6F72697A 
+ 2684      6174696F 
+ 2684      6E466C61 
+ 2684      6700
+ 2685              	.LASF93:
+ 2686 05ae 70726F64 		.ascii	"productNumber\000"
+ 2686      7563744E 
+ 2686      756D6265 
+ 2686      7200
+ 2687              	.LASF81:
+ 2688 05bc 636F756E 		.ascii	"countAnimation1\000"
+ 2688      74416E69 
+ 2688      6D617469 
+ 2688      6F6E3100 
+ 2689              	.LASF82:
+ 2690 05cc 636F756E 		.ascii	"countAnimation2\000"
+ 2690      74416E69 
+ 2690      6D617469 
+ 2690      6F6E3200 
+ 2691              	.LASF40:
+ 2692 05dc 746F7461 		.ascii	"totalPPUPrevious\000"
+ 2692      6C505055 
+ 2692      50726576 
+ 2692      696F7573 
+ 2692      00
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cco2H3Fd.s 			page 58
+
+
+ 2693              	.LASF14:
+ 2694 05ed 646F7562 		.ascii	"double\000"
+ 2694      6C6500
+ 2695              	.LASF113:
+ 2696 05f4 73696465 		.ascii	"side\000"
+ 2696      00
+ 2697              	.LASF80:
+ 2698 05f9 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 2698      52784275 
+ 2698      66666572 
+ 2698      00
+ 2699              	.LASF108:
+ 2700 0606 74797065 		.ascii	"typeIdSeller\000"
+ 2700      49645365 
+ 2700      6C6C6572 
+ 2700      00
+ 2701              	.LASF105:
+ 2702 0613 74656D70 		.ascii	"temporal\000"
+ 2702      6F72616C 
+ 2702      00
+ 2703              	.LASF110:
+ 2704 061c 666C6167 		.ascii	"flagResetMux\000"
+ 2704      52657365 
+ 2704      744D7578 
+ 2704      00
+ 2705              	.LASF59:
+ 2706 0629 70726963 		.ascii	"priceTotalMarket\000"
+ 2706      65546F74 
+ 2706      616C4D61 
+ 2706      726B6574 
+ 2706      00
+ 2707              	.LASF61:
+ 2708 063a 746F7461 		.ascii	"totalMarket\000"
+ 2708      6C4D6172 
+ 2708      6B657400 
+ 2709              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

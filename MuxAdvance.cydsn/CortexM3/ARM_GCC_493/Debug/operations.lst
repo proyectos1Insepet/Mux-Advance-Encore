@@ -1,0 +1,5115 @@
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"operations.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.comm	countAnimation1,8,8
+  19              		.comm	countAnimation2,8,8
+  20              		.comm	countBeagleTX,8,8
+  21              		.comm	flowLCD1,4,4
+  22              		.comm	flowLCD2,4,4
+  23              		.comm	digits,1,1
+  24              		.comm	ipAdress,12,4
+  25              		.comm	numberKeys1,1,1
+  26              		.comm	numberKeys2,1,1
+  27              		.comm	flagPoint1,1,1
+  28              		.comm	flagPoint2,1,1
+  29              		.comm	button,960,4
+  30              		.comm	productNumber,1,1
+  31              		.comm	presetFast,30,4
+  32              		.comm	delayPicture1,4,4
+  33              		.comm	delayPicture2,4,4
+  34              		.comm	ppux10,1,1
+  35              		.comm	decimalMoney,1,1
+  36              		.comm	decimalVolume,1,1
+  37              		.comm	symbols,2,4
+  38              		.comm	time,3,4
+  39              		.comm	date,3,4
+  40              		.comm	screen,2,4
+  41              		.comm	residue,14,4
+  42              		.comm	temporal,30,4
+  43              		.comm	turn,1,1
+  44              		.comm	idSeller,25,4
+  45              		.comm	typeIdSeller,1,1
+  46              		.comm	passwordSeller,8,4
+  47              		.comm	flagResetMux,1,1
+  48              		.comm	bufferLCD1,635,4
+  49              		.comm	bufferLCD2,635,4
+  50              		.comm	side,512,4
+  51              		.section	.text.compare_ppu,"ax",%progbits
+  52              		.align	2
+  53              		.global	compare_ppu
+  54              		.thumb
+  55              		.thumb_func
+  56              		.type	compare_ppu, %function
+  57              	compare_ppu:
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 2
+
+
+  58              	.LFB56:
+  59              		.file 1 ".\\operations.c"
+   1:.\operations.c **** /*
+   2:.\operations.c **** ***************************************************************************************************
+   3:.\operations.c **** *                                         MUX ADVANCE CODE
+   4:.\operations.c **** *
+   5:.\operations.c **** *                             (c) Copyright 2016; Sistemas Insepet LTDA
+   6:.\operations.c **** *
+   7:.\operations.c **** *               All rights reserved.  Protected by international copyright laws.
+   8:.\operations.c **** *               Knowledge of the source code may NOT be used to develop a similar product.
+   9:.\operations.c **** *               Please help us continue to provide the Embedded community with the finest
+  10:.\operations.c **** *               software available.  Your honesty is greatly appreciated.
+  11:.\operations.c **** ***************************************************************************************************
+  12:.\operations.c **** */
+  13:.\operations.c **** 
+  14:.\operations.c **** /*
+  15:.\operations.c **** ***************************************************************************************************
+  16:.\operations.c **** *
+  17:.\operations.c **** *                                             MUX ADVANCE CODE
+  18:.\operations.c **** *
+  19:.\operations.c **** *                                             CYPRESS PSoC5LP
+  20:.\operations.c **** *                                                with the
+  21:.\operations.c **** *                                            CY8C5969AXI-LP035
+  22:.\operations.c **** *
+  23:.\operations.c **** * Filename      : operations.c
+  24:.\operations.c **** * Version       : V1.00
+  25:.\operations.c **** * Programmer(s) : 
+  26:.\operations.c ****                   
+  27:.\operations.c **** ***************************************************************************************************
+  28:.\operations.c **** */
+  29:.\operations.c **** 
+  30:.\operations.c **** 
+  31:.\operations.c **** /*
+  32:.\operations.c **** ***************************************************************************************************
+  33:.\operations.c **** *                                             INCLUDE FILES
+  34:.\operations.c **** ***************************************************************************************************
+  35:.\operations.c **** */
+  36:.\operations.c **** #include <device.h>
+  37:.\operations.c **** #include <variables.h>
+  38:.\operations.c **** #include <math.h>
+  39:.\operations.c **** //#include <stdio.h>
+  40:.\operations.c **** /*
+  41:.\operations.c **** ***************************************************************************************************
+  42:.\operations.c **** *                       uint8 compare_ppu(uint8 *ppuPump,uint8 handle,uint8 dir)
+  43:.\operations.c **** *
+  44:.\operations.c **** * Description : 
+  45:.\operations.c **** *               
+  46:.\operations.c **** *
+  47:.\operations.c **** * Argument(s) : none
+  48:.\operations.c **** *
+  49:.\operations.c **** * Return(s)   : none
+  50:.\operations.c **** *
+  51:.\operations.c **** * Caller(s)   : 
+  52:.\operations.c **** *
+  53:.\operations.c **** * Note(s)     : none.
+  54:.\operations.c **** ***************************************************************************************************
+  55:.\operations.c **** */
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 3
+
+
+  56:.\operations.c **** 
+  57:.\operations.c **** uint8 compare_ppu(uint8 *ppuPump,uint8 handle,uint8 pos){
+  60              		.loc 1 57 0
+  61              		.cfi_startproc
+  62              		@ args = 0, pretend = 0, frame = 24
+  63              		@ frame_needed = 1, uses_anonymous_args = 0
+  64              		@ link register save eliminated.
+  65 0000 80B4     		push	{r7}
+  66              		.cfi_def_cfa_offset 4
+  67              		.cfi_offset 7, -4
+  68 0002 87B0     		sub	sp, sp, #28
+  69              		.cfi_def_cfa_offset 32
+  70 0004 00AF     		add	r7, sp, #0
+  71              		.cfi_def_cfa_register 7
+  72 0006 7860     		str	r0, [r7, #4]
+  73 0008 0B46     		mov	r3, r1
+  74 000a FB70     		strb	r3, [r7, #3]
+  75 000c 1346     		mov	r3, r2
+  76 000e BB70     		strb	r3, [r7, #2]
+  58:.\operations.c ****     uint8 x,y,tempPpu[7];
+  59:.\operations.c ****     if(pos==side.a.dir){
+  77              		.loc 1 59 0
+  78 0010 624B     		ldr	r3, .L25
+  79 0012 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  80 0014 BA78     		ldrb	r2, [r7, #2]	@ zero_extendqisi2
+  81 0016 9A42     		cmp	r2, r3
+  82 0018 18D1     		bne	.L2
+  60:.\operations.c ****         for(x=0;x<=6;x++){
+  83              		.loc 1 60 0
+  84 001a 0023     		movs	r3, #0
+  85 001c FB75     		strb	r3, [r7, #23]
+  86 001e 11E0     		b	.L3
+  87              	.L4:
+  61:.\operations.c ****             tempPpu[x]=side.a.ppuAuthorized[handle-1][x];
+  88              		.loc 1 61 0 discriminator 3
+  89 0020 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+  90 0022 FA78     		ldrb	r2, [r7, #3]	@ zero_extendqisi2
+  91 0024 511E     		subs	r1, r2, #1
+  92 0026 FA7D     		ldrb	r2, [r7, #23]	@ zero_extendqisi2
+  93 0028 5C48     		ldr	r0, .L25
+  94 002a C900     		lsls	r1, r1, #3
+  95 002c 0144     		add	r1, r1, r0
+  96 002e 0A44     		add	r2, r2, r1
+  97 0030 B032     		adds	r2, r2, #176
+  98 0032 5279     		ldrb	r2, [r2, #5]	@ zero_extendqisi2
+  99 0034 07F11801 		add	r1, r7, #24
+ 100 0038 0B44     		add	r3, r3, r1
+ 101 003a 03F80C2C 		strb	r2, [r3, #-12]
+  60:.\operations.c ****         for(x=0;x<=6;x++){
+ 102              		.loc 1 60 0 discriminator 3
+ 103 003e FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 104 0040 0133     		adds	r3, r3, #1
+ 105 0042 FB75     		strb	r3, [r7, #23]
+ 106              	.L3:
+  60:.\operations.c ****         for(x=0;x<=6;x++){
+ 107              		.loc 1 60 0 is_stmt 0 discriminator 1
+ 108 0044 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 4
+
+
+ 109 0046 062B     		cmp	r3, #6
+ 110 0048 EAD9     		bls	.L4
+ 111 004a 18E0     		b	.L5
+ 112              	.L2:
+  62:.\operations.c ****         }
+  63:.\operations.c ****     }else{
+  64:.\operations.c ****         for(x=0;x<=6;x++){
+ 113              		.loc 1 64 0 is_stmt 1
+ 114 004c 0023     		movs	r3, #0
+ 115 004e FB75     		strb	r3, [r7, #23]
+ 116 0050 12E0     		b	.L6
+ 117              	.L7:
+  65:.\operations.c ****             tempPpu[x]=side.b.ppuAuthorized[handle-1][x];
+ 118              		.loc 1 65 0 discriminator 3
+ 119 0052 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 120 0054 FA78     		ldrb	r2, [r7, #3]	@ zero_extendqisi2
+ 121 0056 511E     		subs	r1, r2, #1
+ 122 0058 FA7D     		ldrb	r2, [r7, #23]	@ zero_extendqisi2
+ 123 005a 5048     		ldr	r0, .L25
+ 124 005c C900     		lsls	r1, r1, #3
+ 125 005e 0144     		add	r1, r1, r0
+ 126 0060 0A44     		add	r2, r2, r1
+ 127 0062 02F5D872 		add	r2, r2, #432
+ 128 0066 5279     		ldrb	r2, [r2, #5]	@ zero_extendqisi2
+ 129 0068 07F11801 		add	r1, r7, #24
+ 130 006c 0B44     		add	r3, r3, r1
+ 131 006e 03F80C2C 		strb	r2, [r3, #-12]
+  64:.\operations.c ****             tempPpu[x]=side.b.ppuAuthorized[handle-1][x];
+ 132              		.loc 1 64 0 discriminator 3
+ 133 0072 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 134 0074 0133     		adds	r3, r3, #1
+ 135 0076 FB75     		strb	r3, [r7, #23]
+ 136              	.L6:
+  64:.\operations.c ****             tempPpu[x]=side.b.ppuAuthorized[handle-1][x];
+ 137              		.loc 1 64 0 is_stmt 0 discriminator 1
+ 138 0078 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 139 007a 062B     		cmp	r3, #6
+ 140 007c E9D9     		bls	.L7
+ 141              	.L5:
+  66:.\operations.c ****         }
+  67:.\operations.c ****     }
+  68:.\operations.c ****     for(x=1;x<=6;x++){
+ 142              		.loc 1 68 0 is_stmt 1
+ 143 007e 0123     		movs	r3, #1
+ 144 0080 FB75     		strb	r3, [r7, #23]
+ 145 0082 23E0     		b	.L8
+ 146              	.L13:
+  69:.\operations.c ****         if(tempPpu[x]==','){
+ 147              		.loc 1 69 0
+ 148 0084 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 149 0086 07F11802 		add	r2, r7, #24
+ 150 008a 1344     		add	r3, r3, r2
+ 151 008c 13F80C3C 		ldrb	r3, [r3, #-12]	@ zero_extendqisi2
+ 152 0090 2C2B     		cmp	r3, #44
+ 153 0092 18D1     		bne	.L9
+  70:.\operations.c ****             for(y=x;y>=2;y--){
+ 154              		.loc 1 70 0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 5
+
+
+ 155 0094 FB7D     		ldrb	r3, [r7, #23]
+ 156 0096 BB75     		strb	r3, [r7, #22]
+ 157 0098 0FE0     		b	.L10
+ 158              	.L11:
+  71:.\operations.c ****                 tempPpu[y]=tempPpu[y-1];
+ 159              		.loc 1 71 0 discriminator 3
+ 160 009a BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 161 009c BA7D     		ldrb	r2, [r7, #22]	@ zero_extendqisi2
+ 162 009e 013A     		subs	r2, r2, #1
+ 163 00a0 07F11801 		add	r1, r7, #24
+ 164 00a4 0A44     		add	r2, r2, r1
+ 165 00a6 12F80C2C 		ldrb	r2, [r2, #-12]	@ zero_extendqisi2
+ 166 00aa 07F11801 		add	r1, r7, #24
+ 167 00ae 0B44     		add	r3, r3, r1
+ 168 00b0 03F80C2C 		strb	r2, [r3, #-12]
+  70:.\operations.c ****             for(y=x;y>=2;y--){
+ 169              		.loc 1 70 0 discriminator 3
+ 170 00b4 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 171 00b6 013B     		subs	r3, r3, #1
+ 172 00b8 BB75     		strb	r3, [r7, #22]
+ 173              	.L10:
+  70:.\operations.c ****             for(y=x;y>=2;y--){
+ 174              		.loc 1 70 0 is_stmt 0 discriminator 1
+ 175 00ba BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 176 00bc 012B     		cmp	r3, #1
+ 177 00be ECD8     		bhi	.L11
+  72:.\operations.c ****             }
+  73:.\operations.c ****             tempPpu[1]='0';
+ 178              		.loc 1 73 0 is_stmt 1
+ 179 00c0 3023     		movs	r3, #48
+ 180 00c2 7B73     		strb	r3, [r7, #13]
+  74:.\operations.c ****             break;
+ 181              		.loc 1 74 0
+ 182 00c4 05E0     		b	.L12
+ 183              	.L9:
+  68:.\operations.c ****         if(tempPpu[x]==','){
+ 184              		.loc 1 68 0 discriminator 2
+ 185 00c6 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 186 00c8 0133     		adds	r3, r3, #1
+ 187 00ca FB75     		strb	r3, [r7, #23]
+ 188              	.L8:
+  68:.\operations.c ****         if(tempPpu[x]==','){
+ 189              		.loc 1 68 0 is_stmt 0 discriminator 1
+ 190 00cc FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 191 00ce 062B     		cmp	r3, #6
+ 192 00d0 D8D9     		bls	.L13
+ 193              	.L12:
+  75:.\operations.c ****         }
+  76:.\operations.c ****     }
+  77:.\operations.c ****     ppuPump[0]=ppuPump[0]&0x07;
+ 194              		.loc 1 77 0 is_stmt 1
+ 195 00d2 7B68     		ldr	r3, [r7, #4]
+ 196 00d4 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 197 00d6 03F00703 		and	r3, r3, #7
+ 198 00da DAB2     		uxtb	r2, r3
+ 199 00dc 7B68     		ldr	r3, [r7, #4]
+ 200 00de 1A70     		strb	r2, [r3]
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 6
+
+
+  78:.\operations.c ****     if(ppuPump[0]!=6){
+ 201              		.loc 1 78 0
+ 202 00e0 7B68     		ldr	r3, [r7, #4]
+ 203 00e2 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 204 00e4 062B     		cmp	r3, #6
+ 205 00e6 1CD0     		beq	.L14
+  79:.\operations.c ****         for(x=6;x>=3;x--){
+ 206              		.loc 1 79 0
+ 207 00e8 0623     		movs	r3, #6
+ 208 00ea FB75     		strb	r3, [r7, #23]
+ 209 00ec 0BE0     		b	.L15
+ 210              	.L16:
+  80:.\operations.c ****             ppuPump[x]=ppuPump[x-2];
+ 211              		.loc 1 80 0 discriminator 3
+ 212 00ee FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 213 00f0 7A68     		ldr	r2, [r7, #4]
+ 214 00f2 1344     		add	r3, r3, r2
+ 215 00f4 FA7D     		ldrb	r2, [r7, #23]	@ zero_extendqisi2
+ 216 00f6 023A     		subs	r2, r2, #2
+ 217 00f8 7968     		ldr	r1, [r7, #4]
+ 218 00fa 0A44     		add	r2, r2, r1
+ 219 00fc 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 220 00fe 1A70     		strb	r2, [r3]
+  79:.\operations.c ****         for(x=6;x>=3;x--){
+ 221              		.loc 1 79 0 discriminator 3
+ 222 0100 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 223 0102 013B     		subs	r3, r3, #1
+ 224 0104 FB75     		strb	r3, [r7, #23]
+ 225              	.L15:
+  79:.\operations.c ****         for(x=6;x>=3;x--){
+ 226              		.loc 1 79 0 is_stmt 0 discriminator 1
+ 227 0106 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 228 0108 022B     		cmp	r3, #2
+ 229 010a F0D8     		bhi	.L16
+  81:.\operations.c ****         }
+  82:.\operations.c ****         ppuPump[0]=6;
+ 230              		.loc 1 82 0 is_stmt 1
+ 231 010c 7B68     		ldr	r3, [r7, #4]
+ 232 010e 0622     		movs	r2, #6
+ 233 0110 1A70     		strb	r2, [r3]
+  83:.\operations.c ****         ppuPump[1]='0';
+ 234              		.loc 1 83 0
+ 235 0112 7B68     		ldr	r3, [r7, #4]
+ 236 0114 0133     		adds	r3, r3, #1
+ 237 0116 3022     		movs	r2, #48
+ 238 0118 1A70     		strb	r2, [r3]
+  84:.\operations.c ****         ppuPump[2]='0';
+ 239              		.loc 1 84 0
+ 240 011a 7B68     		ldr	r3, [r7, #4]
+ 241 011c 0233     		adds	r3, r3, #2
+ 242 011e 3022     		movs	r2, #48
+ 243 0120 1A70     		strb	r2, [r3]
+ 244              	.L14:
+  85:.\operations.c ****     }
+  86:.\operations.c ****     if(ppux10==1){
+ 245              		.loc 1 86 0
+ 246 0122 1F4B     		ldr	r3, .L25+4
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 7
+
+
+ 247 0124 1B78     		ldrb	r3, [r3]
+ 248 0126 DBB2     		uxtb	r3, r3
+ 249 0128 012B     		cmp	r3, #1
+ 250 012a 18D1     		bne	.L17
+  87:.\operations.c ****         for(x=1;x<ppuPump[0];x++){
+ 251              		.loc 1 87 0
+ 252 012c 0123     		movs	r3, #1
+ 253 012e FB75     		strb	r3, [r7, #23]
+ 254 0130 0BE0     		b	.L18
+ 255              	.L19:
+  88:.\operations.c ****             ppuPump[x]=ppuPump[x+1];
+ 256              		.loc 1 88 0 discriminator 3
+ 257 0132 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 258 0134 7A68     		ldr	r2, [r7, #4]
+ 259 0136 1344     		add	r3, r3, r2
+ 260 0138 FA7D     		ldrb	r2, [r7, #23]	@ zero_extendqisi2
+ 261 013a 0132     		adds	r2, r2, #1
+ 262 013c 7968     		ldr	r1, [r7, #4]
+ 263 013e 0A44     		add	r2, r2, r1
+ 264 0140 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 265 0142 1A70     		strb	r2, [r3]
+  87:.\operations.c ****         for(x=1;x<ppuPump[0];x++){
+ 266              		.loc 1 87 0 discriminator 3
+ 267 0144 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 268 0146 0133     		adds	r3, r3, #1
+ 269 0148 FB75     		strb	r3, [r7, #23]
+ 270              	.L18:
+  87:.\operations.c ****         for(x=1;x<ppuPump[0];x++){
+ 271              		.loc 1 87 0 is_stmt 0 discriminator 1
+ 272 014a 7B68     		ldr	r3, [r7, #4]
+ 273 014c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 274 014e FA7D     		ldrb	r2, [r7, #23]	@ zero_extendqisi2
+ 275 0150 9A42     		cmp	r2, r3
+ 276 0152 EED3     		bcc	.L19
+  89:.\operations.c ****         }
+  90:.\operations.c ****         ppuPump[x]='0';
+ 277              		.loc 1 90 0 is_stmt 1
+ 278 0154 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 279 0156 7A68     		ldr	r2, [r7, #4]
+ 280 0158 1344     		add	r3, r3, r2
+ 281 015a 3022     		movs	r2, #48
+ 282 015c 1A70     		strb	r2, [r3]
+ 283              	.L17:
+  91:.\operations.c ****     }
+  92:.\operations.c ****     for(x=1;x<=6;x++){
+ 284              		.loc 1 92 0
+ 285 015e 0123     		movs	r3, #1
+ 286 0160 FB75     		strb	r3, [r7, #23]
+ 287 0162 10E0     		b	.L20
+ 288              	.L23:
+  93:.\operations.c ****         if(ppuPump[x]!=tempPpu[x]){
+ 289              		.loc 1 93 0
+ 290 0164 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 291 0166 7A68     		ldr	r2, [r7, #4]
+ 292 0168 1344     		add	r3, r3, r2
+ 293 016a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 294 016c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 8
+
+
+ 295 016e 07F11801 		add	r1, r7, #24
+ 296 0172 0B44     		add	r3, r3, r1
+ 297 0174 13F80C3C 		ldrb	r3, [r3, #-12]	@ zero_extendqisi2
+ 298 0178 9A42     		cmp	r2, r3
+ 299 017a 01D0     		beq	.L21
+  94:.\operations.c ****             return 0;
+ 300              		.loc 1 94 0
+ 301 017c 0023     		movs	r3, #0
+ 302 017e 06E0     		b	.L24
+ 303              	.L21:
+  92:.\operations.c ****         if(ppuPump[x]!=tempPpu[x]){
+ 304              		.loc 1 92 0 discriminator 2
+ 305 0180 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 306 0182 0133     		adds	r3, r3, #1
+ 307 0184 FB75     		strb	r3, [r7, #23]
+ 308              	.L20:
+  92:.\operations.c ****         if(ppuPump[x]!=tempPpu[x]){
+ 309              		.loc 1 92 0 is_stmt 0 discriminator 1
+ 310 0186 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 311 0188 062B     		cmp	r3, #6
+ 312 018a EBD9     		bls	.L23
+  95:.\operations.c ****         }
+  96:.\operations.c ****     }
+  97:.\operations.c ****     return 1;
+ 313              		.loc 1 97 0 is_stmt 1
+ 314 018c 0123     		movs	r3, #1
+ 315              	.L24:
+  98:.\operations.c **** }
+ 316              		.loc 1 98 0 discriminator 1
+ 317 018e 1846     		mov	r0, r3
+ 318 0190 1C37     		adds	r7, r7, #28
+ 319              		.cfi_def_cfa_offset 4
+ 320 0192 BD46     		mov	sp, r7
+ 321              		.cfi_def_cfa_register 13
+ 322              		@ sp needed
+ 323 0194 5DF8047B 		ldr	r7, [sp], #4
+ 324              		.cfi_restore 7
+ 325              		.cfi_def_cfa_offset 0
+ 326 0198 7047     		bx	lr
+ 327              	.L26:
+ 328 019a 00BF     		.align	2
+ 329              	.L25:
+ 330 019c 00000000 		.word	side
+ 331 01a0 00000000 		.word	ppux10
+ 332              		.cfi_endproc
+ 333              	.LFE56:
+ 334              		.size	compare_ppu, .-compare_ppu
+ 335              		.section	.rodata
+ 336              		.align	2
+ 337              	.LC0:
+ 338 0000 09       		.byte	9
+ 339 0001 09       		.byte	9
+ 340 0002 09       		.byte	9
+ 341 0003 09       		.byte	9
+ 342 0004 09       		.byte	9
+ 343 0005 09       		.byte	9
+ 344 0006 09       		.byte	9
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 9
+
+
+ 345 0007 09       		.byte	9
+ 346 0008 09       		.byte	9
+ 347 0009 09       		.byte	9
+ 348 000a 09       		.byte	9
+ 349 000b 09       		.byte	9
+ 350              		.section	.text.subtraction,"ax",%progbits
+ 351              		.align	2
+ 352              		.global	subtraction
+ 353              		.thumb
+ 354              		.thumb_func
+ 355              		.type	subtraction, %function
+ 356              	subtraction:
+ 357              	.LFB57:
+  99:.\operations.c **** 
+ 100:.\operations.c **** 
+ 101:.\operations.c **** /*
+ 102:.\operations.c **** ***************************************************************************************************
+ 103:.\operations.c **** *                      uint8 subtraction(uint8 *minuendo,uint8 *sustraendo,uint8 decimal)
+ 104:.\operations.c **** *
+ 105:.\operations.c **** * Description : 
+ 106:.\operations.c **** *               
+ 107:.\operations.c **** *
+ 108:.\operations.c **** * Argument(s) : none
+ 109:.\operations.c **** *
+ 110:.\operations.c **** * Return(s)   : none
+ 111:.\operations.c **** *
+ 112:.\operations.c **** * Caller(s)   : 
+ 113:.\operations.c **** *
+ 114:.\operations.c **** * Note(s)     : none.
+ 115:.\operations.c **** ***************************************************************************************************
+ 116:.\operations.c **** */
+ 117:.\operations.c **** 
+ 118:.\operations.c **** uint8 subtraction(uint8 *minuendo,uint8 *sustraendo){
+ 358              		.loc 1 118 0
+ 359              		.cfi_startproc
+ 360              		@ args = 0, pretend = 0, frame = 72
+ 361              		@ frame_needed = 1, uses_anonymous_args = 0
+ 362              		@ link register save eliminated.
+ 363 0000 80B4     		push	{r7}
+ 364              		.cfi_def_cfa_offset 4
+ 365              		.cfi_offset 7, -4
+ 366 0002 93B0     		sub	sp, sp, #76
+ 367              		.cfi_def_cfa_offset 80
+ 368 0004 00AF     		add	r7, sp, #0
+ 369              		.cfi_def_cfa_register 7
+ 370 0006 7860     		str	r0, [r7, #4]
+ 371 0008 3960     		str	r1, [r7]
+ 119:.\operations.c ****     uint8 t_residue[14],t_minuendo[14],t_sustraendo[14],carrier,maximumValue[12]={9,9,9,9,9,9,9,9,9
+ 372              		.loc 1 119 0
+ 373 000a D74A     		ldr	r2, .L55
+ 374 000c 07F10803 		add	r3, r7, #8
+ 375 0010 1068     		ldr	r0, [r2]	@ unaligned
+ 376 0012 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 377 0014 9268     		ldr	r2, [r2, #8]	@ unaligned
+ 378 0016 07C3     		stmia	r3!, {r0, r1, r2}
+ 120:.\operations.c ****     t_minuendo[0]=minuendo[0]&0x0f;
+ 379              		.loc 1 120 0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 10
+
+
+ 380 0018 7B68     		ldr	r3, [r7, #4]
+ 381 001a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 382 001c 03F00F03 		and	r3, r3, #15
+ 383 0020 DBB2     		uxtb	r3, r3
+ 384 0022 87F82430 		strb	r3, [r7, #36]
+ 121:.\operations.c ****     t_sustraendo[0]=sustraendo[0]&0x0f;
+ 385              		.loc 1 121 0
+ 386 0026 3B68     		ldr	r3, [r7]
+ 387 0028 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 388 002a 03F00F03 		and	r3, r3, #15
+ 389 002e DBB2     		uxtb	r3, r3
+ 390 0030 3B75     		strb	r3, [r7, #20]
+ 122:.\operations.c ****     y=1;
+ 391              		.loc 1 122 0
+ 392 0032 0123     		movs	r3, #1
+ 393 0034 87F84530 		strb	r3, [r7, #69]
+ 123:.\operations.c ****     for(x=t_minuendo[0];x>0;x--){
+ 394              		.loc 1 123 0
+ 395 0038 97F82430 		ldrb	r3, [r7, #36]
+ 396 003c 87F84630 		strb	r3, [r7, #70]
+ 397 0040 18E0     		b	.L28
+ 398              	.L29:
+ 124:.\operations.c ****         t_minuendo[y]=minuendo[x]&0x0f;
+ 399              		.loc 1 124 0 discriminator 3
+ 400 0042 97F84530 		ldrb	r3, [r7, #69]	@ zero_extendqisi2
+ 401 0046 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 402 004a 7968     		ldr	r1, [r7, #4]
+ 403 004c 0A44     		add	r2, r2, r1
+ 404 004e 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 405 0050 02F00F02 		and	r2, r2, #15
+ 406 0054 D2B2     		uxtb	r2, r2
+ 407 0056 07F14801 		add	r1, r7, #72
+ 408 005a 0B44     		add	r3, r3, r1
+ 409 005c 03F8242C 		strb	r2, [r3, #-36]
+ 125:.\operations.c ****         y++;
+ 410              		.loc 1 125 0 discriminator 3
+ 411 0060 97F84530 		ldrb	r3, [r7, #69]	@ zero_extendqisi2
+ 412 0064 0133     		adds	r3, r3, #1
+ 413 0066 87F84530 		strb	r3, [r7, #69]
+ 123:.\operations.c ****     for(x=t_minuendo[0];x>0;x--){
+ 414              		.loc 1 123 0 discriminator 3
+ 415 006a 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 416 006e 013B     		subs	r3, r3, #1
+ 417 0070 87F84630 		strb	r3, [r7, #70]
+ 418              	.L28:
+ 123:.\operations.c ****     for(x=t_minuendo[0];x>0;x--){
+ 419              		.loc 1 123 0 is_stmt 0 discriminator 1
+ 420 0074 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 421 0078 002B     		cmp	r3, #0
+ 422 007a E2D1     		bne	.L29
+ 126:.\operations.c ****     }
+ 127:.\operations.c ****     y=1;
+ 423              		.loc 1 127 0 is_stmt 1
+ 424 007c 0123     		movs	r3, #1
+ 425 007e 87F84530 		strb	r3, [r7, #69]
+ 128:.\operations.c ****     for(x=t_sustraendo[0];x>0;x--){
+ 426              		.loc 1 128 0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 11
+
+
+ 427 0082 3B7D     		ldrb	r3, [r7, #20]
+ 428 0084 87F84630 		strb	r3, [r7, #70]
+ 429 0088 18E0     		b	.L30
+ 430              	.L31:
+ 129:.\operations.c ****         t_sustraendo[y]=sustraendo[x]&0x0f;
+ 431              		.loc 1 129 0 discriminator 3
+ 432 008a 97F84530 		ldrb	r3, [r7, #69]	@ zero_extendqisi2
+ 433 008e 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 434 0092 3968     		ldr	r1, [r7]
+ 435 0094 0A44     		add	r2, r2, r1
+ 436 0096 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 437 0098 02F00F02 		and	r2, r2, #15
+ 438 009c D2B2     		uxtb	r2, r2
+ 439 009e 07F14801 		add	r1, r7, #72
+ 440 00a2 0B44     		add	r3, r3, r1
+ 441 00a4 03F8342C 		strb	r2, [r3, #-52]
+ 130:.\operations.c ****         y++;
+ 442              		.loc 1 130 0 discriminator 3
+ 443 00a8 97F84530 		ldrb	r3, [r7, #69]	@ zero_extendqisi2
+ 444 00ac 0133     		adds	r3, r3, #1
+ 445 00ae 87F84530 		strb	r3, [r7, #69]
+ 128:.\operations.c ****     for(x=t_sustraendo[0];x>0;x--){
+ 446              		.loc 1 128 0 discriminator 3
+ 447 00b2 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 448 00b6 013B     		subs	r3, r3, #1
+ 449 00b8 87F84630 		strb	r3, [r7, #70]
+ 450              	.L30:
+ 128:.\operations.c ****     for(x=t_sustraendo[0];x>0;x--){
+ 451              		.loc 1 128 0 is_stmt 0 discriminator 1
+ 452 00bc 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 453 00c0 002B     		cmp	r3, #0
+ 454 00c2 E2D1     		bne	.L31
+ 131:.\operations.c ****     }
+ 132:.\operations.c **** 	carrier=0;
+ 455              		.loc 1 132 0 is_stmt 1
+ 456 00c4 0023     		movs	r3, #0
+ 457 00c6 87F84730 		strb	r3, [r7, #71]
+ 133:.\operations.c **** 	if(t_minuendo[t_minuendo[0]]<t_sustraendo[t_minuendo[0]]){
+ 458              		.loc 1 133 0
+ 459 00ca 97F82430 		ldrb	r3, [r7, #36]	@ zero_extendqisi2
+ 460 00ce 07F14802 		add	r2, r7, #72
+ 461 00d2 1344     		add	r3, r3, r2
+ 462 00d4 13F8242C 		ldrb	r2, [r3, #-36]	@ zero_extendqisi2
+ 463 00d8 97F82430 		ldrb	r3, [r7, #36]	@ zero_extendqisi2
+ 464 00dc 07F14801 		add	r1, r7, #72
+ 465 00e0 0B44     		add	r3, r3, r1
+ 466 00e2 13F8343C 		ldrb	r3, [r3, #-52]	@ zero_extendqisi2
+ 467 00e6 9A42     		cmp	r2, r3
+ 468 00e8 80F0C980 		bcs	.L32
+ 134:.\operations.c **** 		for(x=1;x<=t_minuendo[0];x++){
+ 469              		.loc 1 134 0
+ 470 00ec 0123     		movs	r3, #1
+ 471 00ee 87F84630 		strb	r3, [r7, #70]
+ 472 00f2 57E0     		b	.L33
+ 473              	.L36:
+ 135:.\operations.c **** 			if((maximumValue[x]-carrier)<t_sustraendo[x]){
+ 474              		.loc 1 135 0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 12
+
+
+ 475 00f4 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 476 00f8 07F14802 		add	r2, r7, #72
+ 477 00fc 1344     		add	r3, r3, r2
+ 478 00fe 13F8403C 		ldrb	r3, [r3, #-64]	@ zero_extendqisi2
+ 479 0102 1A46     		mov	r2, r3
+ 480 0104 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 481 0108 D31A     		subs	r3, r2, r3
+ 482 010a 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 483 010e 07F14801 		add	r1, r7, #72
+ 484 0112 0A44     		add	r2, r2, r1
+ 485 0114 12F8342C 		ldrb	r2, [r2, #-52]	@ zero_extendqisi2
+ 486 0118 9342     		cmp	r3, r2
+ 487 011a 20DA     		bge	.L34
+ 136:.\operations.c **** 				t_residue[x]=((maximumValue[x]+10)-carrier)-t_sustraendo[x];
+ 488              		.loc 1 136 0
+ 489 011c 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 490 0120 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 491 0124 07F14801 		add	r1, r7, #72
+ 492 0128 0A44     		add	r2, r2, r1
+ 493 012a 12F8401C 		ldrb	r1, [r2, #-64]	@ zero_extendqisi2
+ 494 012e 97F84720 		ldrb	r2, [r7, #71]
+ 495 0132 8A1A     		subs	r2, r1, r2
+ 496 0134 D1B2     		uxtb	r1, r2
+ 497 0136 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 498 013a 07F14800 		add	r0, r7, #72
+ 499 013e 0244     		add	r2, r2, r0
+ 500 0140 12F8342C 		ldrb	r2, [r2, #-52]	@ zero_extendqisi2
+ 501 0144 8A1A     		subs	r2, r1, r2
+ 502 0146 D2B2     		uxtb	r2, r2
+ 503 0148 0A32     		adds	r2, r2, #10
+ 504 014a D2B2     		uxtb	r2, r2
+ 505 014c 07F14801 		add	r1, r7, #72
+ 506 0150 0B44     		add	r3, r3, r1
+ 507 0152 03F8142C 		strb	r2, [r3, #-20]
+ 137:.\operations.c **** 				carrier=1;			
+ 508              		.loc 1 137 0
+ 509 0156 0123     		movs	r3, #1
+ 510 0158 87F84730 		strb	r3, [r7, #71]
+ 511 015c 1DE0     		b	.L35
+ 512              	.L34:
+ 138:.\operations.c **** 			}
+ 139:.\operations.c **** 			else{
+ 140:.\operations.c **** 				t_residue[x]=(maximumValue[x]-carrier)-t_sustraendo[x];
+ 513              		.loc 1 140 0
+ 514 015e 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 515 0162 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 516 0166 07F14801 		add	r1, r7, #72
+ 517 016a 0A44     		add	r2, r2, r1
+ 518 016c 12F8401C 		ldrb	r1, [r2, #-64]	@ zero_extendqisi2
+ 519 0170 97F84720 		ldrb	r2, [r7, #71]
+ 520 0174 8A1A     		subs	r2, r1, r2
+ 521 0176 D1B2     		uxtb	r1, r2
+ 522 0178 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 523 017c 07F14800 		add	r0, r7, #72
+ 524 0180 0244     		add	r2, r2, r0
+ 525 0182 12F8342C 		ldrb	r2, [r2, #-52]	@ zero_extendqisi2
+ 526 0186 8A1A     		subs	r2, r1, r2
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 13
+
+
+ 527 0188 D2B2     		uxtb	r2, r2
+ 528 018a 07F14801 		add	r1, r7, #72
+ 529 018e 0B44     		add	r3, r3, r1
+ 530 0190 03F8142C 		strb	r2, [r3, #-20]
+ 141:.\operations.c **** 				carrier=0;
+ 531              		.loc 1 141 0
+ 532 0194 0023     		movs	r3, #0
+ 533 0196 87F84730 		strb	r3, [r7, #71]
+ 534              	.L35:
+ 134:.\operations.c **** 			if((maximumValue[x]-carrier)<t_sustraendo[x]){
+ 535              		.loc 1 134 0 discriminator 2
+ 536 019a 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 537 019e 0133     		adds	r3, r3, #1
+ 538 01a0 87F84630 		strb	r3, [r7, #70]
+ 539              	.L33:
+ 134:.\operations.c **** 			if((maximumValue[x]-carrier)<t_sustraendo[x]){
+ 540              		.loc 1 134 0 is_stmt 0 discriminator 1
+ 541 01a4 97F82430 		ldrb	r3, [r7, #36]	@ zero_extendqisi2
+ 542 01a8 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 543 01ac 9A42     		cmp	r2, r3
+ 544 01ae A1D9     		bls	.L36
+ 142:.\operations.c **** 			}
+ 143:.\operations.c **** 		}
+ 144:.\operations.c **** 		t_residue[0]=t_minuendo[0];	
+ 545              		.loc 1 144 0 is_stmt 1
+ 546 01b0 97F82430 		ldrb	r3, [r7, #36]	@ zero_extendqisi2
+ 547 01b4 87F83430 		strb	r3, [r7, #52]
+ 145:.\operations.c **** 		for(x=1;x<=t_minuendo[0];x++){
+ 548              		.loc 1 145 0
+ 549 01b8 0123     		movs	r3, #1
+ 550 01ba 87F84630 		strb	r3, [r7, #70]
+ 551 01be 3FE0     		b	.L37
+ 552              	.L40:
+ 146:.\operations.c **** 			t_residue[x]=t_minuendo[x]+t_residue[x]+carrier;
+ 553              		.loc 1 146 0
+ 554 01c0 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 555 01c4 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 556 01c8 07F14801 		add	r1, r7, #72
+ 557 01cc 0A44     		add	r2, r2, r1
+ 558 01ce 12F8241C 		ldrb	r1, [r2, #-36]	@ zero_extendqisi2
+ 559 01d2 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 560 01d6 07F14800 		add	r0, r7, #72
+ 561 01da 0244     		add	r2, r2, r0
+ 562 01dc 12F8142C 		ldrb	r2, [r2, #-20]	@ zero_extendqisi2
+ 563 01e0 0A44     		add	r2, r2, r1
+ 564 01e2 D1B2     		uxtb	r1, r2
+ 565 01e4 97F84720 		ldrb	r2, [r7, #71]
+ 566 01e8 0A44     		add	r2, r2, r1
+ 567 01ea D2B2     		uxtb	r2, r2
+ 568 01ec 07F14801 		add	r1, r7, #72
+ 569 01f0 0B44     		add	r3, r3, r1
+ 570 01f2 03F8142C 		strb	r2, [r3, #-20]
+ 147:.\operations.c **** 			if(t_residue[x]>9){
+ 571              		.loc 1 147 0
+ 572 01f6 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 573 01fa 07F14802 		add	r2, r7, #72
+ 574 01fe 1344     		add	r3, r3, r2
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 14
+
+
+ 575 0200 13F8143C 		ldrb	r3, [r3, #-20]	@ zero_extendqisi2
+ 576 0204 092B     		cmp	r3, #9
+ 577 0206 13D9     		bls	.L38
+ 148:.\operations.c **** 				t_residue[x]=t_residue[x]-10;
+ 578              		.loc 1 148 0
+ 579 0208 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 580 020c 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 581 0210 07F14801 		add	r1, r7, #72
+ 582 0214 0A44     		add	r2, r2, r1
+ 583 0216 12F8142C 		ldrb	r2, [r2, #-20]	@ zero_extendqisi2
+ 584 021a 0A3A     		subs	r2, r2, #10
+ 585 021c D2B2     		uxtb	r2, r2
+ 586 021e 07F14801 		add	r1, r7, #72
+ 587 0222 0B44     		add	r3, r3, r1
+ 588 0224 03F8142C 		strb	r2, [r3, #-20]
+ 149:.\operations.c **** 				carrier=1;
+ 589              		.loc 1 149 0
+ 590 0228 0123     		movs	r3, #1
+ 591 022a 87F84730 		strb	r3, [r7, #71]
+ 592 022e 02E0     		b	.L39
+ 593              	.L38:
+ 150:.\operations.c **** 			}
+ 151:.\operations.c **** 			else{
+ 152:.\operations.c **** 				carrier=0;
+ 594              		.loc 1 152 0
+ 595 0230 0023     		movs	r3, #0
+ 596 0232 87F84730 		strb	r3, [r7, #71]
+ 597              	.L39:
+ 145:.\operations.c **** 			t_residue[x]=t_minuendo[x]+t_residue[x]+carrier;
+ 598              		.loc 1 145 0 discriminator 2
+ 599 0236 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 600 023a 0133     		adds	r3, r3, #1
+ 601 023c 87F84630 		strb	r3, [r7, #70]
+ 602              	.L37:
+ 145:.\operations.c **** 			t_residue[x]=t_minuendo[x]+t_residue[x]+carrier;
+ 603              		.loc 1 145 0 is_stmt 0 discriminator 1
+ 604 0240 97F82430 		ldrb	r3, [r7, #36]	@ zero_extendqisi2
+ 605 0244 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 606 0248 9A42     		cmp	r2, r3
+ 607 024a B9D9     		bls	.L40
+ 153:.\operations.c **** 			}
+ 154:.\operations.c **** 		}
+ 155:.\operations.c **** 		if(carrier==1){
+ 608              		.loc 1 155 0 is_stmt 1
+ 609 024c 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 610 0250 012B     		cmp	r3, #1
+ 611 0252 0FD1     		bne	.L41
+ 156:.\operations.c **** 			t_residue[x+1]=1;
+ 612              		.loc 1 156 0
+ 613 0254 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 614 0258 0133     		adds	r3, r3, #1
+ 615 025a 07F14802 		add	r2, r7, #72
+ 616 025e 1344     		add	r3, r3, r2
+ 617 0260 0122     		movs	r2, #1
+ 618 0262 03F8142C 		strb	r2, [r3, #-20]
+ 157:.\operations.c **** 			t_residue[0]=t_minuendo[0]+1;
+ 619              		.loc 1 157 0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 15
+
+
+ 620 0266 97F82430 		ldrb	r3, [r7, #36]	@ zero_extendqisi2
+ 621 026a 0133     		adds	r3, r3, #1
+ 622 026c DBB2     		uxtb	r3, r3
+ 623 026e 87F83430 		strb	r3, [r7, #52]
+ 624 0272 6AE0     		b	.L43
+ 625              	.L41:
+ 158:.\operations.c **** 		}
+ 159:.\operations.c **** 		else{
+ 160:.\operations.c **** 			t_residue[0]=t_minuendo[0];
+ 626              		.loc 1 160 0
+ 627 0274 97F82430 		ldrb	r3, [r7, #36]	@ zero_extendqisi2
+ 628 0278 87F83430 		strb	r3, [r7, #52]
+ 629 027c 65E0     		b	.L43
+ 630              	.L32:
+ 161:.\operations.c **** 		}			
+ 162:.\operations.c **** 	}
+ 163:.\operations.c **** 	else{
+ 164:.\operations.c **** 		for(x=1;x<=t_minuendo[0];x++){
+ 631              		.loc 1 164 0
+ 632 027e 0123     		movs	r3, #1
+ 633 0280 87F84630 		strb	r3, [r7, #70]
+ 634 0284 57E0     		b	.L44
+ 635              	.L47:
+ 165:.\operations.c **** 			if((t_minuendo[x]-carrier)<t_sustraendo[x]){
+ 636              		.loc 1 165 0
+ 637 0286 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 638 028a 07F14802 		add	r2, r7, #72
+ 639 028e 1344     		add	r3, r3, r2
+ 640 0290 13F8243C 		ldrb	r3, [r3, #-36]	@ zero_extendqisi2
+ 641 0294 1A46     		mov	r2, r3
+ 642 0296 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 643 029a D31A     		subs	r3, r2, r3
+ 644 029c 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 645 02a0 07F14801 		add	r1, r7, #72
+ 646 02a4 0A44     		add	r2, r2, r1
+ 647 02a6 12F8342C 		ldrb	r2, [r2, #-52]	@ zero_extendqisi2
+ 648 02aa 9342     		cmp	r3, r2
+ 649 02ac 20DA     		bge	.L45
+ 166:.\operations.c **** 				t_residue[x]=((t_minuendo[x]+10)-carrier)-t_sustraendo[x];
+ 650              		.loc 1 166 0
+ 651 02ae 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 652 02b2 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 653 02b6 07F14801 		add	r1, r7, #72
+ 654 02ba 0A44     		add	r2, r2, r1
+ 655 02bc 12F8241C 		ldrb	r1, [r2, #-36]	@ zero_extendqisi2
+ 656 02c0 97F84720 		ldrb	r2, [r7, #71]
+ 657 02c4 8A1A     		subs	r2, r1, r2
+ 658 02c6 D1B2     		uxtb	r1, r2
+ 659 02c8 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 660 02cc 07F14800 		add	r0, r7, #72
+ 661 02d0 0244     		add	r2, r2, r0
+ 662 02d2 12F8342C 		ldrb	r2, [r2, #-52]	@ zero_extendqisi2
+ 663 02d6 8A1A     		subs	r2, r1, r2
+ 664 02d8 D2B2     		uxtb	r2, r2
+ 665 02da 0A32     		adds	r2, r2, #10
+ 666 02dc D2B2     		uxtb	r2, r2
+ 667 02de 07F14801 		add	r1, r7, #72
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 16
+
+
+ 668 02e2 0B44     		add	r3, r3, r1
+ 669 02e4 03F8142C 		strb	r2, [r3, #-20]
+ 167:.\operations.c **** 				carrier=1;			
+ 670              		.loc 1 167 0
+ 671 02e8 0123     		movs	r3, #1
+ 672 02ea 87F84730 		strb	r3, [r7, #71]
+ 673 02ee 1DE0     		b	.L46
+ 674              	.L45:
+ 168:.\operations.c **** 			}
+ 169:.\operations.c **** 			else{
+ 170:.\operations.c **** 				t_residue[x]=(t_minuendo[x]-carrier)-t_sustraendo[x];
+ 675              		.loc 1 170 0
+ 676 02f0 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 677 02f4 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 678 02f8 07F14801 		add	r1, r7, #72
+ 679 02fc 0A44     		add	r2, r2, r1
+ 680 02fe 12F8241C 		ldrb	r1, [r2, #-36]	@ zero_extendqisi2
+ 681 0302 97F84720 		ldrb	r2, [r7, #71]
+ 682 0306 8A1A     		subs	r2, r1, r2
+ 683 0308 D1B2     		uxtb	r1, r2
+ 684 030a 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 685 030e 07F14800 		add	r0, r7, #72
+ 686 0312 0244     		add	r2, r2, r0
+ 687 0314 12F8342C 		ldrb	r2, [r2, #-52]	@ zero_extendqisi2
+ 688 0318 8A1A     		subs	r2, r1, r2
+ 689 031a D2B2     		uxtb	r2, r2
+ 690 031c 07F14801 		add	r1, r7, #72
+ 691 0320 0B44     		add	r3, r3, r1
+ 692 0322 03F8142C 		strb	r2, [r3, #-20]
+ 171:.\operations.c **** 				carrier=0;
+ 693              		.loc 1 171 0
+ 694 0326 0023     		movs	r3, #0
+ 695 0328 87F84730 		strb	r3, [r7, #71]
+ 696              	.L46:
+ 164:.\operations.c **** 			if((t_minuendo[x]-carrier)<t_sustraendo[x]){
+ 697              		.loc 1 164 0 discriminator 2
+ 698 032c 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 699 0330 0133     		adds	r3, r3, #1
+ 700 0332 87F84630 		strb	r3, [r7, #70]
+ 701              	.L44:
+ 164:.\operations.c **** 			if((t_minuendo[x]-carrier)<t_sustraendo[x]){
+ 702              		.loc 1 164 0 is_stmt 0 discriminator 1
+ 703 0336 97F82430 		ldrb	r3, [r7, #36]	@ zero_extendqisi2
+ 704 033a 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 705 033e 9A42     		cmp	r2, r3
+ 706 0340 A1D9     		bls	.L47
+ 172:.\operations.c **** 			}
+ 173:.\operations.c **** 		}
+ 174:.\operations.c **** 		t_residue[0]=t_minuendo[0];
+ 707              		.loc 1 174 0 is_stmt 1
+ 708 0342 97F82430 		ldrb	r3, [r7, #36]	@ zero_extendqisi2
+ 709 0346 87F83430 		strb	r3, [r7, #52]
+ 710              	.L43:
+ 175:.\operations.c **** 	}
+ 176:.\operations.c ****     residue[0]=t_residue[0]&0x0f;
+ 711              		.loc 1 176 0
+ 712 034a 97F83430 		ldrb	r3, [r7, #52]	@ zero_extendqisi2
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 17
+
+
+ 713 034e 03F00F03 		and	r3, r3, #15
+ 714 0352 DAB2     		uxtb	r2, r3
+ 715 0354 054B     		ldr	r3, .L55+4
+ 716 0356 1A70     		strb	r2, [r3]
+ 177:.\operations.c ****     y=1;
+ 717              		.loc 1 177 0
+ 718 0358 0123     		movs	r3, #1
+ 719 035a 87F84530 		strb	r3, [r7, #69]
+ 178:.\operations.c ****     for(x=residue[0];x>0;x--){
+ 720              		.loc 1 178 0
+ 721 035e 034B     		ldr	r3, .L55+4
+ 722 0360 1B78     		ldrb	r3, [r3]
+ 723 0362 87F84630 		strb	r3, [r7, #70]
+ 724 0366 1DE0     		b	.L48
+ 725              	.L56:
+ 726              		.align	2
+ 727              	.L55:
+ 728 0368 00000000 		.word	.LC0
+ 729 036c 00000000 		.word	residue
+ 730              	.L49:
+ 179:.\operations.c ****         residue[y]=(t_residue[x]&0x0f)+0x30;
+ 731              		.loc 1 179 0 discriminator 3
+ 732 0370 97F84530 		ldrb	r3, [r7, #69]	@ zero_extendqisi2
+ 733 0374 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 734 0378 07F14801 		add	r1, r7, #72
+ 735 037c 0A44     		add	r2, r2, r1
+ 736 037e 12F8142C 		ldrb	r2, [r2, #-20]	@ zero_extendqisi2
+ 737 0382 02F00F02 		and	r2, r2, #15
+ 738 0386 D2B2     		uxtb	r2, r2
+ 739 0388 3032     		adds	r2, r2, #48
+ 740 038a D1B2     		uxtb	r1, r2
+ 741 038c 174A     		ldr	r2, .L57
+ 742 038e D154     		strb	r1, [r2, r3]
+ 180:.\operations.c ****         y++;
+ 743              		.loc 1 180 0 discriminator 3
+ 744 0390 97F84530 		ldrb	r3, [r7, #69]	@ zero_extendqisi2
+ 745 0394 0133     		adds	r3, r3, #1
+ 746 0396 87F84530 		strb	r3, [r7, #69]
+ 178:.\operations.c ****     for(x=residue[0];x>0;x--){
+ 747              		.loc 1 178 0 discriminator 3
+ 748 039a 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 749 039e 013B     		subs	r3, r3, #1
+ 750 03a0 87F84630 		strb	r3, [r7, #70]
+ 751              	.L48:
+ 178:.\operations.c ****     for(x=residue[0];x>0;x--){
+ 752              		.loc 1 178 0 is_stmt 0 discriminator 1
+ 753 03a4 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 754 03a8 002B     		cmp	r3, #0
+ 755 03aa E1D1     		bne	.L49
+ 181:.\operations.c ****     }
+ 182:.\operations.c ****     for(x=1;x<=residue[0];x++){
+ 756              		.loc 1 182 0 is_stmt 1
+ 757 03ac 0123     		movs	r3, #1
+ 758 03ae 87F84630 		strb	r3, [r7, #70]
+ 759 03b2 0DE0     		b	.L50
+ 760              	.L53:
+ 183:.\operations.c ****         if((residue[x])!='0'){
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 18
+
+
+ 761              		.loc 1 183 0
+ 762 03b4 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 763 03b8 0C4A     		ldr	r2, .L57
+ 764 03ba D35C     		ldrb	r3, [r2, r3]
+ 765 03bc DBB2     		uxtb	r3, r3
+ 766 03be 302B     		cmp	r3, #48
+ 767 03c0 01D0     		beq	.L51
+ 184:.\operations.c ****             return 0;
+ 768              		.loc 1 184 0
+ 769 03c2 0023     		movs	r3, #0
+ 770 03c4 0CE0     		b	.L54
+ 771              	.L51:
+ 182:.\operations.c ****         if((residue[x])!='0'){
+ 772              		.loc 1 182 0 discriminator 2
+ 773 03c6 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 774 03ca 0133     		adds	r3, r3, #1
+ 775 03cc 87F84630 		strb	r3, [r7, #70]
+ 776              	.L50:
+ 182:.\operations.c ****         if((residue[x])!='0'){
+ 777              		.loc 1 182 0 is_stmt 0 discriminator 1
+ 778 03d0 064B     		ldr	r3, .L57
+ 779 03d2 1B78     		ldrb	r3, [r3]
+ 780 03d4 DBB2     		uxtb	r3, r3
+ 781 03d6 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 782 03da 9A42     		cmp	r2, r3
+ 783 03dc EAD9     		bls	.L53
+ 185:.\operations.c ****         }
+ 186:.\operations.c ****     }
+ 187:.\operations.c ****     return 1;
+ 784              		.loc 1 187 0 is_stmt 1
+ 785 03de 0123     		movs	r3, #1
+ 786              	.L54:
+ 188:.\operations.c **** }
+ 787              		.loc 1 188 0 discriminator 1
+ 788 03e0 1846     		mov	r0, r3
+ 789 03e2 4C37     		adds	r7, r7, #76
+ 790              		.cfi_def_cfa_offset 4
+ 791 03e4 BD46     		mov	sp, r7
+ 792              		.cfi_def_cfa_register 13
+ 793              		@ sp needed
+ 794 03e6 5DF8047B 		ldr	r7, [sp], #4
+ 795              		.cfi_restore 7
+ 796              		.cfi_def_cfa_offset 0
+ 797 03ea 7047     		bx	lr
+ 798              	.L58:
+ 799              		.align	2
+ 800              	.L57:
+ 801 03ec 00000000 		.word	residue
+ 802              		.cfi_endproc
+ 803              	.LFE57:
+ 804              		.size	subtraction, .-subtraction
+ 805              		.global	__aeabi_i2d
+ 806              		.global	__aeabi_dmul
+ 807              		.global	__aeabi_dadd
+ 808              		.global	__aeabi_ddiv
+ 809              		.global	__aeabi_dcmpgt
+ 810              		.global	__aeabi_dcmplt
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 19
+
+
+ 811              		.section	.text.higher,"ax",%progbits
+ 812              		.align	2
+ 813              		.global	higher
+ 814              		.thumb
+ 815              		.thumb_func
+ 816              		.type	higher, %function
+ 817              	higher:
+ 818              	.LFB58:
+ 189:.\operations.c **** 
+ 190:.\operations.c **** /*
+ 191:.\operations.c **** ***************************************************************************************************
+ 192:.\operations.c **** *                                    uint8 higher(uint8 *value1,uint8 *value2)
+ 193:.\operations.c **** *
+ 194:.\operations.c **** * Description : 
+ 195:.\operations.c **** *               
+ 196:.\operations.c **** *
+ 197:.\operations.c **** * Argument(s) : none
+ 198:.\operations.c **** *
+ 199:.\operations.c **** * Return(s)   : none
+ 200:.\operations.c **** *
+ 201:.\operations.c **** * Caller(s)   : 
+ 202:.\operations.c **** *
+ 203:.\operations.c **** * Note(s)     : none.
+ 204:.\operations.c **** ***************************************************************************************************
+ 205:.\operations.c **** */
+ 206:.\operations.c **** 
+ 207:.\operations.c **** uint8 higher(uint8 *value1,uint8 *value2){
+ 819              		.loc 1 207 0
+ 820              		.cfi_startproc
+ 821              		@ args = 0, pretend = 0, frame = 32
+ 822              		@ frame_needed = 1, uses_anonymous_args = 0
+ 823 0000 B0B5     		push	{r4, r5, r7, lr}
+ 824              		.cfi_def_cfa_offset 16
+ 825              		.cfi_offset 4, -16
+ 826              		.cfi_offset 5, -12
+ 827              		.cfi_offset 7, -8
+ 828              		.cfi_offset 14, -4
+ 829 0002 88B0     		sub	sp, sp, #32
+ 830              		.cfi_def_cfa_offset 48
+ 831 0004 00AF     		add	r7, sp, #0
+ 832              		.cfi_def_cfa_register 7
+ 833 0006 7860     		str	r0, [r7, #4]
+ 834 0008 3960     		str	r1, [r7]
+ 208:.\operations.c ****     double tempV1=0,tempV2=0;
+ 835              		.loc 1 208 0
+ 836 000a 4FF00002 		mov	r2, #0
+ 837 000e 4FF00003 		mov	r3, #0
+ 838 0012 C7E90623 		strd	r2, [r7, #24]
+ 839 0016 4FF00002 		mov	r2, #0
+ 840 001a 4FF00003 		mov	r3, #0
+ 841 001e C7E90423 		strd	r2, [r7, #16]
+ 209:.\operations.c ****     uint8 x,y;
+ 210:.\operations.c ****     y=value1[0];
+ 842              		.loc 1 210 0
+ 843 0022 7B68     		ldr	r3, [r7, #4]
+ 844 0024 1B78     		ldrb	r3, [r3]
+ 845 0026 BB73     		strb	r3, [r7, #14]
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 20
+
+
+ 211:.\operations.c ****     for(x=value1[0];x>0;x--){
+ 846              		.loc 1 211 0
+ 847 0028 7B68     		ldr	r3, [r7, #4]
+ 848 002a 1B78     		ldrb	r3, [r3]
+ 849 002c FB73     		strb	r3, [r7, #15]
+ 850 002e 4BE0     		b	.L60
+ 851              	.L63:
+ 212:.\operations.c ****         if(value1[x]!=','){
+ 852              		.loc 1 212 0
+ 853 0030 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 854 0032 7A68     		ldr	r2, [r7, #4]
+ 855 0034 1344     		add	r3, r3, r2
+ 856 0036 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 857 0038 2C2B     		cmp	r3, #44
+ 858 003a 28D0     		beq	.L61
+ 213:.\operations.c ****             tempV1+=((double)(value1[x]&0x0f)*pow(10,(y-x)));
+ 859              		.loc 1 213 0
+ 860 003c FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 861 003e 7A68     		ldr	r2, [r7, #4]
+ 862 0040 1344     		add	r3, r3, r2
+ 863 0042 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 864 0044 03F00F03 		and	r3, r3, #15
+ 865 0048 1846     		mov	r0, r3
+ 866 004a FFF7FEFF 		bl	__aeabi_i2d
+ 867 004e 0446     		mov	r4, r0
+ 868 0050 0D46     		mov	r5, r1
+ 869 0052 BA7B     		ldrb	r2, [r7, #14]	@ zero_extendqisi2
+ 870 0054 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 871 0056 D31A     		subs	r3, r2, r3
+ 872 0058 1846     		mov	r0, r3
+ 873 005a FFF7FEFF 		bl	__aeabi_i2d
+ 874 005e 0246     		mov	r2, r0
+ 875 0060 0B46     		mov	r3, r1
+ 876 0062 4FF00000 		mov	r0, #0
+ 877 0066 5249     		ldr	r1, .L77
+ 878 0068 FFF7FEFF 		bl	pow
+ 879 006c 0246     		mov	r2, r0
+ 880 006e 0B46     		mov	r3, r1
+ 881 0070 2046     		mov	r0, r4
+ 882 0072 2946     		mov	r1, r5
+ 883 0074 FFF7FEFF 		bl	__aeabi_dmul
+ 884 0078 0246     		mov	r2, r0
+ 885 007a 0B46     		mov	r3, r1
+ 886 007c D7E90601 		ldrd	r0, [r7, #24]
+ 887 0080 FFF7FEFF 		bl	__aeabi_dadd
+ 888 0084 0246     		mov	r2, r0
+ 889 0086 0B46     		mov	r3, r1
+ 890 0088 C7E90623 		strd	r2, [r7, #24]
+ 891 008c 19E0     		b	.L62
+ 892              	.L61:
+ 214:.\operations.c ****         }else{
+ 215:.\operations.c ****             tempV1/=pow(10,(y-x));
+ 893              		.loc 1 215 0
+ 894 008e BA7B     		ldrb	r2, [r7, #14]	@ zero_extendqisi2
+ 895 0090 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 896 0092 D31A     		subs	r3, r2, r3
+ 897 0094 1846     		mov	r0, r3
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 21
+
+
+ 898 0096 FFF7FEFF 		bl	__aeabi_i2d
+ 899 009a 0246     		mov	r2, r0
+ 900 009c 0B46     		mov	r3, r1
+ 901 009e 4FF00000 		mov	r0, #0
+ 902 00a2 4349     		ldr	r1, .L77
+ 903 00a4 FFF7FEFF 		bl	pow
+ 904 00a8 0246     		mov	r2, r0
+ 905 00aa 0B46     		mov	r3, r1
+ 906 00ac D7E90601 		ldrd	r0, [r7, #24]
+ 907 00b0 FFF7FEFF 		bl	__aeabi_ddiv
+ 908 00b4 0246     		mov	r2, r0
+ 909 00b6 0B46     		mov	r3, r1
+ 910 00b8 C7E90623 		strd	r2, [r7, #24]
+ 216:.\operations.c ****             y=x-1;
+ 911              		.loc 1 216 0
+ 912 00bc FB7B     		ldrb	r3, [r7, #15]
+ 913 00be 013B     		subs	r3, r3, #1
+ 914 00c0 BB73     		strb	r3, [r7, #14]
+ 915              	.L62:
+ 211:.\operations.c ****         if(value1[x]!=','){
+ 916              		.loc 1 211 0 discriminator 2
+ 917 00c2 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 918 00c4 013B     		subs	r3, r3, #1
+ 919 00c6 FB73     		strb	r3, [r7, #15]
+ 920              	.L60:
+ 211:.\operations.c ****         if(value1[x]!=','){
+ 921              		.loc 1 211 0 is_stmt 0 discriminator 1
+ 922 00c8 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 923 00ca 002B     		cmp	r3, #0
+ 924 00cc B0D1     		bne	.L63
+ 217:.\operations.c ****         }
+ 218:.\operations.c ****     }
+ 219:.\operations.c ****     y=value2[0];
+ 925              		.loc 1 219 0 is_stmt 1
+ 926 00ce 3B68     		ldr	r3, [r7]
+ 927 00d0 1B78     		ldrb	r3, [r3]
+ 928 00d2 BB73     		strb	r3, [r7, #14]
+ 220:.\operations.c ****     for(x=value2[0];x>0;x--){
+ 929              		.loc 1 220 0
+ 930 00d4 3B68     		ldr	r3, [r7]
+ 931 00d6 1B78     		ldrb	r3, [r3]
+ 932 00d8 FB73     		strb	r3, [r7, #15]
+ 933 00da 4BE0     		b	.L64
+ 934              	.L67:
+ 221:.\operations.c ****         if(value2[x]!=','){
+ 935              		.loc 1 221 0
+ 936 00dc FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 937 00de 3A68     		ldr	r2, [r7]
+ 938 00e0 1344     		add	r3, r3, r2
+ 939 00e2 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 940 00e4 2C2B     		cmp	r3, #44
+ 941 00e6 28D0     		beq	.L65
+ 222:.\operations.c ****             tempV2+=((double)(value2[x]&0x0f)*pow(10,(y-x)));
+ 942              		.loc 1 222 0
+ 943 00e8 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 944 00ea 3A68     		ldr	r2, [r7]
+ 945 00ec 1344     		add	r3, r3, r2
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 22
+
+
+ 946 00ee 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 947 00f0 03F00F03 		and	r3, r3, #15
+ 948 00f4 1846     		mov	r0, r3
+ 949 00f6 FFF7FEFF 		bl	__aeabi_i2d
+ 950 00fa 0446     		mov	r4, r0
+ 951 00fc 0D46     		mov	r5, r1
+ 952 00fe BA7B     		ldrb	r2, [r7, #14]	@ zero_extendqisi2
+ 953 0100 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 954 0102 D31A     		subs	r3, r2, r3
+ 955 0104 1846     		mov	r0, r3
+ 956 0106 FFF7FEFF 		bl	__aeabi_i2d
+ 957 010a 0246     		mov	r2, r0
+ 958 010c 0B46     		mov	r3, r1
+ 959 010e 4FF00000 		mov	r0, #0
+ 960 0112 2749     		ldr	r1, .L77
+ 961 0114 FFF7FEFF 		bl	pow
+ 962 0118 0246     		mov	r2, r0
+ 963 011a 0B46     		mov	r3, r1
+ 964 011c 2046     		mov	r0, r4
+ 965 011e 2946     		mov	r1, r5
+ 966 0120 FFF7FEFF 		bl	__aeabi_dmul
+ 967 0124 0246     		mov	r2, r0
+ 968 0126 0B46     		mov	r3, r1
+ 969 0128 D7E90401 		ldrd	r0, [r7, #16]
+ 970 012c FFF7FEFF 		bl	__aeabi_dadd
+ 971 0130 0246     		mov	r2, r0
+ 972 0132 0B46     		mov	r3, r1
+ 973 0134 C7E90423 		strd	r2, [r7, #16]
+ 974 0138 19E0     		b	.L66
+ 975              	.L65:
+ 223:.\operations.c ****         }else{
+ 224:.\operations.c ****             tempV2/=pow(10,(y-x));
+ 976              		.loc 1 224 0
+ 977 013a BA7B     		ldrb	r2, [r7, #14]	@ zero_extendqisi2
+ 978 013c FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 979 013e D31A     		subs	r3, r2, r3
+ 980 0140 1846     		mov	r0, r3
+ 981 0142 FFF7FEFF 		bl	__aeabi_i2d
+ 982 0146 0246     		mov	r2, r0
+ 983 0148 0B46     		mov	r3, r1
+ 984 014a 4FF00000 		mov	r0, #0
+ 985 014e 1849     		ldr	r1, .L77
+ 986 0150 FFF7FEFF 		bl	pow
+ 987 0154 0246     		mov	r2, r0
+ 988 0156 0B46     		mov	r3, r1
+ 989 0158 D7E90401 		ldrd	r0, [r7, #16]
+ 990 015c FFF7FEFF 		bl	__aeabi_ddiv
+ 991 0160 0246     		mov	r2, r0
+ 992 0162 0B46     		mov	r3, r1
+ 993 0164 C7E90423 		strd	r2, [r7, #16]
+ 225:.\operations.c ****             y=x-1;
+ 994              		.loc 1 225 0
+ 995 0168 FB7B     		ldrb	r3, [r7, #15]
+ 996 016a 013B     		subs	r3, r3, #1
+ 997 016c BB73     		strb	r3, [r7, #14]
+ 998              	.L66:
+ 220:.\operations.c ****         if(value2[x]!=','){
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 23
+
+
+ 999              		.loc 1 220 0 discriminator 2
+ 1000 016e FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 1001 0170 013B     		subs	r3, r3, #1
+ 1002 0172 FB73     		strb	r3, [r7, #15]
+ 1003              	.L64:
+ 220:.\operations.c ****         if(value2[x]!=','){
+ 1004              		.loc 1 220 0 is_stmt 0 discriminator 1
+ 1005 0174 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 1006 0176 002B     		cmp	r3, #0
+ 1007 0178 B0D1     		bne	.L67
+ 226:.\operations.c ****         }
+ 227:.\operations.c ****     }
+ 228:.\operations.c ****     if(tempV1>tempV2){
+ 1008              		.loc 1 228 0 is_stmt 1
+ 1009 017a D7E90601 		ldrd	r0, [r7, #24]
+ 1010 017e D7E90423 		ldrd	r2, [r7, #16]
+ 1011 0182 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 1012 0186 0346     		mov	r3, r0
+ 1013 0188 002B     		cmp	r3, #0
+ 1014 018a 01D0     		beq	.L75
+ 229:.\operations.c ****         return 1;
+ 1015              		.loc 1 229 0
+ 1016 018c 0123     		movs	r3, #1
+ 1017 018e 0BE0     		b	.L70
+ 1018              	.L75:
+ 230:.\operations.c ****     }else if(tempV1<tempV2){
+ 1019              		.loc 1 230 0
+ 1020 0190 D7E90601 		ldrd	r0, [r7, #24]
+ 1021 0194 D7E90423 		ldrd	r2, [r7, #16]
+ 1022 0198 FFF7FEFF 		bl	__aeabi_dcmplt
+ 1023 019c 0346     		mov	r3, r0
+ 1024 019e 002B     		cmp	r3, #0
+ 1025 01a0 01D0     		beq	.L76
+ 231:.\operations.c ****         return 2;
+ 1026              		.loc 1 231 0
+ 1027 01a2 0223     		movs	r3, #2
+ 1028 01a4 00E0     		b	.L70
+ 1029              	.L76:
+ 232:.\operations.c ****     }else{
+ 233:.\operations.c ****         return 0;
+ 1030              		.loc 1 233 0
+ 1031 01a6 0023     		movs	r3, #0
+ 1032              	.L70:
+ 234:.\operations.c ****     }
+ 235:.\operations.c **** }
+ 1033              		.loc 1 235 0
+ 1034 01a8 1846     		mov	r0, r3
+ 1035 01aa 2037     		adds	r7, r7, #32
+ 1036              		.cfi_def_cfa_offset 16
+ 1037 01ac BD46     		mov	sp, r7
+ 1038              		.cfi_def_cfa_register 13
+ 1039              		@ sp needed
+ 1040 01ae B0BD     		pop	{r4, r5, r7, pc}
+ 1041              	.L78:
+ 1042              		.align	2
+ 1043              	.L77:
+ 1044 01b0 00002440 		.word	1076101120
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 24
+
+
+ 1045              		.cfi_endproc
+ 1046              	.LFE58:
+ 1047              		.size	higher, .-higher
+ 1048              		.section	.text.multiplication_market,"ax",%progbits
+ 1049              		.align	2
+ 1050              		.global	multiplication_market
+ 1051              		.thumb
+ 1052              		.thumb_func
+ 1053              		.type	multiplication_market, %function
+ 1054              	multiplication_market:
+ 1055              	.LFB59:
+ 236:.\operations.c **** 
+ 237:.\operations.c **** /*
+ 238:.\operations.c **** ***************************************************************************************************
+ 239:.\operations.c **** *                         void multiplication_market(uint8 *value1,uint8 *value2)
+ 240:.\operations.c **** *
+ 241:.\operations.c **** * Description : 
+ 242:.\operations.c **** *               
+ 243:.\operations.c **** *
+ 244:.\operations.c **** * Argument(s) : none
+ 245:.\operations.c **** *
+ 246:.\operations.c **** * Return(s)   : none
+ 247:.\operations.c **** *
+ 248:.\operations.c **** * Caller(s)   : 
+ 249:.\operations.c **** *
+ 250:.\operations.c **** * Note(s)     : none.
+ 251:.\operations.c **** ***************************************************************************************************
+ 252:.\operations.c **** */
+ 253:.\operations.c **** 
+ 254:.\operations.c **** void multiplication_market(uint8 *value1,uint8 *value2){
+ 1056              		.loc 1 254 0
+ 1057              		.cfi_startproc
+ 1058              		@ args = 0, pretend = 0, frame = 96
+ 1059              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1060 0000 90B5     		push	{r4, r7, lr}
+ 1061              		.cfi_def_cfa_offset 12
+ 1062              		.cfi_offset 4, -12
+ 1063              		.cfi_offset 7, -8
+ 1064              		.cfi_offset 14, -4
+ 1065 0002 99B0     		sub	sp, sp, #100
+ 1066              		.cfi_def_cfa_offset 112
+ 1067 0004 00AF     		add	r7, sp, #0
+ 1068              		.cfi_def_cfa_register 7
+ 1069 0006 7860     		str	r0, [r7, #4]
+ 1070 0008 3960     		str	r1, [r7]
+ 255:.\operations.c ****     /*double tempV1=0,tempV2=0,total;
+ 256:.\operations.c ****     int x,y;
+ 257:.\operations.c ****     char valueTotal[16];
+ 258:.\operations.c ****     char decimal[5]="%.0f*";
+ 259:.\operations.c ****     decimal[2]=decimalMoney+0x30;
+ 260:.\operations.c ****     y=value1[0];
+ 261:.\operations.c ****     for(x=value1[0];x>0;x--){
+ 262:.\operations.c ****         if(value1[x]!=','){
+ 263:.\operations.c ****             tempV1+=((double)(value1[x]&0x0f)*pow(10,(y-x)));
+ 264:.\operations.c ****         }else{
+ 265:.\operations.c ****             tempV1/=pow(10,(y-x));
+ 266:.\operations.c ****             y=x-1;
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 25
+
+
+ 267:.\operations.c ****         }
+ 268:.\operations.c ****     }
+ 269:.\operations.c ****     y=value2[0];
+ 270:.\operations.c ****     for(x=value2[0];x>0;x--){
+ 271:.\operations.c ****         if(value2[x]!=','){
+ 272:.\operations.c ****             tempV2+=((double)(value2[x]&0x0f)*pow(10,(y-x)));
+ 273:.\operations.c ****         }else{
+ 274:.\operations.c ****             tempV2/=pow(10,(y-x));
+ 275:.\operations.c ****             y=x-1;
+ 276:.\operations.c ****         }
+ 277:.\operations.c ****     }
+ 278:.\operations.c ****     total=tempV1*tempV2;
+ 279:.\operations.c ****     sprintf(valueTotal,decimal,total);
+ 280:.\operations.c ****     for(y=0;y<16;y++){
+ 281:.\operations.c ****         if(valueTotal[y]=='*'){
+ 282:.\operations.c ****             break;
+ 283:.\operations.c ****         }
+ 284:.\operations.c ****     }
+ 285:.\operations.c ****     for(x=1;x<=y;x++){
+ 286:.\operations.c ****         temporal[x]=valueTotal[x-1];
+ 287:.\operations.c ****         if(valueTotal[x-1]=='.'){
+ 288:.\operations.c ****             temporal[x]=',';
+ 289:.\operations.c ****         }
+ 290:.\operations.c ****     }
+ 291:.\operations.c ****     for(x=8;x>0;x--){
+ 292:.\operations.c ****         temporal[x]=temporal[y];
+ 293:.\operations.c ****         y--;
+ 294:.\operations.c ****         if(y<=0){
+ 295:.\operations.c ****             while(x>1){
+ 296:.\operations.c ****                 x--;
+ 297:.\operations.c ****                 temporal[x]='0';
+ 298:.\operations.c ****             }
+ 299:.\operations.c ****             break;
+ 300:.\operations.c ****         }
+ 301:.\operations.c ****     }
+ 302:.\operations.c ****     temporal[0]=8;
+ 303:.\operations.c ****     CyWdtClear();*/
+ 304:.\operations.c ****     /*double tempV1=0,tempV2=0,total;
+ 305:.\operations.c ****     int x,y;
+ 306:.\operations.c ****     y=value1[0];
+ 307:.\operations.c ****     for(x=value1[0];x>0;x--){
+ 308:.\operations.c ****         if(value1[x]!=','){
+ 309:.\operations.c ****             tempV1+=((double)(value1[x]&0x0f)*pow(10,(y-x)));
+ 310:.\operations.c ****         }else{
+ 311:.\operations.c ****             tempV1/=pow(10,(y-x));
+ 312:.\operations.c ****             y=x-1;
+ 313:.\operations.c ****         }
+ 314:.\operations.c ****     }
+ 315:.\operations.c ****     y=value2[0];
+ 316:.\operations.c ****     for(x=value2[0];x>0;x--){
+ 317:.\operations.c ****         if(value2[x]!=','){
+ 318:.\operations.c ****             tempV2+=((double)(value2[x]&0x0f)*pow(10,(y-x)));
+ 319:.\operations.c ****         }else{
+ 320:.\operations.c ****             tempV2/=pow(10,(y-x));
+ 321:.\operations.c ****             y=x-1;
+ 322:.\operations.c ****         }
+ 323:.\operations.c ****     }
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 26
+
+
+ 324:.\operations.c ****     total=tempV1*tempV2;
+ 325:.\operations.c ****     for(x=1;x<=8;x++){
+ 326:.\operations.c **** 		temporal[9-x] = (((int)total%(int)pow(10,x))/pow(10,x-1))+0x30;
+ 327:.\operations.c **** 	}
+ 328:.\operations.c **** 	temporal[0]=8;*/
+ 329:.\operations.c ****     uint8 tempValue1[10],tempValue2[10],tempValue[4][15]={{0},{0}},x,y,z,tenth;
+ 1071              		.loc 1 329 0
+ 1072 000a 07F10803 		add	r3, r7, #8
+ 1073 000e 3C22     		movs	r2, #60
+ 1074 0010 1846     		mov	r0, r3
+ 1075 0012 0021     		movs	r1, #0
+ 1076 0014 FFF7FEFF 		bl	memset
+ 330:.\operations.c ****     tempValue1[0]=value1[0];
+ 1077              		.loc 1 330 0
+ 1078 0018 7B68     		ldr	r3, [r7, #4]
+ 1079 001a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1080 001c 87F85030 		strb	r3, [r7, #80]
+ 331:.\operations.c ****     for(x=value1[0];x>0;x--){
+ 1081              		.loc 1 331 0
+ 1082 0020 7B68     		ldr	r3, [r7, #4]
+ 1083 0022 1B78     		ldrb	r3, [r3]
+ 1084 0024 87F85F30 		strb	r3, [r7, #95]
+ 1085 0028 38E0     		b	.L80
+ 1086              	.L85:
+ 332:.\operations.c ****         tempValue1[x]=value1[x]&0x0f;
+ 1087              		.loc 1 332 0
+ 1088 002a 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1089 002e 97F85F20 		ldrb	r2, [r7, #95]	@ zero_extendqisi2
+ 1090 0032 7968     		ldr	r1, [r7, #4]
+ 1091 0034 0A44     		add	r2, r2, r1
+ 1092 0036 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1093 0038 02F00F02 		and	r2, r2, #15
+ 1094 003c D2B2     		uxtb	r2, r2
+ 1095 003e 07F16001 		add	r1, r7, #96
+ 1096 0042 0B44     		add	r3, r3, r1
+ 1097 0044 03F8102C 		strb	r2, [r3, #-16]
+ 333:.\operations.c ****         if(value1[x]==','){
+ 1098              		.loc 1 333 0
+ 1099 0048 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1100 004c 7A68     		ldr	r2, [r7, #4]
+ 1101 004e 1344     		add	r3, r3, r2
+ 1102 0050 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1103 0052 2C2B     		cmp	r3, #44
+ 1104 0054 1DD1     		bne	.L81
+ 334:.\operations.c ****             while(x>0){
+ 1105              		.loc 1 334 0
+ 1106 0056 14E0     		b	.L82
+ 1107              	.L83:
+ 335:.\operations.c ****                 tempValue1[x]=value1[x-1]&0x0f;
+ 1108              		.loc 1 335 0
+ 1109 0058 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1110 005c 97F85F20 		ldrb	r2, [r7, #95]	@ zero_extendqisi2
+ 1111 0060 013A     		subs	r2, r2, #1
+ 1112 0062 7968     		ldr	r1, [r7, #4]
+ 1113 0064 0A44     		add	r2, r2, r1
+ 1114 0066 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1115 0068 02F00F02 		and	r2, r2, #15
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 27
+
+
+ 1116 006c D2B2     		uxtb	r2, r2
+ 1117 006e 07F16001 		add	r1, r7, #96
+ 1118 0072 0B44     		add	r3, r3, r1
+ 1119 0074 03F8102C 		strb	r2, [r3, #-16]
+ 336:.\operations.c ****                 x--;
+ 1120              		.loc 1 336 0
+ 1121 0078 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1122 007c 013B     		subs	r3, r3, #1
+ 1123 007e 87F85F30 		strb	r3, [r7, #95]
+ 1124              	.L82:
+ 334:.\operations.c ****             while(x>0){
+ 1125              		.loc 1 334 0
+ 1126 0082 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1127 0086 002B     		cmp	r3, #0
+ 1128 0088 E6D1     		bne	.L83
+ 337:.\operations.c ****             }
+ 338:.\operations.c ****             tempValue1[1]=0;
+ 1129              		.loc 1 338 0
+ 1130 008a 0023     		movs	r3, #0
+ 1131 008c 87F85130 		strb	r3, [r7, #81]
+ 339:.\operations.c ****             break;
+ 1132              		.loc 1 339 0
+ 1133 0090 08E0     		b	.L84
+ 1134              	.L81:
+ 331:.\operations.c ****         tempValue1[x]=value1[x]&0x0f;
+ 1135              		.loc 1 331 0 discriminator 2
+ 1136 0092 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1137 0096 013B     		subs	r3, r3, #1
+ 1138 0098 87F85F30 		strb	r3, [r7, #95]
+ 1139              	.L80:
+ 331:.\operations.c ****         tempValue1[x]=value1[x]&0x0f;
+ 1140              		.loc 1 331 0 is_stmt 0 discriminator 1
+ 1141 009c 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1142 00a0 002B     		cmp	r3, #0
+ 1143 00a2 C2D1     		bne	.L85
+ 1144              	.L84:
+ 340:.\operations.c ****         }
+ 341:.\operations.c ****     }
+ 342:.\operations.c ****     tempValue2[0]=value2[0];
+ 1145              		.loc 1 342 0 is_stmt 1
+ 1146 00a4 3B68     		ldr	r3, [r7]
+ 1147 00a6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1148 00a8 87F84430 		strb	r3, [r7, #68]
+ 343:.\operations.c ****     for(x=value2[0];x>0;x--){
+ 1149              		.loc 1 343 0
+ 1150 00ac 3B68     		ldr	r3, [r7]
+ 1151 00ae 1B78     		ldrb	r3, [r3]
+ 1152 00b0 87F85F30 		strb	r3, [r7, #95]
+ 1153 00b4 38E0     		b	.L86
+ 1154              	.L91:
+ 344:.\operations.c ****         tempValue2[x]=value2[x]&0x0f;
+ 1155              		.loc 1 344 0
+ 1156 00b6 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1157 00ba 97F85F20 		ldrb	r2, [r7, #95]	@ zero_extendqisi2
+ 1158 00be 3968     		ldr	r1, [r7]
+ 1159 00c0 0A44     		add	r2, r2, r1
+ 1160 00c2 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 28
+
+
+ 1161 00c4 02F00F02 		and	r2, r2, #15
+ 1162 00c8 D2B2     		uxtb	r2, r2
+ 1163 00ca 07F16001 		add	r1, r7, #96
+ 1164 00ce 0B44     		add	r3, r3, r1
+ 1165 00d0 03F81C2C 		strb	r2, [r3, #-28]
+ 345:.\operations.c ****         if(value2[x]==','){
+ 1166              		.loc 1 345 0
+ 1167 00d4 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1168 00d8 3A68     		ldr	r2, [r7]
+ 1169 00da 1344     		add	r3, r3, r2
+ 1170 00dc 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1171 00de 2C2B     		cmp	r3, #44
+ 1172 00e0 1DD1     		bne	.L87
+ 346:.\operations.c ****             while(x>0){
+ 1173              		.loc 1 346 0
+ 1174 00e2 14E0     		b	.L88
+ 1175              	.L89:
+ 347:.\operations.c ****                 tempValue2[x]=value2[x-1]&0x0f;
+ 1176              		.loc 1 347 0
+ 1177 00e4 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1178 00e8 97F85F20 		ldrb	r2, [r7, #95]	@ zero_extendqisi2
+ 1179 00ec 013A     		subs	r2, r2, #1
+ 1180 00ee 3968     		ldr	r1, [r7]
+ 1181 00f0 0A44     		add	r2, r2, r1
+ 1182 00f2 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1183 00f4 02F00F02 		and	r2, r2, #15
+ 1184 00f8 D2B2     		uxtb	r2, r2
+ 1185 00fa 07F16001 		add	r1, r7, #96
+ 1186 00fe 0B44     		add	r3, r3, r1
+ 1187 0100 03F81C2C 		strb	r2, [r3, #-28]
+ 348:.\operations.c ****                 x--;
+ 1188              		.loc 1 348 0
+ 1189 0104 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1190 0108 013B     		subs	r3, r3, #1
+ 1191 010a 87F85F30 		strb	r3, [r7, #95]
+ 1192              	.L88:
+ 346:.\operations.c ****             while(x>0){
+ 1193              		.loc 1 346 0
+ 1194 010e 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1195 0112 002B     		cmp	r3, #0
+ 1196 0114 E6D1     		bne	.L89
+ 349:.\operations.c ****             }
+ 350:.\operations.c ****             tempValue2[1]=0;
+ 1197              		.loc 1 350 0
+ 1198 0116 0023     		movs	r3, #0
+ 1199 0118 87F84530 		strb	r3, [r7, #69]
+ 351:.\operations.c ****             break;
+ 1200              		.loc 1 351 0
+ 1201 011c 08E0     		b	.L90
+ 1202              	.L87:
+ 343:.\operations.c ****         tempValue2[x]=value2[x]&0x0f;
+ 1203              		.loc 1 343 0 discriminator 2
+ 1204 011e 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1205 0122 013B     		subs	r3, r3, #1
+ 1206 0124 87F85F30 		strb	r3, [r7, #95]
+ 1207              	.L86:
+ 343:.\operations.c ****         tempValue2[x]=value2[x]&0x0f;
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 29
+
+
+ 1208              		.loc 1 343 0 is_stmt 0 discriminator 1
+ 1209 0128 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1210 012c 002B     		cmp	r3, #0
+ 1211 012e C2D1     		bne	.L91
+ 1212              	.L90:
+ 352:.\operations.c ****         }
+ 353:.\operations.c ****     }
+ 354:.\operations.c ****     z=3;
+ 1213              		.loc 1 354 0 is_stmt 1
+ 1214 0130 0323     		movs	r3, #3
+ 1215 0132 87F85D30 		strb	r3, [r7, #93]
+ 355:.\operations.c ****     for(x=3;x>0;x--){
+ 1216              		.loc 1 355 0
+ 1217 0136 0323     		movs	r3, #3
+ 1218 0138 87F85F30 		strb	r3, [r7, #95]
+ 1219 013c 67E0     		b	.L92
+ 1220              	.L95:
+ 356:.\operations.c ****         tenth=0;
+ 1221              		.loc 1 356 0
+ 1222 013e 0023     		movs	r3, #0
+ 1223 0140 87F85C30 		strb	r3, [r7, #92]
+ 357:.\operations.c ****         for(y=8;y>0;y--){
+ 1224              		.loc 1 357 0
+ 1225 0144 0823     		movs	r3, #8
+ 1226 0146 87F85E30 		strb	r3, [r7, #94]
+ 1227 014a 52E0     		b	.L93
+ 1228              	.L94:
+ 358:.\operations.c ****             tempValue[3-x][y+z]=((tempValue1[x]*tempValue2[y])+tenth)%10;
+ 1229              		.loc 1 358 0 discriminator 3
+ 1230 014c 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1231 0150 C3F10300 		rsb	r0, r3, #3
+ 1232 0154 97F85E20 		ldrb	r2, [r7, #94]	@ zero_extendqisi2
+ 1233 0158 97F85D30 		ldrb	r3, [r7, #93]	@ zero_extendqisi2
+ 1234 015c D418     		adds	r4, r2, r3
+ 1235 015e 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1236 0162 07F16002 		add	r2, r7, #96
+ 1237 0166 1344     		add	r3, r3, r2
+ 1238 0168 13F8103C 		ldrb	r3, [r3, #-16]	@ zero_extendqisi2
+ 1239 016c 1A46     		mov	r2, r3
+ 1240 016e 97F85E30 		ldrb	r3, [r7, #94]	@ zero_extendqisi2
+ 1241 0172 07F16001 		add	r1, r7, #96
+ 1242 0176 0B44     		add	r3, r3, r1
+ 1243 0178 13F81C3C 		ldrb	r3, [r3, #-28]	@ zero_extendqisi2
+ 1244 017c 03FB02F2 		mul	r2, r3, r2
+ 1245 0180 97F85C30 		ldrb	r3, [r7, #92]	@ zero_extendqisi2
+ 1246 0184 1A44     		add	r2, r2, r3
+ 1247 0186 774B     		ldr	r3, .L101
+ 1248 0188 83FB0213 		smull	r1, r3, r3, r2
+ 1249 018c 9910     		asrs	r1, r3, #2
+ 1250 018e D317     		asrs	r3, r2, #31
+ 1251 0190 C91A     		subs	r1, r1, r3
+ 1252 0192 0B46     		mov	r3, r1
+ 1253 0194 9B00     		lsls	r3, r3, #2
+ 1254 0196 0B44     		add	r3, r3, r1
+ 1255 0198 5B00     		lsls	r3, r3, #1
+ 1256 019a D11A     		subs	r1, r2, r3
+ 1257 019c CAB2     		uxtb	r2, r1
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 30
+
+
+ 1258 019e 0346     		mov	r3, r0
+ 1259 01a0 1B01     		lsls	r3, r3, #4
+ 1260 01a2 1B1A     		subs	r3, r3, r0
+ 1261 01a4 07F16001 		add	r1, r7, #96
+ 1262 01a8 0B44     		add	r3, r3, r1
+ 1263 01aa 2344     		add	r3, r3, r4
+ 1264 01ac 583B     		subs	r3, r3, #88
+ 1265 01ae 1A70     		strb	r2, [r3]
+ 359:.\operations.c ****             tenth=((tempValue1[x]*tempValue2[y])+tenth)/10;
+ 1266              		.loc 1 359 0 discriminator 3
+ 1267 01b0 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1268 01b4 07F16002 		add	r2, r7, #96
+ 1269 01b8 1344     		add	r3, r3, r2
+ 1270 01ba 13F8103C 		ldrb	r3, [r3, #-16]	@ zero_extendqisi2
+ 1271 01be 1A46     		mov	r2, r3
+ 1272 01c0 97F85E30 		ldrb	r3, [r7, #94]	@ zero_extendqisi2
+ 1273 01c4 07F16001 		add	r1, r7, #96
+ 1274 01c8 0B44     		add	r3, r3, r1
+ 1275 01ca 13F81C3C 		ldrb	r3, [r3, #-28]	@ zero_extendqisi2
+ 1276 01ce 03FB02F2 		mul	r2, r3, r2
+ 1277 01d2 97F85C30 		ldrb	r3, [r7, #92]	@ zero_extendqisi2
+ 1278 01d6 1344     		add	r3, r3, r2
+ 1279 01d8 624A     		ldr	r2, .L101
+ 1280 01da 82FB0312 		smull	r1, r2, r2, r3
+ 1281 01de 9210     		asrs	r2, r2, #2
+ 1282 01e0 DB17     		asrs	r3, r3, #31
+ 1283 01e2 D31A     		subs	r3, r2, r3
+ 1284 01e4 87F85C30 		strb	r3, [r7, #92]
+ 357:.\operations.c ****         for(y=8;y>0;y--){
+ 1285              		.loc 1 357 0 discriminator 3
+ 1286 01e8 97F85E30 		ldrb	r3, [r7, #94]	@ zero_extendqisi2
+ 1287 01ec 013B     		subs	r3, r3, #1
+ 1288 01ee 87F85E30 		strb	r3, [r7, #94]
+ 1289              	.L93:
+ 357:.\operations.c ****         for(y=8;y>0;y--){
+ 1290              		.loc 1 357 0 is_stmt 0 discriminator 1
+ 1291 01f2 97F85E30 		ldrb	r3, [r7, #94]	@ zero_extendqisi2
+ 1292 01f6 002B     		cmp	r3, #0
+ 1293 01f8 A8D1     		bne	.L94
+ 360:.\operations.c ****         }
+ 361:.\operations.c ****         z--;
+ 1294              		.loc 1 361 0 is_stmt 1 discriminator 2
+ 1295 01fa 97F85D30 		ldrb	r3, [r7, #93]	@ zero_extendqisi2
+ 1296 01fe 013B     		subs	r3, r3, #1
+ 1297 0200 87F85D30 		strb	r3, [r7, #93]
+ 355:.\operations.c ****         tenth=0;
+ 1298              		.loc 1 355 0 discriminator 2
+ 1299 0204 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1300 0208 013B     		subs	r3, r3, #1
+ 1301 020a 87F85F30 		strb	r3, [r7, #95]
+ 1302              	.L92:
+ 355:.\operations.c ****         tenth=0;
+ 1303              		.loc 1 355 0 is_stmt 0 discriminator 1
+ 1304 020e 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1305 0212 002B     		cmp	r3, #0
+ 1306 0214 93D1     		bne	.L95
+ 362:.\operations.c ****     }
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 31
+
+
+ 363:.\operations.c ****     tenth=0;
+ 1307              		.loc 1 363 0 is_stmt 1
+ 1308 0216 0023     		movs	r3, #0
+ 1309 0218 87F85C30 		strb	r3, [r7, #92]
+ 364:.\operations.c ****     for(x=11;x>0;x--){
+ 1310              		.loc 1 364 0
+ 1311 021c 0B23     		movs	r3, #11
+ 1312 021e 87F85F30 		strb	r3, [r7, #95]
+ 1313 0222 57E0     		b	.L96
+ 1314              	.L97:
+ 365:.\operations.c ****         tempValue[3][x]=((tempValue[0][x]+tempValue[1][x])+(tempValue[2][x]+tenth))%10;
+ 1315              		.loc 1 365 0 discriminator 3
+ 1316 0224 97F85F00 		ldrb	r0, [r7, #95]	@ zero_extendqisi2
+ 1317 0228 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1318 022c 07F16002 		add	r2, r7, #96
+ 1319 0230 1344     		add	r3, r3, r2
+ 1320 0232 13F8583C 		ldrb	r3, [r3, #-88]	@ zero_extendqisi2
+ 1321 0236 1A46     		mov	r2, r3
+ 1322 0238 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1323 023c 07F16001 		add	r1, r7, #96
+ 1324 0240 0B44     		add	r3, r3, r1
+ 1325 0242 13F8493C 		ldrb	r3, [r3, #-73]	@ zero_extendqisi2
+ 1326 0246 1A44     		add	r2, r2, r3
+ 1327 0248 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1328 024c 07F16001 		add	r1, r7, #96
+ 1329 0250 0B44     		add	r3, r3, r1
+ 1330 0252 13F83A3C 		ldrb	r3, [r3, #-58]	@ zero_extendqisi2
+ 1331 0256 1946     		mov	r1, r3
+ 1332 0258 97F85C30 		ldrb	r3, [r7, #92]	@ zero_extendqisi2
+ 1333 025c 0B44     		add	r3, r3, r1
+ 1334 025e 1A44     		add	r2, r2, r3
+ 1335 0260 404B     		ldr	r3, .L101
+ 1336 0262 83FB0213 		smull	r1, r3, r3, r2
+ 1337 0266 9910     		asrs	r1, r3, #2
+ 1338 0268 D317     		asrs	r3, r2, #31
+ 1339 026a C91A     		subs	r1, r1, r3
+ 1340 026c 0B46     		mov	r3, r1
+ 1341 026e 9B00     		lsls	r3, r3, #2
+ 1342 0270 0B44     		add	r3, r3, r1
+ 1343 0272 5B00     		lsls	r3, r3, #1
+ 1344 0274 D11A     		subs	r1, r2, r3
+ 1345 0276 CAB2     		uxtb	r2, r1
+ 1346 0278 07F16003 		add	r3, r7, #96
+ 1347 027c 0344     		add	r3, r3, r0
+ 1348 027e 03F82B2C 		strb	r2, [r3, #-43]
+ 366:.\operations.c ****         tenth=((tempValue[0][x]+tempValue[1][x])+(tempValue[2][x]+tenth))/10;
+ 1349              		.loc 1 366 0 discriminator 3
+ 1350 0282 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1351 0286 07F16002 		add	r2, r7, #96
+ 1352 028a 1344     		add	r3, r3, r2
+ 1353 028c 13F8583C 		ldrb	r3, [r3, #-88]	@ zero_extendqisi2
+ 1354 0290 1A46     		mov	r2, r3
+ 1355 0292 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1356 0296 07F16001 		add	r1, r7, #96
+ 1357 029a 0B44     		add	r3, r3, r1
+ 1358 029c 13F8493C 		ldrb	r3, [r3, #-73]	@ zero_extendqisi2
+ 1359 02a0 1A44     		add	r2, r2, r3
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 32
+
+
+ 1360 02a2 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1361 02a6 07F16001 		add	r1, r7, #96
+ 1362 02aa 0B44     		add	r3, r3, r1
+ 1363 02ac 13F83A3C 		ldrb	r3, [r3, #-58]	@ zero_extendqisi2
+ 1364 02b0 1946     		mov	r1, r3
+ 1365 02b2 97F85C30 		ldrb	r3, [r7, #92]	@ zero_extendqisi2
+ 1366 02b6 0B44     		add	r3, r3, r1
+ 1367 02b8 1344     		add	r3, r3, r2
+ 1368 02ba 2A4A     		ldr	r2, .L101
+ 1369 02bc 82FB0312 		smull	r1, r2, r2, r3
+ 1370 02c0 9210     		asrs	r2, r2, #2
+ 1371 02c2 DB17     		asrs	r3, r3, #31
+ 1372 02c4 D31A     		subs	r3, r2, r3
+ 1373 02c6 87F85C30 		strb	r3, [r7, #92]
+ 364:.\operations.c ****     for(x=11;x>0;x--){
+ 1374              		.loc 1 364 0 discriminator 3
+ 1375 02ca 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1376 02ce 013B     		subs	r3, r3, #1
+ 1377 02d0 87F85F30 		strb	r3, [r7, #95]
+ 1378              	.L96:
+ 364:.\operations.c ****     for(x=11;x>0;x--){
+ 1379              		.loc 1 364 0 is_stmt 0 discriminator 1
+ 1380 02d4 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1381 02d8 002B     		cmp	r3, #0
+ 1382 02da A3D1     		bne	.L97
+ 367:.\operations.c ****     }
+ 368:.\operations.c ****     y=11;
+ 1383              		.loc 1 368 0 is_stmt 1
+ 1384 02dc 0B23     		movs	r3, #11
+ 1385 02de 87F85E30 		strb	r3, [r7, #94]
+ 369:.\operations.c ****     z=0;
+ 1386              		.loc 1 369 0
+ 1387 02e2 0023     		movs	r3, #0
+ 1388 02e4 87F85D30 		strb	r3, [r7, #93]
+ 370:.\operations.c ****     for(x=8;x>0;x--){
+ 1389              		.loc 1 370 0
+ 1390 02e8 0823     		movs	r3, #8
+ 1391 02ea 87F85F30 		strb	r3, [r7, #95]
+ 1392 02ee 2FE0     		b	.L98
+ 1393              	.L100:
+ 371:.\operations.c ****         temporal[x]=(tempValue[3][y]&0x0f)+0x30;
+ 1394              		.loc 1 371 0
+ 1395 02f0 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1396 02f4 97F85E20 		ldrb	r2, [r7, #94]	@ zero_extendqisi2
+ 1397 02f8 07F16001 		add	r1, r7, #96
+ 1398 02fc 0A44     		add	r2, r2, r1
+ 1399 02fe 12F82B2C 		ldrb	r2, [r2, #-43]	@ zero_extendqisi2
+ 1400 0302 02F00F02 		and	r2, r2, #15
+ 1401 0306 D2B2     		uxtb	r2, r2
+ 1402 0308 3032     		adds	r2, r2, #48
+ 1403 030a D1B2     		uxtb	r1, r2
+ 1404 030c 164A     		ldr	r2, .L101+4
+ 1405 030e D154     		strb	r1, [r2, r3]
+ 372:.\operations.c ****         y--;
+ 1406              		.loc 1 372 0
+ 1407 0310 97F85E30 		ldrb	r3, [r7, #94]	@ zero_extendqisi2
+ 1408 0314 013B     		subs	r3, r3, #1
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 33
+
+
+ 1409 0316 87F85E30 		strb	r3, [r7, #94]
+ 373:.\operations.c ****         z++;
+ 1410              		.loc 1 373 0
+ 1411 031a 97F85D30 		ldrb	r3, [r7, #93]	@ zero_extendqisi2
+ 1412 031e 0133     		adds	r3, r3, #1
+ 1413 0320 87F85D30 		strb	r3, [r7, #93]
+ 374:.\operations.c ****         if(z==decimalMoney){
+ 1414              		.loc 1 374 0
+ 1415 0324 114B     		ldr	r3, .L101+8
+ 1416 0326 1B78     		ldrb	r3, [r3]
+ 1417 0328 DBB2     		uxtb	r3, r3
+ 1418 032a 97F85D20 		ldrb	r2, [r7, #93]	@ zero_extendqisi2
+ 1419 032e 9A42     		cmp	r2, r3
+ 1420 0330 09D1     		bne	.L99
+ 375:.\operations.c ****             x--;
+ 1421              		.loc 1 375 0
+ 1422 0332 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1423 0336 013B     		subs	r3, r3, #1
+ 1424 0338 87F85F30 		strb	r3, [r7, #95]
+ 376:.\operations.c ****             temporal[x]=',';
+ 1425              		.loc 1 376 0
+ 1426 033c 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1427 0340 094A     		ldr	r2, .L101+4
+ 1428 0342 2C21     		movs	r1, #44
+ 1429 0344 D154     		strb	r1, [r2, r3]
+ 1430              	.L99:
+ 370:.\operations.c ****         temporal[x]=(tempValue[3][y]&0x0f)+0x30;
+ 1431              		.loc 1 370 0 discriminator 2
+ 1432 0346 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1433 034a 013B     		subs	r3, r3, #1
+ 1434 034c 87F85F30 		strb	r3, [r7, #95]
+ 1435              	.L98:
+ 370:.\operations.c ****         temporal[x]=(tempValue[3][y]&0x0f)+0x30;
+ 1436              		.loc 1 370 0 is_stmt 0 discriminator 1
+ 1437 0350 97F85F30 		ldrb	r3, [r7, #95]	@ zero_extendqisi2
+ 1438 0354 002B     		cmp	r3, #0
+ 1439 0356 CBD1     		bne	.L100
+ 377:.\operations.c ****         }
+ 378:.\operations.c ****     }
+ 379:.\operations.c ****     temporal[0]=8;
+ 1440              		.loc 1 379 0 is_stmt 1
+ 1441 0358 034B     		ldr	r3, .L101+4
+ 1442 035a 0822     		movs	r2, #8
+ 1443 035c 1A70     		strb	r2, [r3]
+ 380:.\operations.c **** }
+ 1444              		.loc 1 380 0
+ 1445 035e 6437     		adds	r7, r7, #100
+ 1446              		.cfi_def_cfa_offset 12
+ 1447 0360 BD46     		mov	sp, r7
+ 1448              		.cfi_def_cfa_register 13
+ 1449              		@ sp needed
+ 1450 0362 90BD     		pop	{r4, r7, pc}
+ 1451              	.L102:
+ 1452              		.align	2
+ 1453              	.L101:
+ 1454 0364 67666666 		.word	1717986919
+ 1455 0368 00000000 		.word	temporal
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 34
+
+
+ 1456 036c 00000000 		.word	decimalMoney
+ 1457              		.cfi_endproc
+ 1458              	.LFE59:
+ 1459              		.size	multiplication_market, .-multiplication_market
+ 1460              		.section	.text.addition_market,"ax",%progbits
+ 1461              		.align	2
+ 1462              		.global	addition_market
+ 1463              		.thumb
+ 1464              		.thumb_func
+ 1465              		.type	addition_market, %function
+ 1466              	addition_market:
+ 1467              	.LFB60:
+ 381:.\operations.c **** 
+ 382:.\operations.c **** /*
+ 383:.\operations.c **** ***************************************************************************************************
+ 384:.\operations.c **** *                    void addition_market(uint8 *value1,uint8 *value2, uint8 *value3)
+ 385:.\operations.c **** *
+ 386:.\operations.c **** * Description : 
+ 387:.\operations.c **** *               
+ 388:.\operations.c **** *
+ 389:.\operations.c **** * Argument(s) : none
+ 390:.\operations.c **** *
+ 391:.\operations.c **** * Return(s)   : none
+ 392:.\operations.c **** *
+ 393:.\operations.c **** * Caller(s)   : 
+ 394:.\operations.c **** *
+ 395:.\operations.c **** * Note(s)     : none.
+ 396:.\operations.c **** ***************************************************************************************************
+ 397:.\operations.c **** */
+ 398:.\operations.c **** 
+ 399:.\operations.c **** void addition_market(uint8 *value1,uint8 *value2, uint8 *value3){
+ 1468              		.loc 1 399 0
+ 1469              		.cfi_startproc
+ 1470              		@ args = 0, pretend = 0, frame = 72
+ 1471              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1472              		@ link register save eliminated.
+ 1473 0000 80B4     		push	{r7}
+ 1474              		.cfi_def_cfa_offset 4
+ 1475              		.cfi_offset 7, -4
+ 1476 0002 93B0     		sub	sp, sp, #76
+ 1477              		.cfi_def_cfa_offset 80
+ 1478 0004 00AF     		add	r7, sp, #0
+ 1479              		.cfi_def_cfa_register 7
+ 1480 0006 F860     		str	r0, [r7, #12]
+ 1481 0008 B960     		str	r1, [r7, #8]
+ 1482 000a 7A60     		str	r2, [r7, #4]
+ 400:.\operations.c ****    /* double tempV1=0,tempV2=0,tempV3=0,total;
+ 401:.\operations.c ****     int x,y;
+ 402:.\operations.c ****     char valueTotal[12];
+ 403:.\operations.c ****     char decimal[5]="%.0f*";
+ 404:.\operations.c ****     decimal[2]=decimalMoney+0x30;
+ 405:.\operations.c ****     y=value1[0];
+ 406:.\operations.c ****     for(x=value1[0];x>0;x--){
+ 407:.\operations.c ****         if(value1[x]!=','){
+ 408:.\operations.c ****             tempV1+=((double)(value1[x]&0x0f)*pow(10,(y-x)));
+ 409:.\operations.c ****         }else{
+ 410:.\operations.c ****             tempV1/=pow(10,(y-x));
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 35
+
+
+ 411:.\operations.c ****             y=x-1;
+ 412:.\operations.c ****         }
+ 413:.\operations.c ****     }
+ 414:.\operations.c ****     y=value2[0];
+ 415:.\operations.c ****     for(x=value2[0];x>0;x--){
+ 416:.\operations.c ****         if(value2[x]!=','){
+ 417:.\operations.c ****             tempV2+=((double)(value2[x]&0x0f)*pow(10,(y-x)));
+ 418:.\operations.c ****         }else{
+ 419:.\operations.c ****             tempV2/=pow(10,(y-x));
+ 420:.\operations.c ****             y=x-1;
+ 421:.\operations.c ****         }
+ 422:.\operations.c ****     }
+ 423:.\operations.c ****     y=value3[0];
+ 424:.\operations.c ****     for(x=value3[0];x>0;x--){
+ 425:.\operations.c ****         if(value3[x]!=','){
+ 426:.\operations.c ****             tempV3+=((double)(value3[x]&0x0f)*pow(10,(y-x)));
+ 427:.\operations.c ****         }else{
+ 428:.\operations.c ****             tempV3/=pow(10,(y-x));
+ 429:.\operations.c ****             y=x-1;
+ 430:.\operations.c ****         }
+ 431:.\operations.c ****     }
+ 432:.\operations.c ****     total=tempV1+tempV2+tempV3;
+ 433:.\operations.c ****     sprintf(valueTotal,decimal,total);
+ 434:.\operations.c ****     for(y=0;y<12;y++){
+ 435:.\operations.c ****         if(valueTotal[y]=='*'){
+ 436:.\operations.c ****             break;
+ 437:.\operations.c ****         }
+ 438:.\operations.c ****     }
+ 439:.\operations.c ****     for(x=1;x<=y;x++){
+ 440:.\operations.c ****         temporal[x]=valueTotal[x-1];
+ 441:.\operations.c ****         if(valueTotal[x-1]=='.'){
+ 442:.\operations.c ****             temporal[x]=',';
+ 443:.\operations.c ****         }
+ 444:.\operations.c ****     }
+ 445:.\operations.c ****     for(x=9;x>0;x--){
+ 446:.\operations.c ****         temporal[x]=temporal[y];
+ 447:.\operations.c ****         y--;
+ 448:.\operations.c ****         if(y<=0){
+ 449:.\operations.c ****             while(x>1){
+ 450:.\operations.c ****                 x--;
+ 451:.\operations.c ****                 temporal[x]='0';
+ 452:.\operations.c ****             }
+ 453:.\operations.c ****             break;
+ 454:.\operations.c ****         }
+ 455:.\operations.c ****     }
+ 456:.\operations.c **** 	temporal[0]=9;
+ 457:.\operations.c ****     CyWdtClear();*/
+ 458:.\operations.c ****     
+ 459:.\operations.c ****     /*double tempV1=0,tempV2=0,tempV3=0,total;
+ 460:.\operations.c ****     int x,y;
+ 461:.\operations.c ****     y=value1[0];
+ 462:.\operations.c ****     for(x=value1[0];x>0;x--){
+ 463:.\operations.c ****         if(value1[x]!=','){
+ 464:.\operations.c ****             tempV1+=((double)(value1[x]&0x0f)*pow(10,(y-x)));
+ 465:.\operations.c ****         }else{
+ 466:.\operations.c ****             tempV1/=pow(10,(y-x));
+ 467:.\operations.c ****             y=x-1;
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 36
+
+
+ 468:.\operations.c ****         }
+ 469:.\operations.c ****     }
+ 470:.\operations.c ****     y=value2[0];
+ 471:.\operations.c ****     for(x=value2[0];x>0;x--){
+ 472:.\operations.c ****         if(value2[x]!=','){
+ 473:.\operations.c ****             tempV2+=((double)(value2[x]&0x0f)*pow(10,(y-x)));
+ 474:.\operations.c ****         }else{
+ 475:.\operations.c ****             tempV2/=pow(10,(y-x));
+ 476:.\operations.c ****             y=x-1;
+ 477:.\operations.c ****         }
+ 478:.\operations.c ****     }
+ 479:.\operations.c ****     y=value3[0];
+ 480:.\operations.c ****     for(x=value3[0];x>0;x--){
+ 481:.\operations.c ****         if(value3[x]!=','){
+ 482:.\operations.c ****             tempV3+=((double)(value3[x]&0x0f)*pow(10,(y-x)));
+ 483:.\operations.c ****         }else{
+ 484:.\operations.c ****             tempV3/=pow(10,(y-x));
+ 485:.\operations.c ****             y=x-1;
+ 486:.\operations.c ****         }
+ 487:.\operations.c ****     }
+ 488:.\operations.c ****     total=tempV1+tempV2+tempV3;
+ 489:.\operations.c ****     for(x=1;x<=9;x++){
+ 490:.\operations.c ****         temporal[10-x]=(((int)total%(int)pow(10,x))/pow(10,x-1))+0x30;
+ 491:.\operations.c ****     }
+ 492:.\operations.c **** 	temporal[0]=9;*/
+ 493:.\operations.c ****     uint8 tempValue1[10],tempValue2[10],tempValue3[10],tempValue[10]={0},x,y,z,tenth;
+ 1483              		.loc 1 493 0
+ 1484 000c 07F11403 		add	r3, r7, #20
+ 1485 0010 0022     		movs	r2, #0
+ 1486 0012 1A60     		str	r2, [r3]
+ 1487 0014 0433     		adds	r3, r3, #4
+ 1488 0016 0022     		movs	r2, #0
+ 1489 0018 1A60     		str	r2, [r3]
+ 1490 001a 0433     		adds	r3, r3, #4
+ 1491 001c 0022     		movs	r2, #0
+ 1492 001e 1A80     		strh	r2, [r3]	@ movhi
+ 1493 0020 0233     		adds	r3, r3, #2
+ 494:.\operations.c ****     tempValue1[0]=value1[0];
+ 1494              		.loc 1 494 0
+ 1495 0022 FB68     		ldr	r3, [r7, #12]
+ 1496 0024 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1497 0026 87F83830 		strb	r3, [r7, #56]
+ 495:.\operations.c ****     for(x=value1[0];x>0;x--){
+ 1498              		.loc 1 495 0
+ 1499 002a FB68     		ldr	r3, [r7, #12]
+ 1500 002c 1B78     		ldrb	r3, [r3]
+ 1501 002e 87F84730 		strb	r3, [r7, #71]
+ 1502 0032 38E0     		b	.L104
+ 1503              	.L109:
+ 496:.\operations.c ****         tempValue1[x]=value1[x]&0x0f;
+ 1504              		.loc 1 496 0
+ 1505 0034 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1506 0038 97F84720 		ldrb	r2, [r7, #71]	@ zero_extendqisi2
+ 1507 003c F968     		ldr	r1, [r7, #12]
+ 1508 003e 0A44     		add	r2, r2, r1
+ 1509 0040 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1510 0042 02F00F02 		and	r2, r2, #15
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 37
+
+
+ 1511 0046 D2B2     		uxtb	r2, r2
+ 1512 0048 07F14801 		add	r1, r7, #72
+ 1513 004c 0B44     		add	r3, r3, r1
+ 1514 004e 03F8102C 		strb	r2, [r3, #-16]
+ 497:.\operations.c ****         if(value1[x]==','){
+ 1515              		.loc 1 497 0
+ 1516 0052 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1517 0056 FA68     		ldr	r2, [r7, #12]
+ 1518 0058 1344     		add	r3, r3, r2
+ 1519 005a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1520 005c 2C2B     		cmp	r3, #44
+ 1521 005e 1DD1     		bne	.L105
+ 498:.\operations.c ****             while(x>0){
+ 1522              		.loc 1 498 0
+ 1523 0060 14E0     		b	.L106
+ 1524              	.L107:
+ 499:.\operations.c ****                 tempValue1[x]=value1[x-1]&0x0f;
+ 1525              		.loc 1 499 0
+ 1526 0062 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1527 0066 97F84720 		ldrb	r2, [r7, #71]	@ zero_extendqisi2
+ 1528 006a 013A     		subs	r2, r2, #1
+ 1529 006c F968     		ldr	r1, [r7, #12]
+ 1530 006e 0A44     		add	r2, r2, r1
+ 1531 0070 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1532 0072 02F00F02 		and	r2, r2, #15
+ 1533 0076 D2B2     		uxtb	r2, r2
+ 1534 0078 07F14801 		add	r1, r7, #72
+ 1535 007c 0B44     		add	r3, r3, r1
+ 1536 007e 03F8102C 		strb	r2, [r3, #-16]
+ 500:.\operations.c ****                 x--;
+ 1537              		.loc 1 500 0
+ 1538 0082 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1539 0086 013B     		subs	r3, r3, #1
+ 1540 0088 87F84730 		strb	r3, [r7, #71]
+ 1541              	.L106:
+ 498:.\operations.c ****             while(x>0){
+ 1542              		.loc 1 498 0
+ 1543 008c 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1544 0090 002B     		cmp	r3, #0
+ 1545 0092 E6D1     		bne	.L107
+ 501:.\operations.c ****             }
+ 502:.\operations.c ****             tempValue1[1]=0;
+ 1546              		.loc 1 502 0
+ 1547 0094 0023     		movs	r3, #0
+ 1548 0096 87F83930 		strb	r3, [r7, #57]
+ 503:.\operations.c ****             break;
+ 1549              		.loc 1 503 0
+ 1550 009a 08E0     		b	.L108
+ 1551              	.L105:
+ 495:.\operations.c ****         tempValue1[x]=value1[x]&0x0f;
+ 1552              		.loc 1 495 0 discriminator 2
+ 1553 009c 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1554 00a0 013B     		subs	r3, r3, #1
+ 1555 00a2 87F84730 		strb	r3, [r7, #71]
+ 1556              	.L104:
+ 495:.\operations.c ****         tempValue1[x]=value1[x]&0x0f;
+ 1557              		.loc 1 495 0 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 38
+
+
+ 1558 00a6 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1559 00aa 002B     		cmp	r3, #0
+ 1560 00ac C2D1     		bne	.L109
+ 1561              	.L108:
+ 504:.\operations.c ****         }
+ 505:.\operations.c ****     }
+ 506:.\operations.c ****     tempValue2[0]=value2[0];
+ 1562              		.loc 1 506 0 is_stmt 1
+ 1563 00ae BB68     		ldr	r3, [r7, #8]
+ 1564 00b0 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1565 00b2 87F82C30 		strb	r3, [r7, #44]
+ 507:.\operations.c ****     for(x=value2[0];x>0;x--){
+ 1566              		.loc 1 507 0
+ 1567 00b6 BB68     		ldr	r3, [r7, #8]
+ 1568 00b8 1B78     		ldrb	r3, [r3]
+ 1569 00ba 87F84730 		strb	r3, [r7, #71]
+ 1570 00be 38E0     		b	.L110
+ 1571              	.L115:
+ 508:.\operations.c ****         tempValue2[x]=value2[x]&0x0f;
+ 1572              		.loc 1 508 0
+ 1573 00c0 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1574 00c4 97F84720 		ldrb	r2, [r7, #71]	@ zero_extendqisi2
+ 1575 00c8 B968     		ldr	r1, [r7, #8]
+ 1576 00ca 0A44     		add	r2, r2, r1
+ 1577 00cc 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1578 00ce 02F00F02 		and	r2, r2, #15
+ 1579 00d2 D2B2     		uxtb	r2, r2
+ 1580 00d4 07F14801 		add	r1, r7, #72
+ 1581 00d8 0B44     		add	r3, r3, r1
+ 1582 00da 03F81C2C 		strb	r2, [r3, #-28]
+ 509:.\operations.c ****         if(value2[x]==','){
+ 1583              		.loc 1 509 0
+ 1584 00de 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1585 00e2 BA68     		ldr	r2, [r7, #8]
+ 1586 00e4 1344     		add	r3, r3, r2
+ 1587 00e6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1588 00e8 2C2B     		cmp	r3, #44
+ 1589 00ea 1DD1     		bne	.L111
+ 510:.\operations.c ****             while(x>0){
+ 1590              		.loc 1 510 0
+ 1591 00ec 14E0     		b	.L112
+ 1592              	.L113:
+ 511:.\operations.c ****                 tempValue2[x]=value2[x-1]&0x0f;
+ 1593              		.loc 1 511 0
+ 1594 00ee 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1595 00f2 97F84720 		ldrb	r2, [r7, #71]	@ zero_extendqisi2
+ 1596 00f6 013A     		subs	r2, r2, #1
+ 1597 00f8 B968     		ldr	r1, [r7, #8]
+ 1598 00fa 0A44     		add	r2, r2, r1
+ 1599 00fc 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1600 00fe 02F00F02 		and	r2, r2, #15
+ 1601 0102 D2B2     		uxtb	r2, r2
+ 1602 0104 07F14801 		add	r1, r7, #72
+ 1603 0108 0B44     		add	r3, r3, r1
+ 1604 010a 03F81C2C 		strb	r2, [r3, #-28]
+ 512:.\operations.c ****                 x--;
+ 1605              		.loc 1 512 0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 39
+
+
+ 1606 010e 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1607 0112 013B     		subs	r3, r3, #1
+ 1608 0114 87F84730 		strb	r3, [r7, #71]
+ 1609              	.L112:
+ 510:.\operations.c ****             while(x>0){
+ 1610              		.loc 1 510 0
+ 1611 0118 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1612 011c 002B     		cmp	r3, #0
+ 1613 011e E6D1     		bne	.L113
+ 513:.\operations.c ****             }
+ 514:.\operations.c ****             tempValue2[1]=0;
+ 1614              		.loc 1 514 0
+ 1615 0120 0023     		movs	r3, #0
+ 1616 0122 87F82D30 		strb	r3, [r7, #45]
+ 515:.\operations.c ****             break;
+ 1617              		.loc 1 515 0
+ 1618 0126 08E0     		b	.L114
+ 1619              	.L111:
+ 507:.\operations.c ****         tempValue2[x]=value2[x]&0x0f;
+ 1620              		.loc 1 507 0 discriminator 2
+ 1621 0128 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1622 012c 013B     		subs	r3, r3, #1
+ 1623 012e 87F84730 		strb	r3, [r7, #71]
+ 1624              	.L110:
+ 507:.\operations.c ****         tempValue2[x]=value2[x]&0x0f;
+ 1625              		.loc 1 507 0 is_stmt 0 discriminator 1
+ 1626 0132 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1627 0136 002B     		cmp	r3, #0
+ 1628 0138 C2D1     		bne	.L115
+ 1629              	.L114:
+ 516:.\operations.c ****         }
+ 517:.\operations.c ****     }
+ 518:.\operations.c ****     tempValue3[0]=value3[0];
+ 1630              		.loc 1 518 0 is_stmt 1
+ 1631 013a 7B68     		ldr	r3, [r7, #4]
+ 1632 013c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1633 013e 87F82030 		strb	r3, [r7, #32]
+ 519:.\operations.c ****     for(x=value3[0];x>0;x--){
+ 1634              		.loc 1 519 0
+ 1635 0142 7B68     		ldr	r3, [r7, #4]
+ 1636 0144 1B78     		ldrb	r3, [r3]
+ 1637 0146 87F84730 		strb	r3, [r7, #71]
+ 1638 014a 38E0     		b	.L116
+ 1639              	.L121:
+ 520:.\operations.c ****         tempValue3[x]=value3[x]&0x0f;
+ 1640              		.loc 1 520 0
+ 1641 014c 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1642 0150 97F84720 		ldrb	r2, [r7, #71]	@ zero_extendqisi2
+ 1643 0154 7968     		ldr	r1, [r7, #4]
+ 1644 0156 0A44     		add	r2, r2, r1
+ 1645 0158 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1646 015a 02F00F02 		and	r2, r2, #15
+ 1647 015e D2B2     		uxtb	r2, r2
+ 1648 0160 07F14801 		add	r1, r7, #72
+ 1649 0164 0B44     		add	r3, r3, r1
+ 1650 0166 03F8282C 		strb	r2, [r3, #-40]
+ 521:.\operations.c ****         if(value3[x]==','){
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 40
+
+
+ 1651              		.loc 1 521 0
+ 1652 016a 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1653 016e 7A68     		ldr	r2, [r7, #4]
+ 1654 0170 1344     		add	r3, r3, r2
+ 1655 0172 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1656 0174 2C2B     		cmp	r3, #44
+ 1657 0176 1DD1     		bne	.L117
+ 522:.\operations.c ****             while(x>0){
+ 1658              		.loc 1 522 0
+ 1659 0178 14E0     		b	.L118
+ 1660              	.L119:
+ 523:.\operations.c ****                 tempValue3[x]=value3[x-1]&0x0f;
+ 1661              		.loc 1 523 0
+ 1662 017a 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1663 017e 97F84720 		ldrb	r2, [r7, #71]	@ zero_extendqisi2
+ 1664 0182 013A     		subs	r2, r2, #1
+ 1665 0184 7968     		ldr	r1, [r7, #4]
+ 1666 0186 0A44     		add	r2, r2, r1
+ 1667 0188 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1668 018a 02F00F02 		and	r2, r2, #15
+ 1669 018e D2B2     		uxtb	r2, r2
+ 1670 0190 07F14801 		add	r1, r7, #72
+ 1671 0194 0B44     		add	r3, r3, r1
+ 1672 0196 03F8282C 		strb	r2, [r3, #-40]
+ 524:.\operations.c ****                 x--;
+ 1673              		.loc 1 524 0
+ 1674 019a 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1675 019e 013B     		subs	r3, r3, #1
+ 1676 01a0 87F84730 		strb	r3, [r7, #71]
+ 1677              	.L118:
+ 522:.\operations.c ****             while(x>0){
+ 1678              		.loc 1 522 0
+ 1679 01a4 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1680 01a8 002B     		cmp	r3, #0
+ 1681 01aa E6D1     		bne	.L119
+ 525:.\operations.c ****             }
+ 526:.\operations.c ****             tempValue3[1]=0;
+ 1682              		.loc 1 526 0
+ 1683 01ac 0023     		movs	r3, #0
+ 1684 01ae 87F82130 		strb	r3, [r7, #33]
+ 527:.\operations.c ****             break;
+ 1685              		.loc 1 527 0
+ 1686 01b2 08E0     		b	.L120
+ 1687              	.L117:
+ 519:.\operations.c ****         tempValue3[x]=value3[x]&0x0f;
+ 1688              		.loc 1 519 0 discriminator 2
+ 1689 01b4 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1690 01b8 013B     		subs	r3, r3, #1
+ 1691 01ba 87F84730 		strb	r3, [r7, #71]
+ 1692              	.L116:
+ 519:.\operations.c ****         tempValue3[x]=value3[x]&0x0f;
+ 1693              		.loc 1 519 0 is_stmt 0 discriminator 1
+ 1694 01be 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1695 01c2 002B     		cmp	r3, #0
+ 1696 01c4 C2D1     		bne	.L121
+ 1697              	.L120:
+ 528:.\operations.c ****         }
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 41
+
+
+ 529:.\operations.c ****     }
+ 530:.\operations.c ****     tenth=0;
+ 1698              		.loc 1 530 0 is_stmt 1
+ 1699 01c6 0023     		movs	r3, #0
+ 1700 01c8 87F84430 		strb	r3, [r7, #68]
+ 531:.\operations.c ****     for(x=8;x>0;x--){
+ 1701              		.loc 1 531 0
+ 1702 01cc 0823     		movs	r3, #8
+ 1703 01ce 87F84730 		strb	r3, [r7, #71]
+ 1704 01d2 57E0     		b	.L122
+ 1705              	.L123:
+ 532:.\operations.c ****         tempValue[x]=((tempValue1[x]+tempValue2[x])+(tempValue3[x]+tenth))%10;
+ 1706              		.loc 1 532 0 discriminator 3
+ 1707 01d4 97F84700 		ldrb	r0, [r7, #71]	@ zero_extendqisi2
+ 1708 01d8 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1709 01dc 07F14802 		add	r2, r7, #72
+ 1710 01e0 1344     		add	r3, r3, r2
+ 1711 01e2 13F8103C 		ldrb	r3, [r3, #-16]	@ zero_extendqisi2
+ 1712 01e6 1A46     		mov	r2, r3
+ 1713 01e8 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1714 01ec 07F14801 		add	r1, r7, #72
+ 1715 01f0 0B44     		add	r3, r3, r1
+ 1716 01f2 13F81C3C 		ldrb	r3, [r3, #-28]	@ zero_extendqisi2
+ 1717 01f6 1A44     		add	r2, r2, r3
+ 1718 01f8 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1719 01fc 07F14801 		add	r1, r7, #72
+ 1720 0200 0B44     		add	r3, r3, r1
+ 1721 0202 13F8283C 		ldrb	r3, [r3, #-40]	@ zero_extendqisi2
+ 1722 0206 1946     		mov	r1, r3
+ 1723 0208 97F84430 		ldrb	r3, [r7, #68]	@ zero_extendqisi2
+ 1724 020c 0B44     		add	r3, r3, r1
+ 1725 020e 1A44     		add	r2, r2, r3
+ 1726 0210 434B     		ldr	r3, .L127
+ 1727 0212 83FB0213 		smull	r1, r3, r3, r2
+ 1728 0216 9910     		asrs	r1, r3, #2
+ 1729 0218 D317     		asrs	r3, r2, #31
+ 1730 021a C91A     		subs	r1, r1, r3
+ 1731 021c 0B46     		mov	r3, r1
+ 1732 021e 9B00     		lsls	r3, r3, #2
+ 1733 0220 0B44     		add	r3, r3, r1
+ 1734 0222 5B00     		lsls	r3, r3, #1
+ 1735 0224 D11A     		subs	r1, r2, r3
+ 1736 0226 CAB2     		uxtb	r2, r1
+ 1737 0228 07F14803 		add	r3, r7, #72
+ 1738 022c 0344     		add	r3, r3, r0
+ 1739 022e 03F8342C 		strb	r2, [r3, #-52]
+ 533:.\operations.c ****         tenth=((tempValue1[x]+tempValue2[x])+(tempValue3[x]+tenth))/10;
+ 1740              		.loc 1 533 0 discriminator 3
+ 1741 0232 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1742 0236 07F14802 		add	r2, r7, #72
+ 1743 023a 1344     		add	r3, r3, r2
+ 1744 023c 13F8103C 		ldrb	r3, [r3, #-16]	@ zero_extendqisi2
+ 1745 0240 1A46     		mov	r2, r3
+ 1746 0242 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1747 0246 07F14801 		add	r1, r7, #72
+ 1748 024a 0B44     		add	r3, r3, r1
+ 1749 024c 13F81C3C 		ldrb	r3, [r3, #-28]	@ zero_extendqisi2
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 42
+
+
+ 1750 0250 1A44     		add	r2, r2, r3
+ 1751 0252 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1752 0256 07F14801 		add	r1, r7, #72
+ 1753 025a 0B44     		add	r3, r3, r1
+ 1754 025c 13F8283C 		ldrb	r3, [r3, #-40]	@ zero_extendqisi2
+ 1755 0260 1946     		mov	r1, r3
+ 1756 0262 97F84430 		ldrb	r3, [r7, #68]	@ zero_extendqisi2
+ 1757 0266 0B44     		add	r3, r3, r1
+ 1758 0268 1344     		add	r3, r3, r2
+ 1759 026a 2D4A     		ldr	r2, .L127
+ 1760 026c 82FB0312 		smull	r1, r2, r2, r3
+ 1761 0270 9210     		asrs	r2, r2, #2
+ 1762 0272 DB17     		asrs	r3, r3, #31
+ 1763 0274 D31A     		subs	r3, r2, r3
+ 1764 0276 87F84430 		strb	r3, [r7, #68]
+ 531:.\operations.c ****     for(x=8;x>0;x--){
+ 1765              		.loc 1 531 0 discriminator 3
+ 1766 027a 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1767 027e 013B     		subs	r3, r3, #1
+ 1768 0280 87F84730 		strb	r3, [r7, #71]
+ 1769              	.L122:
+ 531:.\operations.c ****     for(x=8;x>0;x--){
+ 1770              		.loc 1 531 0 is_stmt 0 discriminator 1
+ 1771 0284 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1772 0288 002B     		cmp	r3, #0
+ 1773 028a A3D1     		bne	.L123
+ 534:.\operations.c ****     }
+ 535:.\operations.c ****     y=8;
+ 1774              		.loc 1 535 0 is_stmt 1
+ 1775 028c 0823     		movs	r3, #8
+ 1776 028e 87F84630 		strb	r3, [r7, #70]
+ 536:.\operations.c ****     z=0;
+ 1777              		.loc 1 536 0
+ 1778 0292 0023     		movs	r3, #0
+ 1779 0294 87F84530 		strb	r3, [r7, #69]
+ 537:.\operations.c ****     temporal[1]=0;
+ 1780              		.loc 1 537 0
+ 1781 0298 224B     		ldr	r3, .L127+4
+ 1782 029a 0022     		movs	r2, #0
+ 1783 029c 5A70     		strb	r2, [r3, #1]
+ 538:.\operations.c ****     for(x=9;x>0;x--){
+ 1784              		.loc 1 538 0
+ 1785 029e 0923     		movs	r3, #9
+ 1786 02a0 87F84730 		strb	r3, [r7, #71]
+ 1787 02a4 2FE0     		b	.L124
+ 1788              	.L126:
+ 539:.\operations.c ****         temporal[x]=(tempValue[y]&0x0f)+0x30;
+ 1789              		.loc 1 539 0
+ 1790 02a6 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1791 02aa 97F84620 		ldrb	r2, [r7, #70]	@ zero_extendqisi2
+ 1792 02ae 07F14801 		add	r1, r7, #72
+ 1793 02b2 0A44     		add	r2, r2, r1
+ 1794 02b4 12F8342C 		ldrb	r2, [r2, #-52]	@ zero_extendqisi2
+ 1795 02b8 02F00F02 		and	r2, r2, #15
+ 1796 02bc D2B2     		uxtb	r2, r2
+ 1797 02be 3032     		adds	r2, r2, #48
+ 1798 02c0 D1B2     		uxtb	r1, r2
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 43
+
+
+ 1799 02c2 184A     		ldr	r2, .L127+4
+ 1800 02c4 D154     		strb	r1, [r2, r3]
+ 540:.\operations.c ****         y--;
+ 1801              		.loc 1 540 0
+ 1802 02c6 97F84630 		ldrb	r3, [r7, #70]	@ zero_extendqisi2
+ 1803 02ca 013B     		subs	r3, r3, #1
+ 1804 02cc 87F84630 		strb	r3, [r7, #70]
+ 541:.\operations.c ****         z++;
+ 1805              		.loc 1 541 0
+ 1806 02d0 97F84530 		ldrb	r3, [r7, #69]	@ zero_extendqisi2
+ 1807 02d4 0133     		adds	r3, r3, #1
+ 1808 02d6 87F84530 		strb	r3, [r7, #69]
+ 542:.\operations.c ****         if(z==decimalMoney){
+ 1809              		.loc 1 542 0
+ 1810 02da 134B     		ldr	r3, .L127+8
+ 1811 02dc 1B78     		ldrb	r3, [r3]
+ 1812 02de DBB2     		uxtb	r3, r3
+ 1813 02e0 97F84520 		ldrb	r2, [r7, #69]	@ zero_extendqisi2
+ 1814 02e4 9A42     		cmp	r2, r3
+ 1815 02e6 09D1     		bne	.L125
+ 543:.\operations.c ****             x--;
+ 1816              		.loc 1 543 0
+ 1817 02e8 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1818 02ec 013B     		subs	r3, r3, #1
+ 1819 02ee 87F84730 		strb	r3, [r7, #71]
+ 544:.\operations.c ****             temporal[x]=',';
+ 1820              		.loc 1 544 0
+ 1821 02f2 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1822 02f6 0B4A     		ldr	r2, .L127+4
+ 1823 02f8 2C21     		movs	r1, #44
+ 1824 02fa D154     		strb	r1, [r2, r3]
+ 1825              	.L125:
+ 538:.\operations.c ****         temporal[x]=(tempValue[y]&0x0f)+0x30;
+ 1826              		.loc 1 538 0 discriminator 2
+ 1827 02fc 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1828 0300 013B     		subs	r3, r3, #1
+ 1829 0302 87F84730 		strb	r3, [r7, #71]
+ 1830              	.L124:
+ 538:.\operations.c ****         temporal[x]=(tempValue[y]&0x0f)+0x30;
+ 1831              		.loc 1 538 0 is_stmt 0 discriminator 1
+ 1832 0306 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 1833 030a 002B     		cmp	r3, #0
+ 1834 030c CBD1     		bne	.L126
+ 545:.\operations.c ****         }
+ 546:.\operations.c ****     }
+ 547:.\operations.c ****     temporal[0]=9;
+ 1835              		.loc 1 547 0 is_stmt 1
+ 1836 030e 054B     		ldr	r3, .L127+4
+ 1837 0310 0922     		movs	r2, #9
+ 1838 0312 1A70     		strb	r2, [r3]
+ 548:.\operations.c **** }...
+ 1839              		.loc 1 548 0
+ 1840 0314 4C37     		adds	r7, r7, #76
+ 1841              		.cfi_def_cfa_offset 4
+ 1842 0316 BD46     		mov	sp, r7
+ 1843              		.cfi_def_cfa_register 13
+ 1844              		@ sp needed
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 44
+
+
+ 1845 0318 5DF8047B 		ldr	r7, [sp], #4
+ 1846              		.cfi_restore 7
+ 1847              		.cfi_def_cfa_offset 0
+ 1848 031c 7047     		bx	lr
+ 1849              	.L128:
+ 1850 031e 00BF     		.align	2
+ 1851              	.L127:
+ 1852 0320 67666666 		.word	1717986919
+ 1853 0324 00000000 		.word	temporal
+ 1854 0328 00000000 		.word	decimalMoney
+ 1855              		.cfi_endproc
+ 1856              	.LFE60:
+ 1857              		.size	addition_market, .-addition_market
+ 1858              		.text
+ 1859              	.Letext0:
+ 1860              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 1861              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 1862              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 1863              		.file 5 "./variables.h"
+ 1864              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+ 1865              		.section	.debug_info,"",%progbits
+ 1866              	.Ldebug_info0:
+ 1867 0000 8F0A0000 		.4byte	0xa8f
+ 1868 0004 0400     		.2byte	0x4
+ 1869 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1870 000a 04       		.byte	0x4
+ 1871 000b 01       		.uleb128 0x1
+ 1872 000c 9A030000 		.4byte	.LASF135
+ 1873 0010 01       		.byte	0x1
+ 1874 0011 F7000000 		.4byte	.LASF136
+ 1875 0015 79000000 		.4byte	.LASF137
+ 1876 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1877 001d 00000000 		.4byte	0
+ 1878 0021 00000000 		.4byte	.Ldebug_line0
+ 1879 0025 02       		.uleb128 0x2
+ 1880 0026 01       		.byte	0x1
+ 1881 0027 06       		.byte	0x6
+ 1882 0028 7E060000 		.4byte	.LASF0
+ 1883 002c 02       		.uleb128 0x2
+ 1884 002d 01       		.byte	0x1
+ 1885 002e 08       		.byte	0x8
+ 1886 002f 02060000 		.4byte	.LASF1
+ 1887 0033 02       		.uleb128 0x2
+ 1888 0034 02       		.byte	0x2
+ 1889 0035 05       		.byte	0x5
+ 1890 0036 1E050000 		.4byte	.LASF2
+ 1891 003a 02       		.uleb128 0x2
+ 1892 003b 02       		.byte	0x2
+ 1893 003c 07       		.byte	0x7
+ 1894 003d 8A060000 		.4byte	.LASF3
+ 1895 0041 03       		.uleb128 0x3
+ 1896 0042 60000000 		.4byte	.LASF9
+ 1897 0046 02       		.byte	0x2
+ 1898 0047 3F       		.byte	0x3f
+ 1899 0048 4C000000 		.4byte	0x4c
+ 1900 004c 02       		.uleb128 0x2
+ 1901 004d 04       		.byte	0x4
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 45
+
+
+ 1902 004e 05       		.byte	0x5
+ 1903 004f 28050000 		.4byte	.LASF4
+ 1904 0053 02       		.uleb128 0x2
+ 1905 0054 04       		.byte	0x4
+ 1906 0055 07       		.byte	0x7
+ 1907 0056 BB050000 		.4byte	.LASF5
+ 1908 005a 02       		.uleb128 0x2
+ 1909 005b 08       		.byte	0x8
+ 1910 005c 05       		.byte	0x5
+ 1911 005d 32030000 		.4byte	.LASF6
+ 1912 0061 02       		.uleb128 0x2
+ 1913 0062 08       		.byte	0x8
+ 1914 0063 07       		.byte	0x7
+ 1915 0064 74010000 		.4byte	.LASF7
+ 1916 0068 04       		.uleb128 0x4
+ 1917 0069 04       		.byte	0x4
+ 1918 006a 05       		.byte	0x5
+ 1919 006b 696E7400 		.ascii	"int\000"
+ 1920 006f 02       		.uleb128 0x2
+ 1921 0070 04       		.byte	0x4
+ 1922 0071 07       		.byte	0x7
+ 1923 0072 45000000 		.4byte	.LASF8
+ 1924 0076 03       		.uleb128 0x3
+ 1925 0077 E7050000 		.4byte	.LASF10
+ 1926 007b 03       		.byte	0x3
+ 1927 007c 2C       		.byte	0x2c
+ 1928 007d 41000000 		.4byte	0x41
+ 1929 0081 03       		.uleb128 0x3
+ 1930 0082 C1060000 		.4byte	.LASF11
+ 1931 0086 04       		.byte	0x4
+ 1932 0087 A1       		.byte	0xa1
+ 1933 0088 2C000000 		.4byte	0x2c
+ 1934 008c 03       		.uleb128 0x3
+ 1935 008d 6E040000 		.4byte	.LASF12
+ 1936 0091 04       		.byte	0x4
+ 1937 0092 A3       		.byte	0xa3
+ 1938 0093 53000000 		.4byte	0x53
+ 1939 0097 02       		.uleb128 0x2
+ 1940 0098 04       		.byte	0x4
+ 1941 0099 04       		.byte	0x4
+ 1942 009a 5D010000 		.4byte	.LASF13
+ 1943 009e 02       		.uleb128 0x2
+ 1944 009f 08       		.byte	0x8
+ 1945 00a0 04       		.byte	0x4
+ 1946 00a1 C7060000 		.4byte	.LASF14
+ 1947 00a5 03       		.uleb128 0x3
+ 1948 00a6 86050000 		.4byte	.LASF15
+ 1949 00aa 04       		.byte	0x4
+ 1950 00ab AD       		.byte	0xad
+ 1951 00ac 61000000 		.4byte	0x61
+ 1952 00b0 02       		.uleb128 0x2
+ 1953 00b1 01       		.byte	0x1
+ 1954 00b2 08       		.byte	0x8
+ 1955 00b3 7A020000 		.4byte	.LASF16
+ 1956 00b7 05       		.uleb128 0x5
+ 1957 00b8 81000000 		.4byte	0x81
+ 1958 00bc 05       		.uleb128 0x5
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 46
+
+
+ 1959 00bd 8C000000 		.4byte	0x8c
+ 1960 00c1 02       		.uleb128 0x2
+ 1961 00c2 04       		.byte	0x4
+ 1962 00c3 07       		.byte	0x7
+ 1963 00c4 B2050000 		.4byte	.LASF17
+ 1964 00c8 06       		.uleb128 0x6
+ 1965 00c9 1C000000 		.4byte	.LASF66
+ 1966 00cd 7B02     		.2byte	0x27b
+ 1967 00cf 05       		.byte	0x5
+ 1968 00d0 52       		.byte	0x52
+ 1969 00d1 2A030000 		.4byte	0x32a
+ 1970 00d5 07       		.uleb128 0x7
+ 1971 00d6 E3000000 		.4byte	.LASF18
+ 1972 00da 05       		.byte	0x5
+ 1973 00db 53       		.byte	0x53
+ 1974 00dc 81000000 		.4byte	0x81
+ 1975 00e0 00       		.byte	0
+ 1976 00e1 07       		.uleb128 0x7
+ 1977 00e2 D4010000 		.4byte	.LASF19
+ 1978 00e6 05       		.byte	0x5
+ 1979 00e7 54       		.byte	0x54
+ 1980 00e8 2A030000 		.4byte	0x32a
+ 1981 00ec 01       		.byte	0x1
+ 1982 00ed 07       		.uleb128 0x7
+ 1983 00ee CE060000 		.4byte	.LASF20
+ 1984 00f2 05       		.byte	0x5
+ 1985 00f3 55       		.byte	0x55
+ 1986 00f4 81000000 		.4byte	0x81
+ 1987 00f8 1A       		.byte	0x1a
+ 1988 00f9 07       		.uleb128 0x7
+ 1989 00fa 06010000 		.4byte	.LASF21
+ 1990 00fe 05       		.byte	0x5
+ 1991 00ff 56       		.byte	0x56
+ 1992 0100 3A030000 		.4byte	0x33a
+ 1993 0104 1B       		.byte	0x1b
+ 1994 0105 07       		.uleb128 0x7
+ 1995 0106 EB040000 		.4byte	.LASF22
+ 1996 010a 05       		.byte	0x5
+ 1997 010b 57       		.byte	0x57
+ 1998 010c 3A030000 		.4byte	0x33a
+ 1999 0110 25       		.byte	0x25
+ 2000 0111 07       		.uleb128 0x7
+ 2001 0112 F4060000 		.4byte	.LASF23
+ 2002 0116 05       		.byte	0x5
+ 2003 0117 58       		.byte	0x58
+ 2004 0118 2A030000 		.4byte	0x32a
+ 2005 011c 2F       		.byte	0x2f
+ 2006 011d 07       		.uleb128 0x7
+ 2007 011e B5040000 		.4byte	.LASF24
+ 2008 0122 05       		.byte	0x5
+ 2009 0123 59       		.byte	0x59
+ 2010 0124 81000000 		.4byte	0x81
+ 2011 0128 48       		.byte	0x48
+ 2012 0129 07       		.uleb128 0x7
+ 2013 012a 10060000 		.4byte	.LASF25
+ 2014 012e 05       		.byte	0x5
+ 2015 012f 5A       		.byte	0x5a
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 47
+
+
+ 2016 0130 81000000 		.4byte	0x81
+ 2017 0134 49       		.byte	0x49
+ 2018 0135 07       		.uleb128 0x7
+ 2019 0136 70020000 		.4byte	.LASF26
+ 2020 013a 05       		.byte	0x5
+ 2021 013b 5B       		.byte	0x5b
+ 2022 013c 4A030000 		.4byte	0x34a
+ 2023 0140 4A       		.byte	0x4a
+ 2024 0141 07       		.uleb128 0x7
+ 2025 0142 42040000 		.4byte	.LASF27
+ 2026 0146 05       		.byte	0x5
+ 2027 0147 5C       		.byte	0x5c
+ 2028 0148 81000000 		.4byte	0x81
+ 2029 014c 5F       		.byte	0x5f
+ 2030 014d 07       		.uleb128 0x7
+ 2031 014e 67020000 		.4byte	.LASF28
+ 2032 0152 05       		.byte	0x5
+ 2033 0153 5D       		.byte	0x5d
+ 2034 0154 81000000 		.4byte	0x81
+ 2035 0158 60       		.byte	0x60
+ 2036 0159 07       		.uleb128 0x7
+ 2037 015a 39000000 		.4byte	.LASF29
+ 2038 015e 05       		.byte	0x5
+ 2039 015f 5E       		.byte	0x5e
+ 2040 0160 81000000 		.4byte	0x81
+ 2041 0164 61       		.byte	0x61
+ 2042 0165 07       		.uleb128 0x7
+ 2043 0166 4A060000 		.4byte	.LASF30
+ 2044 016a 05       		.byte	0x5
+ 2045 016b 5F       		.byte	0x5f
+ 2046 016c 5A030000 		.4byte	0x35a
+ 2047 0170 62       		.byte	0x62
+ 2048 0171 07       		.uleb128 0x7
+ 2049 0172 39020000 		.4byte	.LASF31
+ 2050 0176 05       		.byte	0x5
+ 2051 0177 60       		.byte	0x60
+ 2052 0178 6A030000 		.4byte	0x36a
+ 2053 017c 64       		.byte	0x64
+ 2054 017d 07       		.uleb128 0x7
+ 2055 017e AB010000 		.4byte	.LASF32
+ 2056 0182 05       		.byte	0x5
+ 2057 0183 61       		.byte	0x61
+ 2058 0184 81000000 		.4byte	0x81
+ 2059 0188 78       		.byte	0x78
+ 2060 0189 07       		.uleb128 0x7
+ 2061 018a A9050000 		.4byte	.LASF33
+ 2062 018e 05       		.byte	0x5
+ 2063 018f 62       		.byte	0x62
+ 2064 0190 80030000 		.4byte	0x380
+ 2065 0194 79       		.byte	0x79
+ 2066 0195 07       		.uleb128 0x7
+ 2067 0196 57050000 		.4byte	.LASF34
+ 2068 019a 05       		.byte	0x5
+ 2069 019b 63       		.byte	0x63
+ 2070 019c 90030000 		.4byte	0x390
+ 2071 01a0 7E       		.byte	0x7e
+ 2072 01a1 07       		.uleb128 0x7
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 48
+
+
+ 2073 01a2 C5010000 		.4byte	.LASF35
+ 2074 01a6 05       		.byte	0x5
+ 2075 01a7 64       		.byte	0x64
+ 2076 01a8 90030000 		.4byte	0x390
+ 2077 01ac 84       		.byte	0x84
+ 2078 01ad 07       		.uleb128 0x7
+ 2079 01ae D7060000 		.4byte	.LASF36
+ 2080 01b2 05       		.byte	0x5
+ 2081 01b3 65       		.byte	0x65
+ 2082 01b4 90030000 		.4byte	0x390
+ 2083 01b8 8A       		.byte	0x8a
+ 2084 01b9 07       		.uleb128 0x7
+ 2085 01ba 28040000 		.4byte	.LASF37
+ 2086 01be 05       		.byte	0x5
+ 2087 01bf 66       		.byte	0x66
+ 2088 01c0 90030000 		.4byte	0x390
+ 2089 01c4 90       		.byte	0x90
+ 2090 01c5 07       		.uleb128 0x7
+ 2091 01c6 CD040000 		.4byte	.LASF38
+ 2092 01ca 05       		.byte	0x5
+ 2093 01cb 67       		.byte	0x67
+ 2094 01cc A0030000 		.4byte	0x3a0
+ 2095 01d0 96       		.byte	0x96
+ 2096 01d1 07       		.uleb128 0x7
+ 2097 01d2 8B010000 		.4byte	.LASF39
+ 2098 01d6 05       		.byte	0x5
+ 2099 01d7 68       		.byte	0x68
+ 2100 01d8 A0030000 		.4byte	0x3a0
+ 2101 01dc A4       		.byte	0xa4
+ 2102 01dd 07       		.uleb128 0x7
+ 2103 01de 6D030000 		.4byte	.LASF40
+ 2104 01e2 05       		.byte	0x5
+ 2105 01e3 69       		.byte	0x69
+ 2106 01e4 A0030000 		.4byte	0x3a0
+ 2107 01e8 B2       		.byte	0xb2
+ 2108 01e9 07       		.uleb128 0x7
+ 2109 01ea F9020000 		.4byte	.LASF41
+ 2110 01ee 05       		.byte	0x5
+ 2111 01ef 6A       		.byte	0x6a
+ 2112 01f0 A0030000 		.4byte	0x3a0
+ 2113 01f4 C0       		.byte	0xc0
+ 2114 01f5 07       		.uleb128 0x7
+ 2115 01f6 75050000 		.4byte	.LASF42
+ 2116 01fa 05       		.byte	0x5
+ 2117 01fb 6B       		.byte	0x6b
+ 2118 01fc A0030000 		.4byte	0x3a0
+ 2119 0200 CE       		.byte	0xce
+ 2120 0201 07       		.uleb128 0x7
+ 2121 0202 8E040000 		.4byte	.LASF43
+ 2122 0206 05       		.byte	0x5
+ 2123 0207 6C       		.byte	0x6c
+ 2124 0208 A0030000 		.4byte	0x3a0
+ 2125 020c DC       		.byte	0xdc
+ 2126 020d 07       		.uleb128 0x7
+ 2127 020e 05050000 		.4byte	.LASF44
+ 2128 0212 05       		.byte	0x5
+ 2129 0213 6D       		.byte	0x6d
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 49
+
+
+ 2130 0214 B0030000 		.4byte	0x3b0
+ 2131 0218 EA       		.byte	0xea
+ 2132 0219 07       		.uleb128 0x7
+ 2133 021a F3010000 		.4byte	.LASF45
+ 2134 021e 05       		.byte	0x5
+ 2135 021f 6E       		.byte	0x6e
+ 2136 0220 B0030000 		.4byte	0x3b0
+ 2137 0224 F5       		.byte	0xf5
+ 2138 0225 08       		.uleb128 0x8
+ 2139 0226 4A020000 		.4byte	.LASF46
+ 2140 022a 05       		.byte	0x5
+ 2141 022b 6F       		.byte	0x6f
+ 2142 022c B0030000 		.4byte	0x3b0
+ 2143 0230 0001     		.2byte	0x100
+ 2144 0232 08       		.uleb128 0x8
+ 2145 0233 4E040000 		.4byte	.LASF47
+ 2146 0237 05       		.byte	0x5
+ 2147 0238 70       		.byte	0x70
+ 2148 0239 81000000 		.4byte	0x81
+ 2149 023d 0B01     		.2byte	0x10b
+ 2150 023f 08       		.uleb128 0x8
+ 2151 0240 D4020000 		.4byte	.LASF48
+ 2152 0244 05       		.byte	0x5
+ 2153 0245 71       		.byte	0x71
+ 2154 0246 81000000 		.4byte	0x81
+ 2155 024a 0C01     		.2byte	0x10c
+ 2156 024c 08       		.uleb128 0x8
+ 2157 024d 6A000000 		.4byte	.LASF49
+ 2158 0251 05       		.byte	0x5
+ 2159 0252 72       		.byte	0x72
+ 2160 0253 81000000 		.4byte	0x81
+ 2161 0257 0D01     		.2byte	0x10d
+ 2162 0259 08       		.uleb128 0x8
+ 2163 025a 4B050000 		.4byte	.LASF50
+ 2164 025e 05       		.byte	0x5
+ 2165 025f 73       		.byte	0x73
+ 2166 0260 81000000 		.4byte	0x81
+ 2167 0264 0E01     		.2byte	0x10e
+ 2168 0266 08       		.uleb128 0x8
+ 2169 0267 14000000 		.4byte	.LASF51
+ 2170 026b 05       		.byte	0x5
+ 2171 026c 74       		.byte	0x74
+ 2172 026d C0030000 		.4byte	0x3c0
+ 2173 0271 0F01     		.2byte	0x10f
+ 2174 0273 08       		.uleb128 0x8
+ 2175 0274 09030000 		.4byte	.LASF52
+ 2176 0278 05       		.byte	0x5
+ 2177 0279 75       		.byte	0x75
+ 2178 027a 3A030000 		.4byte	0x33a
+ 2179 027e 5001     		.2byte	0x150
+ 2180 0280 08       		.uleb128 0x8
+ 2181 0281 51010000 		.4byte	.LASF53
+ 2182 0285 05       		.byte	0x5
+ 2183 0286 76       		.byte	0x76
+ 2184 0287 3A030000 		.4byte	0x33a
+ 2185 028b 5A01     		.2byte	0x15a
+ 2186 028d 08       		.uleb128 0x8
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 50
+
+
+ 2187 028e F0020000 		.4byte	.LASF54
+ 2188 0292 05       		.byte	0x5
+ 2189 0293 77       		.byte	0x77
+ 2190 0294 3A030000 		.4byte	0x33a
+ 2191 0298 6401     		.2byte	0x164
+ 2192 029a 08       		.uleb128 0x8
+ 2193 029b 1F020000 		.4byte	.LASF55
+ 2194 029f 05       		.byte	0x5
+ 2195 02a0 78       		.byte	0x78
+ 2196 02a1 D0030000 		.4byte	0x3d0
+ 2197 02a5 6E01     		.2byte	0x16e
+ 2198 02a7 08       		.uleb128 0x8
+ 2199 02a8 52000000 		.4byte	.LASF56
+ 2200 02ac 05       		.byte	0x5
+ 2201 02ad 79       		.byte	0x79
+ 2202 02ae D0030000 		.4byte	0x3d0
+ 2203 02b2 B901     		.2byte	0x1b9
+ 2204 02b4 08       		.uleb128 0x8
+ 2205 02b5 1A010000 		.4byte	.LASF57
+ 2206 02b9 05       		.byte	0x5
+ 2207 02ba 7A       		.byte	0x7a
+ 2208 02bb E6030000 		.4byte	0x3e6
+ 2209 02bf 0402     		.2byte	0x204
+ 2210 02c1 08       		.uleb128 0x8
+ 2211 02c2 EF050000 		.4byte	.LASF58
+ 2212 02c6 05       		.byte	0x5
+ 2213 02c7 7B       		.byte	0x7b
+ 2214 02c8 E6030000 		.4byte	0x3e6
+ 2215 02cc 1302     		.2byte	0x213
+ 2216 02ce 08       		.uleb128 0x8
+ 2217 02cf 22060000 		.4byte	.LASF59
+ 2218 02d3 05       		.byte	0x5
+ 2219 02d4 7C       		.byte	0x7c
+ 2220 02d5 FC030000 		.4byte	0x3fc
+ 2221 02d9 2202     		.2byte	0x222
+ 2222 02db 08       		.uleb128 0x8
+ 2223 02dc 55060000 		.4byte	.LASF60
+ 2224 02e0 05       		.byte	0x5
+ 2225 02e1 7D       		.byte	0x7d
+ 2226 02e2 FC030000 		.4byte	0x3fc
+ 2227 02e6 4002     		.2byte	0x240
+ 2228 02e8 08       		.uleb128 0x8
+ 2229 02e9 8E030000 		.4byte	.LASF61
+ 2230 02ed 05       		.byte	0x5
+ 2231 02ee 7E       		.byte	0x7e
+ 2232 02ef 3A030000 		.4byte	0x33a
+ 2233 02f3 5E02     		.2byte	0x25e
+ 2234 02f5 08       		.uleb128 0x8
+ 2235 02f6 D5050000 		.4byte	.LASF62
+ 2236 02fa 05       		.byte	0x5
+ 2237 02fb 7F       		.byte	0x7f
+ 2238 02fc 81000000 		.4byte	0x81
+ 2239 0300 6802     		.2byte	0x268
+ 2240 0302 08       		.uleb128 0x8
+ 2241 0303 11050000 		.4byte	.LASF63
+ 2242 0307 05       		.byte	0x5
+ 2243 0308 80       		.byte	0x80
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 51
+
+
+ 2244 0309 12040000 		.4byte	0x412
+ 2245 030d 6902     		.2byte	0x269
+ 2246 030f 08       		.uleb128 0x8
+ 2247 0310 14030000 		.4byte	.LASF64
+ 2248 0314 05       		.byte	0x5
+ 2249 0315 81       		.byte	0x81
+ 2250 0316 5A030000 		.4byte	0x35a
+ 2251 031a 7802     		.2byte	0x278
+ 2252 031c 08       		.uleb128 0x8
+ 2253 031d FF010000 		.4byte	.LASF65
+ 2254 0321 05       		.byte	0x5
+ 2255 0322 82       		.byte	0x82
+ 2256 0323 81000000 		.4byte	0x81
+ 2257 0327 7A02     		.2byte	0x27a
+ 2258 0329 00       		.byte	0
+ 2259 032a 09       		.uleb128 0x9
+ 2260 032b 81000000 		.4byte	0x81
+ 2261 032f 3A030000 		.4byte	0x33a
+ 2262 0333 0A       		.uleb128 0xa
+ 2263 0334 C1000000 		.4byte	0xc1
+ 2264 0338 18       		.byte	0x18
+ 2265 0339 00       		.byte	0
+ 2266 033a 09       		.uleb128 0x9
+ 2267 033b 81000000 		.4byte	0x81
+ 2268 033f 4A030000 		.4byte	0x34a
+ 2269 0343 0A       		.uleb128 0xa
+ 2270 0344 C1000000 		.4byte	0xc1
+ 2271 0348 09       		.byte	0x9
+ 2272 0349 00       		.byte	0
+ 2273 034a 09       		.uleb128 0x9
+ 2274 034b 81000000 		.4byte	0x81
+ 2275 034f 5A030000 		.4byte	0x35a
+ 2276 0353 0A       		.uleb128 0xa
+ 2277 0354 C1000000 		.4byte	0xc1
+ 2278 0358 14       		.byte	0x14
+ 2279 0359 00       		.byte	0
+ 2280 035a 09       		.uleb128 0x9
+ 2281 035b 81000000 		.4byte	0x81
+ 2282 035f 6A030000 		.4byte	0x36a
+ 2283 0363 0A       		.uleb128 0xa
+ 2284 0364 C1000000 		.4byte	0xc1
+ 2285 0368 01       		.byte	0x1
+ 2286 0369 00       		.byte	0
+ 2287 036a 09       		.uleb128 0x9
+ 2288 036b 81000000 		.4byte	0x81
+ 2289 036f 80030000 		.4byte	0x380
+ 2290 0373 0A       		.uleb128 0xa
+ 2291 0374 C1000000 		.4byte	0xc1
+ 2292 0378 01       		.byte	0x1
+ 2293 0379 0A       		.uleb128 0xa
+ 2294 037a C1000000 		.4byte	0xc1
+ 2295 037e 09       		.byte	0x9
+ 2296 037f 00       		.byte	0
+ 2297 0380 09       		.uleb128 0x9
+ 2298 0381 81000000 		.4byte	0x81
+ 2299 0385 90030000 		.4byte	0x390
+ 2300 0389 0A       		.uleb128 0xa
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 52
+
+
+ 2301 038a C1000000 		.4byte	0xc1
+ 2302 038e 04       		.byte	0x4
+ 2303 038f 00       		.byte	0
+ 2304 0390 09       		.uleb128 0x9
+ 2305 0391 81000000 		.4byte	0x81
+ 2306 0395 A0030000 		.4byte	0x3a0
+ 2307 0399 0A       		.uleb128 0xa
+ 2308 039a C1000000 		.4byte	0xc1
+ 2309 039e 05       		.byte	0x5
+ 2310 039f 00       		.byte	0
+ 2311 03a0 09       		.uleb128 0x9
+ 2312 03a1 81000000 		.4byte	0x81
+ 2313 03a5 B0030000 		.4byte	0x3b0
+ 2314 03a9 0A       		.uleb128 0xa
+ 2315 03aa C1000000 		.4byte	0xc1
+ 2316 03ae 0D       		.byte	0xd
+ 2317 03af 00       		.byte	0
+ 2318 03b0 09       		.uleb128 0x9
+ 2319 03b1 81000000 		.4byte	0x81
+ 2320 03b5 C0030000 		.4byte	0x3c0
+ 2321 03b9 0A       		.uleb128 0xa
+ 2322 03ba C1000000 		.4byte	0xc1
+ 2323 03be 0A       		.byte	0xa
+ 2324 03bf 00       		.byte	0
+ 2325 03c0 09       		.uleb128 0x9
+ 2326 03c1 81000000 		.4byte	0x81
+ 2327 03c5 D0030000 		.4byte	0x3d0
+ 2328 03c9 0A       		.uleb128 0xa
+ 2329 03ca C1000000 		.4byte	0xc1
+ 2330 03ce 40       		.byte	0x40
+ 2331 03cf 00       		.byte	0
+ 2332 03d0 09       		.uleb128 0x9
+ 2333 03d1 81000000 		.4byte	0x81
+ 2334 03d5 E6030000 		.4byte	0x3e6
+ 2335 03d9 0A       		.uleb128 0xa
+ 2336 03da C1000000 		.4byte	0xc1
+ 2337 03de 02       		.byte	0x2
+ 2338 03df 0A       		.uleb128 0xa
+ 2339 03e0 C1000000 		.4byte	0xc1
+ 2340 03e4 18       		.byte	0x18
+ 2341 03e5 00       		.byte	0
+ 2342 03e6 09       		.uleb128 0x9
+ 2343 03e7 81000000 		.4byte	0x81
+ 2344 03eb FC030000 		.4byte	0x3fc
+ 2345 03ef 0A       		.uleb128 0xa
+ 2346 03f0 C1000000 		.4byte	0xc1
+ 2347 03f4 02       		.byte	0x2
+ 2348 03f5 0A       		.uleb128 0xa
+ 2349 03f6 C1000000 		.4byte	0xc1
+ 2350 03fa 04       		.byte	0x4
+ 2351 03fb 00       		.byte	0
+ 2352 03fc 09       		.uleb128 0x9
+ 2353 03fd 81000000 		.4byte	0x81
+ 2354 0401 12040000 		.4byte	0x412
+ 2355 0405 0A       		.uleb128 0xa
+ 2356 0406 C1000000 		.4byte	0xc1
+ 2357 040a 02       		.byte	0x2
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 53
+
+
+ 2358 040b 0A       		.uleb128 0xa
+ 2359 040c C1000000 		.4byte	0xc1
+ 2360 0410 09       		.byte	0x9
+ 2361 0411 00       		.byte	0
+ 2362 0412 09       		.uleb128 0x9
+ 2363 0413 81000000 		.4byte	0x81
+ 2364 0417 22040000 		.4byte	0x422
+ 2365 041b 0A       		.uleb128 0xa
+ 2366 041c C1000000 		.4byte	0xc1
+ 2367 0420 0E       		.byte	0xe
+ 2368 0421 00       		.byte	0
+ 2369 0422 06       		.uleb128 0x6
+ 2370 0423 07070000 		.4byte	.LASF67
+ 2371 0427 0001     		.2byte	0x100
+ 2372 0429 05       		.byte	0x5
+ 2373 042a 90       		.byte	0x90
+ 2374 042b 84040000 		.4byte	0x484
+ 2375 042f 0B       		.uleb128 0xb
+ 2376 0430 64697200 		.ascii	"dir\000"
+ 2377 0434 05       		.byte	0x5
+ 2378 0435 91       		.byte	0x91
+ 2379 0436 81000000 		.4byte	0x81
+ 2380 043a 00       		.byte	0
+ 2381 043b 07       		.uleb128 0x7
+ 2382 043c 2C020000 		.4byte	.LASF68
+ 2383 0440 05       		.byte	0x5
+ 2384 0441 92       		.byte	0x92
+ 2385 0442 84040000 		.4byte	0x484
+ 2386 0446 01       		.byte	0x1
+ 2387 0447 07       		.uleb128 0x7
+ 2388 0448 E6060000 		.4byte	.LASF69
+ 2389 044c 05       		.byte	0x5
+ 2390 044d 93       		.byte	0x93
+ 2391 044e A0040000 		.4byte	0x4a0
+ 2392 0452 B5       		.byte	0xb5
+ 2393 0453 07       		.uleb128 0x7
+ 2394 0454 28030000 		.4byte	.LASF70
+ 2395 0458 05       		.byte	0x5
+ 2396 0459 94       		.byte	0x94
+ 2397 045a A0030000 		.4byte	0x3a0
+ 2398 045e D5       		.byte	0xd5
+ 2399 045f 07       		.uleb128 0x7
+ 2400 0460 73060000 		.4byte	.LASF71
+ 2401 0464 05       		.byte	0x5
+ 2402 0465 95       		.byte	0x95
+ 2403 0466 A0030000 		.4byte	0x3a0
+ 2404 046a E3       		.byte	0xe3
+ 2405 046b 07       		.uleb128 0x7
+ 2406 046c 40030000 		.4byte	.LASF72
+ 2407 0470 05       		.byte	0x5
+ 2408 0471 96       		.byte	0x96
+ 2409 0472 A0030000 		.4byte	0x3a0
+ 2410 0476 F1       		.byte	0xf1
+ 2411 0477 07       		.uleb128 0x7
+ 2412 0478 B5060000 		.4byte	.LASF73
+ 2413 047c 05       		.byte	0x5
+ 2414 047d 97       		.byte	0x97
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 54
+
+
+ 2415 047e 81000000 		.4byte	0x81
+ 2416 0482 FF       		.byte	0xff
+ 2417 0483 00       		.byte	0
+ 2418 0484 09       		.uleb128 0x9
+ 2419 0485 81000000 		.4byte	0x81
+ 2420 0489 A0040000 		.4byte	0x4a0
+ 2421 048d 0A       		.uleb128 0xa
+ 2422 048e C1000000 		.4byte	0xc1
+ 2423 0492 03       		.byte	0x3
+ 2424 0493 0A       		.uleb128 0xa
+ 2425 0494 C1000000 		.4byte	0xc1
+ 2426 0498 02       		.byte	0x2
+ 2427 0499 0A       		.uleb128 0xa
+ 2428 049a C1000000 		.4byte	0xc1
+ 2429 049e 0E       		.byte	0xe
+ 2430 049f 00       		.byte	0
+ 2431 04a0 09       		.uleb128 0x9
+ 2432 04a1 81000000 		.4byte	0x81
+ 2433 04a5 B6040000 		.4byte	0x4b6
+ 2434 04a9 0A       		.uleb128 0xa
+ 2435 04aa C1000000 		.4byte	0xc1
+ 2436 04ae 03       		.byte	0x3
+ 2437 04af 0A       		.uleb128 0xa
+ 2438 04b0 C1000000 		.4byte	0xc1
+ 2439 04b4 07       		.byte	0x7
+ 2440 04b5 00       		.byte	0
+ 2441 04b6 06       		.uleb128 0x6
+ 2442 04b7 3C060000 		.4byte	.LASF74
+ 2443 04bb 0002     		.2byte	0x200
+ 2444 04bd 05       		.byte	0x5
+ 2445 04be 9A       		.byte	0x9a
+ 2446 04bf D9040000 		.4byte	0x4d9
+ 2447 04c3 0B       		.uleb128 0xb
+ 2448 04c4 6100     		.ascii	"a\000"
+ 2449 04c6 05       		.byte	0x5
+ 2450 04c7 9B       		.byte	0x9b
+ 2451 04c8 22040000 		.4byte	0x422
+ 2452 04cc 00       		.byte	0
+ 2453 04cd 0C       		.uleb128 0xc
+ 2454 04ce 6200     		.ascii	"b\000"
+ 2455 04d0 05       		.byte	0x5
+ 2456 04d1 9C       		.byte	0x9c
+ 2457 04d2 22040000 		.4byte	0x422
+ 2458 04d6 0001     		.2byte	0x100
+ 2459 04d8 00       		.byte	0
+ 2460 04d9 02       		.uleb128 0x2
+ 2461 04da 08       		.byte	0x8
+ 2462 04db 04       		.byte	0x4
+ 2463 04dc 62040000 		.4byte	.LASF75
+ 2464 04e0 0D       		.uleb128 0xd
+ 2465 04e1 82040000 		.4byte	.LASF79
+ 2466 04e5 01       		.byte	0x1
+ 2467 04e6 39       		.byte	0x39
+ 2468 04e7 81000000 		.4byte	0x81
+ 2469 04eb 00000000 		.4byte	.LFB56
+ 2470 04ef A4010000 		.4byte	.LFE56-.LFB56
+ 2471 04f3 01       		.uleb128 0x1
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 55
+
+
+ 2472 04f4 9C       		.byte	0x9c
+ 2473 04f5 4A050000 		.4byte	0x54a
+ 2474 04f9 0E       		.uleb128 0xe
+ 2475 04fa CD050000 		.4byte	.LASF76
+ 2476 04fe 01       		.byte	0x1
+ 2477 04ff 39       		.byte	0x39
+ 2478 0500 4A050000 		.4byte	0x54a
+ 2479 0504 02       		.uleb128 0x2
+ 2480 0505 91       		.byte	0x91
+ 2481 0506 64       		.sleb128 -28
+ 2482 0507 0E       		.uleb128 0xe
+ 2483 0508 A6060000 		.4byte	.LASF77
+ 2484 050c 01       		.byte	0x1
+ 2485 050d 39       		.byte	0x39
+ 2486 050e 81000000 		.4byte	0x81
+ 2487 0512 02       		.uleb128 0x2
+ 2488 0513 91       		.byte	0x91
+ 2489 0514 63       		.sleb128 -29
+ 2490 0515 0F       		.uleb128 0xf
+ 2491 0516 706F7300 		.ascii	"pos\000"
+ 2492 051a 01       		.byte	0x1
+ 2493 051b 39       		.byte	0x39
+ 2494 051c 81000000 		.4byte	0x81
+ 2495 0520 02       		.uleb128 0x2
+ 2496 0521 91       		.byte	0x91
+ 2497 0522 62       		.sleb128 -30
+ 2498 0523 10       		.uleb128 0x10
+ 2499 0524 7800     		.ascii	"x\000"
+ 2500 0526 01       		.byte	0x1
+ 2501 0527 3A       		.byte	0x3a
+ 2502 0528 81000000 		.4byte	0x81
+ 2503 052c 02       		.uleb128 0x2
+ 2504 052d 91       		.byte	0x91
+ 2505 052e 77       		.sleb128 -9
+ 2506 052f 10       		.uleb128 0x10
+ 2507 0530 7900     		.ascii	"y\000"
+ 2508 0532 01       		.byte	0x1
+ 2509 0533 3A       		.byte	0x3a
+ 2510 0534 81000000 		.4byte	0x81
+ 2511 0538 02       		.uleb128 0x2
+ 2512 0539 91       		.byte	0x91
+ 2513 053a 76       		.sleb128 -10
+ 2514 053b 11       		.uleb128 0x11
+ 2515 053c EF000000 		.4byte	.LASF78
+ 2516 0540 01       		.byte	0x1
+ 2517 0541 3A       		.byte	0x3a
+ 2518 0542 50050000 		.4byte	0x550
+ 2519 0546 02       		.uleb128 0x2
+ 2520 0547 91       		.byte	0x91
+ 2521 0548 6C       		.sleb128 -20
+ 2522 0549 00       		.byte	0
+ 2523 054a 12       		.uleb128 0x12
+ 2524 054b 04       		.byte	0x4
+ 2525 054c 81000000 		.4byte	0x81
+ 2526 0550 09       		.uleb128 0x9
+ 2527 0551 81000000 		.4byte	0x81
+ 2528 0555 60050000 		.4byte	0x560
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 56
+
+
+ 2529 0559 0A       		.uleb128 0xa
+ 2530 055a C1000000 		.4byte	0xc1
+ 2531 055e 06       		.byte	0x6
+ 2532 055f 00       		.byte	0
+ 2533 0560 0D       		.uleb128 0xd
+ 2534 0561 9C040000 		.4byte	.LASF80
+ 2535 0565 01       		.byte	0x1
+ 2536 0566 76       		.byte	0x76
+ 2537 0567 81000000 		.4byte	0x81
+ 2538 056b 00000000 		.4byte	.LFB57
+ 2539 056f F0030000 		.4byte	.LFE57-.LFB57
+ 2540 0573 01       		.uleb128 0x1
+ 2541 0574 9C       		.byte	0x9c
+ 2542 0575 F7050000 		.4byte	0x5f7
+ 2543 0579 0E       		.uleb128 0xe
+ 2544 057a 9D060000 		.4byte	.LASF81
+ 2545 057e 01       		.byte	0x1
+ 2546 057f 76       		.byte	0x76
+ 2547 0580 4A050000 		.4byte	0x54a
+ 2548 0584 03       		.uleb128 0x3
+ 2549 0585 91       		.byte	0x91
+ 2550 0586 B47F     		.sleb128 -76
+ 2551 0588 0E       		.uleb128 0xe
+ 2552 0589 14020000 		.4byte	.LASF82
+ 2553 058d 01       		.byte	0x1
+ 2554 058e 76       		.byte	0x76
+ 2555 058f 4A050000 		.4byte	0x54a
+ 2556 0593 03       		.uleb128 0x3
+ 2557 0594 91       		.byte	0x91
+ 2558 0595 B07F     		.sleb128 -80
+ 2559 0597 11       		.uleb128 0x11
+ 2560 0598 B8020000 		.4byte	.LASF83
+ 2561 059c 01       		.byte	0x1
+ 2562 059d 77       		.byte	0x77
+ 2563 059e A0030000 		.4byte	0x3a0
+ 2564 05a2 02       		.uleb128 0x2
+ 2565 05a3 91       		.byte	0x91
+ 2566 05a4 64       		.sleb128 -28
+ 2567 05a5 11       		.uleb128 0x11
+ 2568 05a6 37040000 		.4byte	.LASF84
+ 2569 05aa 01       		.byte	0x1
+ 2570 05ab 77       		.byte	0x77
+ 2571 05ac A0030000 		.4byte	0x3a0
+ 2572 05b0 02       		.uleb128 0x2
+ 2573 05b1 91       		.byte	0x91
+ 2574 05b2 54       		.sleb128 -44
+ 2575 05b3 11       		.uleb128 0x11
+ 2576 05b4 C7020000 		.4byte	.LASF85
+ 2577 05b8 01       		.byte	0x1
+ 2578 05b9 77       		.byte	0x77
+ 2579 05ba A0030000 		.4byte	0x3a0
+ 2580 05be 02       		.uleb128 0x2
+ 2581 05bf 91       		.byte	0x91
+ 2582 05c0 44       		.sleb128 -60
+ 2583 05c1 11       		.uleb128 0x11
+ 2584 05c2 AD060000 		.4byte	.LASF86
+ 2585 05c6 01       		.byte	0x1
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 57
+
+
+ 2586 05c7 77       		.byte	0x77
+ 2587 05c8 81000000 		.4byte	0x81
+ 2588 05cc 02       		.uleb128 0x2
+ 2589 05cd 91       		.byte	0x91
+ 2590 05ce 77       		.sleb128 -9
+ 2591 05cf 11       		.uleb128 0x11
+ 2592 05d0 A8040000 		.4byte	.LASF87
+ 2593 05d4 01       		.byte	0x1
+ 2594 05d5 77       		.byte	0x77
+ 2595 05d6 F7050000 		.4byte	0x5f7
+ 2596 05da 03       		.uleb128 0x3
+ 2597 05db 91       		.byte	0x91
+ 2598 05dc B87F     		.sleb128 -72
+ 2599 05de 10       		.uleb128 0x10
+ 2600 05df 7800     		.ascii	"x\000"
+ 2601 05e1 01       		.byte	0x1
+ 2602 05e2 77       		.byte	0x77
+ 2603 05e3 81000000 		.4byte	0x81
+ 2604 05e7 02       		.uleb128 0x2
+ 2605 05e8 91       		.byte	0x91
+ 2606 05e9 76       		.sleb128 -10
+ 2607 05ea 10       		.uleb128 0x10
+ 2608 05eb 7900     		.ascii	"y\000"
+ 2609 05ed 01       		.byte	0x1
+ 2610 05ee 77       		.byte	0x77
+ 2611 05ef 81000000 		.4byte	0x81
+ 2612 05f3 02       		.uleb128 0x2
+ 2613 05f4 91       		.byte	0x91
+ 2614 05f5 75       		.sleb128 -11
+ 2615 05f6 00       		.byte	0
+ 2616 05f7 09       		.uleb128 0x9
+ 2617 05f8 81000000 		.4byte	0x81
+ 2618 05fc 07060000 		.4byte	0x607
+ 2619 0600 0A       		.uleb128 0xa
+ 2620 0601 C1000000 		.4byte	0xc1
+ 2621 0605 0B       		.byte	0xb
+ 2622 0606 00       		.byte	0
+ 2623 0607 13       		.uleb128 0x13
+ 2624 0608 6D010000 		.4byte	.LASF88
+ 2625 060c 01       		.byte	0x1
+ 2626 060d CF       		.byte	0xcf
+ 2627 060e 81000000 		.4byte	0x81
+ 2628 0612 00000000 		.4byte	.LFB58
+ 2629 0616 B4010000 		.4byte	.LFE58-.LFB58
+ 2630 061a 01       		.uleb128 0x1
+ 2631 061b 9C       		.byte	0x9c
+ 2632 061c 71060000 		.4byte	0x671
+ 2633 0620 0E       		.uleb128 0xe
+ 2634 0621 48030000 		.4byte	.LASF89
+ 2635 0625 01       		.byte	0x1
+ 2636 0626 CF       		.byte	0xcf
+ 2637 0627 4A050000 		.4byte	0x54a
+ 2638 062b 02       		.uleb128 0x2
+ 2639 062c 91       		.byte	0x91
+ 2640 062d 54       		.sleb128 -44
+ 2641 062e 0E       		.uleb128 0xe
+ 2642 062f 4F030000 		.4byte	.LASF90
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 58
+
+
+ 2643 0633 01       		.byte	0x1
+ 2644 0634 CF       		.byte	0xcf
+ 2645 0635 4A050000 		.4byte	0x54a
+ 2646 0639 02       		.uleb128 0x2
+ 2647 063a 91       		.byte	0x91
+ 2648 063b 50       		.sleb128 -48
+ 2649 063c 11       		.uleb128 0x11
+ 2650 063d 5B040000 		.4byte	.LASF91
+ 2651 0641 01       		.byte	0x1
+ 2652 0642 D0       		.byte	0xd0
+ 2653 0643 9E000000 		.4byte	0x9e
+ 2654 0647 02       		.uleb128 0x2
+ 2655 0648 91       		.byte	0x91
+ 2656 0649 68       		.sleb128 -24
+ 2657 064a 11       		.uleb128 0x11
+ 2658 064b 13010000 		.4byte	.LASF92
+ 2659 064f 01       		.byte	0x1
+ 2660 0650 D0       		.byte	0xd0
+ 2661 0651 9E000000 		.4byte	0x9e
+ 2662 0655 02       		.uleb128 0x2
+ 2663 0656 91       		.byte	0x91
+ 2664 0657 60       		.sleb128 -32
+ 2665 0658 10       		.uleb128 0x10
+ 2666 0659 7800     		.ascii	"x\000"
+ 2667 065b 01       		.byte	0x1
+ 2668 065c D1       		.byte	0xd1
+ 2669 065d 81000000 		.4byte	0x81
+ 2670 0661 02       		.uleb128 0x2
+ 2671 0662 91       		.byte	0x91
+ 2672 0663 5F       		.sleb128 -33
+ 2673 0664 10       		.uleb128 0x10
+ 2674 0665 7900     		.ascii	"y\000"
+ 2675 0667 01       		.byte	0x1
+ 2676 0668 D1       		.byte	0xd1
+ 2677 0669 81000000 		.4byte	0x81
+ 2678 066d 02       		.uleb128 0x2
+ 2679 066e 91       		.byte	0x91
+ 2680 066f 5E       		.sleb128 -34
+ 2681 0670 00       		.byte	0
+ 2682 0671 14       		.uleb128 0x14
+ 2683 0672 34010000 		.4byte	.LASF97
+ 2684 0676 01       		.byte	0x1
+ 2685 0677 FE       		.byte	0xfe
+ 2686 0678 00000000 		.4byte	.LFB59
+ 2687 067c 70030000 		.4byte	.LFE59-.LFB59
+ 2688 0680 01       		.uleb128 0x1
+ 2689 0681 9C       		.byte	0x9c
+ 2690 0682 09070000 		.4byte	0x709
+ 2691 0686 0E       		.uleb128 0xe
+ 2692 0687 48030000 		.4byte	.LASF89
+ 2693 068b 01       		.byte	0x1
+ 2694 068c FE       		.byte	0xfe
+ 2695 068d 4A050000 		.4byte	0x54a
+ 2696 0691 03       		.uleb128 0x3
+ 2697 0692 91       		.byte	0x91
+ 2698 0693 947F     		.sleb128 -108
+ 2699 0695 0E       		.uleb128 0xe
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 59
+
+
+ 2700 0696 4F030000 		.4byte	.LASF90
+ 2701 069a 01       		.byte	0x1
+ 2702 069b FE       		.byte	0xfe
+ 2703 069c 4A050000 		.4byte	0x54a
+ 2704 06a0 03       		.uleb128 0x3
+ 2705 06a1 91       		.byte	0x91
+ 2706 06a2 907F     		.sleb128 -112
+ 2707 06a4 15       		.uleb128 0x15
+ 2708 06a5 97020000 		.4byte	.LASF93
+ 2709 06a9 01       		.byte	0x1
+ 2710 06aa 4901     		.2byte	0x149
+ 2711 06ac 3A030000 		.4byte	0x33a
+ 2712 06b0 02       		.uleb128 0x2
+ 2713 06b1 91       		.byte	0x91
+ 2714 06b2 60       		.sleb128 -32
+ 2715 06b3 15       		.uleb128 0x15
+ 2716 06b4 A2020000 		.4byte	.LASF94
+ 2717 06b8 01       		.byte	0x1
+ 2718 06b9 4901     		.2byte	0x149
+ 2719 06bb 3A030000 		.4byte	0x33a
+ 2720 06bf 02       		.uleb128 0x2
+ 2721 06c0 91       		.byte	0x91
+ 2722 06c1 54       		.sleb128 -44
+ 2723 06c2 15       		.uleb128 0x15
+ 2724 06c3 63010000 		.4byte	.LASF95
+ 2725 06c7 01       		.byte	0x1
+ 2726 06c8 4901     		.2byte	0x149
+ 2727 06ca 09070000 		.4byte	0x709
+ 2728 06ce 03       		.uleb128 0x3
+ 2729 06cf 91       		.byte	0x91
+ 2730 06d0 987F     		.sleb128 -104
+ 2731 06d2 16       		.uleb128 0x16
+ 2732 06d3 7800     		.ascii	"x\000"
+ 2733 06d5 01       		.byte	0x1
+ 2734 06d6 4901     		.2byte	0x149
+ 2735 06d8 81000000 		.4byte	0x81
+ 2736 06dc 02       		.uleb128 0x2
+ 2737 06dd 91       		.byte	0x91
+ 2738 06de 6F       		.sleb128 -17
+ 2739 06df 16       		.uleb128 0x16
+ 2740 06e0 7900     		.ascii	"y\000"
+ 2741 06e2 01       		.byte	0x1
+ 2742 06e3 4901     		.2byte	0x149
+ 2743 06e5 81000000 		.4byte	0x81
+ 2744 06e9 02       		.uleb128 0x2
+ 2745 06ea 91       		.byte	0x91
+ 2746 06eb 6E       		.sleb128 -18
+ 2747 06ec 16       		.uleb128 0x16
+ 2748 06ed 7A00     		.ascii	"z\000"
+ 2749 06ef 01       		.byte	0x1
+ 2750 06f0 4901     		.2byte	0x149
+ 2751 06f2 81000000 		.4byte	0x81
+ 2752 06f6 02       		.uleb128 0x2
+ 2753 06f7 91       		.byte	0x91
+ 2754 06f8 6D       		.sleb128 -19
+ 2755 06f9 15       		.uleb128 0x15
+ 2756 06fa 00000000 		.4byte	.LASF96
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 60
+
+
+ 2757 06fe 01       		.byte	0x1
+ 2758 06ff 4901     		.2byte	0x149
+ 2759 0701 81000000 		.4byte	0x81
+ 2760 0705 02       		.uleb128 0x2
+ 2761 0706 91       		.byte	0x91
+ 2762 0707 6C       		.sleb128 -20
+ 2763 0708 00       		.byte	0
+ 2764 0709 09       		.uleb128 0x9
+ 2765 070a 81000000 		.4byte	0x81
+ 2766 070e 1F070000 		.4byte	0x71f
+ 2767 0712 0A       		.uleb128 0xa
+ 2768 0713 C1000000 		.4byte	0xc1
+ 2769 0717 03       		.byte	0x3
+ 2770 0718 0A       		.uleb128 0xa
+ 2771 0719 C1000000 		.4byte	0xc1
+ 2772 071d 0E       		.byte	0xe
+ 2773 071e 00       		.byte	0
+ 2774 071f 17       		.uleb128 0x17
+ 2775 0720 E0020000 		.4byte	.LASF98
+ 2776 0724 01       		.byte	0x1
+ 2777 0725 8F01     		.2byte	0x18f
+ 2778 0727 00000000 		.4byte	.LFB60
+ 2779 072b 2C030000 		.4byte	.LFE60-.LFB60
+ 2780 072f 01       		.uleb128 0x1
+ 2781 0730 9C       		.byte	0x9c
+ 2782 0731 D8070000 		.4byte	0x7d8
+ 2783 0735 18       		.uleb128 0x18
+ 2784 0736 48030000 		.4byte	.LASF89
+ 2785 073a 01       		.byte	0x1
+ 2786 073b 8F01     		.2byte	0x18f
+ 2787 073d 4A050000 		.4byte	0x54a
+ 2788 0741 03       		.uleb128 0x3
+ 2789 0742 91       		.byte	0x91
+ 2790 0743 BC7F     		.sleb128 -68
+ 2791 0745 18       		.uleb128 0x18
+ 2792 0746 4F030000 		.4byte	.LASF90
+ 2793 074a 01       		.byte	0x1
+ 2794 074b 8F01     		.2byte	0x18f
+ 2795 074d 4A050000 		.4byte	0x54a
+ 2796 0751 03       		.uleb128 0x3
+ 2797 0752 91       		.byte	0x91
+ 2798 0753 B87F     		.sleb128 -72
+ 2799 0755 18       		.uleb128 0x18
+ 2800 0756 56030000 		.4byte	.LASF99
+ 2801 075a 01       		.byte	0x1
+ 2802 075b 8F01     		.2byte	0x18f
+ 2803 075d 4A050000 		.4byte	0x54a
+ 2804 0761 03       		.uleb128 0x3
+ 2805 0762 91       		.byte	0x91
+ 2806 0763 B47F     		.sleb128 -76
+ 2807 0765 15       		.uleb128 0x15
+ 2808 0766 97020000 		.4byte	.LASF93
+ 2809 076a 01       		.byte	0x1
+ 2810 076b ED01     		.2byte	0x1ed
+ 2811 076d 3A030000 		.4byte	0x33a
+ 2812 0771 02       		.uleb128 0x2
+ 2813 0772 91       		.byte	0x91
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 61
+
+
+ 2814 0773 68       		.sleb128 -24
+ 2815 0774 15       		.uleb128 0x15
+ 2816 0775 A2020000 		.4byte	.LASF94
+ 2817 0779 01       		.byte	0x1
+ 2818 077a ED01     		.2byte	0x1ed
+ 2819 077c 3A030000 		.4byte	0x33a
+ 2820 0780 02       		.uleb128 0x2
+ 2821 0781 91       		.byte	0x91
+ 2822 0782 5C       		.sleb128 -36
+ 2823 0783 15       		.uleb128 0x15
+ 2824 0784 AD020000 		.4byte	.LASF100
+ 2825 0788 01       		.byte	0x1
+ 2826 0789 ED01     		.2byte	0x1ed
+ 2827 078b 3A030000 		.4byte	0x33a
+ 2828 078f 02       		.uleb128 0x2
+ 2829 0790 91       		.byte	0x91
+ 2830 0791 50       		.sleb128 -48
+ 2831 0792 15       		.uleb128 0x15
+ 2832 0793 63010000 		.4byte	.LASF95
+ 2833 0797 01       		.byte	0x1
+ 2834 0798 ED01     		.2byte	0x1ed
+ 2835 079a 3A030000 		.4byte	0x33a
+ 2836 079e 02       		.uleb128 0x2
+ 2837 079f 91       		.byte	0x91
+ 2838 07a0 44       		.sleb128 -60
+ 2839 07a1 16       		.uleb128 0x16
+ 2840 07a2 7800     		.ascii	"x\000"
+ 2841 07a4 01       		.byte	0x1
+ 2842 07a5 ED01     		.2byte	0x1ed
+ 2843 07a7 81000000 		.4byte	0x81
+ 2844 07ab 02       		.uleb128 0x2
+ 2845 07ac 91       		.byte	0x91
+ 2846 07ad 77       		.sleb128 -9
+ 2847 07ae 16       		.uleb128 0x16
+ 2848 07af 7900     		.ascii	"y\000"
+ 2849 07b1 01       		.byte	0x1
+ 2850 07b2 ED01     		.2byte	0x1ed
+ 2851 07b4 81000000 		.4byte	0x81
+ 2852 07b8 02       		.uleb128 0x2
+ 2853 07b9 91       		.byte	0x91
+ 2854 07ba 76       		.sleb128 -10
+ 2855 07bb 16       		.uleb128 0x16
+ 2856 07bc 7A00     		.ascii	"z\000"
+ 2857 07be 01       		.byte	0x1
+ 2858 07bf ED01     		.2byte	0x1ed
+ 2859 07c1 81000000 		.4byte	0x81
+ 2860 07c5 02       		.uleb128 0x2
+ 2861 07c6 91       		.byte	0x91
+ 2862 07c7 75       		.sleb128 -11
+ 2863 07c8 15       		.uleb128 0x15
+ 2864 07c9 00000000 		.4byte	.LASF96
+ 2865 07cd 01       		.byte	0x1
+ 2866 07ce ED01     		.2byte	0x1ed
+ 2867 07d0 81000000 		.4byte	0x81
+ 2868 07d4 02       		.uleb128 0x2
+ 2869 07d5 91       		.byte	0x91
+ 2870 07d6 74       		.sleb128 -12
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 62
+
+
+ 2871 07d7 00       		.byte	0
+ 2872 07d8 19       		.uleb128 0x19
+ 2873 07d9 31050000 		.4byte	.LASF101
+ 2874 07dd 06       		.byte	0x6
+ 2875 07de 1606     		.2byte	0x616
+ 2876 07e0 E4070000 		.4byte	0x7e4
+ 2877 07e4 05       		.uleb128 0x5
+ 2878 07e5 76000000 		.4byte	0x76
+ 2879 07e9 1A       		.uleb128 0x1a
+ 2880 07ea 5D030000 		.4byte	.LASF102
+ 2881 07ee 05       		.byte	0x5
+ 2882 07ef 2C       		.byte	0x2c
+ 2883 07f0 FA070000 		.4byte	0x7fa
+ 2884 07f4 05       		.uleb128 0x5
+ 2885 07f5 03       		.byte	0x3
+ 2886 07f6 00000000 		.4byte	countAnimation1
+ 2887 07fa 05       		.uleb128 0x5
+ 2888 07fb A5000000 		.4byte	0xa5
+ 2889 07ff 1A       		.uleb128 0x1a
+ 2890 0800 7E030000 		.4byte	.LASF103
+ 2891 0804 05       		.byte	0x5
+ 2892 0805 2D       		.byte	0x2d
+ 2893 0806 FA070000 		.4byte	0x7fa
+ 2894 080a 05       		.uleb128 0x5
+ 2895 080b 03       		.byte	0x3
+ 2896 080c 00000000 		.4byte	countAnimation2
+ 2897 0810 1A       		.uleb128 0x1a
+ 2898 0811 65060000 		.4byte	.LASF104
+ 2899 0815 05       		.byte	0x5
+ 2900 0816 2E       		.byte	0x2e
+ 2901 0817 FA070000 		.4byte	0x7fa
+ 2902 081b 05       		.uleb128 0x5
+ 2903 081c 03       		.byte	0x3
+ 2904 081d 00000000 		.4byte	countBeagleTX
+ 2905 0821 1A       		.uleb128 0x1a
+ 2906 0822 55020000 		.4byte	.LASF105
+ 2907 0826 05       		.byte	0x5
+ 2908 0827 2F       		.byte	0x2f
+ 2909 0828 BC000000 		.4byte	0xbc
+ 2910 082c 05       		.uleb128 0x5
+ 2911 082d 03       		.byte	0x3
+ 2912 082e 00000000 		.4byte	flowLCD1
+ 2913 0832 1A       		.uleb128 0x1a
+ 2914 0833 5E020000 		.4byte	.LASF106
+ 2915 0837 05       		.byte	0x5
+ 2916 0838 30       		.byte	0x30
+ 2917 0839 BC000000 		.4byte	0xbc
+ 2918 083d 05       		.uleb128 0x5
+ 2919 083e 03       		.byte	0x3
+ 2920 083f 00000000 		.4byte	flowLCD2
+ 2921 0843 1A       		.uleb128 0x1a
+ 2922 0844 9F010000 		.4byte	.LASF107
+ 2923 0848 05       		.byte	0x5
+ 2924 0849 31       		.byte	0x31
+ 2925 084a B7000000 		.4byte	0xb7
+ 2926 084e 05       		.uleb128 0x5
+ 2927 084f 03       		.byte	0x3
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 63
+
+
+ 2928 0850 00000000 		.4byte	digits
+ 2929 0854 1A       		.uleb128 0x1a
+ 2930 0855 23000000 		.4byte	.LASF108
+ 2931 0859 05       		.byte	0x5
+ 2932 085a 32       		.byte	0x32
+ 2933 085b 65080000 		.4byte	0x865
+ 2934 085f 05       		.uleb128 0x5
+ 2935 0860 03       		.byte	0x3
+ 2936 0861 00000000 		.4byte	ipAdress
+ 2937 0865 05       		.uleb128 0x5
+ 2938 0866 F7050000 		.4byte	0x5f7
+ 2939 086a 1A       		.uleb128 0x1a
+ 2940 086b 7F020000 		.4byte	.LASF109
+ 2941 086f 05       		.byte	0x5
+ 2942 0870 33       		.byte	0x33
+ 2943 0871 B7000000 		.4byte	0xb7
+ 2944 0875 05       		.uleb128 0x5
+ 2945 0876 03       		.byte	0x3
+ 2946 0877 00000000 		.4byte	numberKeys1
+ 2947 087b 1A       		.uleb128 0x1a
+ 2948 087c 8B020000 		.4byte	.LASF110
+ 2949 0880 05       		.byte	0x5
+ 2950 0881 34       		.byte	0x34
+ 2951 0882 B7000000 		.4byte	0xb7
+ 2952 0886 05       		.uleb128 0x5
+ 2953 0887 03       		.byte	0x3
+ 2954 0888 00000000 		.4byte	numberKeys2
+ 2955 088c 1A       		.uleb128 0x1a
+ 2956 088d E0040000 		.4byte	.LASF111
+ 2957 0891 05       		.byte	0x5
+ 2958 0892 35       		.byte	0x35
+ 2959 0893 B7000000 		.4byte	0xb7
+ 2960 0897 05       		.uleb128 0x5
+ 2961 0898 03       		.byte	0x3
+ 2962 0899 00000000 		.4byte	flagPoint1
+ 2963 089d 1A       		.uleb128 0x1a
+ 2964 089e 29010000 		.4byte	.LASF112
+ 2965 08a2 05       		.byte	0x5
+ 2966 08a3 36       		.byte	0x36
+ 2967 08a4 B7000000 		.4byte	0xb7
+ 2968 08a8 05       		.uleb128 0x5
+ 2969 08a9 03       		.byte	0x3
+ 2970 08aa 00000000 		.4byte	flagPoint2
+ 2971 08ae 09       		.uleb128 0x9
+ 2972 08af 81000000 		.4byte	0x81
+ 2973 08b3 C4080000 		.4byte	0x8c4
+ 2974 08b7 0A       		.uleb128 0xa
+ 2975 08b8 C1000000 		.4byte	0xc1
+ 2976 08bc 77       		.byte	0x77
+ 2977 08bd 0A       		.uleb128 0xa
+ 2978 08be C1000000 		.4byte	0xc1
+ 2979 08c2 07       		.byte	0x7
+ 2980 08c3 00       		.byte	0
+ 2981 08c4 1A       		.uleb128 0x1a
+ 2982 08c5 0D020000 		.4byte	.LASF113
+ 2983 08c9 05       		.byte	0x5
+ 2984 08ca 37       		.byte	0x37
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 64
+
+
+ 2985 08cb D5080000 		.4byte	0x8d5
+ 2986 08cf 05       		.uleb128 0x5
+ 2987 08d0 03       		.byte	0x3
+ 2988 08d1 00000000 		.4byte	button
+ 2989 08d5 05       		.uleb128 0x5
+ 2990 08d6 AE080000 		.4byte	0x8ae
+ 2991 08da 1A       		.uleb128 0x1a
+ 2992 08db B7010000 		.4byte	.LASF114
+ 2993 08df 05       		.byte	0x5
+ 2994 08e0 38       		.byte	0x38
+ 2995 08e1 B7000000 		.4byte	0xb7
+ 2996 08e5 05       		.uleb128 0x5
+ 2997 08e6 03       		.byte	0x3
+ 2998 08e7 00000000 		.4byte	productNumber
+ 2999 08eb 1A       		.uleb128 0x1a
+ 3000 08ec 1D030000 		.4byte	.LASF115
+ 3001 08f0 05       		.byte	0x5
+ 3002 08f1 39       		.byte	0x39
+ 3003 08f2 FC030000 		.4byte	0x3fc
+ 3004 08f6 05       		.uleb128 0x5
+ 3005 08f7 03       		.byte	0x3
+ 3006 08f8 00000000 		.4byte	presetFast
+ 3007 08fc 1A       		.uleb128 0x1a
+ 3008 08fd 8D050000 		.4byte	.LASF116
+ 3009 0901 05       		.byte	0x5
+ 3010 0902 3A       		.byte	0x3a
+ 3011 0903 BC000000 		.4byte	0xbc
+ 3012 0907 05       		.uleb128 0x5
+ 3013 0908 03       		.byte	0x3
+ 3014 0909 00000000 		.4byte	delayPicture1
+ 3015 090d 1A       		.uleb128 0x1a
+ 3016 090e 9B050000 		.4byte	.LASF117
+ 3017 0912 05       		.byte	0x5
+ 3018 0913 3B       		.byte	0x3b
+ 3019 0914 BC000000 		.4byte	0xbc
+ 3020 0918 05       		.uleb128 0x5
+ 3021 0919 03       		.byte	0x3
+ 3022 091a 00000000 		.4byte	delayPicture2
+ 3023 091e 1A       		.uleb128 0x1a
+ 3024 091f C6040000 		.4byte	.LASF118
+ 3025 0923 05       		.byte	0x5
+ 3026 0924 3C       		.byte	0x3c
+ 3027 0925 B7000000 		.4byte	0xb7
+ 3028 0929 05       		.uleb128 0x5
+ 3029 092a 03       		.byte	0x3
+ 3030 092b 00000000 		.4byte	ppux10
+ 3031 092f 1A       		.uleb128 0x1a
+ 3032 0930 2C000000 		.4byte	.LASF119
+ 3033 0934 05       		.byte	0x5
+ 3034 0935 3D       		.byte	0x3d
+ 3035 0936 B7000000 		.4byte	0xb7
+ 3036 093a 05       		.uleb128 0x5
+ 3037 093b 03       		.byte	0x3
+ 3038 093c 00000000 		.4byte	decimalMoney
+ 3039 0940 1A       		.uleb128 0x1a
+ 3040 0941 06000000 		.4byte	.LASF120
+ 3041 0945 05       		.byte	0x5
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 65
+
+
+ 3042 0946 3E       		.byte	0x3e
+ 3043 0947 B7000000 		.4byte	0xb7
+ 3044 094b 05       		.uleb128 0x5
+ 3045 094c 03       		.byte	0x3
+ 3046 094d 00000000 		.4byte	decimalVolume
+ 3047 0951 1A       		.uleb128 0x1a
+ 3048 0952 FD040000 		.4byte	.LASF121
+ 3049 0956 05       		.byte	0x5
+ 3050 0957 3F       		.byte	0x3f
+ 3051 0958 62090000 		.4byte	0x962
+ 3052 095c 05       		.uleb128 0x5
+ 3053 095d 03       		.byte	0x3
+ 3054 095e 00000000 		.4byte	symbols
+ 3055 0962 05       		.uleb128 0x5
+ 3056 0963 5A030000 		.4byte	0x35a
+ 3057 0967 09       		.uleb128 0x9
+ 3058 0968 81000000 		.4byte	0x81
+ 3059 096c 77090000 		.4byte	0x977
+ 3060 0970 0A       		.uleb128 0xa
+ 3061 0971 C1000000 		.4byte	0xc1
+ 3062 0975 02       		.byte	0x2
+ 3063 0976 00       		.byte	0
+ 3064 0977 1A       		.uleb128 0x1a
+ 3065 0978 A6010000 		.4byte	.LASF122
+ 3066 097c 05       		.byte	0x5
+ 3067 097d 40       		.byte	0x40
+ 3068 097e 88090000 		.4byte	0x988
+ 3069 0982 05       		.uleb128 0x5
+ 3070 0983 03       		.byte	0x3
+ 3071 0984 00000000 		.4byte	time
+ 3072 0988 05       		.uleb128 0x5
+ 3073 0989 67090000 		.4byte	0x967
+ 3074 098d 1A       		.uleb128 0x1a
+ 3075 098e C2020000 		.4byte	.LASF123
+ 3076 0992 05       		.byte	0x5
+ 3077 0993 41       		.byte	0x41
+ 3078 0994 9E090000 		.4byte	0x99e
+ 3079 0998 05       		.uleb128 0x5
+ 3080 0999 03       		.byte	0x3
+ 3081 099a 00000000 		.4byte	date
+ 3082 099e 05       		.uleb128 0x5
+ 3083 099f 67090000 		.4byte	0x967
+ 3084 09a3 1A       		.uleb128 0x1a
+ 3085 09a4 4A010000 		.4byte	.LASF124
+ 3086 09a8 05       		.byte	0x5
+ 3087 09a9 42       		.byte	0x42
+ 3088 09aa B4090000 		.4byte	0x9b4
+ 3089 09ae 05       		.uleb128 0x5
+ 3090 09af 03       		.byte	0x3
+ 3091 09b0 00000000 		.4byte	screen
+ 3092 09b4 05       		.uleb128 0x5
+ 3093 09b5 5A030000 		.4byte	0x35a
+ 3094 09b9 1A       		.uleb128 0x1a
+ 3095 09ba DB000000 		.4byte	.LASF125
+ 3096 09be 05       		.byte	0x5
+ 3097 09bf 43       		.byte	0x43
+ 3098 09c0 CA090000 		.4byte	0x9ca
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 66
+
+
+ 3099 09c4 05       		.uleb128 0x5
+ 3100 09c5 03       		.byte	0x3
+ 3101 09c6 00000000 		.4byte	residue
+ 3102 09ca 05       		.uleb128 0x5
+ 3103 09cb A0030000 		.4byte	0x3a0
+ 3104 09cf 09       		.uleb128 0x9
+ 3105 09d0 81000000 		.4byte	0x81
+ 3106 09d4 DF090000 		.4byte	0x9df
+ 3107 09d8 0A       		.uleb128 0xa
+ 3108 09d9 C1000000 		.4byte	0xc1
+ 3109 09dd 1D       		.byte	0x1d
+ 3110 09de 00       		.byte	0
+ 3111 09df 1A       		.uleb128 0x1a
+ 3112 09e0 41060000 		.4byte	.LASF126
+ 3113 09e4 05       		.byte	0x5
+ 3114 09e5 44       		.byte	0x44
+ 3115 09e6 CF090000 		.4byte	0x9cf
+ 3116 09ea 05       		.uleb128 0x5
+ 3117 09eb 03       		.byte	0x3
+ 3118 09ec 00000000 		.4byte	temporal
+ 3119 09f0 1A       		.uleb128 0x1a
+ 3120 09f1 45020000 		.4byte	.LASF127
+ 3121 09f5 05       		.byte	0x5
+ 3122 09f6 45       		.byte	0x45
+ 3123 09f7 B7000000 		.4byte	0xb7
+ 3124 09fb 05       		.uleb128 0x5
+ 3125 09fc 03       		.byte	0x3
+ 3126 09fd 00000000 		.4byte	turn
+ 3127 0a01 1A       		.uleb128 0x1a
+ 3128 0a02 33060000 		.4byte	.LASF128
+ 3129 0a06 05       		.byte	0x5
+ 3130 0a07 46       		.byte	0x46
+ 3131 0a08 120A0000 		.4byte	0xa12
+ 3132 0a0c 05       		.uleb128 0x5
+ 3133 0a0d 03       		.byte	0x3
+ 3134 0a0e 00000000 		.4byte	idSeller
+ 3135 0a12 05       		.uleb128 0x5
+ 3136 0a13 2A030000 		.4byte	0x32a
+ 3137 0a17 1A       		.uleb128 0x1a
+ 3138 0a18 3E050000 		.4byte	.LASF129
+ 3139 0a1c 05       		.byte	0x5
+ 3140 0a1d 47       		.byte	0x47
+ 3141 0a1e B7000000 		.4byte	0xb7
+ 3142 0a22 05       		.uleb128 0x5
+ 3143 0a23 03       		.byte	0x3
+ 3144 0a24 00000000 		.4byte	typeIdSeller
+ 3145 0a28 09       		.uleb128 0x9
+ 3146 0a29 81000000 		.4byte	0x81
+ 3147 0a2d 380A0000 		.4byte	0xa38
+ 3148 0a31 0A       		.uleb128 0xa
+ 3149 0a32 C1000000 		.4byte	0xc1
+ 3150 0a36 07       		.byte	0x7
+ 3151 0a37 00       		.byte	0
+ 3152 0a38 1A       		.uleb128 0x1a
+ 3153 0a39 66050000 		.4byte	.LASF130
+ 3154 0a3d 05       		.byte	0x5
+ 3155 0a3e 48       		.byte	0x48
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 67
+
+
+ 3156 0a3f 490A0000 		.4byte	0xa49
+ 3157 0a43 05       		.uleb128 0x5
+ 3158 0a44 03       		.byte	0x3
+ 3159 0a45 00000000 		.4byte	passwordSeller
+ 3160 0a49 05       		.uleb128 0x5
+ 3161 0a4a 280A0000 		.4byte	0xa28
+ 3162 0a4e 1A       		.uleb128 0x1a
+ 3163 0a4f 75040000 		.4byte	.LASF131
+ 3164 0a53 05       		.byte	0x5
+ 3165 0a54 49       		.byte	0x49
+ 3166 0a55 B7000000 		.4byte	0xb7
+ 3167 0a59 05       		.uleb128 0x5
+ 3168 0a5a 03       		.byte	0x3
+ 3169 0a5b 00000000 		.4byte	flagResetMux
+ 3170 0a5f 1A       		.uleb128 0x1a
+ 3171 0a60 DD010000 		.4byte	.LASF132
+ 3172 0a64 05       		.byte	0x5
+ 3173 0a65 85       		.byte	0x85
+ 3174 0a66 C8000000 		.4byte	0xc8
+ 3175 0a6a 05       		.uleb128 0x5
+ 3176 0a6b 03       		.byte	0x3
+ 3177 0a6c 00000000 		.4byte	bufferLCD1
+ 3178 0a70 1A       		.uleb128 0x1a
+ 3179 0a71 E8010000 		.4byte	.LASF133
+ 3180 0a75 05       		.byte	0x5
+ 3181 0a76 86       		.byte	0x86
+ 3182 0a77 C8000000 		.4byte	0xc8
+ 3183 0a7b 05       		.uleb128 0x5
+ 3184 0a7c 03       		.byte	0x3
+ 3185 0a7d 00000000 		.4byte	bufferLCD2
+ 3186 0a81 1A       		.uleb128 0x1a
+ 3187 0a82 EA000000 		.4byte	.LASF134
+ 3188 0a86 05       		.byte	0x5
+ 3189 0a87 9F       		.byte	0x9f
+ 3190 0a88 B6040000 		.4byte	0x4b6
+ 3191 0a8c 05       		.uleb128 0x5
+ 3192 0a8d 03       		.byte	0x3
+ 3193 0a8e 00000000 		.4byte	side
+ 3194 0a92 00       		.byte	0
+ 3195              		.section	.debug_abbrev,"",%progbits
+ 3196              	.Ldebug_abbrev0:
+ 3197 0000 01       		.uleb128 0x1
+ 3198 0001 11       		.uleb128 0x11
+ 3199 0002 01       		.byte	0x1
+ 3200 0003 25       		.uleb128 0x25
+ 3201 0004 0E       		.uleb128 0xe
+ 3202 0005 13       		.uleb128 0x13
+ 3203 0006 0B       		.uleb128 0xb
+ 3204 0007 03       		.uleb128 0x3
+ 3205 0008 0E       		.uleb128 0xe
+ 3206 0009 1B       		.uleb128 0x1b
+ 3207 000a 0E       		.uleb128 0xe
+ 3208 000b 55       		.uleb128 0x55
+ 3209 000c 17       		.uleb128 0x17
+ 3210 000d 11       		.uleb128 0x11
+ 3211 000e 01       		.uleb128 0x1
+ 3212 000f 10       		.uleb128 0x10
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 68
+
+
+ 3213 0010 17       		.uleb128 0x17
+ 3214 0011 00       		.byte	0
+ 3215 0012 00       		.byte	0
+ 3216 0013 02       		.uleb128 0x2
+ 3217 0014 24       		.uleb128 0x24
+ 3218 0015 00       		.byte	0
+ 3219 0016 0B       		.uleb128 0xb
+ 3220 0017 0B       		.uleb128 0xb
+ 3221 0018 3E       		.uleb128 0x3e
+ 3222 0019 0B       		.uleb128 0xb
+ 3223 001a 03       		.uleb128 0x3
+ 3224 001b 0E       		.uleb128 0xe
+ 3225 001c 00       		.byte	0
+ 3226 001d 00       		.byte	0
+ 3227 001e 03       		.uleb128 0x3
+ 3228 001f 16       		.uleb128 0x16
+ 3229 0020 00       		.byte	0
+ 3230 0021 03       		.uleb128 0x3
+ 3231 0022 0E       		.uleb128 0xe
+ 3232 0023 3A       		.uleb128 0x3a
+ 3233 0024 0B       		.uleb128 0xb
+ 3234 0025 3B       		.uleb128 0x3b
+ 3235 0026 0B       		.uleb128 0xb
+ 3236 0027 49       		.uleb128 0x49
+ 3237 0028 13       		.uleb128 0x13
+ 3238 0029 00       		.byte	0
+ 3239 002a 00       		.byte	0
+ 3240 002b 04       		.uleb128 0x4
+ 3241 002c 24       		.uleb128 0x24
+ 3242 002d 00       		.byte	0
+ 3243 002e 0B       		.uleb128 0xb
+ 3244 002f 0B       		.uleb128 0xb
+ 3245 0030 3E       		.uleb128 0x3e
+ 3246 0031 0B       		.uleb128 0xb
+ 3247 0032 03       		.uleb128 0x3
+ 3248 0033 08       		.uleb128 0x8
+ 3249 0034 00       		.byte	0
+ 3250 0035 00       		.byte	0
+ 3251 0036 05       		.uleb128 0x5
+ 3252 0037 35       		.uleb128 0x35
+ 3253 0038 00       		.byte	0
+ 3254 0039 49       		.uleb128 0x49
+ 3255 003a 13       		.uleb128 0x13
+ 3256 003b 00       		.byte	0
+ 3257 003c 00       		.byte	0
+ 3258 003d 06       		.uleb128 0x6
+ 3259 003e 13       		.uleb128 0x13
+ 3260 003f 01       		.byte	0x1
+ 3261 0040 03       		.uleb128 0x3
+ 3262 0041 0E       		.uleb128 0xe
+ 3263 0042 0B       		.uleb128 0xb
+ 3264 0043 05       		.uleb128 0x5
+ 3265 0044 3A       		.uleb128 0x3a
+ 3266 0045 0B       		.uleb128 0xb
+ 3267 0046 3B       		.uleb128 0x3b
+ 3268 0047 0B       		.uleb128 0xb
+ 3269 0048 01       		.uleb128 0x1
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 69
+
+
+ 3270 0049 13       		.uleb128 0x13
+ 3271 004a 00       		.byte	0
+ 3272 004b 00       		.byte	0
+ 3273 004c 07       		.uleb128 0x7
+ 3274 004d 0D       		.uleb128 0xd
+ 3275 004e 00       		.byte	0
+ 3276 004f 03       		.uleb128 0x3
+ 3277 0050 0E       		.uleb128 0xe
+ 3278 0051 3A       		.uleb128 0x3a
+ 3279 0052 0B       		.uleb128 0xb
+ 3280 0053 3B       		.uleb128 0x3b
+ 3281 0054 0B       		.uleb128 0xb
+ 3282 0055 49       		.uleb128 0x49
+ 3283 0056 13       		.uleb128 0x13
+ 3284 0057 38       		.uleb128 0x38
+ 3285 0058 0B       		.uleb128 0xb
+ 3286 0059 00       		.byte	0
+ 3287 005a 00       		.byte	0
+ 3288 005b 08       		.uleb128 0x8
+ 3289 005c 0D       		.uleb128 0xd
+ 3290 005d 00       		.byte	0
+ 3291 005e 03       		.uleb128 0x3
+ 3292 005f 0E       		.uleb128 0xe
+ 3293 0060 3A       		.uleb128 0x3a
+ 3294 0061 0B       		.uleb128 0xb
+ 3295 0062 3B       		.uleb128 0x3b
+ 3296 0063 0B       		.uleb128 0xb
+ 3297 0064 49       		.uleb128 0x49
+ 3298 0065 13       		.uleb128 0x13
+ 3299 0066 38       		.uleb128 0x38
+ 3300 0067 05       		.uleb128 0x5
+ 3301 0068 00       		.byte	0
+ 3302 0069 00       		.byte	0
+ 3303 006a 09       		.uleb128 0x9
+ 3304 006b 01       		.uleb128 0x1
+ 3305 006c 01       		.byte	0x1
+ 3306 006d 49       		.uleb128 0x49
+ 3307 006e 13       		.uleb128 0x13
+ 3308 006f 01       		.uleb128 0x1
+ 3309 0070 13       		.uleb128 0x13
+ 3310 0071 00       		.byte	0
+ 3311 0072 00       		.byte	0
+ 3312 0073 0A       		.uleb128 0xa
+ 3313 0074 21       		.uleb128 0x21
+ 3314 0075 00       		.byte	0
+ 3315 0076 49       		.uleb128 0x49
+ 3316 0077 13       		.uleb128 0x13
+ 3317 0078 2F       		.uleb128 0x2f
+ 3318 0079 0B       		.uleb128 0xb
+ 3319 007a 00       		.byte	0
+ 3320 007b 00       		.byte	0
+ 3321 007c 0B       		.uleb128 0xb
+ 3322 007d 0D       		.uleb128 0xd
+ 3323 007e 00       		.byte	0
+ 3324 007f 03       		.uleb128 0x3
+ 3325 0080 08       		.uleb128 0x8
+ 3326 0081 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 70
+
+
+ 3327 0082 0B       		.uleb128 0xb
+ 3328 0083 3B       		.uleb128 0x3b
+ 3329 0084 0B       		.uleb128 0xb
+ 3330 0085 49       		.uleb128 0x49
+ 3331 0086 13       		.uleb128 0x13
+ 3332 0087 38       		.uleb128 0x38
+ 3333 0088 0B       		.uleb128 0xb
+ 3334 0089 00       		.byte	0
+ 3335 008a 00       		.byte	0
+ 3336 008b 0C       		.uleb128 0xc
+ 3337 008c 0D       		.uleb128 0xd
+ 3338 008d 00       		.byte	0
+ 3339 008e 03       		.uleb128 0x3
+ 3340 008f 08       		.uleb128 0x8
+ 3341 0090 3A       		.uleb128 0x3a
+ 3342 0091 0B       		.uleb128 0xb
+ 3343 0092 3B       		.uleb128 0x3b
+ 3344 0093 0B       		.uleb128 0xb
+ 3345 0094 49       		.uleb128 0x49
+ 3346 0095 13       		.uleb128 0x13
+ 3347 0096 38       		.uleb128 0x38
+ 3348 0097 05       		.uleb128 0x5
+ 3349 0098 00       		.byte	0
+ 3350 0099 00       		.byte	0
+ 3351 009a 0D       		.uleb128 0xd
+ 3352 009b 2E       		.uleb128 0x2e
+ 3353 009c 01       		.byte	0x1
+ 3354 009d 3F       		.uleb128 0x3f
+ 3355 009e 19       		.uleb128 0x19
+ 3356 009f 03       		.uleb128 0x3
+ 3357 00a0 0E       		.uleb128 0xe
+ 3358 00a1 3A       		.uleb128 0x3a
+ 3359 00a2 0B       		.uleb128 0xb
+ 3360 00a3 3B       		.uleb128 0x3b
+ 3361 00a4 0B       		.uleb128 0xb
+ 3362 00a5 27       		.uleb128 0x27
+ 3363 00a6 19       		.uleb128 0x19
+ 3364 00a7 49       		.uleb128 0x49
+ 3365 00a8 13       		.uleb128 0x13
+ 3366 00a9 11       		.uleb128 0x11
+ 3367 00aa 01       		.uleb128 0x1
+ 3368 00ab 12       		.uleb128 0x12
+ 3369 00ac 06       		.uleb128 0x6
+ 3370 00ad 40       		.uleb128 0x40
+ 3371 00ae 18       		.uleb128 0x18
+ 3372 00af 9742     		.uleb128 0x2117
+ 3373 00b1 19       		.uleb128 0x19
+ 3374 00b2 01       		.uleb128 0x1
+ 3375 00b3 13       		.uleb128 0x13
+ 3376 00b4 00       		.byte	0
+ 3377 00b5 00       		.byte	0
+ 3378 00b6 0E       		.uleb128 0xe
+ 3379 00b7 05       		.uleb128 0x5
+ 3380 00b8 00       		.byte	0
+ 3381 00b9 03       		.uleb128 0x3
+ 3382 00ba 0E       		.uleb128 0xe
+ 3383 00bb 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 71
+
+
+ 3384 00bc 0B       		.uleb128 0xb
+ 3385 00bd 3B       		.uleb128 0x3b
+ 3386 00be 0B       		.uleb128 0xb
+ 3387 00bf 49       		.uleb128 0x49
+ 3388 00c0 13       		.uleb128 0x13
+ 3389 00c1 02       		.uleb128 0x2
+ 3390 00c2 18       		.uleb128 0x18
+ 3391 00c3 00       		.byte	0
+ 3392 00c4 00       		.byte	0
+ 3393 00c5 0F       		.uleb128 0xf
+ 3394 00c6 05       		.uleb128 0x5
+ 3395 00c7 00       		.byte	0
+ 3396 00c8 03       		.uleb128 0x3
+ 3397 00c9 08       		.uleb128 0x8
+ 3398 00ca 3A       		.uleb128 0x3a
+ 3399 00cb 0B       		.uleb128 0xb
+ 3400 00cc 3B       		.uleb128 0x3b
+ 3401 00cd 0B       		.uleb128 0xb
+ 3402 00ce 49       		.uleb128 0x49
+ 3403 00cf 13       		.uleb128 0x13
+ 3404 00d0 02       		.uleb128 0x2
+ 3405 00d1 18       		.uleb128 0x18
+ 3406 00d2 00       		.byte	0
+ 3407 00d3 00       		.byte	0
+ 3408 00d4 10       		.uleb128 0x10
+ 3409 00d5 34       		.uleb128 0x34
+ 3410 00d6 00       		.byte	0
+ 3411 00d7 03       		.uleb128 0x3
+ 3412 00d8 08       		.uleb128 0x8
+ 3413 00d9 3A       		.uleb128 0x3a
+ 3414 00da 0B       		.uleb128 0xb
+ 3415 00db 3B       		.uleb128 0x3b
+ 3416 00dc 0B       		.uleb128 0xb
+ 3417 00dd 49       		.uleb128 0x49
+ 3418 00de 13       		.uleb128 0x13
+ 3419 00df 02       		.uleb128 0x2
+ 3420 00e0 18       		.uleb128 0x18
+ 3421 00e1 00       		.byte	0
+ 3422 00e2 00       		.byte	0
+ 3423 00e3 11       		.uleb128 0x11
+ 3424 00e4 34       		.uleb128 0x34
+ 3425 00e5 00       		.byte	0
+ 3426 00e6 03       		.uleb128 0x3
+ 3427 00e7 0E       		.uleb128 0xe
+ 3428 00e8 3A       		.uleb128 0x3a
+ 3429 00e9 0B       		.uleb128 0xb
+ 3430 00ea 3B       		.uleb128 0x3b
+ 3431 00eb 0B       		.uleb128 0xb
+ 3432 00ec 49       		.uleb128 0x49
+ 3433 00ed 13       		.uleb128 0x13
+ 3434 00ee 02       		.uleb128 0x2
+ 3435 00ef 18       		.uleb128 0x18
+ 3436 00f0 00       		.byte	0
+ 3437 00f1 00       		.byte	0
+ 3438 00f2 12       		.uleb128 0x12
+ 3439 00f3 0F       		.uleb128 0xf
+ 3440 00f4 00       		.byte	0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 72
+
+
+ 3441 00f5 0B       		.uleb128 0xb
+ 3442 00f6 0B       		.uleb128 0xb
+ 3443 00f7 49       		.uleb128 0x49
+ 3444 00f8 13       		.uleb128 0x13
+ 3445 00f9 00       		.byte	0
+ 3446 00fa 00       		.byte	0
+ 3447 00fb 13       		.uleb128 0x13
+ 3448 00fc 2E       		.uleb128 0x2e
+ 3449 00fd 01       		.byte	0x1
+ 3450 00fe 3F       		.uleb128 0x3f
+ 3451 00ff 19       		.uleb128 0x19
+ 3452 0100 03       		.uleb128 0x3
+ 3453 0101 0E       		.uleb128 0xe
+ 3454 0102 3A       		.uleb128 0x3a
+ 3455 0103 0B       		.uleb128 0xb
+ 3456 0104 3B       		.uleb128 0x3b
+ 3457 0105 0B       		.uleb128 0xb
+ 3458 0106 27       		.uleb128 0x27
+ 3459 0107 19       		.uleb128 0x19
+ 3460 0108 49       		.uleb128 0x49
+ 3461 0109 13       		.uleb128 0x13
+ 3462 010a 11       		.uleb128 0x11
+ 3463 010b 01       		.uleb128 0x1
+ 3464 010c 12       		.uleb128 0x12
+ 3465 010d 06       		.uleb128 0x6
+ 3466 010e 40       		.uleb128 0x40
+ 3467 010f 18       		.uleb128 0x18
+ 3468 0110 9642     		.uleb128 0x2116
+ 3469 0112 19       		.uleb128 0x19
+ 3470 0113 01       		.uleb128 0x1
+ 3471 0114 13       		.uleb128 0x13
+ 3472 0115 00       		.byte	0
+ 3473 0116 00       		.byte	0
+ 3474 0117 14       		.uleb128 0x14
+ 3475 0118 2E       		.uleb128 0x2e
+ 3476 0119 01       		.byte	0x1
+ 3477 011a 3F       		.uleb128 0x3f
+ 3478 011b 19       		.uleb128 0x19
+ 3479 011c 03       		.uleb128 0x3
+ 3480 011d 0E       		.uleb128 0xe
+ 3481 011e 3A       		.uleb128 0x3a
+ 3482 011f 0B       		.uleb128 0xb
+ 3483 0120 3B       		.uleb128 0x3b
+ 3484 0121 0B       		.uleb128 0xb
+ 3485 0122 27       		.uleb128 0x27
+ 3486 0123 19       		.uleb128 0x19
+ 3487 0124 11       		.uleb128 0x11
+ 3488 0125 01       		.uleb128 0x1
+ 3489 0126 12       		.uleb128 0x12
+ 3490 0127 06       		.uleb128 0x6
+ 3491 0128 40       		.uleb128 0x40
+ 3492 0129 18       		.uleb128 0x18
+ 3493 012a 9642     		.uleb128 0x2116
+ 3494 012c 19       		.uleb128 0x19
+ 3495 012d 01       		.uleb128 0x1
+ 3496 012e 13       		.uleb128 0x13
+ 3497 012f 00       		.byte	0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 73
+
+
+ 3498 0130 00       		.byte	0
+ 3499 0131 15       		.uleb128 0x15
+ 3500 0132 34       		.uleb128 0x34
+ 3501 0133 00       		.byte	0
+ 3502 0134 03       		.uleb128 0x3
+ 3503 0135 0E       		.uleb128 0xe
+ 3504 0136 3A       		.uleb128 0x3a
+ 3505 0137 0B       		.uleb128 0xb
+ 3506 0138 3B       		.uleb128 0x3b
+ 3507 0139 05       		.uleb128 0x5
+ 3508 013a 49       		.uleb128 0x49
+ 3509 013b 13       		.uleb128 0x13
+ 3510 013c 02       		.uleb128 0x2
+ 3511 013d 18       		.uleb128 0x18
+ 3512 013e 00       		.byte	0
+ 3513 013f 00       		.byte	0
+ 3514 0140 16       		.uleb128 0x16
+ 3515 0141 34       		.uleb128 0x34
+ 3516 0142 00       		.byte	0
+ 3517 0143 03       		.uleb128 0x3
+ 3518 0144 08       		.uleb128 0x8
+ 3519 0145 3A       		.uleb128 0x3a
+ 3520 0146 0B       		.uleb128 0xb
+ 3521 0147 3B       		.uleb128 0x3b
+ 3522 0148 05       		.uleb128 0x5
+ 3523 0149 49       		.uleb128 0x49
+ 3524 014a 13       		.uleb128 0x13
+ 3525 014b 02       		.uleb128 0x2
+ 3526 014c 18       		.uleb128 0x18
+ 3527 014d 00       		.byte	0
+ 3528 014e 00       		.byte	0
+ 3529 014f 17       		.uleb128 0x17
+ 3530 0150 2E       		.uleb128 0x2e
+ 3531 0151 01       		.byte	0x1
+ 3532 0152 3F       		.uleb128 0x3f
+ 3533 0153 19       		.uleb128 0x19
+ 3534 0154 03       		.uleb128 0x3
+ 3535 0155 0E       		.uleb128 0xe
+ 3536 0156 3A       		.uleb128 0x3a
+ 3537 0157 0B       		.uleb128 0xb
+ 3538 0158 3B       		.uleb128 0x3b
+ 3539 0159 05       		.uleb128 0x5
+ 3540 015a 27       		.uleb128 0x27
+ 3541 015b 19       		.uleb128 0x19
+ 3542 015c 11       		.uleb128 0x11
+ 3543 015d 01       		.uleb128 0x1
+ 3544 015e 12       		.uleb128 0x12
+ 3545 015f 06       		.uleb128 0x6
+ 3546 0160 40       		.uleb128 0x40
+ 3547 0161 18       		.uleb128 0x18
+ 3548 0162 9742     		.uleb128 0x2117
+ 3549 0164 19       		.uleb128 0x19
+ 3550 0165 01       		.uleb128 0x1
+ 3551 0166 13       		.uleb128 0x13
+ 3552 0167 00       		.byte	0
+ 3553 0168 00       		.byte	0
+ 3554 0169 18       		.uleb128 0x18
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 74
+
+
+ 3555 016a 05       		.uleb128 0x5
+ 3556 016b 00       		.byte	0
+ 3557 016c 03       		.uleb128 0x3
+ 3558 016d 0E       		.uleb128 0xe
+ 3559 016e 3A       		.uleb128 0x3a
+ 3560 016f 0B       		.uleb128 0xb
+ 3561 0170 3B       		.uleb128 0x3b
+ 3562 0171 05       		.uleb128 0x5
+ 3563 0172 49       		.uleb128 0x49
+ 3564 0173 13       		.uleb128 0x13
+ 3565 0174 02       		.uleb128 0x2
+ 3566 0175 18       		.uleb128 0x18
+ 3567 0176 00       		.byte	0
+ 3568 0177 00       		.byte	0
+ 3569 0178 19       		.uleb128 0x19
+ 3570 0179 34       		.uleb128 0x34
+ 3571 017a 00       		.byte	0
+ 3572 017b 03       		.uleb128 0x3
+ 3573 017c 0E       		.uleb128 0xe
+ 3574 017d 3A       		.uleb128 0x3a
+ 3575 017e 0B       		.uleb128 0xb
+ 3576 017f 3B       		.uleb128 0x3b
+ 3577 0180 05       		.uleb128 0x5
+ 3578 0181 49       		.uleb128 0x49
+ 3579 0182 13       		.uleb128 0x13
+ 3580 0183 3F       		.uleb128 0x3f
+ 3581 0184 19       		.uleb128 0x19
+ 3582 0185 3C       		.uleb128 0x3c
+ 3583 0186 19       		.uleb128 0x19
+ 3584 0187 00       		.byte	0
+ 3585 0188 00       		.byte	0
+ 3586 0189 1A       		.uleb128 0x1a
+ 3587 018a 34       		.uleb128 0x34
+ 3588 018b 00       		.byte	0
+ 3589 018c 03       		.uleb128 0x3
+ 3590 018d 0E       		.uleb128 0xe
+ 3591 018e 3A       		.uleb128 0x3a
+ 3592 018f 0B       		.uleb128 0xb
+ 3593 0190 3B       		.uleb128 0x3b
+ 3594 0191 0B       		.uleb128 0xb
+ 3595 0192 49       		.uleb128 0x49
+ 3596 0193 13       		.uleb128 0x13
+ 3597 0194 3F       		.uleb128 0x3f
+ 3598 0195 19       		.uleb128 0x19
+ 3599 0196 02       		.uleb128 0x2
+ 3600 0197 18       		.uleb128 0x18
+ 3601 0198 00       		.byte	0
+ 3602 0199 00       		.byte	0
+ 3603 019a 00       		.byte	0
+ 3604              		.section	.debug_aranges,"",%progbits
+ 3605 0000 3C000000 		.4byte	0x3c
+ 3606 0004 0200     		.2byte	0x2
+ 3607 0006 00000000 		.4byte	.Ldebug_info0
+ 3608 000a 04       		.byte	0x4
+ 3609 000b 00       		.byte	0
+ 3610 000c 0000     		.2byte	0
+ 3611 000e 0000     		.2byte	0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 75
+
+
+ 3612 0010 00000000 		.4byte	.LFB56
+ 3613 0014 A4010000 		.4byte	.LFE56-.LFB56
+ 3614 0018 00000000 		.4byte	.LFB57
+ 3615 001c F0030000 		.4byte	.LFE57-.LFB57
+ 3616 0020 00000000 		.4byte	.LFB58
+ 3617 0024 B4010000 		.4byte	.LFE58-.LFB58
+ 3618 0028 00000000 		.4byte	.LFB59
+ 3619 002c 70030000 		.4byte	.LFE59-.LFB59
+ 3620 0030 00000000 		.4byte	.LFB60
+ 3621 0034 2C030000 		.4byte	.LFE60-.LFB60
+ 3622 0038 00000000 		.4byte	0
+ 3623 003c 00000000 		.4byte	0
+ 3624              		.section	.debug_ranges,"",%progbits
+ 3625              	.Ldebug_ranges0:
+ 3626 0000 00000000 		.4byte	.LFB56
+ 3627 0004 A4010000 		.4byte	.LFE56
+ 3628 0008 00000000 		.4byte	.LFB57
+ 3629 000c F0030000 		.4byte	.LFE57
+ 3630 0010 00000000 		.4byte	.LFB58
+ 3631 0014 B4010000 		.4byte	.LFE58
+ 3632 0018 00000000 		.4byte	.LFB59
+ 3633 001c 70030000 		.4byte	.LFE59
+ 3634 0020 00000000 		.4byte	.LFB60
+ 3635 0024 2C030000 		.4byte	.LFE60
+ 3636 0028 00000000 		.4byte	0
+ 3637 002c 00000000 		.4byte	0
+ 3638              		.section	.debug_line,"",%progbits
+ 3639              	.Ldebug_line0:
+ 3640 0000 4D040000 		.section	.debug_str,"MS",%progbits,1
+ 3640      02006001 
+ 3640      00000201 
+ 3640      FB0E0D00 
+ 3640      01010101 
+ 3641              	.LASF96:
+ 3642 0000 74656E74 		.ascii	"tenth\000"
+ 3642      6800
+ 3643              	.LASF120:
+ 3644 0006 64656369 		.ascii	"decimalVolume\000"
+ 3644      6D616C56 
+ 3644      6F6C756D 
+ 3644      6500
+ 3645              	.LASF51:
+ 3646 0014 6D657373 		.ascii	"message\000"
+ 3646      61676500 
+ 3647              	.LASF66:
+ 3648 001c 62756666 		.ascii	"buffer\000"
+ 3648      657200
+ 3649              	.LASF108:
+ 3650 0023 69704164 		.ascii	"ipAdress\000"
+ 3650      72657373 
+ 3650      00
+ 3651              	.LASF119:
+ 3652 002c 64656369 		.ascii	"decimalMoney\000"
+ 3652      6D616C4D 
+ 3652      6F6E6579 
+ 3652      00
+ 3653              	.LASF29:
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 76
+
+
+ 3654 0039 73616C65 		.ascii	"salePerform\000"
+ 3654      50657266 
+ 3654      6F726D00 
+ 3655              	.LASF8:
+ 3656 0045 756E7369 		.ascii	"unsigned int\000"
+ 3656      676E6564 
+ 3656      20696E74 
+ 3656      00
+ 3657              	.LASF56:
+ 3658 0052 70726F64 		.ascii	"productMarket\000"
+ 3658      7563744D 
+ 3658      61726B65 
+ 3658      7400
+ 3659              	.LASF9:
+ 3660 0060 5F5F696E 		.ascii	"__int32_t\000"
+ 3660      7433325F 
+ 3660      7400
+ 3661              	.LASF49:
+ 3662 006a 666C6167 		.ascii	"flagLiftHandle\000"
+ 3662      4C696674 
+ 3662      48616E64 
+ 3662      6C6500
+ 3663              	.LASF137:
+ 3664 0079 433A5C55 		.ascii	"C:\\Users\\Proyectos_Hardware\\Dropbox\\Proyecto Co"
+ 3664      73657273 
+ 3664      5C50726F 
+ 3664      79656374 
+ 3664      6F735F48 
+ 3665 00a8 6E74726F 		.ascii	"ntroller\\Mux Advance Encore V5_00\\MuxAdvance.cyds"
+ 3665      6C6C6572 
+ 3665      5C4D7578 
+ 3665      20416476 
+ 3665      616E6365 
+ 3666 00d9 6E00     		.ascii	"n\000"
+ 3667              	.LASF125:
+ 3668 00db 72657369 		.ascii	"residue\000"
+ 3668      64756500 
+ 3669              	.LASF18:
+ 3670 00e3 69645479 		.ascii	"idType\000"
+ 3670      706500
+ 3671              	.LASF134:
+ 3672 00ea 73696465 		.ascii	"side\000"
+ 3672      00
+ 3673              	.LASF78:
+ 3674 00ef 74656D70 		.ascii	"tempPpu\000"
+ 3674      50707500 
+ 3675              	.LASF136:
+ 3676 00f7 2E5C6F70 		.ascii	".\\operations.c\000"
+ 3676      65726174 
+ 3676      696F6E73 
+ 3676      2E6300
+ 3677              	.LASF21:
+ 3678 0106 73656C65 		.ascii	"selectedSale\000"
+ 3678      63746564 
+ 3678      53616C65 
+ 3678      00
+ 3679              	.LASF92:
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 77
+
+
+ 3680 0113 74656D70 		.ascii	"tempV2\000"
+ 3680      563200
+ 3681              	.LASF57:
+ 3682 011a 7175616E 		.ascii	"quantityMarket\000"
+ 3682      74697479 
+ 3682      4D61726B 
+ 3682      657400
+ 3683              	.LASF112:
+ 3684 0129 666C6167 		.ascii	"flagPoint2\000"
+ 3684      506F696E 
+ 3684      743200
+ 3685              	.LASF97:
+ 3686 0134 6D756C74 		.ascii	"multiplication_market\000"
+ 3686      69706C69 
+ 3686      63617469 
+ 3686      6F6E5F6D 
+ 3686      61726B65 
+ 3687              	.LASF124:
+ 3688 014a 73637265 		.ascii	"screen\000"
+ 3688      656E00
+ 3689              	.LASF53:
+ 3690 0151 766F6C75 		.ascii	"volumeQuota\000"
+ 3690      6D655175 
+ 3690      6F746100 
+ 3691              	.LASF13:
+ 3692 015d 666C6F61 		.ascii	"float\000"
+ 3692      7400
+ 3693              	.LASF95:
+ 3694 0163 74656D70 		.ascii	"tempValue\000"
+ 3694      56616C75 
+ 3694      6500
+ 3695              	.LASF88:
+ 3696 016d 68696768 		.ascii	"higher\000"
+ 3696      657200
+ 3697              	.LASF7:
+ 3698 0174 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 3698      206C6F6E 
+ 3698      6720756E 
+ 3698      7369676E 
+ 3698      65642069 
+ 3699              	.LASF39:
+ 3700 018b 746F7461 		.ascii	"totalVolumePrevious\000"
+ 3700      6C566F6C 
+ 3700      756D6550 
+ 3700      72657669 
+ 3700      6F757300 
+ 3701              	.LASF107:
+ 3702 019f 64696769 		.ascii	"digits\000"
+ 3702      747300
+ 3703              	.LASF122:
+ 3704 01a6 74696D65 		.ascii	"time\000"
+ 3704      00
+ 3705              	.LASF32:
+ 3706 01ab 70726F64 		.ascii	"productType\000"
+ 3706      75637454 
+ 3706      79706500 
+ 3707              	.LASF114:
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 78
+
+
+ 3708 01b7 70726F64 		.ascii	"productNumber\000"
+ 3708      7563744E 
+ 3708      756D6265 
+ 3708      7200
+ 3709              	.LASF35:
+ 3710 01c5 64617465 		.ascii	"dateDownHandle\000"
+ 3710      446F776E 
+ 3710      48616E64 
+ 3710      6C6500
+ 3711              	.LASF19:
+ 3712 01d4 69645365 		.ascii	"idSerial\000"
+ 3712      7269616C 
+ 3712      00
+ 3713              	.LASF132:
+ 3714 01dd 62756666 		.ascii	"bufferLCD1\000"
+ 3714      65724C43 
+ 3714      443100
+ 3715              	.LASF133:
+ 3716 01e8 62756666 		.ascii	"bufferLCD2\000"
+ 3716      65724C43 
+ 3716      443200
+ 3717              	.LASF45:
+ 3718 01f3 6D696C65 		.ascii	"mileageSale\000"
+ 3718      61676553 
+ 3718      616C6500 
+ 3719              	.LASF65:
+ 3720 01ff 666C6167 		.ascii	"flagChangePPU\000"
+ 3720      4368616E 
+ 3720      67655050 
+ 3720      5500
+ 3721              	.LASF113:
+ 3722 020d 62757474 		.ascii	"button\000"
+ 3722      6F6E00
+ 3723              	.LASF82:
+ 3724 0214 73757374 		.ascii	"sustraendo\000"
+ 3724      7261656E 
+ 3724      646F00
+ 3725              	.LASF55:
+ 3726 021f 73657269 		.ascii	"serialMarket\000"
+ 3726      616C4D61 
+ 3726      726B6574 
+ 3726      00
+ 3727              	.LASF68:
+ 3728 022c 746F7461 		.ascii	"totalsHandle\000"
+ 3728      6C734861 
+ 3728      6E646C65 
+ 3728      00
+ 3729              	.LASF31:
+ 3730 0239 70726573 		.ascii	"presetValue\000"
+ 3730      65745661 
+ 3730      6C756500 
+ 3731              	.LASF127:
+ 3732 0245 7475726E 		.ascii	"turn\000"
+ 3732      00
+ 3733              	.LASF46:
+ 3734 024a 6964656E 		.ascii	"identySale\000"
+ 3734      74795361 
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 79
+
+
+ 3734      6C6500
+ 3735              	.LASF105:
+ 3736 0255 666C6F77 		.ascii	"flowLCD1\000"
+ 3736      4C434431 
+ 3736      00
+ 3737              	.LASF106:
+ 3738 025e 666C6F77 		.ascii	"flowLCD2\000"
+ 3738      4C434432 
+ 3738      00
+ 3739              	.LASF28:
+ 3740 0267 73616C65 		.ascii	"saleType\000"
+ 3740      54797065 
+ 3740      00
+ 3741              	.LASF26:
+ 3742 0270 76616C75 		.ascii	"valueKeys\000"
+ 3742      654B6579 
+ 3742      7300
+ 3743              	.LASF16:
+ 3744 027a 63686172 		.ascii	"char\000"
+ 3744      00
+ 3745              	.LASF109:
+ 3746 027f 6E756D62 		.ascii	"numberKeys1\000"
+ 3746      65724B65 
+ 3746      79733100 
+ 3747              	.LASF110:
+ 3748 028b 6E756D62 		.ascii	"numberKeys2\000"
+ 3748      65724B65 
+ 3748      79733200 
+ 3749              	.LASF93:
+ 3750 0297 74656D70 		.ascii	"tempValue1\000"
+ 3750      56616C75 
+ 3750      653100
+ 3751              	.LASF94:
+ 3752 02a2 74656D70 		.ascii	"tempValue2\000"
+ 3752      56616C75 
+ 3752      653200
+ 3753              	.LASF100:
+ 3754 02ad 74656D70 		.ascii	"tempValue3\000"
+ 3754      56616C75 
+ 3754      653300
+ 3755              	.LASF83:
+ 3756 02b8 745F7265 		.ascii	"t_residue\000"
+ 3756      73696475 
+ 3756      6500
+ 3757              	.LASF123:
+ 3758 02c2 64617465 		.ascii	"date\000"
+ 3758      00
+ 3759              	.LASF85:
+ 3760 02c7 745F7375 		.ascii	"t_sustraendo\000"
+ 3760      73747261 
+ 3760      656E646F 
+ 3760      00
+ 3761              	.LASF48:
+ 3762 02d4 666C6167 		.ascii	"flagPayment\000"
+ 3762      5061796D 
+ 3762      656E7400 
+ 3763              	.LASF98:
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 80
+
+
+ 3764 02e0 61646469 		.ascii	"addition_market\000"
+ 3764      74696F6E 
+ 3764      5F6D6172 
+ 3764      6B657400 
+ 3765              	.LASF54:
+ 3766 02f0 70707551 		.ascii	"ppuQuota\000"
+ 3766      756F7461 
+ 3766      00
+ 3767              	.LASF41:
+ 3768 02f9 746F7461 		.ascii	"totalMoneyAfter\000"
+ 3768      6C4D6F6E 
+ 3768      65794166 
+ 3768      74657200 
+ 3769              	.LASF52:
+ 3770 0309 6D6F6E65 		.ascii	"moneyQuota\000"
+ 3770      7951756F 
+ 3770      746100
+ 3771              	.LASF64:
+ 3772 0314 7072696E 		.ascii	"printers\000"
+ 3772      74657273 
+ 3772      00
+ 3773              	.LASF115:
+ 3774 031d 70726573 		.ascii	"presetFast\000"
+ 3774      65744661 
+ 3774      737400
+ 3775              	.LASF70:
+ 3776 0328 6D6F6E65 		.ascii	"moneySale\000"
+ 3776      7953616C 
+ 3776      6500
+ 3777              	.LASF6:
+ 3778 0332 6C6F6E67 		.ascii	"long long int\000"
+ 3778      206C6F6E 
+ 3778      6720696E 
+ 3778      7400
+ 3779              	.LASF72:
+ 3780 0340 70707553 		.ascii	"ppuSale\000"
+ 3780      616C6500 
+ 3781              	.LASF89:
+ 3782 0348 76616C75 		.ascii	"value1\000"
+ 3782      653100
+ 3783              	.LASF90:
+ 3784 034f 76616C75 		.ascii	"value2\000"
+ 3784      653200
+ 3785              	.LASF99:
+ 3786 0356 76616C75 		.ascii	"value3\000"
+ 3786      653300
+ 3787              	.LASF102:
+ 3788 035d 636F756E 		.ascii	"countAnimation1\000"
+ 3788      74416E69 
+ 3788      6D617469 
+ 3788      6F6E3100 
+ 3789              	.LASF40:
+ 3790 036d 746F7461 		.ascii	"totalPPUPrevious\000"
+ 3790      6C505055 
+ 3790      50726576 
+ 3790      696F7573 
+ 3790      00
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 81
+
+
+ 3791              	.LASF103:
+ 3792 037e 636F756E 		.ascii	"countAnimation2\000"
+ 3792      74416E69 
+ 3792      6D617469 
+ 3792      6F6E3200 
+ 3793              	.LASF61:
+ 3794 038e 746F7461 		.ascii	"totalMarket\000"
+ 3794      6C4D6172 
+ 3794      6B657400 
+ 3795              	.LASF135:
+ 3796 039a 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 3796      4320342E 
+ 3796      392E3320 
+ 3796      32303135 
+ 3796      30333033 
+ 3797 03cd 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 3797      20726576 
+ 3797      6973696F 
+ 3797      6E203232 
+ 3797      31323230 
+ 3798 0400 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 3798      66756E63 
+ 3798      74696F6E 
+ 3798      2D736563 
+ 3798      74696F6E 
+ 3799              	.LASF37:
+ 3800 0428 74696D65 		.ascii	"timeDownHandle\000"
+ 3800      446F776E 
+ 3800      48616E64 
+ 3800      6C6500
+ 3801              	.LASF84:
+ 3802 0437 745F6D69 		.ascii	"t_minuendo\000"
+ 3802      6E75656E 
+ 3802      646F00
+ 3803              	.LASF27:
+ 3804 0442 76656869 		.ascii	"vehicleType\000"
+ 3804      636C6554 
+ 3804      79706500 
+ 3805              	.LASF47:
+ 3806 044e 666C6167 		.ascii	"flagKeyboard\000"
+ 3806      4B657962 
+ 3806      6F617264 
+ 3806      00
+ 3807              	.LASF91:
+ 3808 045b 74656D70 		.ascii	"tempV1\000"
+ 3808      563100
+ 3809              	.LASF75:
+ 3810 0462 6C6F6E67 		.ascii	"long double\000"
+ 3810      20646F75 
+ 3810      626C6500 
+ 3811              	.LASF12:
+ 3812 046e 75696E74 		.ascii	"uint32\000"
+ 3812      333200
+ 3813              	.LASF131:
+ 3814 0475 666C6167 		.ascii	"flagResetMux\000"
+ 3814      52657365 
+ 3814      744D7578 
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 82
+
+
+ 3814      00
+ 3815              	.LASF79:
+ 3816 0482 636F6D70 		.ascii	"compare_ppu\000"
+ 3816      6172655F 
+ 3816      70707500 
+ 3817              	.LASF43:
+ 3818 048e 746F7461 		.ascii	"totalPPUAfter\000"
+ 3818      6C505055 
+ 3818      41667465 
+ 3818      7200
+ 3819              	.LASF80:
+ 3820 049c 73756274 		.ascii	"subtraction\000"
+ 3820      72616374 
+ 3820      696F6E00 
+ 3821              	.LASF87:
+ 3822 04a8 6D617869 		.ascii	"maximumValue\000"
+ 3822      6D756D56 
+ 3822      616C7565 
+ 3822      00
+ 3823              	.LASF24:
+ 3824 04b5 6B657962 		.ascii	"keyboardWayToPay\000"
+ 3824      6F617264 
+ 3824      57617954 
+ 3824      6F506179 
+ 3824      00
+ 3825              	.LASF118:
+ 3826 04c6 70707578 		.ascii	"ppux10\000"
+ 3826      313000
+ 3827              	.LASF38:
+ 3828 04cd 746F7461 		.ascii	"totalMoneyPrevious\000"
+ 3828      6C4D6F6E 
+ 3828      65795072 
+ 3828      6576696F 
+ 3828      757300
+ 3829              	.LASF111:
+ 3830 04e0 666C6167 		.ascii	"flagPoint1\000"
+ 3830      506F696E 
+ 3830      743100
+ 3831              	.LASF22:
+ 3832 04eb 6D6F6E65 		.ascii	"moneySelectedSale\000"
+ 3832      7953656C 
+ 3832      65637465 
+ 3832      6453616C 
+ 3832      6500
+ 3833              	.LASF121:
+ 3834 04fd 73796D62 		.ascii	"symbols\000"
+ 3834      6F6C7300 
+ 3835              	.LASF44:
+ 3836 0505 6C696365 		.ascii	"licenceSale\000"
+ 3836      6E636553 
+ 3836      616C6500 
+ 3837              	.LASF63:
+ 3838 0511 70726963 		.ascii	"priceConsign\000"
+ 3838      65436F6E 
+ 3838      7369676E 
+ 3838      00
+ 3839              	.LASF2:
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 83
+
+
+ 3840 051e 73686F72 		.ascii	"short int\000"
+ 3840      7420696E 
+ 3840      7400
+ 3841              	.LASF4:
+ 3842 0528 6C6F6E67 		.ascii	"long int\000"
+ 3842      20696E74 
+ 3842      00
+ 3843              	.LASF101:
+ 3844 0531 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 3844      52784275 
+ 3844      66666572 
+ 3844      00
+ 3845              	.LASF129:
+ 3846 053e 74797065 		.ascii	"typeIdSeller\000"
+ 3846      49645365 
+ 3846      6C6C6572 
+ 3846      00
+ 3847              	.LASF50:
+ 3848 054b 666C6167 		.ascii	"flagEndSale\000"
+ 3848      456E6453 
+ 3848      616C6500 
+ 3849              	.LASF34:
+ 3850 0557 64617465 		.ascii	"dateLiftHandle\000"
+ 3850      4C696674 
+ 3850      48616E64 
+ 3850      6C6500
+ 3851              	.LASF130:
+ 3852 0566 70617373 		.ascii	"passwordSeller\000"
+ 3852      776F7264 
+ 3852      53656C6C 
+ 3852      657200
+ 3853              	.LASF42:
+ 3854 0575 746F7461 		.ascii	"totalVolumeAfter\000"
+ 3854      6C566F6C 
+ 3854      756D6541 
+ 3854      66746572 
+ 3854      00
+ 3855              	.LASF15:
+ 3856 0586 75696E74 		.ascii	"uint64\000"
+ 3856      363400
+ 3857              	.LASF116:
+ 3858 058d 64656C61 		.ascii	"delayPicture1\000"
+ 3858      79506963 
+ 3858      74757265 
+ 3858      3100
+ 3859              	.LASF117:
+ 3860 059b 64656C61 		.ascii	"delayPicture2\000"
+ 3860      79506963 
+ 3860      74757265 
+ 3860      3200
+ 3861              	.LASF33:
+ 3862 05a9 73746174 		.ascii	"stateMux\000"
+ 3862      654D7578 
+ 3862      00
+ 3863              	.LASF17:
+ 3864 05b2 73697A65 		.ascii	"sizetype\000"
+ 3864      74797065 
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 84
+
+
+ 3864      00
+ 3865              	.LASF5:
+ 3866 05bb 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3866      20756E73 
+ 3866      69676E65 
+ 3866      6420696E 
+ 3866      7400
+ 3867              	.LASF76:
+ 3868 05cd 70707550 		.ascii	"ppuPump\000"
+ 3868      756D7000 
+ 3869              	.LASF62:
+ 3870 05d5 666C6167 		.ascii	"flagProductmarket\000"
+ 3870      50726F64 
+ 3870      7563746D 
+ 3870      61726B65 
+ 3870      7400
+ 3871              	.LASF10:
+ 3872 05e7 696E7433 		.ascii	"int32_t\000"
+ 3872      325F7400 
+ 3873              	.LASF58:
+ 3874 05ef 7175616E 		.ascii	"quantAvailableMark\000"
+ 3874      74417661 
+ 3874      696C6162 
+ 3874      6C654D61 
+ 3874      726B00
+ 3875              	.LASF1:
+ 3876 0602 756E7369 		.ascii	"unsigned char\000"
+ 3876      676E6564 
+ 3876      20636861 
+ 3876      7200
+ 3877              	.LASF25:
+ 3878 0610 61757468 		.ascii	"authorizationFlag\000"
+ 3878      6F72697A 
+ 3878      6174696F 
+ 3878      6E466C61 
+ 3878      6700
+ 3879              	.LASF59:
+ 3880 0622 70726963 		.ascii	"priceTotalMarket\000"
+ 3880      65546F74 
+ 3880      616C4D61 
+ 3880      726B6574 
+ 3880      00
+ 3881              	.LASF128:
+ 3882 0633 69645365 		.ascii	"idSeller\000"
+ 3882      6C6C6572 
+ 3882      00
+ 3883              	.LASF74:
+ 3884 063c 70756D70 		.ascii	"pump\000"
+ 3884      00
+ 3885              	.LASF126:
+ 3886 0641 74656D70 		.ascii	"temporal\000"
+ 3886      6F72616C 
+ 3886      00
+ 3887              	.LASF30:
+ 3888 064a 70726573 		.ascii	"presetType\000"
+ 3888      65745479 
+ 3888      706500
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 85
+
+
+ 3889              	.LASF60:
+ 3890 0655 70726963 		.ascii	"priceUnitMarket\000"
+ 3890      65556E69 
+ 3890      744D6172 
+ 3890      6B657400 
+ 3891              	.LASF104:
+ 3892 0665 636F756E 		.ascii	"countBeagleTX\000"
+ 3892      74426561 
+ 3892      676C6554 
+ 3892      5800
+ 3893              	.LASF71:
+ 3894 0673 766F6C75 		.ascii	"volumeSale\000"
+ 3894      6D655361 
+ 3894      6C6500
+ 3895              	.LASF0:
+ 3896 067e 7369676E 		.ascii	"signed char\000"
+ 3896      65642063 
+ 3896      68617200 
+ 3897              	.LASF3:
+ 3898 068a 73686F72 		.ascii	"short unsigned int\000"
+ 3898      7420756E 
+ 3898      7369676E 
+ 3898      65642069 
+ 3898      6E7400
+ 3899              	.LASF81:
+ 3900 069d 6D696E75 		.ascii	"minuendo\000"
+ 3900      656E646F 
+ 3900      00
+ 3901              	.LASF77:
+ 3902 06a6 68616E64 		.ascii	"handle\000"
+ 3902      6C6500
+ 3903              	.LASF86:
+ 3904 06ad 63617272 		.ascii	"carrier\000"
+ 3904      69657200 
+ 3905              	.LASF73:
+ 3906 06b5 70726F64 		.ascii	"productSale\000"
+ 3906      75637453 
+ 3906      616C6500 
+ 3907              	.LASF11:
+ 3908 06c1 75696E74 		.ascii	"uint8\000"
+ 3908      3800
+ 3909              	.LASF14:
+ 3910 06c7 646F7562 		.ascii	"double\000"
+ 3910      6C6500
+ 3911              	.LASF20:
+ 3912 06ce 77617954 		.ascii	"wayToPay\000"
+ 3912      6F506179 
+ 3912      00
+ 3913              	.LASF36:
+ 3914 06d7 74696D65 		.ascii	"timeLiftHandle\000"
+ 3914      4C696674 
+ 3914      48616E64 
+ 3914      6C6500
+ 3915              	.LASF69:
+ 3916 06e6 70707541 		.ascii	"ppuAuthorized\000"
+ 3916      7574686F 
+ 3916      72697A65 
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccczGU2D.s 			page 86
+
+
+ 3916      6400
+ 3917              	.LASF23:
+ 3918 06f4 73657269 		.ascii	"serialSelectedSale\000"
+ 3918      616C5365 
+ 3918      6C656374 
+ 3918      65645361 
+ 3918      6C6500
+ 3919              	.LASF67:
+ 3920 0707 706F7369 		.ascii	"position\000"
+ 3920      74696F6E 
+ 3920      00
+ 3921              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

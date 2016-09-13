@@ -1,0 +1,2034 @@
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"codebar.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.comm	countAnimation1,8,8
+  19              		.comm	countAnimation2,8,8
+  20              		.comm	countBeagleTX,8,8
+  21              		.comm	flowLCD1,4,4
+  22              		.comm	flowLCD2,4,4
+  23              		.comm	digits,1,1
+  24              		.comm	ipAdress,12,4
+  25              		.comm	numberKeys1,1,1
+  26              		.comm	numberKeys2,1,1
+  27              		.comm	flagPoint1,1,1
+  28              		.comm	flagPoint2,1,1
+  29              		.comm	button,960,4
+  30              		.comm	productNumber,1,1
+  31              		.comm	presetFast,30,4
+  32              		.comm	delayPicture1,4,4
+  33              		.comm	delayPicture2,4,4
+  34              		.comm	ppux10,1,1
+  35              		.comm	decimalMoney,1,1
+  36              		.comm	decimalVolume,1,1
+  37              		.comm	symbols,2,4
+  38              		.comm	time,3,4
+  39              		.comm	date,3,4
+  40              		.comm	screen,2,4
+  41              		.comm	residue,14,4
+  42              		.comm	temporal,30,4
+  43              		.comm	turn,1,1
+  44              		.comm	idSeller,25,4
+  45              		.comm	typeIdSeller,1,1
+  46              		.comm	passwordSeller,8,4
+  47              		.comm	flagResetMux,1,1
+  48              		.comm	bufferLCD1,635,4
+  49              		.comm	bufferLCD2,635,4
+  50              		.comm	side,512,4
+  51              		.section	.text.serial_codebar,"ax",%progbits
+  52              		.align	2
+  53              		.global	serial_codebar
+  54              		.thumb
+  55              		.thumb_func
+  56              		.type	serial_codebar, %function
+  57              	serial_codebar:
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 2
+
+
+  58              	.LFB56:
+  59              		.file 1 ".\\codebar.c"
+   1:.\codebar.c   **** /*
+   2:.\codebar.c   **** ***************************************************************************************************
+   3:.\codebar.c   **** *                                         MUX ADVANCE CODE
+   4:.\codebar.c   **** *
+   5:.\codebar.c   **** *                             (c) Copyright 2016; Sistemas Insepet LTDA
+   6:.\codebar.c   **** *
+   7:.\codebar.c   **** *               All rights reserved.  Protected by international copyright laws.
+   8:.\codebar.c   **** *               Knowledge of the source code may NOT be used to develop a similar product.
+   9:.\codebar.c   **** *               Please help us continue to provide the Embedded community with the finest
+  10:.\codebar.c   **** *               software available.  Your honesty is greatly appreciated.
+  11:.\codebar.c   **** ***************************************************************************************************
+  12:.\codebar.c   **** */
+  13:.\codebar.c   **** 
+  14:.\codebar.c   **** /*
+  15:.\codebar.c   **** ***************************************************************************************************
+  16:.\codebar.c   **** *
+  17:.\codebar.c   **** *                                            MUX ADVANCE CODE
+  18:.\codebar.c   **** *
+  19:.\codebar.c   **** *                                             CYPRESS PSoC5LP
+  20:.\codebar.c   **** *                                                with the
+  21:.\codebar.c   **** *                                            CY8C5969AXI-LP035
+  22:.\codebar.c   **** *
+  23:.\codebar.c   **** * Filename      : codebar.c
+  24:.\codebar.c   **** * Version       : V1.00
+  25:.\codebar.c   **** * Programmer(s) : 
+  26:.\codebar.c   ****                   
+  27:.\codebar.c   **** ***************************************************************************************************
+  28:.\codebar.c   **** */
+  29:.\codebar.c   **** 
+  30:.\codebar.c   **** /*
+  31:.\codebar.c   **** ***************************************************************************************************
+  32:.\codebar.c   **** *                                             INCLUDE FILES
+  33:.\codebar.c   **** ***************************************************************************************************
+  34:.\codebar.c   **** */
+  35:.\codebar.c   **** 
+  36:.\codebar.c   **** #include <device.h>
+  37:.\codebar.c   **** #include "variables.h"
+  38:.\codebar.c   **** 
+  39:.\codebar.c   **** /*
+  40:.\codebar.c   **** ***************************************************************************************************
+  41:.\codebar.c   **** *                                        uint8 serial_codebar()
+  42:.\codebar.c   **** *
+  43:.\codebar.c   **** * Description : 
+  44:.\codebar.c   **** *               
+  45:.\codebar.c   **** *
+  46:.\codebar.c   **** * Argument(s) : none
+  47:.\codebar.c   **** *
+  48:.\codebar.c   **** * Return(s)   : none
+  49:.\codebar.c   **** *
+  50:.\codebar.c   **** * Caller(s)   :  
+  51:.\codebar.c   **** *
+  52:.\codebar.c   **** * Note(s)     : none.
+  53:.\codebar.c   **** ***************************************************************************************************
+  54:.\codebar.c   **** */
+  55:.\codebar.c   **** 
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 3
+
+
+  56:.\codebar.c   **** uint8 serial_codebar(){
+  60              		.loc 1 56 0
+  61              		.cfi_startproc
+  62              		@ args = 0, pretend = 0, frame = 8
+  63              		@ frame_needed = 1, uses_anonymous_args = 0
+  64 0000 80B5     		push	{r7, lr}
+  65              		.cfi_def_cfa_offset 8
+  66              		.cfi_offset 7, -8
+  67              		.cfi_offset 14, -4
+  68 0002 82B0     		sub	sp, sp, #8
+  69              		.cfi_def_cfa_offset 16
+  70 0004 00AF     		add	r7, sp, #0
+  71              		.cfi_def_cfa_register 7
+  57:.\codebar.c   ****     uint32 size;
+  58:.\codebar.c   **** 	if(Code_Bar_GetRxBufferSize() >= 1){
+  72              		.loc 1 58 0
+  73 0006 FFF7FEFF 		bl	Code_Bar_GetRxBufferSize
+  74 000a 0346     		mov	r3, r0
+  75 000c 002B     		cmp	r3, #0
+  76 000e 23D0     		beq	.L2
+  59:.\codebar.c   ****         CyDelay(100);
+  77              		.loc 1 59 0
+  78 0010 6420     		movs	r0, #100
+  79 0012 FFF7FEFF 		bl	CyDelay
+  60:.\codebar.c   **** 		size=1;
+  80              		.loc 1 60 0
+  81 0016 0123     		movs	r3, #1
+  82 0018 7B60     		str	r3, [r7, #4]
+  61:.\codebar.c   **** 		while(Code_Bar_GetRxBufferSize()>0){
+  83              		.loc 1 61 0
+  84 001a 0BE0     		b	.L3
+  85              	.L4:
+  62:.\codebar.c   ****     		temporal[size]=Code_Bar_ReadRxData();
+  86              		.loc 1 62 0
+  87 001c FFF7FEFF 		bl	Code_Bar_ReadRxData
+  88 0020 0346     		mov	r3, r0
+  89 0022 1946     		mov	r1, r3
+  90 0024 0F4A     		ldr	r2, .L6
+  91 0026 7B68     		ldr	r3, [r7, #4]
+  92 0028 1344     		add	r3, r3, r2
+  93 002a 0A46     		mov	r2, r1
+  94 002c 1A70     		strb	r2, [r3]
+  63:.\codebar.c   ****     		size++;
+  95              		.loc 1 63 0
+  96 002e 7B68     		ldr	r3, [r7, #4]
+  97 0030 0133     		adds	r3, r3, #1
+  98 0032 7B60     		str	r3, [r7, #4]
+  99              	.L3:
+  61:.\codebar.c   **** 		while(Code_Bar_GetRxBufferSize()>0){
+ 100              		.loc 1 61 0
+ 101 0034 FFF7FEFF 		bl	Code_Bar_GetRxBufferSize
+ 102 0038 0346     		mov	r3, r0
+ 103 003a 002B     		cmp	r3, #0
+ 104 003c EED1     		bne	.L4
+  64:.\codebar.c   ****     	}
+  65:.\codebar.c   **** 		temporal[0]=size-1;
+ 105              		.loc 1 65 0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 4
+
+
+ 106 003e 7B68     		ldr	r3, [r7, #4]
+ 107 0040 DBB2     		uxtb	r3, r3
+ 108 0042 013B     		subs	r3, r3, #1
+ 109 0044 DAB2     		uxtb	r2, r3
+ 110 0046 074B     		ldr	r3, .L6
+ 111 0048 1A70     		strb	r2, [r3]
+  66:.\codebar.c   **** 		Code_Bar_ClearRxBuffer();
+ 112              		.loc 1 66 0
+ 113 004a FFF7FEFF 		bl	Code_Bar_ClearRxBuffer
+  67:.\codebar.c   **** 		CyDelay(5);
+ 114              		.loc 1 67 0
+ 115 004e 0520     		movs	r0, #5
+ 116 0050 FFF7FEFF 		bl	CyDelay
+  68:.\codebar.c   **** 		return 1;
+ 117              		.loc 1 68 0
+ 118 0054 0123     		movs	r3, #1
+ 119 0056 00E0     		b	.L5
+ 120              	.L2:
+  69:.\codebar.c   **** 	}
+  70:.\codebar.c   ****     return 0;
+ 121              		.loc 1 70 0
+ 122 0058 0023     		movs	r3, #0
+ 123              	.L5:
+  71:.\codebar.c   **** }...
+ 124              		.loc 1 71 0
+ 125 005a 1846     		mov	r0, r3
+ 126 005c 0837     		adds	r7, r7, #8
+ 127              		.cfi_def_cfa_offset 8
+ 128 005e BD46     		mov	sp, r7
+ 129              		.cfi_def_cfa_register 13
+ 130              		@ sp needed
+ 131 0060 80BD     		pop	{r7, pc}
+ 132              	.L7:
+ 133 0062 00BF     		.align	2
+ 134              	.L6:
+ 135 0064 00000000 		.word	temporal
+ 136              		.cfi_endproc
+ 137              	.LFE56:
+ 138              		.size	serial_codebar, .-serial_codebar
+ 139              		.text
+ 140              	.Letext0:
+ 141              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 142              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 143              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 144              		.file 5 ".\\variables.h"
+ 145              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+ 146              		.section	.debug_info,"",%progbits
+ 147              	.Ldebug_info0:
+ 148 0000 C8070000 		.4byte	0x7c8
+ 149 0004 0400     		.2byte	0x4
+ 150 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 151 000a 04       		.byte	0x4
+ 152 000b 01       		.uleb128 0x1
+ 153 000c 6C010000 		.4byte	.LASF109
+ 154 0010 01       		.byte	0x1
+ 155 0011 51020000 		.4byte	.LASF110
+ 156 0015 B7020000 		.4byte	.LASF111
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 5
+
+
+ 157 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 158 001d 00000000 		.4byte	0
+ 159 0021 00000000 		.4byte	.Ldebug_line0
+ 160 0025 02       		.uleb128 0x2
+ 161 0026 01       		.byte	0x1
+ 162 0027 06       		.byte	0x6
+ 163 0028 0B010000 		.4byte	.LASF0
+ 164 002c 02       		.uleb128 0x2
+ 165 002d 01       		.byte	0x1
+ 166 002e 08       		.byte	0x8
+ 167 002f 8E020000 		.4byte	.LASF1
+ 168 0033 02       		.uleb128 0x2
+ 169 0034 02       		.byte	0x2
+ 170 0035 05       		.byte	0x5
+ 171 0036 41000000 		.4byte	.LASF2
+ 172 003a 02       		.uleb128 0x2
+ 173 003b 02       		.byte	0x2
+ 174 003c 07       		.byte	0x7
+ 175 003d D9040000 		.4byte	.LASF3
+ 176 0041 03       		.uleb128 0x3
+ 177 0042 66050000 		.4byte	.LASF9
+ 178 0046 02       		.byte	0x2
+ 179 0047 3F       		.byte	0x3f
+ 180 0048 4C000000 		.4byte	0x4c
+ 181 004c 02       		.uleb128 0x2
+ 182 004d 04       		.byte	0x4
+ 183 004e 05       		.byte	0x5
+ 184 004f 6B040000 		.4byte	.LASF4
+ 185 0053 02       		.uleb128 0x2
+ 186 0054 04       		.byte	0x4
+ 187 0055 07       		.byte	0x7
+ 188 0056 17000000 		.4byte	.LASF5
+ 189 005a 02       		.uleb128 0x2
+ 190 005b 08       		.byte	0x8
+ 191 005c 05       		.byte	0x5
+ 192 005d 4D010000 		.4byte	.LASF6
+ 193 0061 02       		.uleb128 0x2
+ 194 0062 08       		.byte	0x8
+ 195 0063 07       		.byte	0x7
+ 196 0064 9E030000 		.4byte	.LASF7
+ 197 0068 04       		.uleb128 0x4
+ 198 0069 04       		.byte	0x4
+ 199 006a 05       		.byte	0x5
+ 200 006b 696E7400 		.ascii	"int\000"
+ 201 006f 02       		.uleb128 0x2
+ 202 0070 04       		.byte	0x4
+ 203 0071 07       		.byte	0x7
+ 204 0072 CF030000 		.4byte	.LASF8
+ 205 0076 03       		.uleb128 0x3
+ 206 0077 74040000 		.4byte	.LASF10
+ 207 007b 03       		.byte	0x3
+ 208 007c 2C       		.byte	0x2c
+ 209 007d 41000000 		.4byte	0x41
+ 210 0081 03       		.uleb128 0x3
+ 211 0082 FC000000 		.4byte	.LASF11
+ 212 0086 04       		.byte	0x4
+ 213 0087 A1       		.byte	0xa1
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 6
+
+
+ 214 0088 2C000000 		.4byte	0x2c
+ 215 008c 03       		.uleb128 0x3
+ 216 008d EC040000 		.4byte	.LASF12
+ 217 0091 04       		.byte	0x4
+ 218 0092 A3       		.byte	0xa3
+ 219 0093 53000000 		.4byte	0x53
+ 220 0097 02       		.uleb128 0x2
+ 221 0098 04       		.byte	0x4
+ 222 0099 04       		.byte	0x4
+ 223 009a 24010000 		.4byte	.LASF13
+ 224 009e 02       		.uleb128 0x2
+ 225 009f 08       		.byte	0x8
+ 226 00a0 04       		.byte	0x4
+ 227 00a1 C1050000 		.4byte	.LASF14
+ 228 00a5 03       		.uleb128 0x3
+ 229 00a6 FA010000 		.4byte	.LASF15
+ 230 00aa 04       		.byte	0x4
+ 231 00ab AD       		.byte	0xad
+ 232 00ac 61000000 		.4byte	0x61
+ 233 00b0 02       		.uleb128 0x2
+ 234 00b1 01       		.byte	0x1
+ 235 00b2 08       		.byte	0x8
+ 236 00b3 5E040000 		.4byte	.LASF16
+ 237 00b7 05       		.uleb128 0x5
+ 238 00b8 81000000 		.4byte	0x81
+ 239 00bc 05       		.uleb128 0x5
+ 240 00bd 8C000000 		.4byte	0x8c
+ 241 00c1 02       		.uleb128 0x2
+ 242 00c2 04       		.byte	0x4
+ 243 00c3 07       		.byte	0x7
+ 244 00c4 63000000 		.4byte	.LASF17
+ 245 00c8 06       		.uleb128 0x6
+ 246 00c9 D2040000 		.4byte	.LASF66
+ 247 00cd 7B02     		.2byte	0x27b
+ 248 00cf 05       		.byte	0x5
+ 249 00d0 52       		.byte	0x52
+ 250 00d1 2A030000 		.4byte	0x32a
+ 251 00d5 07       		.uleb128 0x7
+ 252 00d6 F5000000 		.4byte	.LASF18
+ 253 00da 05       		.byte	0x5
+ 254 00db 53       		.byte	0x53
+ 255 00dc 81000000 		.4byte	0x81
+ 256 00e0 00       		.byte	0
+ 257 00e1 07       		.uleb128 0x7
+ 258 00e2 38000000 		.4byte	.LASF19
+ 259 00e6 05       		.byte	0x5
+ 260 00e7 54       		.byte	0x54
+ 261 00e8 2A030000 		.4byte	0x32a
+ 262 00ec 01       		.byte	0x1
+ 263 00ed 07       		.uleb128 0x7
+ 264 00ee D4000000 		.4byte	.LASF20
+ 265 00f2 05       		.byte	0x5
+ 266 00f3 55       		.byte	0x55
+ 267 00f4 81000000 		.4byte	0x81
+ 268 00f8 1A       		.byte	0x1a
+ 269 00f9 07       		.uleb128 0x7
+ 270 00fa 59050000 		.4byte	.LASF21
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 7
+
+
+ 271 00fe 05       		.byte	0x5
+ 272 00ff 56       		.byte	0x56
+ 273 0100 3A030000 		.4byte	0x33a
+ 274 0104 1B       		.byte	0x1b
+ 275 0105 07       		.uleb128 0x7
+ 276 0106 4B030000 		.4byte	.LASF22
+ 277 010a 05       		.byte	0x5
+ 278 010b 57       		.byte	0x57
+ 279 010c 3A030000 		.4byte	0x33a
+ 280 0110 25       		.byte	0x25
+ 281 0111 07       		.uleb128 0x7
+ 282 0112 87000000 		.4byte	.LASF23
+ 283 0116 05       		.byte	0x5
+ 284 0117 58       		.byte	0x58
+ 285 0118 2A030000 		.4byte	0x32a
+ 286 011c 2F       		.byte	0x2f
+ 287 011d 07       		.uleb128 0x7
+ 288 011e 5B010000 		.4byte	.LASF24
+ 289 0122 05       		.byte	0x5
+ 290 0123 59       		.byte	0x59
+ 291 0124 81000000 		.4byte	0x81
+ 292 0128 48       		.byte	0x48
+ 293 0129 07       		.uleb128 0x7
+ 294 012a 70050000 		.4byte	.LASF25
+ 295 012e 05       		.byte	0x5
+ 296 012f 5A       		.byte	0x5a
+ 297 0130 81000000 		.4byte	0x81
+ 298 0134 49       		.byte	0x49
+ 299 0135 07       		.uleb128 0x7
+ 300 0136 47020000 		.4byte	.LASF26
+ 301 013a 05       		.byte	0x5
+ 302 013b 5B       		.byte	0x5b
+ 303 013c 4A030000 		.4byte	0x34a
+ 304 0140 4A       		.byte	0x4a
+ 305 0141 07       		.uleb128 0x7
+ 306 0142 F3040000 		.4byte	.LASF27
+ 307 0146 05       		.byte	0x5
+ 308 0147 5C       		.byte	0x5c
+ 309 0148 81000000 		.4byte	0x81
+ 310 014c 5F       		.byte	0x5f
+ 311 014d 07       		.uleb128 0x7
+ 312 014e 75000000 		.4byte	.LASF28
+ 313 0152 05       		.byte	0x5
+ 314 0153 5D       		.byte	0x5d
+ 315 0154 81000000 		.4byte	0x81
+ 316 0158 60       		.byte	0x60
+ 317 0159 07       		.uleb128 0x7
+ 318 015a DD000000 		.4byte	.LASF29
+ 319 015e 05       		.byte	0x5
+ 320 015f 5E       		.byte	0x5e
+ 321 0160 81000000 		.4byte	0x81
+ 322 0164 61       		.byte	0x61
+ 323 0165 07       		.uleb128 0x7
+ 324 0166 19030000 		.4byte	.LASF30
+ 325 016a 05       		.byte	0x5
+ 326 016b 5F       		.byte	0x5f
+ 327 016c 5A030000 		.4byte	0x35a
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 8
+
+
+ 328 0170 62       		.byte	0x62
+ 329 0171 07       		.uleb128 0x7
+ 330 0172 C8000000 		.4byte	.LASF31
+ 331 0176 05       		.byte	0x5
+ 332 0177 60       		.byte	0x60
+ 333 0178 6A030000 		.4byte	0x36a
+ 334 017c 64       		.byte	0x64
+ 335 017d 07       		.uleb128 0x7
+ 336 017e 0B000000 		.4byte	.LASF32
+ 337 0182 05       		.byte	0x5
+ 338 0183 61       		.byte	0x61
+ 339 0184 81000000 		.4byte	0x81
+ 340 0188 78       		.byte	0x78
+ 341 0189 07       		.uleb128 0x7
+ 342 018a 6C000000 		.4byte	.LASF33
+ 343 018e 05       		.byte	0x5
+ 344 018f 62       		.byte	0x62
+ 345 0190 80030000 		.4byte	0x380
+ 346 0194 79       		.byte	0x79
+ 347 0195 07       		.uleb128 0x7
+ 348 0196 29000000 		.4byte	.LASF34
+ 349 019a 05       		.byte	0x5
+ 350 019b 63       		.byte	0x63
+ 351 019c 90030000 		.4byte	0x390
+ 352 01a0 7E       		.byte	0x7e
+ 353 01a1 07       		.uleb128 0x7
+ 354 01a2 B1040000 		.4byte	.LASF35
+ 355 01a6 05       		.byte	0x5
+ 356 01a7 64       		.byte	0x64
+ 357 01a8 90030000 		.4byte	0x390
+ 358 01ac 84       		.byte	0x84
+ 359 01ad 07       		.uleb128 0x7
+ 360 01ae 7C040000 		.4byte	.LASF36
+ 361 01b2 05       		.byte	0x5
+ 362 01b3 65       		.byte	0x65
+ 363 01b4 90030000 		.4byte	0x390
+ 364 01b8 8A       		.byte	0x8a
+ 365 01b9 07       		.uleb128 0x7
+ 366 01ba 07050000 		.4byte	.LASF37
+ 367 01be 05       		.byte	0x5
+ 368 01bf 66       		.byte	0x66
+ 369 01c0 90030000 		.4byte	0x390
+ 370 01c4 90       		.byte	0x90
+ 371 01c5 07       		.uleb128 0x7
+ 372 01c6 BC030000 		.4byte	.LASF38
+ 373 01ca 05       		.byte	0x5
+ 374 01cb 67       		.byte	0x67
+ 375 01cc A0030000 		.4byte	0x3a0
+ 376 01d0 96       		.byte	0x96
+ 377 01d1 07       		.uleb128 0x7
+ 378 01d2 33020000 		.4byte	.LASF39
+ 379 01d6 05       		.byte	0x5
+ 380 01d7 68       		.byte	0x68
+ 381 01d8 A0030000 		.4byte	0x3a0
+ 382 01dc A4       		.byte	0xa4
+ 383 01dd 07       		.uleb128 0x7
+ 384 01de B0050000 		.4byte	.LASF40
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 9
+
+
+ 385 01e2 05       		.byte	0x5
+ 386 01e3 69       		.byte	0x69
+ 387 01e4 A0030000 		.4byte	0x3a0
+ 388 01e8 B2       		.byte	0xb2
+ 389 01e9 07       		.uleb128 0x7
+ 390 01ea 7E020000 		.4byte	.LASF41
+ 391 01ee 05       		.byte	0x5
+ 392 01ef 6A       		.byte	0x6a
+ 393 01f0 A0030000 		.4byte	0x3a0
+ 394 01f4 C0       		.byte	0xc0
+ 395 01f5 07       		.uleb128 0x7
+ 396 01f6 04040000 		.4byte	.LASF42
+ 397 01fa 05       		.byte	0x5
+ 398 01fb 6B       		.byte	0x6b
+ 399 01fc A0030000 		.4byte	0x3a0
+ 400 0200 CE       		.byte	0xce
+ 401 0201 07       		.uleb128 0x7
+ 402 0202 8B040000 		.4byte	.LASF43
+ 403 0206 05       		.byte	0x5
+ 404 0207 6C       		.byte	0x6c
+ 405 0208 A0030000 		.4byte	0x3a0
+ 406 020c DC       		.byte	0xdc
+ 407 020d 07       		.uleb128 0x7
+ 408 020e 4B000000 		.4byte	.LASF44
+ 409 0212 05       		.byte	0x5
+ 410 0213 6D       		.byte	0x6d
+ 411 0214 B0030000 		.4byte	0x3b0
+ 412 0218 EA       		.byte	0xea
+ 413 0219 07       		.uleb128 0x7
+ 414 021a E9000000 		.4byte	.LASF45
+ 415 021e 05       		.byte	0x5
+ 416 021f 6E       		.byte	0x6e
+ 417 0220 B0030000 		.4byte	0x3b0
+ 418 0224 F5       		.byte	0xf5
+ 419 0225 08       		.uleb128 0x8
+ 420 0226 E4030000 		.4byte	.LASF46
+ 421 022a 05       		.byte	0x5
+ 422 022b 6F       		.byte	0x6f
+ 423 022c B0030000 		.4byte	0x3b0
+ 424 0230 0001     		.2byte	0x100
+ 425 0232 08       		.uleb128 0x8
+ 426 0233 24030000 		.4byte	.LASF47
+ 427 0237 05       		.byte	0x5
+ 428 0238 70       		.byte	0x70
+ 429 0239 81000000 		.4byte	0x81
+ 430 023d 0B01     		.2byte	0x10b
+ 431 023f 08       		.uleb128 0x8
+ 432 0240 48040000 		.4byte	.LASF48
+ 433 0244 05       		.byte	0x5
+ 434 0245 71       		.byte	0x71
+ 435 0246 81000000 		.4byte	0x81
+ 436 024a 0C01     		.2byte	0x10c
+ 437 024c 08       		.uleb128 0x8
+ 438 024d 24020000 		.4byte	.LASF49
+ 439 0251 05       		.byte	0x5
+ 440 0252 72       		.byte	0x72
+ 441 0253 81000000 		.4byte	0x81
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 10
+
+
+ 442 0257 0D01     		.2byte	0x10d
+ 443 0259 08       		.uleb128 0x8
+ 444 025a 64020000 		.4byte	.LASF50
+ 445 025e 05       		.byte	0x5
+ 446 025f 73       		.byte	0x73
+ 447 0260 81000000 		.4byte	0x81
+ 448 0264 0E01     		.2byte	0x10e
+ 449 0266 08       		.uleb128 0x8
+ 450 0267 FF040000 		.4byte	.LASF51
+ 451 026b 05       		.byte	0x5
+ 452 026c 74       		.byte	0x74
+ 453 026d C0030000 		.4byte	0x3c0
+ 454 0271 0F01     		.2byte	0x10f
+ 455 0273 08       		.uleb128 0x8
+ 456 0274 00000000 		.4byte	.LASF52
+ 457 0278 05       		.byte	0x5
+ 458 0279 75       		.byte	0x75
+ 459 027a 3A030000 		.4byte	0x33a
+ 460 027e 5001     		.2byte	0x150
+ 461 0280 08       		.uleb128 0x8
+ 462 0281 3C040000 		.4byte	.LASF53
+ 463 0285 05       		.byte	0x5
+ 464 0286 76       		.byte	0x76
+ 465 0287 3A030000 		.4byte	0x33a
+ 466 028b 5A01     		.2byte	0x15a
+ 467 028d 08       		.uleb128 0x8
+ 468 028e B1000000 		.4byte	.LASF54
+ 469 0292 05       		.byte	0x5
+ 470 0293 77       		.byte	0x77
+ 471 0294 3A030000 		.4byte	0x33a
+ 472 0298 6401     		.2byte	0x164
+ 473 029a 08       		.uleb128 0x8
+ 474 029b 91030000 		.4byte	.LASF55
+ 475 029f 05       		.byte	0x5
+ 476 02a0 78       		.byte	0x78
+ 477 02a1 D0030000 		.4byte	0x3d0
+ 478 02a5 6E01     		.2byte	0x16e
+ 479 02a7 08       		.uleb128 0x8
+ 480 02a8 23040000 		.4byte	.LASF56
+ 481 02ac 05       		.byte	0x5
+ 482 02ad 79       		.byte	0x79
+ 483 02ae D0030000 		.4byte	0x3d0
+ 484 02b2 B901     		.2byte	0x1b9
+ 485 02b4 08       		.uleb128 0x8
+ 486 02b5 3C030000 		.4byte	.LASF57
+ 487 02b9 05       		.byte	0x5
+ 488 02ba 7A       		.byte	0x7a
+ 489 02bb E6030000 		.4byte	0x3e6
+ 490 02bf 0402     		.2byte	0x204
+ 491 02c1 08       		.uleb128 0x8
+ 492 02c2 70030000 		.4byte	.LASF58
+ 493 02c6 05       		.byte	0x5
+ 494 02c7 7B       		.byte	0x7b
+ 495 02c8 E6030000 		.4byte	0x3e6
+ 496 02cc 1302     		.2byte	0x213
+ 497 02ce 08       		.uleb128 0x8
+ 498 02cf FD050000 		.4byte	.LASF59
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 11
+
+
+ 499 02d3 05       		.byte	0x5
+ 500 02d4 7C       		.byte	0x7c
+ 501 02d5 FC030000 		.4byte	0x3fc
+ 502 02d9 2202     		.2byte	0x222
+ 503 02db 08       		.uleb128 0x8
+ 504 02dc EF030000 		.4byte	.LASF60
+ 505 02e0 05       		.byte	0x5
+ 506 02e1 7D       		.byte	0x7d
+ 507 02e2 FC030000 		.4byte	0x3fc
+ 508 02e6 4002     		.2byte	0x240
+ 509 02e8 08       		.uleb128 0x8
+ 510 02e9 0E060000 		.4byte	.LASF61
+ 511 02ed 05       		.byte	0x5
+ 512 02ee 7E       		.byte	0x7e
+ 513 02ef 3A030000 		.4byte	0x33a
+ 514 02f3 5E02     		.2byte	0x25e
+ 515 02f5 08       		.uleb128 0x8
+ 516 02f6 34050000 		.4byte	.LASF62
+ 517 02fa 05       		.byte	0x5
+ 518 02fb 7F       		.byte	0x7f
+ 519 02fc 81000000 		.4byte	0x81
+ 520 0300 6802     		.2byte	0x268
+ 521 0302 08       		.uleb128 0x8
+ 522 0303 C5040000 		.4byte	.LASF63
+ 523 0307 05       		.byte	0x5
+ 524 0308 80       		.byte	0x80
+ 525 0309 12040000 		.4byte	0x412
+ 526 030d 6902     		.2byte	0x269
+ 527 030f 08       		.uleb128 0x8
+ 528 0310 7E000000 		.4byte	.LASF64
+ 529 0314 05       		.byte	0x5
+ 530 0315 81       		.byte	0x81
+ 531 0316 5A030000 		.4byte	0x35a
+ 532 031a 7802     		.2byte	0x278
+ 533 031c 08       		.uleb128 0x8
+ 534 031d 4B050000 		.4byte	.LASF65
+ 535 0321 05       		.byte	0x5
+ 536 0322 82       		.byte	0x82
+ 537 0323 81000000 		.4byte	0x81
+ 538 0327 7A02     		.2byte	0x27a
+ 539 0329 00       		.byte	0
+ 540 032a 09       		.uleb128 0x9
+ 541 032b 81000000 		.4byte	0x81
+ 542 032f 3A030000 		.4byte	0x33a
+ 543 0333 0A       		.uleb128 0xa
+ 544 0334 C1000000 		.4byte	0xc1
+ 545 0338 18       		.byte	0x18
+ 546 0339 00       		.byte	0
+ 547 033a 09       		.uleb128 0x9
+ 548 033b 81000000 		.4byte	0x81
+ 549 033f 4A030000 		.4byte	0x34a
+ 550 0343 0A       		.uleb128 0xa
+ 551 0344 C1000000 		.4byte	0xc1
+ 552 0348 09       		.byte	0x9
+ 553 0349 00       		.byte	0
+ 554 034a 09       		.uleb128 0x9
+ 555 034b 81000000 		.4byte	0x81
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 12
+
+
+ 556 034f 5A030000 		.4byte	0x35a
+ 557 0353 0A       		.uleb128 0xa
+ 558 0354 C1000000 		.4byte	0xc1
+ 559 0358 14       		.byte	0x14
+ 560 0359 00       		.byte	0
+ 561 035a 09       		.uleb128 0x9
+ 562 035b 81000000 		.4byte	0x81
+ 563 035f 6A030000 		.4byte	0x36a
+ 564 0363 0A       		.uleb128 0xa
+ 565 0364 C1000000 		.4byte	0xc1
+ 566 0368 01       		.byte	0x1
+ 567 0369 00       		.byte	0
+ 568 036a 09       		.uleb128 0x9
+ 569 036b 81000000 		.4byte	0x81
+ 570 036f 80030000 		.4byte	0x380
+ 571 0373 0A       		.uleb128 0xa
+ 572 0374 C1000000 		.4byte	0xc1
+ 573 0378 01       		.byte	0x1
+ 574 0379 0A       		.uleb128 0xa
+ 575 037a C1000000 		.4byte	0xc1
+ 576 037e 09       		.byte	0x9
+ 577 037f 00       		.byte	0
+ 578 0380 09       		.uleb128 0x9
+ 579 0381 81000000 		.4byte	0x81
+ 580 0385 90030000 		.4byte	0x390
+ 581 0389 0A       		.uleb128 0xa
+ 582 038a C1000000 		.4byte	0xc1
+ 583 038e 04       		.byte	0x4
+ 584 038f 00       		.byte	0
+ 585 0390 09       		.uleb128 0x9
+ 586 0391 81000000 		.4byte	0x81
+ 587 0395 A0030000 		.4byte	0x3a0
+ 588 0399 0A       		.uleb128 0xa
+ 589 039a C1000000 		.4byte	0xc1
+ 590 039e 05       		.byte	0x5
+ 591 039f 00       		.byte	0
+ 592 03a0 09       		.uleb128 0x9
+ 593 03a1 81000000 		.4byte	0x81
+ 594 03a5 B0030000 		.4byte	0x3b0
+ 595 03a9 0A       		.uleb128 0xa
+ 596 03aa C1000000 		.4byte	0xc1
+ 597 03ae 0D       		.byte	0xd
+ 598 03af 00       		.byte	0
+ 599 03b0 09       		.uleb128 0x9
+ 600 03b1 81000000 		.4byte	0x81
+ 601 03b5 C0030000 		.4byte	0x3c0
+ 602 03b9 0A       		.uleb128 0xa
+ 603 03ba C1000000 		.4byte	0xc1
+ 604 03be 0A       		.byte	0xa
+ 605 03bf 00       		.byte	0
+ 606 03c0 09       		.uleb128 0x9
+ 607 03c1 81000000 		.4byte	0x81
+ 608 03c5 D0030000 		.4byte	0x3d0
+ 609 03c9 0A       		.uleb128 0xa
+ 610 03ca C1000000 		.4byte	0xc1
+ 611 03ce 40       		.byte	0x40
+ 612 03cf 00       		.byte	0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 13
+
+
+ 613 03d0 09       		.uleb128 0x9
+ 614 03d1 81000000 		.4byte	0x81
+ 615 03d5 E6030000 		.4byte	0x3e6
+ 616 03d9 0A       		.uleb128 0xa
+ 617 03da C1000000 		.4byte	0xc1
+ 618 03de 02       		.byte	0x2
+ 619 03df 0A       		.uleb128 0xa
+ 620 03e0 C1000000 		.4byte	0xc1
+ 621 03e4 18       		.byte	0x18
+ 622 03e5 00       		.byte	0
+ 623 03e6 09       		.uleb128 0x9
+ 624 03e7 81000000 		.4byte	0x81
+ 625 03eb FC030000 		.4byte	0x3fc
+ 626 03ef 0A       		.uleb128 0xa
+ 627 03f0 C1000000 		.4byte	0xc1
+ 628 03f4 02       		.byte	0x2
+ 629 03f5 0A       		.uleb128 0xa
+ 630 03f6 C1000000 		.4byte	0xc1
+ 631 03fa 04       		.byte	0x4
+ 632 03fb 00       		.byte	0
+ 633 03fc 09       		.uleb128 0x9
+ 634 03fd 81000000 		.4byte	0x81
+ 635 0401 12040000 		.4byte	0x412
+ 636 0405 0A       		.uleb128 0xa
+ 637 0406 C1000000 		.4byte	0xc1
+ 638 040a 02       		.byte	0x2
+ 639 040b 0A       		.uleb128 0xa
+ 640 040c C1000000 		.4byte	0xc1
+ 641 0410 09       		.byte	0x9
+ 642 0411 00       		.byte	0
+ 643 0412 09       		.uleb128 0x9
+ 644 0413 81000000 		.4byte	0x81
+ 645 0417 22040000 		.4byte	0x422
+ 646 041b 0A       		.uleb128 0xa
+ 647 041c C1000000 		.4byte	0xc1
+ 648 0420 0E       		.byte	0xe
+ 649 0421 00       		.byte	0
+ 650 0422 06       		.uleb128 0x6
+ 651 0423 BA000000 		.4byte	.LASF67
+ 652 0427 0001     		.2byte	0x100
+ 653 0429 05       		.byte	0x5
+ 654 042a 90       		.byte	0x90
+ 655 042b 84040000 		.4byte	0x484
+ 656 042f 0B       		.uleb128 0xb
+ 657 0430 64697200 		.ascii	"dir\000"
+ 658 0434 05       		.byte	0x5
+ 659 0435 91       		.byte	0x91
+ 660 0436 81000000 		.4byte	0x81
+ 661 043a 00       		.byte	0
+ 662 043b 07       		.uleb128 0x7
+ 663 043c 17010000 		.4byte	.LASF68
+ 664 0440 05       		.byte	0x5
+ 665 0441 92       		.byte	0x92
+ 666 0442 84040000 		.4byte	0x484
+ 667 0446 01       		.byte	0x1
+ 668 0447 07       		.uleb128 0x7
+ 669 0448 70020000 		.4byte	.LASF69
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 14
+
+
+ 670 044c 05       		.byte	0x5
+ 671 044d 93       		.byte	0x93
+ 672 044e A0040000 		.4byte	0x4a0
+ 673 0452 B5       		.byte	0xb5
+ 674 0453 07       		.uleb128 0x7
+ 675 0454 54040000 		.4byte	.LASF70
+ 676 0458 05       		.byte	0x5
+ 677 0459 94       		.byte	0x94
+ 678 045a A0030000 		.4byte	0x3a0
+ 679 045e D5       		.byte	0xd5
+ 680 045f 07       		.uleb128 0x7
+ 681 0460 31040000 		.4byte	.LASF71
+ 682 0464 05       		.byte	0x5
+ 683 0465 95       		.byte	0x95
+ 684 0466 A0030000 		.4byte	0x3a0
+ 685 046a E3       		.byte	0xe3
+ 686 046b 07       		.uleb128 0x7
+ 687 046c DC030000 		.4byte	.LASF72
+ 688 0470 05       		.byte	0x5
+ 689 0471 96       		.byte	0x96
+ 690 0472 A0030000 		.4byte	0x3a0
+ 691 0476 F1       		.byte	0xf1
+ 692 0477 07       		.uleb128 0x7
+ 693 0478 9C020000 		.4byte	.LASF73
+ 694 047c 05       		.byte	0x5
+ 695 047d 97       		.byte	0x97
+ 696 047e 81000000 		.4byte	0x81
+ 697 0482 FF       		.byte	0xff
+ 698 0483 00       		.byte	0
+ 699 0484 09       		.uleb128 0x9
+ 700 0485 81000000 		.4byte	0x81
+ 701 0489 A0040000 		.4byte	0x4a0
+ 702 048d 0A       		.uleb128 0xa
+ 703 048e C1000000 		.4byte	0xc1
+ 704 0492 03       		.byte	0x3
+ 705 0493 0A       		.uleb128 0xa
+ 706 0494 C1000000 		.4byte	0xc1
+ 707 0498 02       		.byte	0x2
+ 708 0499 0A       		.uleb128 0xa
+ 709 049a C1000000 		.4byte	0xc1
+ 710 049e 0E       		.byte	0xe
+ 711 049f 00       		.byte	0
+ 712 04a0 09       		.uleb128 0x9
+ 713 04a1 81000000 		.4byte	0x81
+ 714 04a5 B6040000 		.4byte	0x4b6
+ 715 04a9 0A       		.uleb128 0xa
+ 716 04aa C1000000 		.4byte	0xc1
+ 717 04ae 03       		.byte	0x3
+ 718 04af 0A       		.uleb128 0xa
+ 719 04b0 C1000000 		.4byte	0xc1
+ 720 04b4 07       		.byte	0x7
+ 721 04b5 00       		.byte	0
+ 722 04b6 06       		.uleb128 0x6
+ 723 04b7 C0040000 		.4byte	.LASF74
+ 724 04bb 0002     		.2byte	0x200
+ 725 04bd 05       		.byte	0x5
+ 726 04be 9A       		.byte	0x9a
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 15
+
+
+ 727 04bf D9040000 		.4byte	0x4d9
+ 728 04c3 0B       		.uleb128 0xb
+ 729 04c4 6100     		.ascii	"a\000"
+ 730 04c6 05       		.byte	0x5
+ 731 04c7 9B       		.byte	0x9b
+ 732 04c8 22040000 		.4byte	0x422
+ 733 04cc 00       		.byte	0
+ 734 04cd 0C       		.uleb128 0xc
+ 735 04ce 6200     		.ascii	"b\000"
+ 736 04d0 05       		.byte	0x5
+ 737 04d1 9C       		.byte	0x9c
+ 738 04d2 22040000 		.4byte	0x422
+ 739 04d6 0001     		.2byte	0x100
+ 740 04d8 00       		.byte	0
+ 741 04d9 0D       		.uleb128 0xd
+ 742 04da A2040000 		.4byte	.LASF112
+ 743 04de 01       		.byte	0x1
+ 744 04df 38       		.byte	0x38
+ 745 04e0 81000000 		.4byte	0x81
+ 746 04e4 00000000 		.4byte	.LFB56
+ 747 04e8 68000000 		.4byte	.LFE56-.LFB56
+ 748 04ec 01       		.uleb128 0x1
+ 749 04ed 9C       		.byte	0x9c
+ 750 04ee 01050000 		.4byte	0x501
+ 751 04f2 0E       		.uleb128 0xe
+ 752 04f3 46050000 		.4byte	.LASF113
+ 753 04f7 01       		.byte	0x1
+ 754 04f8 39       		.byte	0x39
+ 755 04f9 8C000000 		.4byte	0x8c
+ 756 04fd 02       		.uleb128 0x2
+ 757 04fe 91       		.byte	0x91
+ 758 04ff 74       		.sleb128 -12
+ 759 0500 00       		.byte	0
+ 760 0501 0F       		.uleb128 0xf
+ 761 0502 CD050000 		.4byte	.LASF75
+ 762 0506 06       		.byte	0x6
+ 763 0507 1606     		.2byte	0x616
+ 764 0509 0D050000 		.4byte	0x50d
+ 765 050d 05       		.uleb128 0x5
+ 766 050e 76000000 		.4byte	0x76
+ 767 0512 10       		.uleb128 0x10
+ 768 0513 90050000 		.4byte	.LASF76
+ 769 0517 05       		.byte	0x5
+ 770 0518 2C       		.byte	0x2c
+ 771 0519 23050000 		.4byte	0x523
+ 772 051d 05       		.uleb128 0x5
+ 773 051e 03       		.byte	0x3
+ 774 051f 00000000 		.4byte	countAnimation1
+ 775 0523 05       		.uleb128 0x5
+ 776 0524 A5000000 		.4byte	0xa5
+ 777 0528 10       		.uleb128 0x10
+ 778 0529 A0050000 		.4byte	.LASF77
+ 779 052d 05       		.byte	0x5
+ 780 052e 2D       		.byte	0x2d
+ 781 052f 23050000 		.4byte	0x523
+ 782 0533 05       		.uleb128 0x5
+ 783 0534 03       		.byte	0x3
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 16
+
+
+ 784 0535 00000000 		.4byte	countAnimation2
+ 785 0539 10       		.uleb128 0x10
+ 786 053a A3000000 		.4byte	.LASF78
+ 787 053e 05       		.byte	0x5
+ 788 053f 2E       		.byte	0x2e
+ 789 0540 23050000 		.4byte	0x523
+ 790 0544 05       		.uleb128 0x5
+ 791 0545 03       		.byte	0x3
+ 792 0546 00000000 		.4byte	countBeagleTX
+ 793 054a 10       		.uleb128 0x10
+ 794 054b 15040000 		.4byte	.LASF79
+ 795 054f 05       		.byte	0x5
+ 796 0550 2F       		.byte	0x2f
+ 797 0551 BC000000 		.4byte	0xbc
+ 798 0555 05       		.uleb128 0x5
+ 799 0556 03       		.byte	0x3
+ 800 0557 00000000 		.4byte	flowLCD1
+ 801 055b 10       		.uleb128 0x10
+ 802 055c 99040000 		.4byte	.LASF80
+ 803 0560 05       		.byte	0x5
+ 804 0561 30       		.byte	0x30
+ 805 0562 BC000000 		.4byte	0xbc
+ 806 0566 05       		.uleb128 0x5
+ 807 0567 03       		.byte	0x3
+ 808 0568 00000000 		.4byte	flowLCD2
+ 809 056c 10       		.uleb128 0x10
+ 810 056d 5D020000 		.4byte	.LASF81
+ 811 0571 05       		.byte	0x5
+ 812 0572 31       		.byte	0x31
+ 813 0573 B7000000 		.4byte	0xb7
+ 814 0577 05       		.uleb128 0x5
+ 815 0578 03       		.byte	0x3
+ 816 0579 00000000 		.4byte	digits
+ 817 057d 09       		.uleb128 0x9
+ 818 057e 81000000 		.4byte	0x81
+ 819 0582 8D050000 		.4byte	0x58d
+ 820 0586 0A       		.uleb128 0xa
+ 821 0587 C1000000 		.4byte	0xc1
+ 822 058b 0B       		.byte	0xb
+ 823 058c 00       		.byte	0
+ 824 058d 10       		.uleb128 0x10
+ 825 058e 9A000000 		.4byte	.LASF82
+ 826 0592 05       		.byte	0x5
+ 827 0593 32       		.byte	0x32
+ 828 0594 9E050000 		.4byte	0x59e
+ 829 0598 05       		.uleb128 0x5
+ 830 0599 03       		.byte	0x3
+ 831 059a 00000000 		.4byte	ipAdress
+ 832 059e 05       		.uleb128 0x5
+ 833 059f 7D050000 		.4byte	0x57d
+ 834 05a3 10       		.uleb128 0x10
+ 835 05a4 5D030000 		.4byte	.LASF83
+ 836 05a8 05       		.byte	0x5
+ 837 05a9 33       		.byte	0x33
+ 838 05aa B7000000 		.4byte	0xb7
+ 839 05ae 05       		.uleb128 0x5
+ 840 05af 03       		.byte	0x3
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 17
+
+
+ 841 05b0 00000000 		.4byte	numberKeys1
+ 842 05b4 10       		.uleb128 0x10
+ 843 05b5 57000000 		.4byte	.LASF84
+ 844 05b9 05       		.byte	0x5
+ 845 05ba 34       		.byte	0x34
+ 846 05bb B7000000 		.4byte	0xb7
+ 847 05bf 05       		.uleb128 0x5
+ 848 05c0 03       		.byte	0x3
+ 849 05c1 00000000 		.4byte	numberKeys2
+ 850 05c5 10       		.uleb128 0x10
+ 851 05c6 37010000 		.4byte	.LASF85
+ 852 05ca 05       		.byte	0x5
+ 853 05cb 35       		.byte	0x35
+ 854 05cc B7000000 		.4byte	0xb7
+ 855 05d0 05       		.uleb128 0x5
+ 856 05d1 03       		.byte	0x3
+ 857 05d2 00000000 		.4byte	flagPoint1
+ 858 05d6 10       		.uleb128 0x10
+ 859 05d7 42010000 		.4byte	.LASF86
+ 860 05db 05       		.byte	0x5
+ 861 05dc 36       		.byte	0x36
+ 862 05dd B7000000 		.4byte	0xb7
+ 863 05e1 05       		.uleb128 0x5
+ 864 05e2 03       		.byte	0x3
+ 865 05e3 00000000 		.4byte	flagPoint2
+ 866 05e7 09       		.uleb128 0x9
+ 867 05e8 81000000 		.4byte	0x81
+ 868 05ec FD050000 		.4byte	0x5fd
+ 869 05f0 0A       		.uleb128 0xa
+ 870 05f1 C1000000 		.4byte	0xc1
+ 871 05f5 77       		.byte	0x77
+ 872 05f6 0A       		.uleb128 0xa
+ 873 05f7 C1000000 		.4byte	0xc1
+ 874 05fb 07       		.byte	0x7
+ 875 05fc 00       		.byte	0
+ 876 05fd 10       		.uleb128 0x10
+ 877 05fe 01020000 		.4byte	.LASF87
+ 878 0602 05       		.byte	0x5
+ 879 0603 37       		.byte	0x37
+ 880 0604 0E060000 		.4byte	0x60e
+ 881 0608 05       		.uleb128 0x5
+ 882 0609 03       		.byte	0x3
+ 883 060a 00000000 		.4byte	button
+ 884 060e 05       		.uleb128 0x5
+ 885 060f E7050000 		.4byte	0x5e7
+ 886 0613 10       		.uleb128 0x10
+ 887 0614 82050000 		.4byte	.LASF88
+ 888 0618 05       		.byte	0x5
+ 889 0619 38       		.byte	0x38
+ 890 061a B7000000 		.4byte	0xb7
+ 891 061e 05       		.uleb128 0x5
+ 892 061f 03       		.byte	0x3
+ 893 0620 00000000 		.4byte	productNumber
+ 894 0624 10       		.uleb128 0x10
+ 895 0625 31030000 		.4byte	.LASF89
+ 896 0629 05       		.byte	0x5
+ 897 062a 39       		.byte	0x39
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 18
+
+
+ 898 062b FC030000 		.4byte	0x3fc
+ 899 062f 05       		.uleb128 0x5
+ 900 0630 03       		.byte	0x3
+ 901 0631 00000000 		.4byte	presetFast
+ 902 0635 10       		.uleb128 0x10
+ 903 0636 08020000 		.4byte	.LASF90
+ 904 063a 05       		.byte	0x5
+ 905 063b 3A       		.byte	0x3a
+ 906 063c BC000000 		.4byte	0xbc
+ 907 0640 05       		.uleb128 0x5
+ 908 0641 03       		.byte	0x3
+ 909 0642 00000000 		.4byte	delayPicture1
+ 910 0646 10       		.uleb128 0x10
+ 911 0647 16020000 		.4byte	.LASF91
+ 912 064b 05       		.byte	0x5
+ 913 064c 3B       		.byte	0x3b
+ 914 064d BC000000 		.4byte	0xbc
+ 915 0651 05       		.uleb128 0x5
+ 916 0652 03       		.byte	0x3
+ 917 0653 00000000 		.4byte	delayPicture2
+ 918 0657 10       		.uleb128 0x10
+ 919 0658 B5030000 		.4byte	.LASF92
+ 920 065c 05       		.byte	0x5
+ 921 065d 3C       		.byte	0x3c
+ 922 065e B7000000 		.4byte	0xb7
+ 923 0662 05       		.uleb128 0x5
+ 924 0663 03       		.byte	0x3
+ 925 0664 00000000 		.4byte	ppux10
+ 926 0668 10       		.uleb128 0x10
+ 927 0669 2A010000 		.4byte	.LASF93
+ 928 066d 05       		.byte	0x5
+ 929 066e 3D       		.byte	0x3d
+ 930 066f B7000000 		.4byte	0xb7
+ 931 0673 05       		.uleb128 0x5
+ 932 0674 03       		.byte	0x3
+ 933 0675 00000000 		.4byte	decimalMoney
+ 934 0679 10       		.uleb128 0x10
+ 935 067a 83030000 		.4byte	.LASF94
+ 936 067e 05       		.byte	0x5
+ 937 067f 3E       		.byte	0x3e
+ 938 0680 B7000000 		.4byte	0xb7
+ 939 0684 05       		.uleb128 0x5
+ 940 0685 03       		.byte	0x3
+ 941 0686 00000000 		.4byte	decimalVolume
+ 942 068a 10       		.uleb128 0x10
+ 943 068b 63040000 		.4byte	.LASF95
+ 944 068f 05       		.byte	0x5
+ 945 0690 3F       		.byte	0x3f
+ 946 0691 9B060000 		.4byte	0x69b
+ 947 0695 05       		.uleb128 0x5
+ 948 0696 03       		.byte	0x3
+ 949 0697 00000000 		.4byte	symbols
+ 950 069b 05       		.uleb128 0x5
+ 951 069c 5A030000 		.4byte	0x35a
+ 952 06a0 09       		.uleb128 0x9
+ 953 06a1 81000000 		.4byte	0x81
+ 954 06a5 B0060000 		.4byte	0x6b0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 19
+
+
+ 955 06a9 0A       		.uleb128 0xa
+ 956 06aa C1000000 		.4byte	0xc1
+ 957 06ae 02       		.byte	0x2
+ 958 06af 00       		.byte	0
+ 959 06b0 10       		.uleb128 0x10
+ 960 06b1 1E040000 		.4byte	.LASF96
+ 961 06b5 05       		.byte	0x5
+ 962 06b6 40       		.byte	0x40
+ 963 06b7 C1060000 		.4byte	0x6c1
+ 964 06bb 05       		.uleb128 0x5
+ 965 06bc 03       		.byte	0x3
+ 966 06bd 00000000 		.4byte	time
+ 967 06c1 05       		.uleb128 0x5
+ 968 06c2 A0060000 		.4byte	0x6a0
+ 969 06c6 10       		.uleb128 0x10
+ 970 06c7 C3000000 		.4byte	.LASF97
+ 971 06cb 05       		.byte	0x5
+ 972 06cc 41       		.byte	0x41
+ 973 06cd D7060000 		.4byte	0x6d7
+ 974 06d1 05       		.uleb128 0x5
+ 975 06d2 03       		.byte	0x3
+ 976 06d3 00000000 		.4byte	date
+ 977 06d7 05       		.uleb128 0x5
+ 978 06d8 A0060000 		.4byte	0x6a0
+ 979 06dc 10       		.uleb128 0x10
+ 980 06dd 69030000 		.4byte	.LASF98
+ 981 06e1 05       		.byte	0x5
+ 982 06e2 42       		.byte	0x42
+ 983 06e3 ED060000 		.4byte	0x6ed
+ 984 06e7 05       		.uleb128 0x5
+ 985 06e8 03       		.byte	0x3
+ 986 06e9 00000000 		.4byte	screen
+ 987 06ed 05       		.uleb128 0x5
+ 988 06ee 5A030000 		.4byte	0x35a
+ 989 06f2 10       		.uleb128 0x10
+ 990 06f3 2C050000 		.4byte	.LASF99
+ 991 06f7 05       		.byte	0x5
+ 992 06f8 43       		.byte	0x43
+ 993 06f9 03070000 		.4byte	0x703
+ 994 06fd 05       		.uleb128 0x5
+ 995 06fe 03       		.byte	0x3
+ 996 06ff 00000000 		.4byte	residue
+ 997 0703 05       		.uleb128 0x5
+ 998 0704 A0030000 		.4byte	0x3a0
+ 999 0708 09       		.uleb128 0x9
+ 1000 0709 81000000 		.4byte	0x81
+ 1001 070d 18070000 		.4byte	0x718
+ 1002 0711 0A       		.uleb128 0xa
+ 1003 0712 C1000000 		.4byte	0xc1
+ 1004 0716 1D       		.byte	0x1d
+ 1005 0717 00       		.byte	0
+ 1006 0718 10       		.uleb128 0x10
+ 1007 0719 E7050000 		.4byte	.LASF100
+ 1008 071d 05       		.byte	0x5
+ 1009 071e 44       		.byte	0x44
+ 1010 071f 08070000 		.4byte	0x708
+ 1011 0723 05       		.uleb128 0x5
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 20
+
+
+ 1012 0724 03       		.byte	0x3
+ 1013 0725 00000000 		.4byte	temporal
+ 1014 0729 10       		.uleb128 0x10
+ 1015 072a FF030000 		.4byte	.LASF101
+ 1016 072e 05       		.byte	0x5
+ 1017 072f 45       		.byte	0x45
+ 1018 0730 B7000000 		.4byte	0xb7
+ 1019 0734 05       		.uleb128 0x5
+ 1020 0735 03       		.byte	0x3
+ 1021 0736 00000000 		.4byte	turn
+ 1022 073a 10       		.uleb128 0x10
+ 1023 073b 02010000 		.4byte	.LASF102
+ 1024 073f 05       		.byte	0x5
+ 1025 0740 46       		.byte	0x46
+ 1026 0741 4B070000 		.4byte	0x74b
+ 1027 0745 05       		.uleb128 0x5
+ 1028 0746 03       		.byte	0x3
+ 1029 0747 00000000 		.4byte	idSeller
+ 1030 074b 05       		.uleb128 0x5
+ 1031 074c 2A030000 		.4byte	0x32a
+ 1032 0750 10       		.uleb128 0x10
+ 1033 0751 DA050000 		.4byte	.LASF103
+ 1034 0755 05       		.byte	0x5
+ 1035 0756 47       		.byte	0x47
+ 1036 0757 B7000000 		.4byte	0xb7
+ 1037 075b 05       		.uleb128 0x5
+ 1038 075c 03       		.byte	0x3
+ 1039 075d 00000000 		.4byte	typeIdSeller
+ 1040 0761 09       		.uleb128 0x9
+ 1041 0762 81000000 		.4byte	0x81
+ 1042 0766 71070000 		.4byte	0x771
+ 1043 076a 0A       		.uleb128 0xa
+ 1044 076b C1000000 		.4byte	0xc1
+ 1045 076f 07       		.byte	0x7
+ 1046 0770 00       		.byte	0
+ 1047 0771 10       		.uleb128 0x10
+ 1048 0772 A8020000 		.4byte	.LASF104
+ 1049 0776 05       		.byte	0x5
+ 1050 0777 48       		.byte	0x48
+ 1051 0778 82070000 		.4byte	0x782
+ 1052 077c 05       		.uleb128 0x5
+ 1053 077d 03       		.byte	0x3
+ 1054 077e 00000000 		.4byte	passwordSeller
+ 1055 0782 05       		.uleb128 0x5
+ 1056 0783 61070000 		.4byte	0x761
+ 1057 0787 10       		.uleb128 0x10
+ 1058 0788 F0050000 		.4byte	.LASF105
+ 1059 078c 05       		.byte	0x5
+ 1060 078d 49       		.byte	0x49
+ 1061 078e B7000000 		.4byte	0xb7
+ 1062 0792 05       		.uleb128 0x5
+ 1063 0793 03       		.byte	0x3
+ 1064 0794 00000000 		.4byte	flagResetMux
+ 1065 0798 10       		.uleb128 0x10
+ 1066 0799 16050000 		.4byte	.LASF106
+ 1067 079d 05       		.byte	0x5
+ 1068 079e 85       		.byte	0x85
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 21
+
+
+ 1069 079f C8000000 		.4byte	0xc8
+ 1070 07a3 05       		.uleb128 0x5
+ 1071 07a4 03       		.byte	0x3
+ 1072 07a5 00000000 		.4byte	bufferLCD1
+ 1073 07a9 10       		.uleb128 0x10
+ 1074 07aa 21050000 		.4byte	.LASF107
+ 1075 07ae 05       		.byte	0x5
+ 1076 07af 86       		.byte	0x86
+ 1077 07b0 C8000000 		.4byte	0xc8
+ 1078 07b4 05       		.uleb128 0x5
+ 1079 07b5 03       		.byte	0x3
+ 1080 07b6 00000000 		.4byte	bufferLCD2
+ 1081 07ba 10       		.uleb128 0x10
+ 1082 07bb C8050000 		.4byte	.LASF108
+ 1083 07bf 05       		.byte	0x5
+ 1084 07c0 9F       		.byte	0x9f
+ 1085 07c1 B6040000 		.4byte	0x4b6
+ 1086 07c5 05       		.uleb128 0x5
+ 1087 07c6 03       		.byte	0x3
+ 1088 07c7 00000000 		.4byte	side
+ 1089 07cb 00       		.byte	0
+ 1090              		.section	.debug_abbrev,"",%progbits
+ 1091              	.Ldebug_abbrev0:
+ 1092 0000 01       		.uleb128 0x1
+ 1093 0001 11       		.uleb128 0x11
+ 1094 0002 01       		.byte	0x1
+ 1095 0003 25       		.uleb128 0x25
+ 1096 0004 0E       		.uleb128 0xe
+ 1097 0005 13       		.uleb128 0x13
+ 1098 0006 0B       		.uleb128 0xb
+ 1099 0007 03       		.uleb128 0x3
+ 1100 0008 0E       		.uleb128 0xe
+ 1101 0009 1B       		.uleb128 0x1b
+ 1102 000a 0E       		.uleb128 0xe
+ 1103 000b 55       		.uleb128 0x55
+ 1104 000c 17       		.uleb128 0x17
+ 1105 000d 11       		.uleb128 0x11
+ 1106 000e 01       		.uleb128 0x1
+ 1107 000f 10       		.uleb128 0x10
+ 1108 0010 17       		.uleb128 0x17
+ 1109 0011 00       		.byte	0
+ 1110 0012 00       		.byte	0
+ 1111 0013 02       		.uleb128 0x2
+ 1112 0014 24       		.uleb128 0x24
+ 1113 0015 00       		.byte	0
+ 1114 0016 0B       		.uleb128 0xb
+ 1115 0017 0B       		.uleb128 0xb
+ 1116 0018 3E       		.uleb128 0x3e
+ 1117 0019 0B       		.uleb128 0xb
+ 1118 001a 03       		.uleb128 0x3
+ 1119 001b 0E       		.uleb128 0xe
+ 1120 001c 00       		.byte	0
+ 1121 001d 00       		.byte	0
+ 1122 001e 03       		.uleb128 0x3
+ 1123 001f 16       		.uleb128 0x16
+ 1124 0020 00       		.byte	0
+ 1125 0021 03       		.uleb128 0x3
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 22
+
+
+ 1126 0022 0E       		.uleb128 0xe
+ 1127 0023 3A       		.uleb128 0x3a
+ 1128 0024 0B       		.uleb128 0xb
+ 1129 0025 3B       		.uleb128 0x3b
+ 1130 0026 0B       		.uleb128 0xb
+ 1131 0027 49       		.uleb128 0x49
+ 1132 0028 13       		.uleb128 0x13
+ 1133 0029 00       		.byte	0
+ 1134 002a 00       		.byte	0
+ 1135 002b 04       		.uleb128 0x4
+ 1136 002c 24       		.uleb128 0x24
+ 1137 002d 00       		.byte	0
+ 1138 002e 0B       		.uleb128 0xb
+ 1139 002f 0B       		.uleb128 0xb
+ 1140 0030 3E       		.uleb128 0x3e
+ 1141 0031 0B       		.uleb128 0xb
+ 1142 0032 03       		.uleb128 0x3
+ 1143 0033 08       		.uleb128 0x8
+ 1144 0034 00       		.byte	0
+ 1145 0035 00       		.byte	0
+ 1146 0036 05       		.uleb128 0x5
+ 1147 0037 35       		.uleb128 0x35
+ 1148 0038 00       		.byte	0
+ 1149 0039 49       		.uleb128 0x49
+ 1150 003a 13       		.uleb128 0x13
+ 1151 003b 00       		.byte	0
+ 1152 003c 00       		.byte	0
+ 1153 003d 06       		.uleb128 0x6
+ 1154 003e 13       		.uleb128 0x13
+ 1155 003f 01       		.byte	0x1
+ 1156 0040 03       		.uleb128 0x3
+ 1157 0041 0E       		.uleb128 0xe
+ 1158 0042 0B       		.uleb128 0xb
+ 1159 0043 05       		.uleb128 0x5
+ 1160 0044 3A       		.uleb128 0x3a
+ 1161 0045 0B       		.uleb128 0xb
+ 1162 0046 3B       		.uleb128 0x3b
+ 1163 0047 0B       		.uleb128 0xb
+ 1164 0048 01       		.uleb128 0x1
+ 1165 0049 13       		.uleb128 0x13
+ 1166 004a 00       		.byte	0
+ 1167 004b 00       		.byte	0
+ 1168 004c 07       		.uleb128 0x7
+ 1169 004d 0D       		.uleb128 0xd
+ 1170 004e 00       		.byte	0
+ 1171 004f 03       		.uleb128 0x3
+ 1172 0050 0E       		.uleb128 0xe
+ 1173 0051 3A       		.uleb128 0x3a
+ 1174 0052 0B       		.uleb128 0xb
+ 1175 0053 3B       		.uleb128 0x3b
+ 1176 0054 0B       		.uleb128 0xb
+ 1177 0055 49       		.uleb128 0x49
+ 1178 0056 13       		.uleb128 0x13
+ 1179 0057 38       		.uleb128 0x38
+ 1180 0058 0B       		.uleb128 0xb
+ 1181 0059 00       		.byte	0
+ 1182 005a 00       		.byte	0
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 23
+
+
+ 1183 005b 08       		.uleb128 0x8
+ 1184 005c 0D       		.uleb128 0xd
+ 1185 005d 00       		.byte	0
+ 1186 005e 03       		.uleb128 0x3
+ 1187 005f 0E       		.uleb128 0xe
+ 1188 0060 3A       		.uleb128 0x3a
+ 1189 0061 0B       		.uleb128 0xb
+ 1190 0062 3B       		.uleb128 0x3b
+ 1191 0063 0B       		.uleb128 0xb
+ 1192 0064 49       		.uleb128 0x49
+ 1193 0065 13       		.uleb128 0x13
+ 1194 0066 38       		.uleb128 0x38
+ 1195 0067 05       		.uleb128 0x5
+ 1196 0068 00       		.byte	0
+ 1197 0069 00       		.byte	0
+ 1198 006a 09       		.uleb128 0x9
+ 1199 006b 01       		.uleb128 0x1
+ 1200 006c 01       		.byte	0x1
+ 1201 006d 49       		.uleb128 0x49
+ 1202 006e 13       		.uleb128 0x13
+ 1203 006f 01       		.uleb128 0x1
+ 1204 0070 13       		.uleb128 0x13
+ 1205 0071 00       		.byte	0
+ 1206 0072 00       		.byte	0
+ 1207 0073 0A       		.uleb128 0xa
+ 1208 0074 21       		.uleb128 0x21
+ 1209 0075 00       		.byte	0
+ 1210 0076 49       		.uleb128 0x49
+ 1211 0077 13       		.uleb128 0x13
+ 1212 0078 2F       		.uleb128 0x2f
+ 1213 0079 0B       		.uleb128 0xb
+ 1214 007a 00       		.byte	0
+ 1215 007b 00       		.byte	0
+ 1216 007c 0B       		.uleb128 0xb
+ 1217 007d 0D       		.uleb128 0xd
+ 1218 007e 00       		.byte	0
+ 1219 007f 03       		.uleb128 0x3
+ 1220 0080 08       		.uleb128 0x8
+ 1221 0081 3A       		.uleb128 0x3a
+ 1222 0082 0B       		.uleb128 0xb
+ 1223 0083 3B       		.uleb128 0x3b
+ 1224 0084 0B       		.uleb128 0xb
+ 1225 0085 49       		.uleb128 0x49
+ 1226 0086 13       		.uleb128 0x13
+ 1227 0087 38       		.uleb128 0x38
+ 1228 0088 0B       		.uleb128 0xb
+ 1229 0089 00       		.byte	0
+ 1230 008a 00       		.byte	0
+ 1231 008b 0C       		.uleb128 0xc
+ 1232 008c 0D       		.uleb128 0xd
+ 1233 008d 00       		.byte	0
+ 1234 008e 03       		.uleb128 0x3
+ 1235 008f 08       		.uleb128 0x8
+ 1236 0090 3A       		.uleb128 0x3a
+ 1237 0091 0B       		.uleb128 0xb
+ 1238 0092 3B       		.uleb128 0x3b
+ 1239 0093 0B       		.uleb128 0xb
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 24
+
+
+ 1240 0094 49       		.uleb128 0x49
+ 1241 0095 13       		.uleb128 0x13
+ 1242 0096 38       		.uleb128 0x38
+ 1243 0097 05       		.uleb128 0x5
+ 1244 0098 00       		.byte	0
+ 1245 0099 00       		.byte	0
+ 1246 009a 0D       		.uleb128 0xd
+ 1247 009b 2E       		.uleb128 0x2e
+ 1248 009c 01       		.byte	0x1
+ 1249 009d 3F       		.uleb128 0x3f
+ 1250 009e 19       		.uleb128 0x19
+ 1251 009f 03       		.uleb128 0x3
+ 1252 00a0 0E       		.uleb128 0xe
+ 1253 00a1 3A       		.uleb128 0x3a
+ 1254 00a2 0B       		.uleb128 0xb
+ 1255 00a3 3B       		.uleb128 0x3b
+ 1256 00a4 0B       		.uleb128 0xb
+ 1257 00a5 49       		.uleb128 0x49
+ 1258 00a6 13       		.uleb128 0x13
+ 1259 00a7 11       		.uleb128 0x11
+ 1260 00a8 01       		.uleb128 0x1
+ 1261 00a9 12       		.uleb128 0x12
+ 1262 00aa 06       		.uleb128 0x6
+ 1263 00ab 40       		.uleb128 0x40
+ 1264 00ac 18       		.uleb128 0x18
+ 1265 00ad 9642     		.uleb128 0x2116
+ 1266 00af 19       		.uleb128 0x19
+ 1267 00b0 01       		.uleb128 0x1
+ 1268 00b1 13       		.uleb128 0x13
+ 1269 00b2 00       		.byte	0
+ 1270 00b3 00       		.byte	0
+ 1271 00b4 0E       		.uleb128 0xe
+ 1272 00b5 34       		.uleb128 0x34
+ 1273 00b6 00       		.byte	0
+ 1274 00b7 03       		.uleb128 0x3
+ 1275 00b8 0E       		.uleb128 0xe
+ 1276 00b9 3A       		.uleb128 0x3a
+ 1277 00ba 0B       		.uleb128 0xb
+ 1278 00bb 3B       		.uleb128 0x3b
+ 1279 00bc 0B       		.uleb128 0xb
+ 1280 00bd 49       		.uleb128 0x49
+ 1281 00be 13       		.uleb128 0x13
+ 1282 00bf 02       		.uleb128 0x2
+ 1283 00c0 18       		.uleb128 0x18
+ 1284 00c1 00       		.byte	0
+ 1285 00c2 00       		.byte	0
+ 1286 00c3 0F       		.uleb128 0xf
+ 1287 00c4 34       		.uleb128 0x34
+ 1288 00c5 00       		.byte	0
+ 1289 00c6 03       		.uleb128 0x3
+ 1290 00c7 0E       		.uleb128 0xe
+ 1291 00c8 3A       		.uleb128 0x3a
+ 1292 00c9 0B       		.uleb128 0xb
+ 1293 00ca 3B       		.uleb128 0x3b
+ 1294 00cb 05       		.uleb128 0x5
+ 1295 00cc 49       		.uleb128 0x49
+ 1296 00cd 13       		.uleb128 0x13
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 25
+
+
+ 1297 00ce 3F       		.uleb128 0x3f
+ 1298 00cf 19       		.uleb128 0x19
+ 1299 00d0 3C       		.uleb128 0x3c
+ 1300 00d1 19       		.uleb128 0x19
+ 1301 00d2 00       		.byte	0
+ 1302 00d3 00       		.byte	0
+ 1303 00d4 10       		.uleb128 0x10
+ 1304 00d5 34       		.uleb128 0x34
+ 1305 00d6 00       		.byte	0
+ 1306 00d7 03       		.uleb128 0x3
+ 1307 00d8 0E       		.uleb128 0xe
+ 1308 00d9 3A       		.uleb128 0x3a
+ 1309 00da 0B       		.uleb128 0xb
+ 1310 00db 3B       		.uleb128 0x3b
+ 1311 00dc 0B       		.uleb128 0xb
+ 1312 00dd 49       		.uleb128 0x49
+ 1313 00de 13       		.uleb128 0x13
+ 1314 00df 3F       		.uleb128 0x3f
+ 1315 00e0 19       		.uleb128 0x19
+ 1316 00e1 02       		.uleb128 0x2
+ 1317 00e2 18       		.uleb128 0x18
+ 1318 00e3 00       		.byte	0
+ 1319 00e4 00       		.byte	0
+ 1320 00e5 00       		.byte	0
+ 1321              		.section	.debug_aranges,"",%progbits
+ 1322 0000 1C000000 		.4byte	0x1c
+ 1323 0004 0200     		.2byte	0x2
+ 1324 0006 00000000 		.4byte	.Ldebug_info0
+ 1325 000a 04       		.byte	0x4
+ 1326 000b 00       		.byte	0
+ 1327 000c 0000     		.2byte	0
+ 1328 000e 0000     		.2byte	0
+ 1329 0010 00000000 		.4byte	.LFB56
+ 1330 0014 68000000 		.4byte	.LFE56-.LFB56
+ 1331 0018 00000000 		.4byte	0
+ 1332 001c 00000000 		.4byte	0
+ 1333              		.section	.debug_ranges,"",%progbits
+ 1334              	.Ldebug_ranges0:
+ 1335 0000 00000000 		.4byte	.LFB56
+ 1336 0004 68000000 		.4byte	.LFE56
+ 1337 0008 00000000 		.4byte	0
+ 1338 000c 00000000 		.4byte	0
+ 1339              		.section	.debug_line,"",%progbits
+ 1340              	.Ldebug_line0:
+ 1341 0000 7F010000 		.section	.debug_str,"MS",%progbits,1
+ 1341      02005D01 
+ 1341      00000201 
+ 1341      FB0E0D00 
+ 1341      01010101 
+ 1342              	.LASF52:
+ 1343 0000 6D6F6E65 		.ascii	"moneyQuota\000"
+ 1343      7951756F 
+ 1343      746100
+ 1344              	.LASF32:
+ 1345 000b 70726F64 		.ascii	"productType\000"
+ 1345      75637454 
+ 1345      79706500 
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 26
+
+
+ 1346              	.LASF5:
+ 1347 0017 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1347      20756E73 
+ 1347      69676E65 
+ 1347      6420696E 
+ 1347      7400
+ 1348              	.LASF34:
+ 1349 0029 64617465 		.ascii	"dateLiftHandle\000"
+ 1349      4C696674 
+ 1349      48616E64 
+ 1349      6C6500
+ 1350              	.LASF19:
+ 1351 0038 69645365 		.ascii	"idSerial\000"
+ 1351      7269616C 
+ 1351      00
+ 1352              	.LASF2:
+ 1353 0041 73686F72 		.ascii	"short int\000"
+ 1353      7420696E 
+ 1353      7400
+ 1354              	.LASF44:
+ 1355 004b 6C696365 		.ascii	"licenceSale\000"
+ 1355      6E636553 
+ 1355      616C6500 
+ 1356              	.LASF84:
+ 1357 0057 6E756D62 		.ascii	"numberKeys2\000"
+ 1357      65724B65 
+ 1357      79733200 
+ 1358              	.LASF17:
+ 1359 0063 73697A65 		.ascii	"sizetype\000"
+ 1359      74797065 
+ 1359      00
+ 1360              	.LASF33:
+ 1361 006c 73746174 		.ascii	"stateMux\000"
+ 1361      654D7578 
+ 1361      00
+ 1362              	.LASF28:
+ 1363 0075 73616C65 		.ascii	"saleType\000"
+ 1363      54797065 
+ 1363      00
+ 1364              	.LASF64:
+ 1365 007e 7072696E 		.ascii	"printers\000"
+ 1365      74657273 
+ 1365      00
+ 1366              	.LASF23:
+ 1367 0087 73657269 		.ascii	"serialSelectedSale\000"
+ 1367      616C5365 
+ 1367      6C656374 
+ 1367      65645361 
+ 1367      6C6500
+ 1368              	.LASF82:
+ 1369 009a 69704164 		.ascii	"ipAdress\000"
+ 1369      72657373 
+ 1369      00
+ 1370              	.LASF78:
+ 1371 00a3 636F756E 		.ascii	"countBeagleTX\000"
+ 1371      74426561 
+ 1371      676C6554 
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 27
+
+
+ 1371      5800
+ 1372              	.LASF54:
+ 1373 00b1 70707551 		.ascii	"ppuQuota\000"
+ 1373      756F7461 
+ 1373      00
+ 1374              	.LASF67:
+ 1375 00ba 706F7369 		.ascii	"position\000"
+ 1375      74696F6E 
+ 1375      00
+ 1376              	.LASF97:
+ 1377 00c3 64617465 		.ascii	"date\000"
+ 1377      00
+ 1378              	.LASF31:
+ 1379 00c8 70726573 		.ascii	"presetValue\000"
+ 1379      65745661 
+ 1379      6C756500 
+ 1380              	.LASF20:
+ 1381 00d4 77617954 		.ascii	"wayToPay\000"
+ 1381      6F506179 
+ 1381      00
+ 1382              	.LASF29:
+ 1383 00dd 73616C65 		.ascii	"salePerform\000"
+ 1383      50657266 
+ 1383      6F726D00 
+ 1384              	.LASF45:
+ 1385 00e9 6D696C65 		.ascii	"mileageSale\000"
+ 1385      61676553 
+ 1385      616C6500 
+ 1386              	.LASF18:
+ 1387 00f5 69645479 		.ascii	"idType\000"
+ 1387      706500
+ 1388              	.LASF11:
+ 1389 00fc 75696E74 		.ascii	"uint8\000"
+ 1389      3800
+ 1390              	.LASF102:
+ 1391 0102 69645365 		.ascii	"idSeller\000"
+ 1391      6C6C6572 
+ 1391      00
+ 1392              	.LASF0:
+ 1393 010b 7369676E 		.ascii	"signed char\000"
+ 1393      65642063 
+ 1393      68617200 
+ 1394              	.LASF68:
+ 1395 0117 746F7461 		.ascii	"totalsHandle\000"
+ 1395      6C734861 
+ 1395      6E646C65 
+ 1395      00
+ 1396              	.LASF13:
+ 1397 0124 666C6F61 		.ascii	"float\000"
+ 1397      7400
+ 1398              	.LASF93:
+ 1399 012a 64656369 		.ascii	"decimalMoney\000"
+ 1399      6D616C4D 
+ 1399      6F6E6579 
+ 1399      00
+ 1400              	.LASF85:
+ 1401 0137 666C6167 		.ascii	"flagPoint1\000"
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 28
+
+
+ 1401      506F696E 
+ 1401      743100
+ 1402              	.LASF86:
+ 1403 0142 666C6167 		.ascii	"flagPoint2\000"
+ 1403      506F696E 
+ 1403      743200
+ 1404              	.LASF6:
+ 1405 014d 6C6F6E67 		.ascii	"long long int\000"
+ 1405      206C6F6E 
+ 1405      6720696E 
+ 1405      7400
+ 1406              	.LASF24:
+ 1407 015b 6B657962 		.ascii	"keyboardWayToPay\000"
+ 1407      6F617264 
+ 1407      57617954 
+ 1407      6F506179 
+ 1407      00
+ 1408              	.LASF109:
+ 1409 016c 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1409      4320342E 
+ 1409      392E3320 
+ 1409      32303135 
+ 1409      30333033 
+ 1410 019f 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 1410      20726576 
+ 1410      6973696F 
+ 1410      6E203232 
+ 1410      31323230 
+ 1411 01d2 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 1411      66756E63 
+ 1411      74696F6E 
+ 1411      2D736563 
+ 1411      74696F6E 
+ 1412              	.LASF15:
+ 1413 01fa 75696E74 		.ascii	"uint64\000"
+ 1413      363400
+ 1414              	.LASF87:
+ 1415 0201 62757474 		.ascii	"button\000"
+ 1415      6F6E00
+ 1416              	.LASF90:
+ 1417 0208 64656C61 		.ascii	"delayPicture1\000"
+ 1417      79506963 
+ 1417      74757265 
+ 1417      3100
+ 1418              	.LASF91:
+ 1419 0216 64656C61 		.ascii	"delayPicture2\000"
+ 1419      79506963 
+ 1419      74757265 
+ 1419      3200
+ 1420              	.LASF49:
+ 1421 0224 666C6167 		.ascii	"flagLiftHandle\000"
+ 1421      4C696674 
+ 1421      48616E64 
+ 1421      6C6500
+ 1422              	.LASF39:
+ 1423 0233 746F7461 		.ascii	"totalVolumePrevious\000"
+ 1423      6C566F6C 
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 29
+
+
+ 1423      756D6550 
+ 1423      72657669 
+ 1423      6F757300 
+ 1424              	.LASF26:
+ 1425 0247 76616C75 		.ascii	"valueKeys\000"
+ 1425      654B6579 
+ 1425      7300
+ 1426              	.LASF110:
+ 1427 0251 2E5C636F 		.ascii	".\\codebar.c\000"
+ 1427      64656261 
+ 1427      722E6300 
+ 1428              	.LASF81:
+ 1429 025d 64696769 		.ascii	"digits\000"
+ 1429      747300
+ 1430              	.LASF50:
+ 1431 0264 666C6167 		.ascii	"flagEndSale\000"
+ 1431      456E6453 
+ 1431      616C6500 
+ 1432              	.LASF69:
+ 1433 0270 70707541 		.ascii	"ppuAuthorized\000"
+ 1433      7574686F 
+ 1433      72697A65 
+ 1433      6400
+ 1434              	.LASF41:
+ 1435 027e 746F7461 		.ascii	"totalMoneyAfter\000"
+ 1435      6C4D6F6E 
+ 1435      65794166 
+ 1435      74657200 
+ 1436              	.LASF1:
+ 1437 028e 756E7369 		.ascii	"unsigned char\000"
+ 1437      676E6564 
+ 1437      20636861 
+ 1437      7200
+ 1438              	.LASF73:
+ 1439 029c 70726F64 		.ascii	"productSale\000"
+ 1439      75637453 
+ 1439      616C6500 
+ 1440              	.LASF104:
+ 1441 02a8 70617373 		.ascii	"passwordSeller\000"
+ 1441      776F7264 
+ 1441      53656C6C 
+ 1441      657200
+ 1442              	.LASF111:
+ 1443 02b7 433A5C55 		.ascii	"C:\\Users\\Proyectos_Hardware\\Dropbox\\Proyecto Co"
+ 1443      73657273 
+ 1443      5C50726F 
+ 1443      79656374 
+ 1443      6F735F48 
+ 1444 02e6 6E74726F 		.ascii	"ntroller\\Mux Advance Encore V5_00\\MuxAdvance.cyds"
+ 1444      6C6C6572 
+ 1444      5C4D7578 
+ 1444      20416476 
+ 1444      616E6365 
+ 1445 0317 6E00     		.ascii	"n\000"
+ 1446              	.LASF30:
+ 1447 0319 70726573 		.ascii	"presetType\000"
+ 1447      65745479 
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 30
+
+
+ 1447      706500
+ 1448              	.LASF47:
+ 1449 0324 666C6167 		.ascii	"flagKeyboard\000"
+ 1449      4B657962 
+ 1449      6F617264 
+ 1449      00
+ 1450              	.LASF89:
+ 1451 0331 70726573 		.ascii	"presetFast\000"
+ 1451      65744661 
+ 1451      737400
+ 1452              	.LASF57:
+ 1453 033c 7175616E 		.ascii	"quantityMarket\000"
+ 1453      74697479 
+ 1453      4D61726B 
+ 1453      657400
+ 1454              	.LASF22:
+ 1455 034b 6D6F6E65 		.ascii	"moneySelectedSale\000"
+ 1455      7953656C 
+ 1455      65637465 
+ 1455      6453616C 
+ 1455      6500
+ 1456              	.LASF83:
+ 1457 035d 6E756D62 		.ascii	"numberKeys1\000"
+ 1457      65724B65 
+ 1457      79733100 
+ 1458              	.LASF98:
+ 1459 0369 73637265 		.ascii	"screen\000"
+ 1459      656E00
+ 1460              	.LASF58:
+ 1461 0370 7175616E 		.ascii	"quantAvailableMark\000"
+ 1461      74417661 
+ 1461      696C6162 
+ 1461      6C654D61 
+ 1461      726B00
+ 1462              	.LASF94:
+ 1463 0383 64656369 		.ascii	"decimalVolume\000"
+ 1463      6D616C56 
+ 1463      6F6C756D 
+ 1463      6500
+ 1464              	.LASF55:
+ 1465 0391 73657269 		.ascii	"serialMarket\000"
+ 1465      616C4D61 
+ 1465      726B6574 
+ 1465      00
+ 1466              	.LASF7:
+ 1467 039e 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1467      206C6F6E 
+ 1467      6720756E 
+ 1467      7369676E 
+ 1467      65642069 
+ 1468              	.LASF92:
+ 1469 03b5 70707578 		.ascii	"ppux10\000"
+ 1469      313000
+ 1470              	.LASF38:
+ 1471 03bc 746F7461 		.ascii	"totalMoneyPrevious\000"
+ 1471      6C4D6F6E 
+ 1471      65795072 
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 31
+
+
+ 1471      6576696F 
+ 1471      757300
+ 1472              	.LASF8:
+ 1473 03cf 756E7369 		.ascii	"unsigned int\000"
+ 1473      676E6564 
+ 1473      20696E74 
+ 1473      00
+ 1474              	.LASF72:
+ 1475 03dc 70707553 		.ascii	"ppuSale\000"
+ 1475      616C6500 
+ 1476              	.LASF46:
+ 1477 03e4 6964656E 		.ascii	"identySale\000"
+ 1477      74795361 
+ 1477      6C6500
+ 1478              	.LASF60:
+ 1479 03ef 70726963 		.ascii	"priceUnitMarket\000"
+ 1479      65556E69 
+ 1479      744D6172 
+ 1479      6B657400 
+ 1480              	.LASF101:
+ 1481 03ff 7475726E 		.ascii	"turn\000"
+ 1481      00
+ 1482              	.LASF42:
+ 1483 0404 746F7461 		.ascii	"totalVolumeAfter\000"
+ 1483      6C566F6C 
+ 1483      756D6541 
+ 1483      66746572 
+ 1483      00
+ 1484              	.LASF79:
+ 1485 0415 666C6F77 		.ascii	"flowLCD1\000"
+ 1485      4C434431 
+ 1485      00
+ 1486              	.LASF96:
+ 1487 041e 74696D65 		.ascii	"time\000"
+ 1487      00
+ 1488              	.LASF56:
+ 1489 0423 70726F64 		.ascii	"productMarket\000"
+ 1489      7563744D 
+ 1489      61726B65 
+ 1489      7400
+ 1490              	.LASF71:
+ 1491 0431 766F6C75 		.ascii	"volumeSale\000"
+ 1491      6D655361 
+ 1491      6C6500
+ 1492              	.LASF53:
+ 1493 043c 766F6C75 		.ascii	"volumeQuota\000"
+ 1493      6D655175 
+ 1493      6F746100 
+ 1494              	.LASF48:
+ 1495 0448 666C6167 		.ascii	"flagPayment\000"
+ 1495      5061796D 
+ 1495      656E7400 
+ 1496              	.LASF70:
+ 1497 0454 6D6F6E65 		.ascii	"moneySale\000"
+ 1497      7953616C 
+ 1497      6500
+ 1498              	.LASF16:
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 32
+
+
+ 1499 045e 63686172 		.ascii	"char\000"
+ 1499      00
+ 1500              	.LASF95:
+ 1501 0463 73796D62 		.ascii	"symbols\000"
+ 1501      6F6C7300 
+ 1502              	.LASF4:
+ 1503 046b 6C6F6E67 		.ascii	"long int\000"
+ 1503      20696E74 
+ 1503      00
+ 1504              	.LASF10:
+ 1505 0474 696E7433 		.ascii	"int32_t\000"
+ 1505      325F7400 
+ 1506              	.LASF36:
+ 1507 047c 74696D65 		.ascii	"timeLiftHandle\000"
+ 1507      4C696674 
+ 1507      48616E64 
+ 1507      6C6500
+ 1508              	.LASF43:
+ 1509 048b 746F7461 		.ascii	"totalPPUAfter\000"
+ 1509      6C505055 
+ 1509      41667465 
+ 1509      7200
+ 1510              	.LASF80:
+ 1511 0499 666C6F77 		.ascii	"flowLCD2\000"
+ 1511      4C434432 
+ 1511      00
+ 1512              	.LASF112:
+ 1513 04a2 73657269 		.ascii	"serial_codebar\000"
+ 1513      616C5F63 
+ 1513      6F646562 
+ 1513      617200
+ 1514              	.LASF35:
+ 1515 04b1 64617465 		.ascii	"dateDownHandle\000"
+ 1515      446F776E 
+ 1515      48616E64 
+ 1515      6C6500
+ 1516              	.LASF74:
+ 1517 04c0 70756D70 		.ascii	"pump\000"
+ 1517      00
+ 1518              	.LASF63:
+ 1519 04c5 70726963 		.ascii	"priceConsign\000"
+ 1519      65436F6E 
+ 1519      7369676E 
+ 1519      00
+ 1520              	.LASF66:
+ 1521 04d2 62756666 		.ascii	"buffer\000"
+ 1521      657200
+ 1522              	.LASF3:
+ 1523 04d9 73686F72 		.ascii	"short unsigned int\000"
+ 1523      7420756E 
+ 1523      7369676E 
+ 1523      65642069 
+ 1523      6E7400
+ 1524              	.LASF12:
+ 1525 04ec 75696E74 		.ascii	"uint32\000"
+ 1525      333200
+ 1526              	.LASF27:
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 33
+
+
+ 1527 04f3 76656869 		.ascii	"vehicleType\000"
+ 1527      636C6554 
+ 1527      79706500 
+ 1528              	.LASF51:
+ 1529 04ff 6D657373 		.ascii	"message\000"
+ 1529      61676500 
+ 1530              	.LASF37:
+ 1531 0507 74696D65 		.ascii	"timeDownHandle\000"
+ 1531      446F776E 
+ 1531      48616E64 
+ 1531      6C6500
+ 1532              	.LASF106:
+ 1533 0516 62756666 		.ascii	"bufferLCD1\000"
+ 1533      65724C43 
+ 1533      443100
+ 1534              	.LASF107:
+ 1535 0521 62756666 		.ascii	"bufferLCD2\000"
+ 1535      65724C43 
+ 1535      443200
+ 1536              	.LASF99:
+ 1537 052c 72657369 		.ascii	"residue\000"
+ 1537      64756500 
+ 1538              	.LASF62:
+ 1539 0534 666C6167 		.ascii	"flagProductmarket\000"
+ 1539      50726F64 
+ 1539      7563746D 
+ 1539      61726B65 
+ 1539      7400
+ 1540              	.LASF113:
+ 1541 0546 73697A65 		.ascii	"size\000"
+ 1541      00
+ 1542              	.LASF65:
+ 1543 054b 666C6167 		.ascii	"flagChangePPU\000"
+ 1543      4368616E 
+ 1543      67655050 
+ 1543      5500
+ 1544              	.LASF21:
+ 1545 0559 73656C65 		.ascii	"selectedSale\000"
+ 1545      63746564 
+ 1545      53616C65 
+ 1545      00
+ 1546              	.LASF9:
+ 1547 0566 5F5F696E 		.ascii	"__int32_t\000"
+ 1547      7433325F 
+ 1547      7400
+ 1548              	.LASF25:
+ 1549 0570 61757468 		.ascii	"authorizationFlag\000"
+ 1549      6F72697A 
+ 1549      6174696F 
+ 1549      6E466C61 
+ 1549      6700
+ 1550              	.LASF88:
+ 1551 0582 70726F64 		.ascii	"productNumber\000"
+ 1551      7563744E 
+ 1551      756D6265 
+ 1551      7200
+ 1552              	.LASF76:
+ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccjmJYen.s 			page 34
+
+
+ 1553 0590 636F756E 		.ascii	"countAnimation1\000"
+ 1553      74416E69 
+ 1553      6D617469 
+ 1553      6F6E3100 
+ 1554              	.LASF77:
+ 1555 05a0 636F756E 		.ascii	"countAnimation2\000"
+ 1555      74416E69 
+ 1555      6D617469 
+ 1555      6F6E3200 
+ 1556              	.LASF40:
+ 1557 05b0 746F7461 		.ascii	"totalPPUPrevious\000"
+ 1557      6C505055 
+ 1557      50726576 
+ 1557      696F7573 
+ 1557      00
+ 1558              	.LASF14:
+ 1559 05c1 646F7562 		.ascii	"double\000"
+ 1559      6C6500
+ 1560              	.LASF108:
+ 1561 05c8 73696465 		.ascii	"side\000"
+ 1561      00
+ 1562              	.LASF75:
+ 1563 05cd 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1563      52784275 
+ 1563      66666572 
+ 1563      00
+ 1564              	.LASF103:
+ 1565 05da 74797065 		.ascii	"typeIdSeller\000"
+ 1565      49645365 
+ 1565      6C6C6572 
+ 1565      00
+ 1566              	.LASF100:
+ 1567 05e7 74656D70 		.ascii	"temporal\000"
+ 1567      6F72616C 
+ 1567      00
+ 1568              	.LASF105:
+ 1569 05f0 666C6167 		.ascii	"flagResetMux\000"
+ 1569      52657365 
+ 1569      744D7578 
+ 1569      00
+ 1570              	.LASF59:
+ 1571 05fd 70726963 		.ascii	"priceTotalMarket\000"
+ 1571      65546F74 
+ 1571      616C4D61 
+ 1571      726B6574 
+ 1571      00
+ 1572              	.LASF61:
+ 1573 060e 746F7461 		.ascii	"totalMarket\000"
+ 1573      6C4D6172 
+ 1573      6B657400 
+ 1574              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
