@@ -36,7 +36,7 @@ extern uint8 Waitable_4_initVar;
 *           Parameter Defaults
 **************************************/
 
-#define Waitable_4_Resolution                 8u
+#define Waitable_4_Resolution                 16u
 #define Waitable_4_UsingFixedFunction         1u
 #define Waitable_4_UsingHWCaptureCounter      0u
 #define Waitable_4_SoftwareCaptureMode        0u
@@ -69,7 +69,7 @@ typedef struct
     uint8 TimerEnableState;
     #if(!Waitable_4_UsingFixedFunction)
 
-        uint8 TimerUdb;
+        uint16 TimerUdb;
         uint8 InterruptMaskValue;
         #if (Waitable_4_UsingHWCaptureCounter)
             uint8 TimerCaptureCounter;
@@ -100,11 +100,11 @@ uint8   Waitable_4_ReadStatusRegister(void) ;
     void    Waitable_4_WriteControlRegister(uint8 control) ;
 #endif /* (!Waitable_4_UDB_CONTROL_REG_REMOVED) */
 
-uint8  Waitable_4_ReadPeriod(void) ;
-void    Waitable_4_WritePeriod(uint8 period) ;
-uint8  Waitable_4_ReadCounter(void) ;
-void    Waitable_4_WriteCounter(uint8 counter) ;
-uint8  Waitable_4_ReadCapture(void) ;
+uint16  Waitable_4_ReadPeriod(void) ;
+void    Waitable_4_WritePeriod(uint16 period) ;
+uint16  Waitable_4_ReadCounter(void) ;
+void    Waitable_4_WriteCounter(uint16 counter) ;
+uint16  Waitable_4_ReadCapture(void) ;
 void    Waitable_4_SoftwareCapture(void) ;
 
 #if(!Waitable_4_UsingFixedFunction) /* UDB Prototypes */
@@ -168,7 +168,7 @@ void Waitable_4_Wakeup(void)        ;
 *    Initialial Parameter Constants
 ***************************************/
 
-#define Waitable_4_INIT_PERIOD             19u
+#define Waitable_4_INIT_PERIOD             249u
 #define Waitable_4_INIT_CAPTURE_MODE       ((uint8)((uint8)0u << Waitable_4_CTRL_CAP_MODE_SHIFT))
 #define Waitable_4_INIT_TRIGGER_MODE       ((uint8)((uint8)0u << Waitable_4_CTRL_TRIG_MODE_SHIFT))
 #if (Waitable_4_UsingFixedFunction)
@@ -313,54 +313,54 @@ void Waitable_4_Wakeup(void)        ;
     #define Waitable_4_CONTROL             (* (reg8 *) Waitable_4_TimerUDB_sCTRLReg_SyncCtl_ctrlreg__CONTROL_REG )
     
     #if(Waitable_4_Resolution <= 8u) /* 8-bit Timer */
-        #define Waitable_4_CAPTURE_LSB         (* (reg8 *) Waitable_4_TimerUDB_sT8_timerdp_u0__F0_REG )
-        #define Waitable_4_CAPTURE_LSB_PTR       ((reg8 *) Waitable_4_TimerUDB_sT8_timerdp_u0__F0_REG )
-        #define Waitable_4_PERIOD_LSB          (* (reg8 *) Waitable_4_TimerUDB_sT8_timerdp_u0__D0_REG )
-        #define Waitable_4_PERIOD_LSB_PTR        ((reg8 *) Waitable_4_TimerUDB_sT8_timerdp_u0__D0_REG )
-        #define Waitable_4_COUNTER_LSB         (* (reg8 *) Waitable_4_TimerUDB_sT8_timerdp_u0__A0_REG )
-        #define Waitable_4_COUNTER_LSB_PTR       ((reg8 *) Waitable_4_TimerUDB_sT8_timerdp_u0__A0_REG )
+        #define Waitable_4_CAPTURE_LSB         (* (reg8 *) Waitable_4_TimerUDB_sT16_timerdp_u0__F0_REG )
+        #define Waitable_4_CAPTURE_LSB_PTR       ((reg8 *) Waitable_4_TimerUDB_sT16_timerdp_u0__F0_REG )
+        #define Waitable_4_PERIOD_LSB          (* (reg8 *) Waitable_4_TimerUDB_sT16_timerdp_u0__D0_REG )
+        #define Waitable_4_PERIOD_LSB_PTR        ((reg8 *) Waitable_4_TimerUDB_sT16_timerdp_u0__D0_REG )
+        #define Waitable_4_COUNTER_LSB         (* (reg8 *) Waitable_4_TimerUDB_sT16_timerdp_u0__A0_REG )
+        #define Waitable_4_COUNTER_LSB_PTR       ((reg8 *) Waitable_4_TimerUDB_sT16_timerdp_u0__A0_REG )
     #elif(Waitable_4_Resolution <= 16u) /* 8-bit Timer */
         #if(CY_PSOC3) /* 8-bit addres space */
-            #define Waitable_4_CAPTURE_LSB         (* (reg16 *) Waitable_4_TimerUDB_sT8_timerdp_u0__F0_REG )
-            #define Waitable_4_CAPTURE_LSB_PTR       ((reg16 *) Waitable_4_TimerUDB_sT8_timerdp_u0__F0_REG )
-            #define Waitable_4_PERIOD_LSB          (* (reg16 *) Waitable_4_TimerUDB_sT8_timerdp_u0__D0_REG )
-            #define Waitable_4_PERIOD_LSB_PTR        ((reg16 *) Waitable_4_TimerUDB_sT8_timerdp_u0__D0_REG )
-            #define Waitable_4_COUNTER_LSB         (* (reg16 *) Waitable_4_TimerUDB_sT8_timerdp_u0__A0_REG )
-            #define Waitable_4_COUNTER_LSB_PTR       ((reg16 *) Waitable_4_TimerUDB_sT8_timerdp_u0__A0_REG )
+            #define Waitable_4_CAPTURE_LSB         (* (reg16 *) Waitable_4_TimerUDB_sT16_timerdp_u0__F0_REG )
+            #define Waitable_4_CAPTURE_LSB_PTR       ((reg16 *) Waitable_4_TimerUDB_sT16_timerdp_u0__F0_REG )
+            #define Waitable_4_PERIOD_LSB          (* (reg16 *) Waitable_4_TimerUDB_sT16_timerdp_u0__D0_REG )
+            #define Waitable_4_PERIOD_LSB_PTR        ((reg16 *) Waitable_4_TimerUDB_sT16_timerdp_u0__D0_REG )
+            #define Waitable_4_COUNTER_LSB         (* (reg16 *) Waitable_4_TimerUDB_sT16_timerdp_u0__A0_REG )
+            #define Waitable_4_COUNTER_LSB_PTR       ((reg16 *) Waitable_4_TimerUDB_sT16_timerdp_u0__A0_REG )
         #else /* 16-bit address space */
-            #define Waitable_4_CAPTURE_LSB         (* (reg16 *) Waitable_4_TimerUDB_sT8_timerdp_u0__16BIT_F0_REG )
-            #define Waitable_4_CAPTURE_LSB_PTR       ((reg16 *) Waitable_4_TimerUDB_sT8_timerdp_u0__16BIT_F0_REG )
-            #define Waitable_4_PERIOD_LSB          (* (reg16 *) Waitable_4_TimerUDB_sT8_timerdp_u0__16BIT_D0_REG )
-            #define Waitable_4_PERIOD_LSB_PTR        ((reg16 *) Waitable_4_TimerUDB_sT8_timerdp_u0__16BIT_D0_REG )
-            #define Waitable_4_COUNTER_LSB         (* (reg16 *) Waitable_4_TimerUDB_sT8_timerdp_u0__16BIT_A0_REG )
-            #define Waitable_4_COUNTER_LSB_PTR       ((reg16 *) Waitable_4_TimerUDB_sT8_timerdp_u0__16BIT_A0_REG )
+            #define Waitable_4_CAPTURE_LSB         (* (reg16 *) Waitable_4_TimerUDB_sT16_timerdp_u0__16BIT_F0_REG )
+            #define Waitable_4_CAPTURE_LSB_PTR       ((reg16 *) Waitable_4_TimerUDB_sT16_timerdp_u0__16BIT_F0_REG )
+            #define Waitable_4_PERIOD_LSB          (* (reg16 *) Waitable_4_TimerUDB_sT16_timerdp_u0__16BIT_D0_REG )
+            #define Waitable_4_PERIOD_LSB_PTR        ((reg16 *) Waitable_4_TimerUDB_sT16_timerdp_u0__16BIT_D0_REG )
+            #define Waitable_4_COUNTER_LSB         (* (reg16 *) Waitable_4_TimerUDB_sT16_timerdp_u0__16BIT_A0_REG )
+            #define Waitable_4_COUNTER_LSB_PTR       ((reg16 *) Waitable_4_TimerUDB_sT16_timerdp_u0__16BIT_A0_REG )
         #endif /* CY_PSOC3 */
     #elif(Waitable_4_Resolution <= 24u)/* 24-bit Timer */
-        #define Waitable_4_CAPTURE_LSB         (* (reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__F0_REG )
-        #define Waitable_4_CAPTURE_LSB_PTR       ((reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__F0_REG )
-        #define Waitable_4_PERIOD_LSB          (* (reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__D0_REG )
-        #define Waitable_4_PERIOD_LSB_PTR        ((reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__D0_REG )
-        #define Waitable_4_COUNTER_LSB         (* (reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__A0_REG )
-        #define Waitable_4_COUNTER_LSB_PTR       ((reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__A0_REG )
+        #define Waitable_4_CAPTURE_LSB         (* (reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__F0_REG )
+        #define Waitable_4_CAPTURE_LSB_PTR       ((reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__F0_REG )
+        #define Waitable_4_PERIOD_LSB          (* (reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__D0_REG )
+        #define Waitable_4_PERIOD_LSB_PTR        ((reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__D0_REG )
+        #define Waitable_4_COUNTER_LSB         (* (reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__A0_REG )
+        #define Waitable_4_COUNTER_LSB_PTR       ((reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__A0_REG )
     #else /* 32-bit Timer */
         #if(CY_PSOC3 || CY_PSOC5) /* 8-bit address space */
-            #define Waitable_4_CAPTURE_LSB         (* (reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__F0_REG )
-            #define Waitable_4_CAPTURE_LSB_PTR       ((reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__F0_REG )
-            #define Waitable_4_PERIOD_LSB          (* (reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__D0_REG )
-            #define Waitable_4_PERIOD_LSB_PTR        ((reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__D0_REG )
-            #define Waitable_4_COUNTER_LSB         (* (reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__A0_REG )
-            #define Waitable_4_COUNTER_LSB_PTR       ((reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__A0_REG )
+            #define Waitable_4_CAPTURE_LSB         (* (reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__F0_REG )
+            #define Waitable_4_CAPTURE_LSB_PTR       ((reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__F0_REG )
+            #define Waitable_4_PERIOD_LSB          (* (reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__D0_REG )
+            #define Waitable_4_PERIOD_LSB_PTR        ((reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__D0_REG )
+            #define Waitable_4_COUNTER_LSB         (* (reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__A0_REG )
+            #define Waitable_4_COUNTER_LSB_PTR       ((reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__A0_REG )
         #else /* 32-bit address space */
-            #define Waitable_4_CAPTURE_LSB         (* (reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__32BIT_F0_REG )
-            #define Waitable_4_CAPTURE_LSB_PTR       ((reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__32BIT_F0_REG )
-            #define Waitable_4_PERIOD_LSB          (* (reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__32BIT_D0_REG )
-            #define Waitable_4_PERIOD_LSB_PTR        ((reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__32BIT_D0_REG )
-            #define Waitable_4_COUNTER_LSB         (* (reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__32BIT_A0_REG )
-            #define Waitable_4_COUNTER_LSB_PTR       ((reg32 *) Waitable_4_TimerUDB_sT8_timerdp_u0__32BIT_A0_REG )
+            #define Waitable_4_CAPTURE_LSB         (* (reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__32BIT_F0_REG )
+            #define Waitable_4_CAPTURE_LSB_PTR       ((reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__32BIT_F0_REG )
+            #define Waitable_4_PERIOD_LSB          (* (reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__32BIT_D0_REG )
+            #define Waitable_4_PERIOD_LSB_PTR        ((reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__32BIT_D0_REG )
+            #define Waitable_4_COUNTER_LSB         (* (reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__32BIT_A0_REG )
+            #define Waitable_4_COUNTER_LSB_PTR       ((reg32 *) Waitable_4_TimerUDB_sT16_timerdp_u0__32BIT_A0_REG )
         #endif /* CY_PSOC3 || CY_PSOC5 */ 
     #endif
 
-    #define Waitable_4_COUNTER_LSB_PTR_8BIT       ((reg8 *) Waitable_4_TimerUDB_sT8_timerdp_u0__A0_REG )
+    #define Waitable_4_COUNTER_LSB_PTR_8BIT       ((reg8 *) Waitable_4_TimerUDB_sT16_timerdp_u0__A0_REG )
     
     #if (Waitable_4_UsingHWCaptureCounter)
         #define Waitable_4_CAP_COUNT              (*(reg8 *) Waitable_4_TimerUDB_sCapCount_counter__PERIOD_REG )

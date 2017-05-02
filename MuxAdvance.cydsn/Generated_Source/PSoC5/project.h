@@ -1,7 +1,7 @@
 /*******************************************************************************
 * File Name: project.h
 * 
-* PSoC Creator  3.3
+* PSoC Creator  3.3 SP1
 *
 * Description:
 * It contains references to all generated header files and should not be modified.
@@ -58,7 +58,6 @@
 #include "Rx_Tag.h"
 #include "Tx_Tag_aliases.h"
 #include "Tx_Tag.h"
-#include "Bootloadable_1.h"
 #include "Rs1_aliases.h"
 #include "Rs1.h"
 #include "Rs2_aliases.h"

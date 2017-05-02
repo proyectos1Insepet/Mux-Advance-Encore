@@ -1,6 +1,6 @@
 -- Project:   MuxAdvance
--- Generated: 08/25/2016 08:43:57
--- PSoC Creator  3.3
+-- Generated: 04/26/2017 14:20:24
+-- PSoC Creator  3.3 SP1
 
 ENTITY MuxAdvance IS
     PORT(
@@ -31,8 +31,8 @@ ENTITY MuxAdvance IS
         Rs5(0)_PAD : OUT std_ulogic);
     ATTRIBUTE voltage_VDDABUF OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VDDA OF __DEFAULT__ : ENTITY IS 5e0;
-    ATTRIBUTE voltage_VDDD OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VUSB OF __DEFAULT__ : ENTITY IS 5e0;
+    ATTRIBUTE voltage_VDDD OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VDDIO0 OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VDDIO1 OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VDDIO2 OF __DEFAULT__ : ENTITY IS 5e0;

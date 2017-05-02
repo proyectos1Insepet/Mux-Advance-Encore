@@ -1964,7 +1964,7 @@
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif</v>
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\cy_psoc3.vif</v>
 </warp_dep>
-<deps_time v="131166062952852896" />
+<deps_time v="131242116887057290" />
 <top_block v="TopDesign" />
 <last_generation v="4" />
 </CyGuid_925cc1e1-309e-4e08-b0a1-09a83c35b157>
@@ -2773,14 +2773,6 @@
 <dep name=".\variables.h" />
 </file>
 <file name=".\protocol.c" />
-<file name=".\CortexM3\ARM_GCC_493\Debug\cymetadata.o">
-<dep name=".\Generated_Source\PSoC5\cydevice.h" />
-<dep name=".\Generated_Source\PSoC5\cydevice_trm.h" />
-<dep name=".\Generated_Source\PSoC5\cyfitter.h" />
-<dep name=".\Generated_Source\PSoC5\cymetadata.c" />
-<dep name=".\Generated_Source\PSoC5\cytypes.h" />
-</file>
-<file name=".\Generated_Source\PSoC5\cymetadata.c" />
 <file name=".\CortexM3\ARM_GCC_493\Debug\ibuton.o">
 <dep name=".\Generated_Source\PSoC5\Beagle.h" />
 <dep name=".\Generated_Source\PSoC5\Beagle_IntClock.h" />
@@ -2858,6 +2850,40 @@
 <dep name=".\ibuton.c" />
 </file>
 <file name=".\ibuton.c" />
+<file name=".\CortexM3\ARM_GCC_493\Debug\Waitable_4.o">
+<dep name=".\Generated_Source\PSoC5\CyFlash.h" />
+<dep name=".\Generated_Source\PSoC5\CyLib.h" />
+<dep name=".\Generated_Source\PSoC5\CySpc.h" />
+<dep name=".\Generated_Source\PSoC5\Waitable_4.c" />
+<dep name=".\Generated_Source\PSoC5\Waitable_4.h" />
+<dep name=".\Generated_Source\PSoC5\cyPm.h" />
+<dep name=".\Generated_Source\PSoC5\cydevice.h" />
+<dep name=".\Generated_Source\PSoC5\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC5\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC5\cytypes.h" />
+</file>
+<file name=".\Generated_Source\PSoC5\Waitable_4.c" />
+<file name=".\CortexM3\ARM_GCC_493\Debug\Waitable_4_PM.o">
+<dep name=".\Generated_Source\PSoC5\CyFlash.h" />
+<dep name=".\Generated_Source\PSoC5\CyLib.h" />
+<dep name=".\Generated_Source\PSoC5\CySpc.h" />
+<dep name=".\Generated_Source\PSoC5\Waitable_4.h" />
+<dep name=".\Generated_Source\PSoC5\Waitable_4_PM.c" />
+<dep name=".\Generated_Source\PSoC5\cyPm.h" />
+<dep name=".\Generated_Source\PSoC5\cydevice.h" />
+<dep name=".\Generated_Source\PSoC5\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC5\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC5\cytypes.h" />
+</file>
+<file name=".\Generated_Source\PSoC5\Waitable_4_PM.c" />
+<file name=".\CortexM3\ARM_GCC_493\Debug\cymetadata.o">
+<dep name=".\Generated_Source\PSoC5\cydevice.h" />
+<dep name=".\Generated_Source\PSoC5\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC5\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC5\cymetadata.c" />
+<dep name=".\Generated_Source\PSoC5\cytypes.h" />
+</file>
+<file name=".\Generated_Source\PSoC5\cymetadata.c" />
 <file name=".\CortexM3\ARM_GCC_493\Debug\Beagle.o">
 <dep name=".\Generated_Source\PSoC5\Beagle.c" />
 <dep name=".\Generated_Source\PSoC5\Beagle.h" />
@@ -3645,32 +3671,6 @@
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\Waitable_3_PM.c" />
-<file name=".\CortexM3\ARM_GCC_493\Debug\Waitable_4.o">
-<dep name=".\Generated_Source\PSoC5\CyFlash.h" />
-<dep name=".\Generated_Source\PSoC5\CyLib.h" />
-<dep name=".\Generated_Source\PSoC5\CySpc.h" />
-<dep name=".\Generated_Source\PSoC5\Waitable_4.c" />
-<dep name=".\Generated_Source\PSoC5\Waitable_4.h" />
-<dep name=".\Generated_Source\PSoC5\cyPm.h" />
-<dep name=".\Generated_Source\PSoC5\cydevice.h" />
-<dep name=".\Generated_Source\PSoC5\cydevice_trm.h" />
-<dep name=".\Generated_Source\PSoC5\cyfitter.h" />
-<dep name=".\Generated_Source\PSoC5\cytypes.h" />
-</file>
-<file name=".\Generated_Source\PSoC5\Waitable_4.c" />
-<file name=".\CortexM3\ARM_GCC_493\Debug\Waitable_4_PM.o">
-<dep name=".\Generated_Source\PSoC5\CyFlash.h" />
-<dep name=".\Generated_Source\PSoC5\CyLib.h" />
-<dep name=".\Generated_Source\PSoC5\CySpc.h" />
-<dep name=".\Generated_Source\PSoC5\Waitable_4.h" />
-<dep name=".\Generated_Source\PSoC5\Waitable_4_PM.c" />
-<dep name=".\Generated_Source\PSoC5\cyPm.h" />
-<dep name=".\Generated_Source\PSoC5\cydevice.h" />
-<dep name=".\Generated_Source\PSoC5\cydevice_trm.h" />
-<dep name=".\Generated_Source\PSoC5\cyfitter.h" />
-<dep name=".\Generated_Source\PSoC5\cytypes.h" />
-</file>
-<file name=".\Generated_Source\PSoC5\Waitable_4_PM.c" />
 <file name=".\CortexM3\ARM_GCC_493\Debug\cyPm.o">
 <dep name=".\Generated_Source\PSoC5\CyFlash.h" />
 <dep name=".\Generated_Source\PSoC5\CyLib.h" />
@@ -5008,14 +5008,15 @@
 <name_val_pair name=".\Generated_Source\PSoC5\Rs4.c" v="-mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -O0 -ffat-lto-objects" />
 <name_val_pair name=".\Generated_Source\PSoC5\Rs5.c" v="-mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -O0 -ffat-lto-objects" />
 <name_val_pair name="C:\Users\Proyectos_Hardware\Dropbox\Proyecto Controller\Mux Advance Encore V5_00\MuxAdvance.cydsn\CortexM3\ARM_GCC_493\Debug\MuxAdvance.hex" v="-mcpu=cortex-m3 -mthumb -g -ffunction-sections -O0 -l m -L Generated_Source\PSoC5 -Wl,-Map,${OutputDir}/${ProjectShortName}.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -Wl,--gc-sections -u_printf_float" />
+<name_val_pair name="C:\Users\Proyectos_Hardware\Dropbox\Proyecto Controller\Mux Advance Encore V6_00\MuxAdvance.cydsn\CortexM3\ARM_GCC_493\Debug\MuxAdvance.hex" v="-mcpu=cortex-m3 -mthumb -g -ffunction-sections -O0 -l m -L Generated_Source\PSoC5 -Wl,-Map,${OutputDir}/${ProjectShortName}.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -Wl,--gc-sections -u_printf_float" />
 </name>
 </genericCmdLineData>
-<codeGenCmdLineTag v="-.appdatapath &quot;C:\Users\Proyectos_Hardware\AppData\Local\Cypress Semiconductor\PSoC Creator\3.3&quot; -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p &quot;C:\Users\Proyectos_Hardware\Dropbox\Proyecto Controller\Mux Advance Encore V5_00\MuxAdvance.cydsn\MuxAdvance.cyprj&quot; -d CY8C5868AXI-LP035 -s &quot;C:\Users\Proyectos_Hardware\Dropbox\Proyecto Controller\Mux Advance Encore V5_00\MuxAdvance.cydsn\Generated_Source\PSoC5&quot; -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE" />
+<codeGenCmdLineTag v="-.appdatapath &quot;C:\Users\Proyectos_Hardware\AppData\Local\Cypress Semiconductor\PSoC Creator\3.3&quot; -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p &quot;C:\Users\Proyectos_Hardware\Dropbox\Proyecto Controller\Mux Advance Encore V6_00\MuxAdvance.cydsn\MuxAdvance.cyprj&quot; -d CY8C5868AXI-LP035 -s &quot;C:\Users\Proyectos_Hardware\Dropbox\Proyecto Controller\Mux Advance Encore V6_00\MuxAdvance.cydsn\Generated_Source\PSoC5&quot; -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE" />
 </CyGuid_b0374e30-ce3a-47f2-ad85-821643292c68>
 </dataGuid>
 <dataGuid v="769d31ea-68b1-4f0c-b90a-7c10a43ee563">
 <CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563 type_name="CyDesigner.Common.ProjMgmt.Model.CyLinkCustomData" version="1">
-<deps_time v="131182393194801727" />
+<deps_time v="131262173269595377" />
 </CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563>
 </dataGuid>
 <dataGuid v="718b6b01-68ba-4a17-b632-d38dc61ebb3b">

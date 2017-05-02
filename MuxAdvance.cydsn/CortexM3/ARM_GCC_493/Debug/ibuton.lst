@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
   29:.\ibuton.c    **** 
   30:.\ibuton.c    **** /*
   31:.\ibuton.c    **** ***************************************************************************************************
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 2
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 2
 
 
   32:.\ibuton.c    **** *                                             INCLUDE FILES
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
   53 0020 FFF7FEFF 		bl	IB1_Write
   60:.\ibuton.c    **** 	    CyDelayUs(5);
   54              		.loc 1 60 0
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 3
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 3
 
 
   55 0024 0520     		movs	r0, #5
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
   77:.\ibuton.c    **** 	    IB2_Write(0);
   93              		.loc 1 77 0
   94 0064 0020     		movs	r0, #0
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 4
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 4
 
 
   95 0066 FFF7FEFF 		bl	IB2_Write
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  136              	.L7:
   91:.\ibuton.c    **** 	    }
   92:.\ibuton.c    **** 	    else{
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 5
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 5
 
 
   93:.\ibuton.c    **** 	        return 0;
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  166              		.cfi_offset 14, -4
  167 0002 84B0     		sub	sp, sp, #16
  168              		.cfi_def_cfa_offset 24
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 6
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 6
 
 
  169 0004 00AF     		add	r7, sp, #0
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  128:.\ibuton.c    **** 	           }
  129:.\ibuton.c    **** 	        }
  130:.\ibuton.c    **** 	        else{
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 7
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 7
 
 
  131:.\ibuton.c    **** 	            IB1_Write(0); 
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  251 008e 0023     		movs	r3, #0
  252 0090 FB73     		strb	r3, [r7, #15]
  253 0092 33E0     		b	.L15
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 8
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 8
 
 
  254              	.L18:
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  294              		.loc 1 158 0
  295 00e0 0023     		movs	r3, #0
  296 00e2 0FE0     		b	.L13
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 9
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 9
 
 
  297              	.L17:
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  170:.\ibuton.c    **** ***************************************************************************************************
  171:.\ibuton.c    **** *                                   uint8 touch_read_byte(uint8 ibutton)
  172:.\ibuton.c    **** *
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 10
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 10
 
 
  173:.\ibuton.c    **** * Description : Lee un byte del ibutton, se usa para leer los bytes del serial
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  371 0026 0120     		movs	r0, #1
  372 0028 FFF7FEFF 		bl	IB1_Write
  194:.\ibuton.c    **** 	        CyDelayUs(7);
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 11
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 11
 
 
  373              		.loc 1 194 0 discriminator 3
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  415 0072 0120     		movs	r0, #1
  416 0074 FFF7FEFF 		bl	IB2_Write
  205:.\ibuton.c    **** 	        CyDelayUs(7);
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 12
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 12
 
 
  417              		.loc 1 205 0 discriminator 3
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  463              	crc_check:
  464              	.LFB59:
  212:.\ibuton.c    **** 
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 13
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 13
 
 
  213:.\ibuton.c    **** /*
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  235:.\ibuton.c    ****             crc = (crc >> 1) ^ 0x8C;
  497              		.loc 1 235 0
  498 0028 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 14
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 14
 
 
  499 002a 5B08     		lsrs	r3, r3, #1
@@ -838,54 +838,54 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  545 0004 0400     		.2byte	0x4
  546 0006 00000000 		.4byte	.Ldebug_abbrev0
  547 000a 04       		.byte	0x4
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 15
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 15
 
 
  548 000b 01       		.uleb128 0x1
- 549 000c 12000000 		.4byte	.LASF25
+ 549 000c 64000000 		.4byte	.LASF25
  550 0010 01       		.byte	0x1
- 551 0011 69010000 		.4byte	.LASF26
- 552 0015 D0000000 		.4byte	.LASF27
+ 551 0011 59010000 		.4byte	.LASF26
+ 552 0015 08000000 		.4byte	.LASF27
  553 0019 00000000 		.4byte	.Ldebug_ranges0+0
  554 001d 00000000 		.4byte	0
  555 0021 00000000 		.4byte	.Ldebug_line0
  556 0025 02       		.uleb128 0x2
  557 0026 01       		.byte	0x1
  558 0027 06       		.byte	0x6
- 559 0028 FA010000 		.4byte	.LASF0
+ 559 0028 EA010000 		.4byte	.LASF0
  560 002c 02       		.uleb128 0x2
  561 002d 01       		.byte	0x1
  562 002e 08       		.byte	0x8
- 563 002f C2000000 		.4byte	.LASF1
+ 563 002f 0D010000 		.4byte	.LASF1
  564 0033 02       		.uleb128 0x2
  565 0034 02       		.byte	0x2
  566 0035 05       		.byte	0x5
- 567 0036 E1010000 		.4byte	.LASF2
+ 567 0036 D1010000 		.4byte	.LASF2
  568 003a 02       		.uleb128 0x2
  569 003b 02       		.byte	0x2
  570 003c 07       		.byte	0x7
- 571 003d 32010000 		.4byte	.LASF3
+ 571 003d 2D010000 		.4byte	.LASF3
  572 0041 03       		.uleb128 0x3
- 573 0042 08000000 		.4byte	.LASF9
+ 573 0042 5A000000 		.4byte	.LASF9
  574 0046 02       		.byte	0x2
  575 0047 3F       		.byte	0x3f
  576 0048 4C000000 		.4byte	0x4c
  577 004c 02       		.uleb128 0x2
  578 004d 04       		.byte	0x4
  579 004e 05       		.byte	0x5
- 580 004f F1010000 		.4byte	.LASF4
+ 580 004f E1010000 		.4byte	.LASF4
  581 0053 02       		.uleb128 0x2
  582 0054 04       		.byte	0x4
  583 0055 07       		.byte	0x7
- 584 0056 57010000 		.4byte	.LASF5
+ 584 0056 1B010000 		.4byte	.LASF5
  585 005a 02       		.uleb128 0x2
  586 005b 08       		.byte	0x8
  587 005c 05       		.byte	0x5
- 588 005d CE010000 		.4byte	.LASF6
+ 588 005d BE010000 		.4byte	.LASF6
  589 0061 02       		.uleb128 0x2
  590 0062 08       		.byte	0x8
  591 0063 07       		.byte	0x7
- 592 0064 A4010000 		.4byte	.LASF7
+ 592 0064 94010000 		.4byte	.LASF7
  593 0068 04       		.uleb128 0x4
  594 0069 04       		.byte	0x4
  595 006a 05       		.byte	0x5
@@ -893,43 +893,43 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  597 006f 02       		.uleb128 0x2
  598 0070 04       		.byte	0x4
  599 0071 07       		.byte	0x7
- 600 0072 87010000 		.4byte	.LASF8
+ 600 0072 77010000 		.4byte	.LASF8
  601 0076 03       		.uleb128 0x3
- 602 0077 A7000000 		.4byte	.LASF10
+ 602 0077 F2000000 		.4byte	.LASF10
  603 007b 03       		.byte	0x3
  604 007c 2C       		.byte	0x2c
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 16
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 16
 
 
  605 007d 41000000 		.4byte	0x41
  606 0081 03       		.uleb128 0x3
- 607 0082 EB010000 		.4byte	.LASF11
+ 607 0082 DB010000 		.4byte	.LASF11
  608 0086 04       		.byte	0x4
  609 0087 A1       		.byte	0xa1
  610 0088 2C000000 		.4byte	0x2c
  611 008c 03       		.uleb128 0x3
- 612 008d 80010000 		.4byte	.LASF12
+ 612 008d 70010000 		.4byte	.LASF12
  613 0091 04       		.byte	0x4
  614 0092 A3       		.byte	0xa3
  615 0093 53000000 		.4byte	0x53
  616 0097 02       		.uleb128 0x2
  617 0098 04       		.byte	0x4
  618 0099 04       		.byte	0x4
- 619 009a B7000000 		.4byte	.LASF13
+ 619 009a 02010000 		.4byte	.LASF13
  620 009e 02       		.uleb128 0x2
  621 009f 08       		.byte	0x8
  622 00a0 04       		.byte	0x4
- 623 00a1 A0000000 		.4byte	.LASF14
+ 623 00a1 52010000 		.4byte	.LASF14
  624 00a5 02       		.uleb128 0x2
  625 00a6 01       		.byte	0x1
  626 00a7 08       		.byte	0x8
- 627 00a8 DC010000 		.4byte	.LASF15
+ 627 00a8 CC010000 		.4byte	.LASF15
  628 00ac 02       		.uleb128 0x2
  629 00ad 04       		.byte	0x4
  630 00ae 07       		.byte	0x7
- 631 00af C5010000 		.4byte	.LASF16
+ 631 00af B5010000 		.4byte	.LASF16
  632 00b3 05       		.uleb128 0x5
- 633 00b4 06020000 		.4byte	.LASF17
+ 633 00b4 F6010000 		.4byte	.LASF17
  634 00b8 01       		.byte	0x1
  635 00b9 36       		.byte	0x36
  636 00ba 81000000 		.4byte	0x81
@@ -939,7 +939,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  640 00c7 9C       		.byte	0x9c
  641 00c8 E9000000 		.4byte	0xe9
  642 00cc 06       		.uleb128 0x6
- 643 00cd AF000000 		.4byte	.LASF19
+ 643 00cd FA000000 		.4byte	.LASF19
  644 00d1 01       		.byte	0x1
  645 00d2 36       		.byte	0x36
  646 00d3 81000000 		.4byte	0x81
@@ -956,9 +956,9 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  657 00e7 77       		.sleb128 -9
  658 00e8 00       		.byte	0
  659 00e9 05       		.uleb128 0x5
- 660 00ea 74010000 		.4byte	.LASF18
+ 660 00ea 64010000 		.4byte	.LASF18
  661 00ee 01       		.byte	0x1
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 17
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 17
 
 
  662 00ef 75       		.byte	0x75
@@ -969,7 +969,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  667 00fd 9C       		.byte	0x9c
  668 00fe 2B010000 		.4byte	0x12b
  669 0102 06       		.uleb128 0x6
- 670 0103 AF000000 		.4byte	.LASF19
+ 670 0103 FA000000 		.4byte	.LASF19
  671 0107 01       		.byte	0x1
  672 0108 75       		.byte	0x75
  673 0109 81000000 		.4byte	0x81
@@ -977,7 +977,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  675 010e 91       		.byte	0x91
  676 010f 6F       		.sleb128 -17
  677 0110 06       		.uleb128 0x6
- 678 0111 BD000000 		.4byte	.LASF20
+ 678 0111 08010000 		.4byte	.LASF20
  679 0115 01       		.byte	0x1
  680 0116 75       		.byte	0x75
  681 0117 81000000 		.4byte	0x81
@@ -994,7 +994,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  692 0129 77       		.sleb128 -9
  693 012a 00       		.byte	0
  694 012b 05       		.uleb128 0x5
- 695 012c 94010000 		.4byte	.LASF22
+ 695 012c 84010000 		.4byte	.LASF22
  696 0130 01       		.byte	0x1
  697 0131 BB       		.byte	0xbb
  698 0132 81000000 		.4byte	0x81
@@ -1004,7 +1004,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  702 013f 9C       		.byte	0x9c
  703 0140 6D010000 		.4byte	0x16d
  704 0144 06       		.uleb128 0x6
- 705 0145 AF000000 		.4byte	.LASF19
+ 705 0145 FA000000 		.4byte	.LASF19
  706 0149 01       		.byte	0x1
  707 014a BB       		.byte	0xbb
  708 014b 81000000 		.4byte	0x81
@@ -1018,12 +1018,12 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  716 0157 81000000 		.4byte	0x81
  717 015b 02       		.uleb128 0x2
  718 015c 91       		.byte	0x91
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 18
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 18
 
 
  719 015d 77       		.sleb128 -9
  720 015e 07       		.uleb128 0x7
- 721 015f 45010000 		.4byte	.LASF23
+ 721 015f 40010000 		.4byte	.LASF23
  722 0163 01       		.byte	0x1
  723 0164 BC       		.byte	0xbc
  724 0165 81000000 		.4byte	0x81
@@ -1032,7 +1032,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  727 016b 76       		.sleb128 -10
  728 016c 00       		.byte	0
  729 016d 09       		.uleb128 0x9
- 730 016e BB010000 		.4byte	.LASF24
+ 730 016e AB010000 		.4byte	.LASF24
  731 0172 01       		.byte	0x1
  732 0173 E6       		.byte	0xe6
  733 0174 81000000 		.4byte	0x81
@@ -1050,7 +1050,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  745 0192 91       		.byte	0x91
  746 0193 6F       		.sleb128 -17
  747 0194 06       		.uleb128 0x6
- 748 0195 BD000000 		.4byte	.LASF20
+ 748 0195 08010000 		.4byte	.LASF20
  749 0199 01       		.byte	0x1
  750 019a E6       		.byte	0xe6
  751 019b 81000000 		.4byte	0x81
@@ -1067,7 +1067,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  762 01ad 74       		.sleb128 -12
  763 01ae 00       		.byte	0
  764 01af 0B       		.uleb128 0xb
- 765 01b0 4A010000 		.4byte	.LASF28
+ 765 01b0 45010000 		.4byte	.LASF28
  766 01b4 05       		.byte	0x5
  767 01b5 1606     		.2byte	0x616
  768 01b7 BB010000 		.4byte	0x1bb
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  773              	.Ldebug_abbrev0:
  774 0000 01       		.uleb128 0x1
  775 0001 11       		.uleb128 0x11
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 19
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 19
 
 
  776 0002 01       		.byte	0x1
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  830 0038 01       		.byte	0x1
  831 0039 3F       		.uleb128 0x3f
  832 003a 19       		.uleb128 0x19
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 20
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 20
 
 
  833 003b 03       		.uleb128 0x3
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  887 0072 00       		.byte	0
  888 0073 03       		.uleb128 0x3
  889 0074 08       		.uleb128 0x8
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 21
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 21
 
 
  890 0075 3A       		.uleb128 0x3a
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  944 00ac 00       		.byte	0
  945 00ad 03       		.uleb128 0x3
  946 00ae 0E       		.uleb128 0xe
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 22
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 22
 
 
  947 00af 3A       		.uleb128 0x3a
@@ -1318,151 +1318,150 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 1
  999      00000201 
  999      FB0E0D00 
  999      01010101 
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 23
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 23
 
 
  1000              	.LASF21:
  1001 0000 70726573 		.ascii	"present\000"
  1001      656E7400 
- 1002              	.LASF9:
- 1003 0008 5F5F696E 		.ascii	"__int32_t\000"
- 1003      7433325F 
- 1003      7400
- 1004              	.LASF25:
- 1005 0012 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
- 1005      4320342E 
- 1005      392E3320 
- 1005      32303135 
- 1005      30333033 
- 1006 0045 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
- 1006      20726576 
- 1006      6973696F 
- 1006      6E203232 
- 1006      31323230 
- 1007 0078 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
- 1007      66756E63 
- 1007      74696F6E 
- 1007      2D736563 
- 1007      74696F6E 
- 1008              	.LASF14:
- 1009 00a0 646F7562 		.ascii	"double\000"
- 1009      6C6500
- 1010              	.LASF10:
- 1011 00a7 696E7433 		.ascii	"int32_t\000"
- 1011      325F7400 
- 1012              	.LASF19:
- 1013 00af 69627574 		.ascii	"ibutton\000"
- 1013      746F6E00 
- 1014              	.LASF13:
- 1015 00b7 666C6F61 		.ascii	"float\000"
- 1015      7400
- 1016              	.LASF20:
- 1017 00bd 64617461 		.ascii	"data\000"
- 1017      00
- 1018              	.LASF1:
- 1019 00c2 756E7369 		.ascii	"unsigned char\000"
- 1019      676E6564 
- 1019      20636861 
- 1019      7200
- 1020              	.LASF27:
- 1021 00d0 433A5C55 		.ascii	"C:\\Users\\Proyectos_Hardware\\Dropbox\\Proyecto Co"
- 1021      73657273 
- 1021      5C50726F 
- 1021      79656374 
- 1021      6F735F48 
- 1022 00ff 6E74726F 		.ascii	"ntroller\\Mux Advance Encore V4_00\\MuxAdvance.cyds"
- 1022      6C6C6572 
- 1022      5C4D7578 
- 1022      20416476 
- 1022      616E6365 
- 1023 0130 6E00     		.ascii	"n\000"
- 1024              	.LASF3:
- 1025 0132 73686F72 		.ascii	"short unsigned int\000"
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 24
+ 1002              	.LASF27:
+ 1003 0008 433A5C55 		.ascii	"C:\\Users\\Lenovo\\Desktop\\Hardware\\Software Mux\\"
+ 1003      73657273 
+ 1003      5C4C656E 
+ 1003      6F766F5C 
+ 1003      4465736B 
+ 1004 0036 4D757820 		.ascii	"Mux Advance Encore\\MuxAdvance.cydsn\000"
+ 1004      41647661 
+ 1004      6E636520 
+ 1004      456E636F 
+ 1004      72655C4D 
+ 1005              	.LASF9:
+ 1006 005a 5F5F696E 		.ascii	"__int32_t\000"
+ 1006      7433325F 
+ 1006      7400
+ 1007              	.LASF25:
+ 1008 0064 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1008      4320342E 
+ 1008      392E3320 
+ 1008      32303135 
+ 1008      30333033 
+ 1009 0097 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 1009      20726576 
+ 1009      6973696F 
+ 1009      6E203232 
+ 1009      31323230 
+ 1010 00ca 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 1010      66756E63 
+ 1010      74696F6E 
+ 1010      2D736563 
+ 1010      74696F6E 
+ 1011              	.LASF10:
+ 1012 00f2 696E7433 		.ascii	"int32_t\000"
+ 1012      325F7400 
+ 1013              	.LASF19:
+ 1014 00fa 69627574 		.ascii	"ibutton\000"
+ 1014      746F6E00 
+ 1015              	.LASF13:
+ 1016 0102 666C6F61 		.ascii	"float\000"
+ 1016      7400
+ 1017              	.LASF20:
+ 1018 0108 64617461 		.ascii	"data\000"
+ 1018      00
+ 1019              	.LASF1:
+ 1020 010d 756E7369 		.ascii	"unsigned char\000"
+ 1020      676E6564 
+ 1020      20636861 
+ 1020      7200
+ 1021              	.LASF5:
+ 1022 011b 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1022      20756E73 
+ 1022      69676E65 
+ 1022      6420696E 
+ 1022      7400
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 24
 
 
- 1025      7420756E 
- 1025      7369676E 
- 1025      65642069 
- 1025      6E7400
- 1026              	.LASF23:
- 1027 0145 6461746F 		.ascii	"dato\000"
- 1027      00
- 1028              	.LASF28:
- 1029 014a 49544D5F 		.ascii	"ITM_RxBuffer\000"
- 1029      52784275 
- 1029      66666572 
- 1029      00
- 1030              	.LASF5:
- 1031 0157 6C6F6E67 		.ascii	"long unsigned int\000"
- 1031      20756E73 
- 1031      69676E65 
- 1031      6420696E 
- 1031      7400
- 1032              	.LASF26:
- 1033 0169 2E5C6962 		.ascii	".\\ibuton.c\000"
- 1033      75746F6E 
- 1033      2E6300
- 1034              	.LASF18:
- 1035 0174 746F7563 		.ascii	"touch_write\000"
- 1035      685F7772 
- 1035      69746500 
- 1036              	.LASF12:
- 1037 0180 75696E74 		.ascii	"uint32\000"
- 1037      333200
- 1038              	.LASF8:
- 1039 0187 756E7369 		.ascii	"unsigned int\000"
- 1039      676E6564 
- 1039      20696E74 
- 1039      00
- 1040              	.LASF22:
- 1041 0194 746F7563 		.ascii	"touch_read_byte\000"
- 1041      685F7265 
- 1041      61645F62 
- 1041      79746500 
- 1042              	.LASF7:
- 1043 01a4 6C6F6E67 		.ascii	"long long unsigned int\000"
- 1043      206C6F6E 
- 1043      6720756E 
- 1043      7369676E 
- 1043      65642069 
- 1044              	.LASF24:
- 1045 01bb 6372635F 		.ascii	"crc_check\000"
- 1045      63686563 
- 1045      6B00
- 1046              	.LASF16:
- 1047 01c5 73697A65 		.ascii	"sizetype\000"
- 1047      74797065 
- 1047      00
- 1048              	.LASF6:
- 1049 01ce 6C6F6E67 		.ascii	"long long int\000"
- 1049      206C6F6E 
- 1049      6720696E 
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\ccmz5nLj.s 			page 25
+ 1023              	.LASF3:
+ 1024 012d 73686F72 		.ascii	"short unsigned int\000"
+ 1024      7420756E 
+ 1024      7369676E 
+ 1024      65642069 
+ 1024      6E7400
+ 1025              	.LASF23:
+ 1026 0140 6461746F 		.ascii	"dato\000"
+ 1026      00
+ 1027              	.LASF28:
+ 1028 0145 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1028      52784275 
+ 1028      66666572 
+ 1028      00
+ 1029              	.LASF14:
+ 1030 0152 646F7562 		.ascii	"double\000"
+ 1030      6C6500
+ 1031              	.LASF26:
+ 1032 0159 2E5C6962 		.ascii	".\\ibuton.c\000"
+ 1032      75746F6E 
+ 1032      2E6300
+ 1033              	.LASF18:
+ 1034 0164 746F7563 		.ascii	"touch_write\000"
+ 1034      685F7772 
+ 1034      69746500 
+ 1035              	.LASF12:
+ 1036 0170 75696E74 		.ascii	"uint32\000"
+ 1036      333200
+ 1037              	.LASF8:
+ 1038 0177 756E7369 		.ascii	"unsigned int\000"
+ 1038      676E6564 
+ 1038      20696E74 
+ 1038      00
+ 1039              	.LASF22:
+ 1040 0184 746F7563 		.ascii	"touch_read_byte\000"
+ 1040      685F7265 
+ 1040      61645F62 
+ 1040      79746500 
+ 1041              	.LASF7:
+ 1042 0194 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1042      206C6F6E 
+ 1042      6720756E 
+ 1042      7369676E 
+ 1042      65642069 
+ 1043              	.LASF24:
+ 1044 01ab 6372635F 		.ascii	"crc_check\000"
+ 1044      63686563 
+ 1044      6B00
+ 1045              	.LASF16:
+ 1046 01b5 73697A65 		.ascii	"sizetype\000"
+ 1046      74797065 
+ 1046      00
+ 1047              	.LASF6:
+ 1048 01be 6C6F6E67 		.ascii	"long long int\000"
+ 1048      206C6F6E 
+ 1048      6720696E 
+ 1048      7400
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\ccIuIOHM.s 			page 25
 
 
- 1049      7400
- 1050              	.LASF15:
- 1051 01dc 63686172 		.ascii	"char\000"
- 1051      00
- 1052              	.LASF2:
- 1053 01e1 73686F72 		.ascii	"short int\000"
- 1053      7420696E 
- 1053      7400
- 1054              	.LASF11:
- 1055 01eb 75696E74 		.ascii	"uint8\000"
- 1055      3800
- 1056              	.LASF4:
- 1057 01f1 6C6F6E67 		.ascii	"long int\000"
- 1057      20696E74 
- 1057      00
- 1058              	.LASF0:
- 1059 01fa 7369676E 		.ascii	"signed char\000"
- 1059      65642063 
- 1059      68617200 
- 1060              	.LASF17:
- 1061 0206 746F7563 		.ascii	"touch_present\000"
- 1061      685F7072 
- 1061      6573656E 
- 1061      7400
- 1062              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
+ 1049              	.LASF15:
+ 1050 01cc 63686172 		.ascii	"char\000"
+ 1050      00
+ 1051              	.LASF2:
+ 1052 01d1 73686F72 		.ascii	"short int\000"
+ 1052      7420696E 
+ 1052      7400
+ 1053              	.LASF11:
+ 1054 01db 75696E74 		.ascii	"uint8\000"
+ 1054      3800
+ 1055              	.LASF4:
+ 1056 01e1 6C6F6E67 		.ascii	"long int\000"
+ 1056      20696E74 
+ 1056      00
+ 1057              	.LASF0:
+ 1058 01ea 7369676E 		.ascii	"signed char\000"
+ 1058      65642063 
+ 1058      68617200 
+ 1059              	.LASF17:
+ 1060 01f6 746F7563 		.ascii	"touch_present\000"
+ 1060      685F7072 
+ 1060      6573656E 
+ 1060      7400
+ 1061              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

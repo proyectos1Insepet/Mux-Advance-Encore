@@ -142,6 +142,7 @@ Estados del MUX
 0x19    Surtiendo
 0x1A    Fin Venta Combustible
 0x1B    Fin Venta en Cero
+0x1F    Lazo desconectado
 
 0x21    Peticion Venta Seleccionada Forma de Pago
 0x22    Espera de respuesta a Peticion Venta Seleccionada Forma de Pago

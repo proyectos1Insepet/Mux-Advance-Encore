@@ -138,6 +138,10 @@ void write_settings(){
     }
     memoryData[8]=screen[0];
     memoryData[9]=screen[1];
+    memoryData[10]=passwordSeller[1];
+    memoryData[11]=passwordSeller[2];
+    memoryData[12]=passwordSeller[3];
+    memoryData[13]=passwordSeller[4];
     EEPROM_1_Write(memoryData,58);
 }
 

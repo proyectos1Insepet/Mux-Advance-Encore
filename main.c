@@ -48,7 +48,8 @@
 CY_ISR(timerAnimation1);
 CY_ISR(timerAnimation2);
 CY_ISR(timerBeagleTX);
-uint8 version[10]="Ctr V 2.28";
+CY_ISR(timerPump);
+uint8 version[10]="Ctr V 2.37";
 uint8 passwordPump[6]="102030";  //Contraseña para habilitar surtidor
 
 
@@ -118,6 +119,8 @@ void init_mux(void){
     EEPROM_1_Start();
     isr_3_StartEx(timerBeagleTX); 
     Waitable_3_Start();
+    isr_4_StartEx(timerPump); 
+    Waitable_4_Start();
     countBeagleTX=0;
     CyDelay(1000);
 
@@ -147,7 +150,8 @@ void init_mux(void){
         ipAdress[2+y]=(((CY_GET_REG8(CYDEV_EE_BASE + (950+x)))%10)&0x0f)+0x30;
         y=y+3;
     }
-    turn=(CY_GET_REG8(CYDEV_EE_BASE + 954))&0x01;;
+    turn=(CY_GET_REG8(CYDEV_EE_BASE + 954))&0x01;
+    lockTurn=0;
     typeIdSeller=CY_GET_REG8(CYDEV_EE_BASE + 955);
     idSeller[0]=20;
     for(x=1;x<=20;x++){
@@ -185,6 +189,9 @@ void init_mux(void){
     }
     screen[0]=((CY_GET_REG8(CYDEV_EE_BASE + 936))&0x01)+0x30;
     screen[1]=((CY_GET_REG8(CYDEV_EE_BASE + 937))&0x01)+0x30;
+    for(x=0;x<4;x++){
+        passwordSeller[x+1]=(CY_GET_REG8(CYDEV_EE_BASE + (938+x)));
+    }
     bufferLCD1.stateMux[1]=0x16;
     bufferLCD2.stateMux[1]=0x16;
     bufferLCD1.stateMux[2]=0;
@@ -194,6 +201,7 @@ void init_mux(void){
     flagResetMux=0;
     flowLCD1=1;
     flowLCD2=1;
+    stateBeagleSoft=0;//En comunicacion
 }
 
 /*
@@ -396,28 +404,7 @@ void polling_Beagle_RX(void){
                             if(bufferBeagleRX[6]=='1'){//Aceptado
                                 bufferLCD1.authorizationFlag=1;
                                 turn=(!turn);
-                                /*for(z=0;z<3;z++){
-                                    y=0;
-                                    for(x=8;x>=1;x--){
-                                        presetFast[z][x]=presetFast[z][digits-y];
-                                        y++;
-                                        if(y==digits){
-                                            while(x>1){
-                                                x--;
-                                                presetFast[z][x]='0';
-                                            }
-                                            break;
-                                        }
-                                    }
-                                    presetFast[z][0]=8;
-                                }*/
                                 write_settings();
-                                /*for(z=0;z<3;z++){
-                                    for(x=1;x<=digits;x++){
-                                        presetFast[z][x]=presetFast[z][x+(presetFast[z][0]-digits)];
-                                    }
-                                    presetFast[z][0]=digits;
-                                }*/
                             }else{//No aceptado
                                 for(x=1;x<=20;x++){
                                     idSeller[x]=CY_GET_REG8(CYDEV_EE_BASE + (x+955));
@@ -438,31 +425,10 @@ void polling_Beagle_RX(void){
                                 turn=1;
                             }else{//Cerrar Turno
                                 turn=0;
-                                flowLCD1=1;
-                                flowLCD2=1;
+//                                flowLCD1=1;
+//                                flowLCD2=1;
                             }
-                            /*for(z=0;z<3;z++){
-                                y=0;
-                                for(x=8;x>=1;x--){
-                                    presetFast[z][x]=presetFast[z][digits-y];
-                                    y++;
-                                    if(y==digits){
-                                        while(x>1){
-                                            x--;
-                                            presetFast[z][x]='0';
-                                        }
-                                        break;
-                                    }
-                                }
-                                presetFast[z][0]=8;
-                            }*/
                             write_settings();
-                            /*for(z=0;z<3;z++){
-                                for(x=1;x<=digits;x++){
-                                    presetFast[z][x]=presetFast[z][x+(presetFast[z][0]-digits)];
-                                }
-                                presetFast[z][0]=digits;
-                            }*/
                             if(get_totals(side.a.dir)==0 || get_totals(side.b.dir)==0){
                                 for(x=0;x<4;x++){
                                     for(y=0;y<3;y++){
@@ -766,6 +732,31 @@ void polling_Beagle_RX(void){
                             sizeTX=6;
                         break;
                         
+                        case 0x4F://Datos Vendedor
+                            typeIdSeller=bufferBeagleRX[6];
+                            idSeller[0]=20;
+                            for(x=1;x<=20;x++){
+                                idSeller[x]=bufferBeagleRX[x+7];
+                            }
+                            passwordSeller[0]=4;
+                            for(x=1;x<=4;x++){
+                                passwordSeller[x]=bufferBeagleRX[x+28];
+                            }
+                            write_settings();
+                            bufferBeagleTX[6]='1';
+                            sizeTX=6;
+                        break;
+                            
+                        case 0x50://Estado de comunicacion NSX
+                            if(bufferBeagleRX[6]=='1'){//En comunicacion
+                                stateBeagleSoft=1;
+                            }else{//Sin comunicacion
+                                stateBeagleSoft=0;
+                            }
+                            bufferBeagleTX[6]='1';
+                            sizeTX=6;
+                        break;
+                            
                         case 0x59://Reset Estado
                             switch(bufferLCD1.stateMux[1]){
                                 case 0x19://Surtiendo
@@ -972,28 +963,7 @@ void polling_Beagle_RX(void){
                             if(bufferBeagleRX[y]=='1'){//Aceptado
                                 bufferLCD2.authorizationFlag=1;
                                 turn=(!turn);
-                                /*for(z=0;z<3;z++){
-                                    y=0;
-                                    for(x=8;x>=1;x--){
-                                        presetFast[z][x]=presetFast[z][digits-y];
-                                        y++;
-                                        if(y==digits){
-                                            while(x>1){
-                                                x--;
-                                                presetFast[z][x]='0';
-                                            }
-                                            break;
-                                        }
-                                    }
-                                    presetFast[z][0]=8;
-                                }*/
                                 write_settings();
-                                /*for(z=0;z<3;z++){
-                                    for(x=1;x<=digits;x++){
-                                        presetFast[z][x]=presetFast[z][x+(presetFast[z][0]-digits)];
-                                    }
-                                    presetFast[z][0]=digits;
-                                }*/
                             }else{//No aceptado
                                 for(x=1;x<=20;x++){
                                     idSeller[x]=CY_GET_REG8(CYDEV_EE_BASE + (x+955));
@@ -1016,31 +986,10 @@ void polling_Beagle_RX(void){
                                 turn=1;
                             }else{//Cerrar Turno
                                 turn=0;
-                                flowLCD1=1;
-                                flowLCD2=1;
+//                                flowLCD1=1;
+//                                flowLCD2=1;
                             }
-                            /*for(z=0;z<3;z++){
-                                y=0;
-                                for(x=8;x>=1;x--){
-                                    presetFast[z][x]=presetFast[z][digits-y];
-                                    y++;
-                                    if(y==digits){
-                                        while(x>1){
-                                            x--;
-                                            presetFast[z][x]='0';
-                                        }
-                                        break;
-                                    }
-                                }
-                                presetFast[z][0]=8;
-                            }*/
                             write_settings();
-                            /*for(z=0;z<3;z++){
-                                for(x=1;x<=digits;x++){
-                                    presetFast[z][x]=presetFast[z][x+(presetFast[z][0]-digits)];
-                                }
-                                presetFast[z][0]=digits;
-                            }*/
                             if(get_totals(side.a.dir)==0 || get_totals(side.b.dir)==0){
                                 for(x=0;x<4;x++){
                                     for(y=0;y<3;y++){
@@ -1355,6 +1304,35 @@ void polling_Beagle_RX(void){
                         break;    
                             
                         case 0x4E://No Ejecutar
+                            bufferBeagleTX[6]='1';
+                            sizeTX=6;
+                        break;
+                            
+                        case 0x4F://Datos Vendedor
+                            y=y+2;
+                            typeIdSeller=bufferBeagleRX[y];
+                            y++;
+                            idSeller[0]=20;
+                            for(x=1;x<=20;x++){
+                                idSeller[x]=bufferBeagleRX[x+y];
+                            }
+                            y=y+21;
+                            passwordSeller[0]=4;
+                            for(x=1;x<=4;x++){
+                                passwordSeller[x]=bufferBeagleRX[x+y];
+                            }
+                            write_settings();
+                            bufferBeagleTX[6]='1';
+                            sizeTX=6;
+                        break;
+                        
+                        case 0x50://Estado de comunicacion NSX
+                            y=y+2;
+                            if(bufferBeagleRX[y]=='1'){//En comunicacion
+                                stateBeagleSoft=1;
+                            }else{//Sin comunicacion
+                                stateBeagleSoft=0;
+                            }
                             bufferBeagleTX[6]='1';
                             sizeTX=6;
                         break;
@@ -1911,7 +1889,11 @@ void polling_beagle_TX(void){
                 bufferBeagleTX[15]=(bufferLCD1.wayToPay/10)+48;
                 bufferBeagleTX[16]=(bufferLCD1.wayToPay%10)+48;
                 bufferBeagleTX[17]=';';
-                bufferBeagleTX[18]=bufferLCD1.salePerform;
+                if(bufferLCD1.flagWayToPayMixed==1){
+                    bufferBeagleTX[18]='3';
+                }else{
+                     bufferBeagleTX[18]=bufferLCD1.salePerform;
+                }
                 size=18;
             break;
             
@@ -2766,7 +2748,11 @@ void polling_beagle_TX(void){
                 bufferBeagleTX[15]=(bufferLCD2.wayToPay/10)+48;
                 bufferBeagleTX[16]=(bufferLCD2.wayToPay%10)+48;
                 bufferBeagleTX[17]=';';
-                bufferBeagleTX[18]=bufferLCD2.salePerform;
+                if(bufferLCD2.flagWayToPayMixed==1){
+                    bufferBeagleTX[18]='3';
+                }else{
+                    bufferBeagleTX[18]=bufferLCD2.salePerform;
+                }
                 size=18;
             break;
             
@@ -3274,15 +3260,21 @@ void polling_LCD1(void){
                 if((LCD1_rxBuffer[0]==0xAA) && (LCD1_rxBuffer[6]==0xC3) && (LCD1_rxBuffer[7]==0x3C)){
                     switch(LCD1_rxBuffer[3]){
                         case 0x01:  //Ventas
-                            if(turn==1){//Abierto
+                            if(turn==1 && lockTurn==0 && stateBeagleSoft==1){//Abierto y desbloqueado y comunicando
                                 bufferLCD1.flagLiftHandle=0;
                                 set_picture(1,33);
                                 write_button(1,'S');    //Venta
                                 bufferLCD1.salePerform='1';
                                 flowLCD1=5;
                             }else{
-                                show_picture(1,44,3);
-                                write_button(1,'a');//Error abrir turno
+                                if(lockTurn==1){
+                                    show_picture(1,66,3);
+                                }else if(stateBeagleSoft==0){
+                                    show_picture(1,67,3);
+                                }else{
+                                    show_picture(1,44,3);
+                                    write_button(1,'a');//Error abrir turno
+                                }
                             }
                         break;
                         
@@ -3294,6 +3286,7 @@ void polling_LCD1(void){
                                 set_picture(1,64);
                                 flowLCD1=40;
                                 if(turn==1){//Abierto
+                                    write_button(1,'v');//ID Vendedor
                                     write_button(1,'x');//Cerrar Turno
                                 }else{//Cerrado
                                     write_button(1,'y');//Abrir Turno
@@ -3302,7 +3295,7 @@ void polling_LCD1(void){
                         break;
                        
                         case 0x03:  //Canasta 
-                            if(turn==1){//Abierto
+                            if(turn==1 && lockTurn==0 && stateBeagleSoft==1){//Abierto y desbloqueado y comunicando
                                 set_picture(1,33);
                                 write_button(1,'S');    //Venta
                                 bufferLCD1.salePerform='2';
@@ -3344,13 +3337,19 @@ void polling_LCD1(void){
                                 bufferLCD1.totalMarket[0]=9;
                                 flowLCD1=5;
                             }else{
-                                show_picture(1,44,3);
-                                write_button(1,'a');//Error abrir turno
+                                if(lockTurn==1){
+                                    show_picture(1,66,3);
+                                }else if(stateBeagleSoft==0){
+                                    show_picture(1,67,3);
+                                }else{
+                                    show_picture(1,44,3);
+                                    write_button(1,'a');//Error abrir turno
+                                }
                             }
                         break;
                         
                         case 0x04:  //Consignaciones 
-                            if(turn==1){//Abierto
+                            if(turn==1 && lockTurn==0 && stateBeagleSoft==1){//Abierto y desbloqueado y comunicando
                                 set_picture(1,37);
                                 write_button(1,'0');    //Teclado antidad Canasta / Cantidad Consignacion
                                 write_LCD(1,symbols[0],2,2,1,0x0000,'N');
@@ -3362,30 +3361,46 @@ void polling_LCD1(void){
                                 }
                                 flowLCD1=35;
                             }else{
-                                show_picture(1,44,3);
-                                write_button(1,'a');//Error abrir turno
+                                if(lockTurn==1){
+                                    show_picture(1,66,3);
+                                }else if(stateBeagleSoft==0){
+                                    show_picture(1,67,3);
+                                }else{
+                                    show_picture(1,44,3);
+                                    write_button(1,'a');//Error abrir turno
+                                }
                             }
                         break; 	 
                         
                         case 0x05:  //Mantenimiento 
-                            if(turn==1){//Abierto
+                            if(turn==1 && lockTurn==0){//Abierto y desbloqueado
                                 set_picture(1,61);
                                 write_button(1,'u');//Mantenimiento
                                 flowLCD1=38;
                             }else{
-                                show_picture(1,44,3);
-                                write_button(1,'a');//Error abrir turno
+                                if(lockTurn==1){
+                                    show_picture(1,66,3);
+                                }else{
+                                    show_picture(1,44,3);
+                                    write_button(1,'a');//Error abrir turno
+                                }
                             }
                         break;
                         
                         case 0x06:  //Copia de recibo 
-                            if(turn==1){//Abierto
+                            if(turn==1 && lockTurn==0 && stateBeagleSoft==1){//Abierto y desbloqueado y comunicando
                                 show_picture(1,55,3);
                                 bufferLCD1.stateMux[1]=0x34;//Recibo de impresion
                                 write_button(1,'W');//Espere 1 momento
                             }else{
-                                show_picture(1,44,3);
-                                write_button(1,'a');//Error abrir turno
+                                if(lockTurn==1){
+                                    show_picture(1,66,3);
+                                }else if(stateBeagleSoft==0){
+                                    show_picture(1,67,3);
+                                }else{
+                                    show_picture(1,44,3);
+                                    write_button(1,'a');//Error abrir turno
+                                }
                             }
                         break;
                         
@@ -3476,6 +3491,28 @@ void polling_LCD1(void){
                         break;
                         
                         case 0x0A://Formas de pago
+                            bufferLCD1.flagWayToPayMixed=0;
+                            if(screen[1]=='1'){
+                                set_picture(1,37);
+                                write_button(1,'6');//Teclado Venta F. de pago
+                                bufferLCD1.valueKeys[1]='0';
+                                numberKeys1=1;
+                                write_LCD(1,bufferLCD1.valueKeys[numberKeys1],2,numberKeys1+2,1,0x0000,'N');
+                                flagPoint1=1;
+                                flowLCD1=14;
+                            }else{
+                                bufferLCD1.selectedSale[0]=1;
+                                bufferLCD1.selectedSale[1]='0';
+                                set_picture(1,49);
+                                write_button(1,'F');//Formas de pago
+                                bufferLCD1.flagPayment=1;
+                                write_button(1,bufferLCD1.flagPayment);//Nombres a Formas de pago
+                                flowLCD1=15;
+                            }
+                        break;
+                            
+                        case 0x0B://Forma de pago Mixto
+                            bufferLCD1.flagWayToPayMixed=1;
                             if(screen[1]=='1'){
                                 set_picture(1,37);
                                 write_button(1,'6');//Teclado Venta F. de pago
@@ -3710,6 +3747,11 @@ void polling_LCD1(void){
         break;
             
         case 10: //Suba la manija
+            if(turn==0){//Turno cerrado
+                flowLCD1=1;
+                LCD1_ClearRxBuffer();
+                break;
+            }
             if(LCD1_GetRxBufferSize()==8){
                 flowLCD1=1;
                 LCD1_ClearRxBuffer();
@@ -3744,6 +3786,11 @@ void polling_LCD1(void){
         break;
             
         case 11: //Programar Equipo
+            if(turn==0){//Turno cerrado
+                flowLCD1=1;
+                LCD1_ClearRxBuffer();
+                break;
+            }
             if(get_totals(side.a.dir)!=0){
                 for(x=0;x<=side.a.totalsHandle[bufferLCD1.productType-1][0][0];x++){
                     bufferLCD1.totalVolumePrevious[x]=side.a.totalsHandle[bufferLCD1.productType-1][0][x];
@@ -4160,36 +4207,44 @@ void polling_LCD1(void){
             
         case 16: //Esperando respuesta a peticion
             if(bufferLCD1.authorizationFlag!=0){
+                isr_1_Stop(); 
+                Waitable_1_Stop();
                 if(bufferLCD1.authorizationFlag==1){
-                    set_picture(1,37);
-                    write_button(1,'7');//Teclado Dinero Venta F. de pago
-                    write_LCD(1,symbols[0],2,2,1,0x0000,'N');
-                    y=0;
-                    for(x=1;x<=bufferLCD1.moneySelectedSale[0];x++){
-                        if(bufferLCD1.moneySelectedSale[x]!='0'){
-                            bufferLCD1.moneySelectedSale[0]-=(x-1);
-                            for(y=1;y<=bufferLCD1.moneySelectedSale[0];y++){
-                                bufferLCD1.moneySelectedSale[y]=bufferLCD1.moneySelectedSale[x];
-                                bufferLCD1.valueKeys[y]=bufferLCD1.moneySelectedSale[x];
-                                x++;
-                            }
-                            break;
-                        }
-                    }
-                    if(decimalMoney>0){
-                        flagPoint1=0;
+                    if(bufferLCD1.flagWayToPayMixed==1){
+                        bufferLCD1.stateMux[1]=0x16;//Espera
+                        show_picture(1,54,3);
+                        write_button(1,'G');//Gracias
                     }else{
-                        flagPoint1=1;
-                    }
-                     for(x=1;x<=bufferLCD1.moneySelectedSale[0];x++){
-                        write_LCD(1,bufferLCD1.moneySelectedSale[x],2,x+2,1,0x0000,'N');
-                        if(bufferLCD1.moneySelectedSale[x]==','){
+                        set_picture(1,37);
+                        write_button(1,'7');//Teclado Dinero Venta F. de pago
+                        write_LCD(1,symbols[0],2,2,1,0x0000,'N');
+                        y=0;
+                        for(x=1;x<=bufferLCD1.moneySelectedSale[0];x++){
+                            if(bufferLCD1.moneySelectedSale[x]!='0'){
+                                bufferLCD1.moneySelectedSale[0]-=(x-1);
+                                for(y=1;y<=bufferLCD1.moneySelectedSale[0];y++){
+                                    bufferLCD1.moneySelectedSale[y]=bufferLCD1.moneySelectedSale[x];
+                                    bufferLCD1.valueKeys[y]=bufferLCD1.moneySelectedSale[x];
+                                    x++;
+                                }
+                                break;
+                            }
+                        }
+                        if(decimalMoney>0){
+                            flagPoint1=0;
+                        }else{
                             flagPoint1=1;
                         }
+                         for(x=1;x<=bufferLCD1.moneySelectedSale[0];x++){
+                            write_LCD(1,bufferLCD1.moneySelectedSale[x],2,x+2,1,0x0000,'N');
+                            if(bufferLCD1.moneySelectedSale[x]==','){
+                                flagPoint1=1;
+                            }
+                        }
+                        numberKeys1=bufferLCD1.moneySelectedSale[0];
+                        bufferLCD1.stateMux[1]=0x23;
+                        flowLCD1=17;
                     }
-                    numberKeys1=bufferLCD1.moneySelectedSale[0];
-                    bufferLCD1.stateMux[1]=0x23;
-                    flowLCD1=17;
                 }else{
                     isr_1_Stop(); 
                     Waitable_1_Stop();
@@ -4337,6 +4392,11 @@ void polling_LCD1(void){
                             write_button(1,'j');//Metodo 2
                             flowLCD1=22;
                             Tag_ClearRxBuffer();
+                            Tag_ClearTxBuffer();
+                            Tag_PutChar('O');
+                            Tag_PutChar('K');
+                            Tag_PutChar(0x01);
+                            CyDelay(100);
                         break;
                         
                         case 0x03:  //Numerico
@@ -4454,6 +4514,9 @@ void polling_LCD1(void){
                         flowLCD1=21;
                         LCD1_ClearRxBuffer();
                         break;
+                    }
+                    for(x=0;x<=29;x++){
+                        temporal[x]=0x00;
                     }
                     if(serial_codetag(1)==1){
                         for(x=0;x<=temporal[0];x++){
@@ -5527,13 +5590,27 @@ void polling_LCD1(void){
             if(LCD1_GetRxBufferSize()==8){
                 if((LCD1_rxBuffer[0]==0xAA) && (LCD1_rxBuffer[6]==0xC3) && (LCD1_rxBuffer[7]==0x3C)){
                     switch(LCD1_rxBuffer[3]){
+                        case 0x0D://Bloquear posicion
+                            if(turn==1){//Abierto el turno
+                                set_picture(1,37);
+                                write_button(1,'*');//Teclado Contraseña
+                                numberKeys1=0;
+                                flagPoint1=1;
+                                flowLCD1=46;
+                            }
+                        break;
+                        
                         case 0x0E://Continuar
-                            bufferLCD1.stateMux[1]=0x40;//Pendiente datos turno
-                            set_picture(1,37);
-                            write_button(1,'5');//Teclado Nit/CC
-                            numberKeys1=0;
-                            flagPoint1=1;
-                            flowLCD1=41;
+                            if(lockTurn==0){//desbloqueado
+                                bufferLCD1.stateMux[1]=0x40;//Pendiente datos turno
+                                set_picture(1,37);
+                                write_button(1,'5');//Teclado Nit/CC
+                                numberKeys1=0;
+                                flagPoint1=1;
+                                flowLCD1=41;
+                            }else{
+                                show_picture(1,66,3);
+                            }
                         break;
                         
                         case 0x0F://Atras
@@ -5561,8 +5638,12 @@ void polling_LCD1(void){
                     }
                     idSeller[0]=20;
                     typeIdSeller=CY_GET_REG8(CYDEV_EE_BASE + 955);
+                    for(x=0;x<4;x++){
+                        passwordSeller[x+1]=(CY_GET_REG8(CYDEV_EE_BASE + (938+x)));
+                    }
                     if(turn==1){//Abierto
                         write_button(1,'x');//Cerrar Turno
+                        write_button(1,'v');//ID Vendedor
                     }else{//Cerrado
                         write_button(1,'y');//Abrir Turno
                     }
@@ -5597,36 +5678,38 @@ void polling_LCD1(void){
                         show_picture(1,44,3);
                         write_button(1,'E');//Error de sistema
                     }else{
-                        for(x=0;x<=bufferLCD1.valueKeys[0];x++){
-                            passwordSeller[x]=bufferLCD1.valueKeys[x];
-                        }
-                        set_picture(1,55);
-                        write_button(1,'W');//Espere 1 momento
-                        if(get_totals(side.a.dir)!=0 && get_totals(side.b.dir)!=0){
-                            if(read_date()==1 && read_time()==1){
-                                for(x=0;x<=2;x++){
-                                    bufferLCD1.timeDownHandle[x*2]=((time[2-x]&0xF0)>>4)+48;
-                                    bufferLCD1.timeDownHandle[(x*2)+1]=(time[2-x]&0x0F)+48;
-                                    bufferLCD1.dateDownHandle[x*2]=((date[2-x]&0xF0)>>4)+48;
-                                    bufferLCD1.dateDownHandle[(x*2)+1]=(date[2-x]&0x0F)+48;
-                                }
-                            }else{
-                                for(x=0;x<6;x++){
-                                    bufferLCD1.timeDownHandle[x]='0';
-                                    bufferLCD1.dateDownHandle[x]='0';
-                                }
+                        if(bufferLCD1.valueKeys[0]==4){
+                            for(x=0;x<=bufferLCD1.valueKeys[0];x++){
+                                passwordSeller[x]=bufferLCD1.valueKeys[x];
                             }
-                            isr_1_StartEx(timerAnimation1); 
-                            Waitable_1_Start();
-                            countAnimation1=0;
-                            bufferLCD1.stateMux[1]=0x41;//Peticion Turno
-                            bufferLCD1.authorizationFlag=0;
-                            show_picture(2,55,10);
-                            write_button(2,'W');//Espere 1 momento
-                            flowLCD1=43;
-                        }else{
-                            show_picture(1,44,3);
-                            write_button(1,'E');//Error de sistema
+                            set_picture(1,55);
+                            write_button(1,'W');//Espere 1 momento
+                            if(get_totals(side.a.dir)!=0 && get_totals(side.b.dir)!=0){
+                                if(read_date()==1 && read_time()==1){
+                                    for(x=0;x<=2;x++){
+                                        bufferLCD1.timeDownHandle[x*2]=((time[2-x]&0xF0)>>4)+48;
+                                        bufferLCD1.timeDownHandle[(x*2)+1]=(time[2-x]&0x0F)+48;
+                                        bufferLCD1.dateDownHandle[x*2]=((date[2-x]&0xF0)>>4)+48;
+                                        bufferLCD1.dateDownHandle[(x*2)+1]=(date[2-x]&0x0F)+48;
+                                    }
+                                }else{
+                                    for(x=0;x<6;x++){
+                                        bufferLCD1.timeDownHandle[x]='0';
+                                        bufferLCD1.dateDownHandle[x]='0';
+                                    }
+                                }
+                                isr_1_StartEx(timerAnimation1); 
+                                Waitable_1_Start();
+                                countAnimation1=0;
+                                bufferLCD1.stateMux[1]=0x41;//Peticion Turno
+                                bufferLCD1.authorizationFlag=0;
+                                show_picture(2,55,10);
+                                write_button(2,'W');//Espere 1 momento
+                                flowLCD1=43;
+                            }else{
+                                show_picture(1,44,3);
+                                write_button(1,'E');//Error de sistema
+                            }
                         }
                     }
                 break;
@@ -5651,6 +5734,9 @@ void polling_LCD1(void){
                 }
                 idSeller[0]=20;
                 typeIdSeller=CY_GET_REG8(CYDEV_EE_BASE + 955);
+                for(x=0;x<4;x++){
+                    passwordSeller[x+1]=(CY_GET_REG8(CYDEV_EE_BASE + (938+x)));
+                }
                 isr_1_Stop(); 
                 Waitable_1_Stop();
                 show_picture(1,44,3);
@@ -5660,7 +5746,7 @@ void polling_LCD1(void){
         break;
             
         case 44://Posicion Bloqueada por Corte
-            if(countAnimation1>2000){
+            if(countAnimation1>12000){
                 isr_1_Stop(); 
                 Waitable_1_Stop();
                 show_picture(1,44,3);
@@ -5684,6 +5770,7 @@ void polling_LCD1(void){
                         }
                     }
                     if(x>6){
+                        stateBeagleSoft=1;//En comunicacion
                         show_picture(1,54,4);
                         write_button(1,'G');//Gracias
                         for(x=0;x<3;x++){
@@ -5699,6 +5786,43 @@ void polling_LCD1(void){
                     }else{
                         show_picture(1,44,3);
                         write_button(1,'E');//Error de sistema
+                    }
+                break;
+            }
+        break;
+            
+        case 46://Contraseña Vendedor para bloquear turno
+            switch (alphanumeric_keyboard(1,4,'*')){
+                case 0: //Cancelar
+                    set_picture(1,64);
+                    flowLCD1=40;
+                    if(turn==1){//Abierto
+                        write_button(1,'x');//Cerrar Turno
+                        write_button(1,'v');//ID Vendedor
+                    }else{//Cerrado
+                        write_button(1,'y');//Abrir Turno
+                    }
+                break;
+                    
+                case 1: //Enter
+                    if(flowLCD2>4){
+                        show_picture(1,44,3);
+                        write_button(1,'E');//Error de sistema
+                    }else{
+                        if(bufferLCD1.valueKeys[0]==4){
+                            for(x=1;x<=4;x++){
+                                if(bufferLCD1.valueKeys[x]!=passwordSeller[x]){
+                                    show_picture(1,44,3);
+                                    write_button(1,'E');//Error de sistema
+                                    break;
+                                }
+                            }
+                            if(x>=5){
+                                lockTurn=(!lockTurn);
+                                show_picture(1,54,4);
+                                write_button(1,'G');
+                            }
+                        }
                     }
                 break;
             }
@@ -5757,15 +5881,21 @@ void polling_LCD2(void){
                 if((LCD2_rxBuffer[0]==0xAA) && (LCD2_rxBuffer[6]==0xC3) && (LCD2_rxBuffer[7]==0x3C)){
                     switch(LCD2_rxBuffer[3]){
                         case 0x01:  //Ventas
-                            if(turn==1){//Abierto
+                            if(turn==1 && lockTurn==0 && stateBeagleSoft==1){//Abierto y desbloqueado y comunicando
                                 bufferLCD2.flagLiftHandle=0;
                                 set_picture(2,33);
                                 write_button(2,'S');    //Venta
                                 bufferLCD2.salePerform='1';
                                 flowLCD2=5;
                             }else{
-                                show_picture(2,44,3);
-                                write_button(2,'a');//Error abrir turno
+                                if(lockTurn==1){
+                                    show_picture(2,66,3);
+                                }else if(stateBeagleSoft==0){
+                                    show_picture(2,67,3);
+                                }else{
+                                    show_picture(2,44,3);
+                                    write_button(2,'a');//Error abrir turno
+                                }
                             }
                         break;
                         
@@ -5778,6 +5908,7 @@ void polling_LCD2(void){
                                 flowLCD2=40;
                                 if(turn==1){//Abierto
                                     write_button(2,'x');//Cerrar Turno
+                                    write_button(2,'v');//ID Vendedor
                                 }else{//Cerrado
                                     write_button(2,'y');//Abrir Turno
                                 }
@@ -5785,7 +5916,7 @@ void polling_LCD2(void){
                         break;
                        
                         case 0x03:  //Canasta 
-                            if(turn==1){//Abierto
+                            if(turn==1 && lockTurn==0 && stateBeagleSoft==1){//Abierto y desbloqueado y comunicando
                                 set_picture(2,33);
                                 write_button(2,'S');    //Venta
                                 bufferLCD2.salePerform='2';
@@ -5827,13 +5958,19 @@ void polling_LCD2(void){
                                 bufferLCD2.totalMarket[0]=9;
                                 flowLCD2=5;
                             }else{
-                                show_picture(2,44,3);
-                                write_button(2,'a');//Error abrir turno
+                                if(lockTurn==1){
+                                    show_picture(2,66,3);
+                                }else if(stateBeagleSoft==0){
+                                    show_picture(2,67,3);
+                                }else{
+                                    show_picture(2,44,3);
+                                    write_button(2,'a');//Error abrir turno
+                                }
                             }
                         break;
                         
                         case 0x04:  //Consignaciones 
-                            if(turn==1){//Abierto
+                            if(turn==1 && lockTurn==0 && stateBeagleSoft==1){//Abierto y desbloqueado y comunicando
                                 set_picture(2,37);
                                 write_button(2,'0');    //Teclado antidad Canasta / Cantidad Consignacion
                                 write_LCD(2,symbols[0],2,2,1,0x0000,'N');
@@ -5845,30 +5982,46 @@ void polling_LCD2(void){
                                 }
                                 flowLCD2=35;
                             }else{
-                                show_picture(2,44,3);
-                                write_button(2,'a');//Error abrir turno
+                                if(lockTurn==1){
+                                    show_picture(2,66,3);
+                                }else if(stateBeagleSoft==0){
+                                    show_picture(2,67,3);
+                                }else{
+                                    show_picture(2,44,3);
+                                    write_button(2,'a');//Error abrir turno
+                                }
                             }
                         break; 	 
                         
                         case 0x05:  //Mantenimiento 
-                            if(turn==1){//Abierto
+                            if(turn==1 && lockTurn==0){//Abierto y desbloqueado
                                 set_picture(2,61);
                                 write_button(2,'u');//Mantenimiento
                                 flowLCD2=38;
                             }else{
-                                show_picture(2,44,3);
-                                write_button(2,'a');//Error abrir turno
+                                if(lockTurn==1){
+                                    show_picture(2,66,3);
+                                }else{
+                                    show_picture(2,44,3);
+                                    write_button(2,'a');//Error abrir turno
+                                }
                             }
                         break;
                         
                         case 0x06:  //Copia de recibo 
-                            if(turn==1){//Abierto
+                            if(turn==1 && lockTurn==0 && stateBeagleSoft==1){//Abierto y desbloqueado y comunicando
                                 show_picture(2,55,3);
                                 bufferLCD2.stateMux[1]=0x34;//Recibo de impresion
                                 write_button(2,'W');//Espere 1 momento
                             }else{
-                                show_picture(2,44,3);
-                                write_button(2,'a');//Error abrir turno
+                                if(lockTurn==1){
+                                    show_picture(2,66,3);
+                                }else if(stateBeagleSoft==0){
+                                    show_picture(2,67,3);
+                                }else{
+                                    show_picture(2,44,3);
+                                    write_button(2,'a');//Error abrir turno
+                                }
                             }
                         break;
                         
@@ -5959,6 +6112,28 @@ void polling_LCD2(void){
                         break;
                             
                         case 0x0A://Formas de pago
+                            bufferLCD2.flagWayToPayMixed=0;
+                            if(screen[1]=='1'){
+                                set_picture(2,37);
+                                write_button(2,'6');//Teclado Venta F. de pago
+                                bufferLCD2.valueKeys[1]='0';
+                                numberKeys2=1;
+                                write_LCD(2,bufferLCD2.valueKeys[numberKeys2],2,numberKeys2+2,1,0x0000,'N');
+                                flagPoint2=1;
+                                flowLCD2=14;
+                            }else{
+                                bufferLCD2.selectedSale[0]=1;
+                                bufferLCD2.selectedSale[1]='0';
+                                set_picture(2,49);
+                                write_button(2,'F');//Formas de pago
+                                bufferLCD2.flagPayment=1;
+                                write_button(2,bufferLCD2.flagPayment);//Nombres a Formas de pago
+                                flowLCD2=15;
+                            }
+                        break;
+                            
+                        case 0x0B://Forma de pago Mixto
+                            bufferLCD2.flagWayToPayMixed=1;
                             if(screen[1]=='1'){
                                 set_picture(2,37);
                                 write_button(2,'6');//Teclado Venta F. de pago
@@ -6193,6 +6368,11 @@ void polling_LCD2(void){
         break;
             
         case 10: //Suba la manija
+            if(turn==0){//Turno cerrado
+                flowLCD2=1;
+                LCD2_ClearRxBuffer();
+                break;
+            }
             if(LCD2_GetRxBufferSize()==8){
                 flowLCD2=1;
                 LCD2_ClearRxBuffer();
@@ -6227,6 +6407,11 @@ void polling_LCD2(void){
         break;
             
         case 11: //Programar Equipo
+            if(turn==0){//Turno cerrado
+                flowLCD2=1;
+                LCD2_ClearRxBuffer();
+                break;
+            }
             if(get_totals(side.b.dir)!=0){
                 for(x=0;x<=side.b.totalsHandle[bufferLCD2.productType-1][0][0];x++){
                     bufferLCD2.totalVolumePrevious[x]=side.b.totalsHandle[bufferLCD2.productType-1][0][x];
@@ -6643,36 +6828,44 @@ void polling_LCD2(void){
             
         case 16: //Esperando respuesta a peticion
             if(bufferLCD2.authorizationFlag!=0){
+                isr_2_Stop(); 
+                Waitable_2_Stop();
                 if(bufferLCD2.authorizationFlag==1){
-                    set_picture(2,37);
-                    write_button(2,'7');//Teclado Dinero Venta F. de pago
-                    write_LCD(2,symbols[0],2,2,1,0x0000,'N');
-                    y=0;
-                    for(x=1;x<=bufferLCD2.moneySelectedSale[0];x++){
-                        if(bufferLCD2.moneySelectedSale[x]!='0'){
-                            bufferLCD2.moneySelectedSale[0]-=(x-1);
-                            for(y=1;y<=bufferLCD2.moneySelectedSale[0];y++){
-                                bufferLCD2.moneySelectedSale[y]=bufferLCD2.moneySelectedSale[x];
-                                bufferLCD2.valueKeys[y]=bufferLCD2.moneySelectedSale[x];
-                                x++;
-                            }
-                            break;
-                        }
-                    }
-                    if(decimalMoney>0){
-                        flagPoint2=0;
+                    if(bufferLCD2.flagWayToPayMixed==1){
+                        bufferLCD2.stateMux[1]=0x16;//Espera
+                        show_picture(2,54,3);
+                        write_button(2,'G');//Gracias
                     }else{
-                        flagPoint2=1;
-                    }
-                     for(x=1;x<=bufferLCD2.moneySelectedSale[0];x++){
-                        write_LCD(2,bufferLCD2.moneySelectedSale[x],2,x+2,1,0x0000,'N');
-                        if(bufferLCD2.moneySelectedSale[x]==','){
+                        set_picture(2,37);
+                        write_button(2,'7');//Teclado Dinero Venta F. de pago
+                        write_LCD(2,symbols[0],2,2,1,0x0000,'N');
+                        y=0;
+                        for(x=1;x<=bufferLCD2.moneySelectedSale[0];x++){
+                            if(bufferLCD2.moneySelectedSale[x]!='0'){
+                                bufferLCD2.moneySelectedSale[0]-=(x-1);
+                                for(y=1;y<=bufferLCD2.moneySelectedSale[0];y++){
+                                    bufferLCD2.moneySelectedSale[y]=bufferLCD2.moneySelectedSale[x];
+                                    bufferLCD2.valueKeys[y]=bufferLCD2.moneySelectedSale[x];
+                                    x++;
+                                }
+                                break;
+                            }
+                        }
+                        if(decimalMoney>0){
+                            flagPoint2=0;
+                        }else{
                             flagPoint2=1;
                         }
+                         for(x=1;x<=bufferLCD2.moneySelectedSale[0];x++){
+                            write_LCD(2,bufferLCD2.moneySelectedSale[x],2,x+2,1,0x0000,'N');
+                            if(bufferLCD2.moneySelectedSale[x]==','){
+                                flagPoint2=1;
+                            }
+                        }
+                        numberKeys2=bufferLCD2.moneySelectedSale[0];
+                        bufferLCD2.stateMux[1]=0x23;
+                        flowLCD2=17;
                     }
-                    numberKeys2=bufferLCD2.moneySelectedSale[0];
-                    bufferLCD2.stateMux[1]=0x23;
-                    flowLCD2=17;
                 }else{
                     isr_2_Stop(); 
                     Waitable_2_Stop();
@@ -6820,6 +7013,11 @@ void polling_LCD2(void){
                             write_button(2,'j');//Metodo 2
                             flowLCD2=22;
                             Tag_ClearRxBuffer();
+                            Tag_ClearTxBuffer();
+                            Tag_PutChar('O');
+                            Tag_PutChar('K');
+                            Tag_PutChar(0x02);
+                            CyDelay(100);
                         break;
                         
                         case 0x03:  //Numerico
@@ -6937,6 +7135,9 @@ void polling_LCD2(void){
                         flowLCD2=21;
                         LCD2_ClearRxBuffer();
                         break;
+                    }
+                    for(x=0;x<=29;x++){
+                        temporal[x]=0x00;
                     }
                     if(serial_codetag(2)==1){
                         for(x=0;x<=temporal[0];x++){
@@ -8009,13 +8210,27 @@ void polling_LCD2(void){
             if(LCD2_GetRxBufferSize()==8){
                 if((LCD2_rxBuffer[0]==0xAA) && (LCD2_rxBuffer[6]==0xC3) && (LCD2_rxBuffer[7]==0x3C)){
                     switch(LCD2_rxBuffer[3]){
+                        case 0x0D://Bloquear posicion
+                            if(turn==1){//Abierto el turno
+                                set_picture(2,37);
+                                write_button(2,'*');//Teclado Contraseña
+                                numberKeys2=0;
+                                flagPoint2=1;
+                                flowLCD2=46;
+                            }
+                        break;
+                        
                         case 0x0E://Continuar
-                            bufferLCD2.stateMux[1]=0x40;//Pendiente datos turno
-                            set_picture(2,37);
-                            write_button(2,'5');//Teclado Nit/CC
-                            numberKeys2=0;
-                            flagPoint2=1;
-                            flowLCD2=41;
+                            if(lockTurn==0){//desbloqueado
+                                bufferLCD2.stateMux[1]=0x40;//Pendiente datos turno
+                                set_picture(2,37);
+                                write_button(2,'5');//Teclado Nit/CC
+                                numberKeys2=0;
+                                flagPoint2=1;
+                                flowLCD2=41;
+                            }else{
+                                show_picture(2,66,3);
+                            }
                         break;
                         
                         case 0x0F://Atras
@@ -8038,8 +8253,17 @@ void polling_LCD2(void){
                 case 0: //Cancelar
                     set_picture(2,64);
                     flowLCD2=40;
+                    for(x=1;x<=20;x++){
+                        idSeller[x]=CY_GET_REG8(CYDEV_EE_BASE + (x+955));
+                    }
+                    idSeller[0]=20;
+                    typeIdSeller=CY_GET_REG8(CYDEV_EE_BASE + 955);
+                    for(x=0;x<4;x++){
+                        passwordSeller[x+1]=(CY_GET_REG8(CYDEV_EE_BASE + (938+x)));
+                    }
                     if(turn==1){//Abierto
                         write_button(2,'x');//Cerrar Turno
+                        write_button(2,'v');//ID Vendedor
                     }else{//Cerrado
                         write_button(2,'y');//Abrir Turno
                     }
@@ -8074,36 +8298,38 @@ void polling_LCD2(void){
                         show_picture(2,44,3);
                         write_button(2,'E');//Error de sistema
                     }else{
-                        for(x=0;x<=bufferLCD2.valueKeys[0];x++){
-                            passwordSeller[x]=bufferLCD2.valueKeys[x];
-                        }
-                        set_picture(2,55);
-                        write_button(2,'W');//Espere 1 momento
-                        if(get_totals(side.a.dir)!=0 && get_totals(side.b.dir)!=0){
-                            if(read_date()==1 && read_time()==1){
-                                for(x=0;x<=2;x++){
-                                    bufferLCD2.timeDownHandle[x*2]=((time[2-x]&0xF0)>>4)+48;
-                                    bufferLCD2.timeDownHandle[(x*2)+1]=(time[2-x]&0x0F)+48;
-                                    bufferLCD2.dateDownHandle[x*2]=((date[2-x]&0xF0)>>4)+48;
-                                    bufferLCD2.dateDownHandle[(x*2)+1]=(date[2-x]&0x0F)+48;
-                                }
-                            }else{
-                                for(x=0;x<6;x++){
-                                    bufferLCD2.timeDownHandle[x]='0';
-                                    bufferLCD2.dateDownHandle[x]='0';
-                                }
+                        if(bufferLCD2.valueKeys[0]==4){
+                            for(x=0;x<=bufferLCD2.valueKeys[0];x++){
+                                passwordSeller[x]=bufferLCD2.valueKeys[x];
                             }
-                            isr_2_StartEx(timerAnimation2); 
-                            Waitable_2_Start();
-                            countAnimation2=0;
-                            bufferLCD2.stateMux[1]=0x41;//Peticion Turno
-                            bufferLCD2.authorizationFlag=0;
-                            show_picture(1,55,10);
-                            write_button(1,'W');//Espere 1 momento
-                            flowLCD2=43;
-                        }else{
-                            show_picture(2,44,3);
-                            write_button(2,'E');//Error de sistema
+                            set_picture(2,55);
+                            write_button(2,'W');//Espere 1 momento
+                            if(get_totals(side.a.dir)!=0 && get_totals(side.b.dir)!=0){
+                                if(read_date()==1 && read_time()==1){
+                                    for(x=0;x<=2;x++){
+                                        bufferLCD2.timeDownHandle[x*2]=((time[2-x]&0xF0)>>4)+48;
+                                        bufferLCD2.timeDownHandle[(x*2)+1]=(time[2-x]&0x0F)+48;
+                                        bufferLCD2.dateDownHandle[x*2]=((date[2-x]&0xF0)>>4)+48;
+                                        bufferLCD2.dateDownHandle[(x*2)+1]=(date[2-x]&0x0F)+48;
+                                    }
+                                }else{
+                                    for(x=0;x<6;x++){
+                                        bufferLCD2.timeDownHandle[x]='0';
+                                        bufferLCD2.dateDownHandle[x]='0';
+                                    }
+                                }
+                                isr_2_StartEx(timerAnimation2); 
+                                Waitable_2_Start();
+                                countAnimation2=0;
+                                bufferLCD2.stateMux[1]=0x41;//Peticion Turno
+                                bufferLCD2.authorizationFlag=0;
+                                show_picture(1,55,10);
+                                write_button(1,'W');//Espere 1 momento
+                                flowLCD2=43;
+                            }else{
+                                show_picture(2,44,3);
+                                write_button(2,'E');//Error de sistema
+                            }
                         }
                     }
                 break;
@@ -8128,6 +8354,9 @@ void polling_LCD2(void){
                 }
                 idSeller[0]=20;
                 typeIdSeller=CY_GET_REG8(CYDEV_EE_BASE + 955);
+                for(x=0;x<4;x++){
+                    passwordSeller[x+1]=(CY_GET_REG8(CYDEV_EE_BASE + (938+x)));
+                }
                 isr_2_Stop(); 
                 Waitable_2_Stop();
                 show_picture(2,44,3);
@@ -8137,7 +8366,7 @@ void polling_LCD2(void){
         break;
             
         case 44://Posicion Bloqueada por Corte
-            if(countAnimation2>2000){
+            if(countAnimation2>12000){
                 isr_2_Stop(); 
                 Waitable_2_Stop();
                 show_picture(2,44,3);
@@ -8161,6 +8390,7 @@ void polling_LCD2(void){
                         }
                     }
                     if(x>6){
+                        stateBeagleSoft=1;//En comunicacion
                         show_picture(2,54,4);
                         write_button(2,'G');//Gracias
                         for(x=0;x<3;x++){
@@ -8180,6 +8410,109 @@ void polling_LCD2(void){
                 break;
             }
         break;
+            
+        case 46://Contraseña Vendedor para bloquear turno
+            switch (alphanumeric_keyboard(2,4,'*')){
+                case 0: //Cancelar
+                    set_picture(2,64);
+                    flowLCD2=40;
+                    if(turn==1){//Abierto
+                        write_button(2,'x');//Cerrar Turno
+                        write_button(2,'v');//ID Vendedor
+                    }else{//Cerrado
+                        write_button(2,'y');//Abrir Turno
+                    }
+                break;
+                    
+                case 1: //Enter
+                    if(flowLCD1>4){
+                        show_picture(2,44,3);
+                        write_button(2,'E');//Error de sistema
+                    }else{
+                        if(bufferLCD2.valueKeys[0]==4){
+                            for(x=1;x<=4;x++){
+                                if(bufferLCD2.valueKeys[x]!=passwordSeller[x]){
+                                    show_picture(2,44,3);
+                                    write_button(2,'E');//Error de sistema
+                                    break;
+                                }
+                            }
+                            if(x>=5){
+                                lockTurn=!lockTurn;
+                                show_picture(2,54,4);
+                                write_button(2,'G');
+                            }
+                        }
+                    }
+                break;
+            }
+        break;
+    }
+}
+
+/*
+*********************************************************************************************************
+*                                         void polling_Pump(void)
+*
+* Description : Pregunta estado al surtidor cada segundo
+*               
+*
+* Argument(s) : none
+*
+* Return(s)   : none
+*
+* Caller(s)   : 
+*
+* Note(s)     : none.
+*********************************************************************************************************
+*/
+
+void polling_Pump(void){
+    uint8 state=0;
+    if(countPump>4){
+        if(bufferLCD1.stateMux[1]==0x16 || bufferLCD1.stateMux[1]==0x1F){//Espera o Lazo desconectado
+            Pump_AL_ClearRxBuffer();
+            Pump_AL_PutChar(side.a.dir);
+            CyDelay(65);
+            if(Pump_AL_GetRxBufferSize()>=1){
+                state=Pump_AL_ReadRxData();
+                if(state==(0x60|side.a.dir) || state==(0x70|side.a.dir) || state==(0x80|side.a.dir) || state==(0x90|side.a.dir)){
+                    bufferLCD1.stateMux[1]=0x16;
+                }else{
+                    bufferLCD1.stateMux[1]=0x1F;
+                }
+                Pump_AL_ClearRxBuffer();
+            }else{
+                bufferLCD1.stateMux[1]=0x1F;
+            }
+        }
+        if(bufferLCD2.stateMux[1]==0x16 || bufferLCD2.stateMux[1]==0x1F){//Espera o Lazo desconectado
+            Pump_AL_ClearRxBuffer();
+            Pump_AL_PutChar(side.b.dir);
+            CyDelay(65);
+            if(Pump_AL_GetRxBufferSize()>=1){
+                state=Pump_AL_ReadRxData();
+                if(state==(0x60|side.b.dir) || state==(0x70|side.b.dir) || state==(0x80|side.b.dir) || state==(0x90|side.b.dir)){
+                    bufferLCD2.stateMux[1]=0x16;
+                }else{
+                    bufferLCD2.stateMux[1]=0x1F;
+                }
+                Pump_AL_ClearRxBuffer();
+            }else{
+                bufferLCD2.stateMux[1]=0x1F;
+            }
+        }
+        if(flowLCD1==44){
+            Pump_AL_PutChar(0x10|side.a.dir);//Autoriza el surtidor
+            CyDelay(60);
+            Pump_AL_PutChar(0x30|side.a.dir);//Detiene el surtidor
+        }
+        if(flowLCD2==44){
+            Pump_AL_PutChar(0x10|side.b.dir);//Autoriza el surtidor
+            CyDelay(60);
+            Pump_AL_PutChar(0x30|side.b.dir);//Detiene el surtidor 
+        }
+        countPump=0;
     }
 }
 
@@ -8270,6 +8603,27 @@ CY_ISR(timerBeagleTX){
 
 /*
 *********************************************************************************************************
+*                                         CY_ISR(timerPump)
+*
+* Description : Interrupcion que temporiza tiempos de espera para preguntar al surtidor
+*               
+*
+* Argument(s) : none
+*
+* Return(s)   : none
+*
+* Caller(s)   : 
+*
+* Note(s)     : none.
+*********************************************************************************************************
+*/
+CY_ISR(timerPump){
+    Waitable_4_ReadStatusRegister();
+    countPump++;
+}
+
+/*
+*********************************************************************************************************
 *                                         main( void )
 *
 * Description : Ejecuta las funciones de inicio y verifica el estado de las pantallas
@@ -8325,6 +8679,8 @@ int main(){
 		CyWdtClear();
         polling_LCD2();
 		CyWdtClear();
+        polling_Pump();
+        CyWdtClear();
         polling_beagle_TX();
     }	
 }

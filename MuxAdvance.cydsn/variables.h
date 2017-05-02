@@ -44,6 +44,7 @@
     volatile uint64 countAnimation1; //Contador de animacion para pantalla 1
     volatile uint64 countAnimation2; //Contador de animacion para pantalla 2
     volatile uint64 countBeagleTX;   //Contador de tiempos de envio de informacion al beagle
+    volatile uint64 countPump;       //Contador de tiempos de pregunta estado a surtidor
     volatile uint32 flowLCD1;        //Flujo pantalla 1
     volatile uint32 flowLCD2;        //Flujo pantalla 2
     volatile uint8 digits;           //Version de digitos del surtidor
@@ -65,12 +66,15 @@
     volatile uint8 date[3];          //Fecha
     volatile uint8 screen[2];        //Pantallas 0:Inhabilitada 1:Habilitada => [0]Tipo de vehiculo [1]Ingrese N° Venta Forma
     volatile uint8 residue[14];      //Residuo de operacion resta 
-    uint8 temporal[30];              //Utilizada para realizar operaciones temporales 
+    uint8 temporal[30];              //Utilizada para realizar operaciones temporales
+    uint8 temporalCom[30];           //Utilizada para realizar operaciones temporales de comparacion
     volatile uint8 turn;             //Habilita si el turno esta 1=abierto o 0=cerrado
+    volatile uint8 lockTurn;         //Bloquea temporalmente el turno 1=bloqueado o 0=desbloqueado
     volatile uint8 idSeller[25];     //Identificacion de vendedor
     volatile uint8 typeIdSeller;     //Tipo de identificacion del vendedor
     volatile uint8 passwordSeller[8];//Contraseña Vendedor
     volatile uint8 flagResetMux;     //Bandera que habilita Resetar el MUX
+    volatile uint8 stateBeagleSoft;  //Indica si el Beagle se encuentra en comunicaion con el software
     
 /*
 *********************************************************************************************************
@@ -82,7 +86,9 @@
 struct buffer{
     uint8 idType;                   //Tipo de metodo de Identificacion 
     uint8 idSerial[25];             //Serial del metodo de identificacion
+    uint8 idSerialCom[25];          //Serial del metodo de identificacion para comparacion
     uint8 wayToPay;                 //Forma de pago seleccionada
+    uint8 flagWayToPayMixed;        //Bandera para indicar forma de pago mixta
     uint8 selectedSale[10];         //N° de Venta seleccionada a discriminar para forma de pago
     uint8 moneySelectedSale[10];    //Valor recibido de la venta seleccionada a discriminar para forma de pago,mismo para enviar
     uint8 serialSelectedSale[25];   //Serial ID de la venta seleccionada a discriminar para forma de pago

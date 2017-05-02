@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <blockRegMap version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cypress.com/xsd/cyblockregmap cyblockregmap.xsd" xmlns="http://cypress.com/xsd/cyblockregmap">
-  <block name="ZeroTerminal_3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Waitable_3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="VirtualMux_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -59,10 +58,10 @@
     <register name="Waitable_3_COUNTER" address="0x40004F1E" bitWidth="16" desc="TMRx.CNT_CMP0 - Current Down Counter Value" hidden="false" />
   </block>
   <block name="ZeroTerminal_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Rx_Beagle" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="isr_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="isr_4" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="ZeroTerminal_4" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="EEPROM_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="ZeroTerminal_3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="I2C_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="BusClock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="or_ff" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -148,7 +147,7 @@
     </register>
   </block>
   <block name="SCL" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="isr_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="SDA" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Waitable_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="VirtualMux_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -207,37 +206,13 @@
     <register name="Waitable_2_COUNTER" address="0x40004F12" bitWidth="16" desc="TMRx.CNT_CMP0 - Current Down Counter Value" hidden="false" />
   </block>
   <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="EEPROM_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Rs3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Rs2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Rs1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="cy_boot" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Rs5" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Rs4" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Tag" BASE="0x0" SIZE="0x0" desc="UART" visible="true" hidden="false">
-    <block name="IntClock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-    <block name="VirtualMux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-    <block name="RXInternalInterrupt" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-    <block name="BUART" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-    <register name="RX_Tag_RX_ADDRESS1" address="0x40006424" bitWidth="8" desc="RX Address1 Register" hidden="false" />
-    <register name="RX_Tag_RX_ADDRESS2" address="0x40006434" bitWidth="8" desc="RX Address2 Register" hidden="false" />
-    <register name="RX_Tag_RX_DATA" address="0x40006444" bitWidth="8" desc="RX Data Register" hidden="false" />
-    <register name="RX_Tag_RX_STATUS" address="0x40006463" bitWidth="8" desc="RX status register" hidden="false">
-      <field name="Tag_RX_STS_MRKSPC" from="0" to="0" access="R" resetVal="" desc="" />
-      <field name="Tag_RX_STS_BREAK" from="1" to="1" access="R" resetVal="" desc="" />
-      <field name="Tag_RX_STS_PAR_ERROR" from="2" to="2" access="R" resetVal="" desc="" />
-      <field name="Tag_RX_STS_STOP_ERROR" from="3" to="3" access="R" resetVal="" desc="" />
-      <field name="Tag_RX_STS_OVERRUN" from="4" to="4" access="R" resetVal="" desc="" />
-      <field name="Tag_RX_STS_FIFO_NOTEMPTY" from="5" to="5" access="R" resetVal="" desc="" />
-      <field name="Tag_RX_STS_ADDR_MATCH" from="6" to="6" access="R" resetVal="" desc="" />
-    </register>
-    <register name="TX_Tag_TX_DATA" address="0x40006544" bitWidth="8" desc="TX Data Register" hidden="false" />
-    <register name="TX_Tag_TX_STATUS" address="0x4000656B" bitWidth="8" desc="TX status register" hidden="false">
-      <field name="Tag_TX_STS_COMPLETE" from="0" to="0" access="R" resetVal="" desc="" />
-      <field name="Tag_TX_STS_FIFO_EMPTY" from="1" to="1" access="R" resetVal="" desc="" />
-      <field name="Tag_TX_STS_FIFO_FULL" from="2" to="2" access="R" resetVal="" desc="" />
-      <field name="Tag_TX_STS_FIFO_NOT_FULL" from="3" to="3" access="R" resetVal="" desc="" />
-    </register>
-  </block>
   <block name="Beagle" BASE="0x0" SIZE="0x0" desc="UART" visible="true" hidden="false">
     <block name="RXInternalInterrupt" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="VirtualMux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -264,10 +239,34 @@
     </register>
   </block>
   <block name="Tx_Beagle" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Bootloadable_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Rx_Beagle" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Tx_Tag" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Rx_Tag" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="SDA" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Tag" BASE="0x0" SIZE="0x0" desc="UART" visible="true" hidden="false">
+    <block name="IntClock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="VirtualMux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="RXInternalInterrupt" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="BUART" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <register name="RX_Tag_RX_ADDRESS1" address="0x40006424" bitWidth="8" desc="RX Address1 Register" hidden="false" />
+    <register name="RX_Tag_RX_ADDRESS2" address="0x40006434" bitWidth="8" desc="RX Address2 Register" hidden="false" />
+    <register name="RX_Tag_RX_DATA" address="0x40006444" bitWidth="8" desc="RX Data Register" hidden="false" />
+    <register name="RX_Tag_RX_STATUS" address="0x40006463" bitWidth="8" desc="RX status register" hidden="false">
+      <field name="Tag_RX_STS_MRKSPC" from="0" to="0" access="R" resetVal="" desc="" />
+      <field name="Tag_RX_STS_BREAK" from="1" to="1" access="R" resetVal="" desc="" />
+      <field name="Tag_RX_STS_PAR_ERROR" from="2" to="2" access="R" resetVal="" desc="" />
+      <field name="Tag_RX_STS_STOP_ERROR" from="3" to="3" access="R" resetVal="" desc="" />
+      <field name="Tag_RX_STS_OVERRUN" from="4" to="4" access="R" resetVal="" desc="" />
+      <field name="Tag_RX_STS_FIFO_NOTEMPTY" from="5" to="5" access="R" resetVal="" desc="" />
+      <field name="Tag_RX_STS_ADDR_MATCH" from="6" to="6" access="R" resetVal="" desc="" />
+    </register>
+    <register name="TX_Tag_TX_DATA" address="0x40006544" bitWidth="8" desc="TX Data Register" hidden="false" />
+    <register name="TX_Tag_TX_STATUS" address="0x4000656B" bitWidth="8" desc="TX status register" hidden="false">
+      <field name="Tag_TX_STS_COMPLETE" from="0" to="0" access="R" resetVal="" desc="" />
+      <field name="Tag_TX_STS_FIFO_EMPTY" from="1" to="1" access="R" resetVal="" desc="" />
+      <field name="Tag_TX_STS_FIFO_FULL" from="2" to="2" access="R" resetVal="" desc="" />
+      <field name="Tag_TX_STS_FIFO_NOT_FULL" from="3" to="3" access="R" resetVal="" desc="" />
+    </register>
+  </block>
   <block name="Tx_LCD1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Rx_LCD1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Tx_PL" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -488,8 +487,8 @@
       </field>
       <field name="HW_EN" from="7" to="7" access="RW" resetVal="" desc="When set Timer Enable controls counting." />
     </register>
-    <register name="Waitable_4_PERIOD" address="0x40004F28" bitWidth="8" desc="TMRx.PER0 - Assigned Period" hidden="false" />
-    <register name="Waitable_4_COUNTER" address="0x40004F2A" bitWidth="8" desc="TMRx.CNT_CMP0 - Current Down Counter Value" hidden="false" />
+    <register name="Waitable_4_PERIOD" address="0x40004F28" bitWidth="16" desc="TMRx.PER0 - Assigned Period" hidden="false" />
+    <register name="Waitable_4_COUNTER" address="0x40004F2A" bitWidth="16" desc="TMRx.CNT_CMP0 - Current Down Counter Value" hidden="false" />
   </block>
   <block name="Pin_B3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="isr_3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />

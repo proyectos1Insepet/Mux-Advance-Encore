@@ -54,8 +54,9 @@
 */
 
 uint8 serial_codetag(uint8 side){
-    uint8 buffer[20],x,check;
+    uint8 buffer[20],x,check;       
     Tag_ClearRxBuffer();
+    Tag_ClearTxBuffer();
     Tag_PutChar('M');
     Tag_PutChar('R');
     Tag_PutChar(side);
@@ -85,5 +86,6 @@ uint8 serial_codetag(uint8 side){
             return 0;
         }
     }
+    
     return 0;
 }

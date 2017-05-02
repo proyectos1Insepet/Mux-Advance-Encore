@@ -128,7 +128,7 @@ uint8_t buffer[18]={0xAA,0x98,0,0,0x01,0x39,0x23,0xC5,0x02,0x00,0x00,0xFF,0xFF,0
 */
 
 void write_button(uint8 lcd, uint8 screen){
-    uint8 x,y,flag;
+    uint8 x,y,flag,mixto[8]="Mix     ";
     switch(screen){
         case 'M'://Menu
             for(x=0;x<8;x++){
@@ -154,9 +154,10 @@ void write_button(uint8 lcd, uint8 screen){
             
         case 'S'://Venta
             for(x=0;x<8;x++){
-                write_LCD(lcd,button[12][x],9,x+11,1,0xFFFF,'Y');  //Nombre de boton Contado
-                write_LCD(lcd,button[13][x],15,x+11,1,0xFFFF,'Y');  //Nombre de boton Credito
-                write_LCD(lcd,button[70][x],21,x+11,1,0xFFFF,'Y');  //Nombre de boton Forma de pago
+                write_LCD(lcd,button[12][x],10,x+11,1,0xFFFF,'Y');  //Nombre de boton Contado
+                write_LCD(lcd,button[13][x],16,x+11,1,0xFFFF,'Y');  //Nombre de boton Credito
+                write_LCD(lcd,button[70][x],22,x+11,1,0xFFFF,'Y');  //Nombre de boton Forma de pago
+                write_LCD(lcd,mixto[x],28,x+11,1,0xFFFF,'Y');   //Nombre de boton Forma de pago MIXTA
             }
         break;
             
@@ -608,10 +609,10 @@ void write_button(uint8 lcd, uint8 screen){
                 write_LCD(lcd,button[90][x],2,x+1,2,0x2110,'Y');   //Nombre de imagen Tipo de vehiculo Renglon 1
                 write_LCD(lcd,button[91][x],2,x+9,2,0x2110,'Y');   //Nombre de imagen Tipo de vehiculo Renglon 2
                 write_LCD(lcd,button[92][x],9,x+4,1,0xFFFF,'Y');     //Nombre Tipo de vehiculo 1
-                write_LCD(lcd,button[93][x],9,x+15,1,0xFFFF,'Y');    //Nombre Tipo de vehiculo 2
-                write_LCD(lcd,button[94][x],15,x+4,1,0xFFFF,'Y');    //Nombre Tipo de vehiculo 3
-                write_LCD(lcd,button[95][x],15,x+15,1,0xFFFF,'Y');   //Nombre Tipo de vehiculo 4
-                write_LCD(lcd,button[96][x],21,x+4,1,0xFFFF,'Y');    //Nombre Tipo de vehiculo 5
+                write_LCD(lcd,button[95][x],9,x+15,1,0xFFFF,'Y');    //Nombre Tipo de vehiculo 2
+                write_LCD(lcd,button[93][x],15,x+4,1,0xFFFF,'Y');    //Nombre Tipo de vehiculo 3
+                write_LCD(lcd,button[96][x],15,x+15,1,0xFFFF,'Y');   //Nombre Tipo de vehiculo 4
+                write_LCD(lcd,button[94][x],21,x+4,1,0xFFFF,'Y');    //Nombre Tipo de vehiculo 5
                 write_LCD(lcd,button[97][x],21,x+15,1,0xFFFF,'Y');   //Nombre Tipo de vehiculo 6
             }
         break;
@@ -725,6 +726,21 @@ void write_button(uint8 lcd, uint8 screen){
                 write_LCD(lcd,button[19][x],15,x+5,2,0x2110,'Y');   //Nombre de imagen Corte Renglon 1
                 write_LCD(lcd,button[32][x],19,x+5,2,0x2110,'Y');   //Nombre de imagen Corte Renglon 2
                 write_LCD(lcd,button[33][x],21,x+5,2,0x2110,'Y');   //Nombre de imagen Corte Renglon 3
+            }
+        break; 
+            
+        case 'v'://ID Vendedor
+            flag=0;
+            y=5;
+            write_LCD(lcd,'I',4,2,1,0x0000,'Y');
+            write_LCD(lcd,'D',4,3,1,0x0000,'Y');
+            for(x=1;x<=20;x++){
+                if(idSeller[x]=='0' && flag==0){
+                }else{
+                    write_LCD(lcd,idSeller[x],4,y,1,0x0000,'Y');  //Numero de identificacion del vendedor
+                    flag=1;
+                    y++;
+                }
             }
         break;
     }

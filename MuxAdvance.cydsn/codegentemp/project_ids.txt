@@ -1,6 +1,6 @@
-C:\Users\Proyectos_Hardware\Dropbox\Proyecto Controller\Mux Advance Encore V5_00\MuxAdvance.cydsn\MuxAdvance.cyprj|e7cf84e8-fefd-49cd-b29d-c3fb00cbb199
-C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|5b5b5883-83d8-4ed9-ac3b-c8177230cc73
-C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|ecfed4cd-9193-499f-8473-04f026002ed0
-C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|452c44d9-95da-4f9e-b1e7-45780d4540cc
-C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|41de829a-f8fa-4db5-b2d3-5fc5603ab122
-C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|83394dae-033e-4723-9fdc-7612d7721b32
+C:\Users\Lenovo\Desktop\Hardware\Software Mux\Mux Advance Encore\MuxAdvance.cydsn\MuxAdvance.cyprj|8eaba0e3-fe66-49b1-9088-bb2d9e761297
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|48bdf3ca-3d3a-47e1-b5aa-76284affe456
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|4e091ee2-2eda-413a-a813-117055058fff
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|76a309e9-d0d3-468e-aaea-b1ca6c2a89e0
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|ca7a4e72-b089-40e3-8aca-94cbcf8b820d
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|c52c7aca-b4bd-4f2f-8e99-33171145e46f

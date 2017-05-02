@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
   23:.\Generated_Source\PSoC5/Waitable_1.c **** 
   24:.\Generated_Source\PSoC5/Waitable_1.c **** #include "Waitable_1.h"
   25:.\Generated_Source\PSoC5/Waitable_1.c **** 
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 2
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 2
 
 
   26:.\Generated_Source\PSoC5/Waitable_1.c **** uint8 Waitable_1_initVar = 0u;
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
   52 0014 1D4A     		ldr	r2, .L2+4
   53 0016 1D4B     		ldr	r3, .L2+4
   54 0018 1B78     		ldrb	r3, [r3]
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 3
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 3
 
 
   55 001a DBB2     		uxtb	r3, r3
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
   63 002a DBB2     		uxtb	r3, r3
   64 002c 23F03003 		bic	r3, r3, #48
   65 0030 DBB2     		uxtb	r3, r3
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 4
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 4
 
 
   66 0032 1370     		strb	r3, [r2]
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  122:.\Generated_Source\PSoC5/Waitable_1.c ****         Waitable_1_CAPTURE_COUNT_CTRL |= Waitable_1_CNTR_ENABLE;
  123:.\Generated_Source\PSoC5/Waitable_1.c ****         Waitable_1_SetCaptureCount(Waitable_1_INIT_CAPTURE_COUNT);
  124:.\Generated_Source\PSoC5/Waitable_1.c ****     #endif /* Configure capture counter value */
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 5
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 5
 
 
  125:.\Generated_Source\PSoC5/Waitable_1.c **** 
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  120              		.section	.text.Waitable_1_Enable,"ax",%progbits
  121              		.align	2
  122              		.global	Waitable_1_Enable
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 6
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 6
 
 
  123              		.thumb
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  187:.\Generated_Source\PSoC5/Waitable_1.c **** 
  188:.\Generated_Source\PSoC5/Waitable_1.c ****     /* Remove assignment if control register is removed */
  189:.\Generated_Source\PSoC5/Waitable_1.c ****     #if (!Waitable_1_UDB_CONTROL_REG_REMOVED || Waitable_1_UsingFixedFunction)
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 7
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 7
 
 
  190:.\Generated_Source\PSoC5/Waitable_1.c ****         Waitable_1_CONTROL |= Waitable_1_CTRL_ENABLE;
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  211:.\Generated_Source\PSoC5/Waitable_1.c **** *  Waitable_1_initVar: Is modified when this function is called for the
  212:.\Generated_Source\PSoC5/Waitable_1.c **** *   first time. Is used to ensure that initialization happens only once.
  213:.\Generated_Source\PSoC5/Waitable_1.c **** *
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 8
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 8
 
 
  214:.\Generated_Source\PSoC5/Waitable_1.c **** *******************************************************************************/
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  227:.\Generated_Source\PSoC5/Waitable_1.c **** 
  228:.\Generated_Source\PSoC5/Waitable_1.c **** 
  229:.\Generated_Source\PSoC5/Waitable_1.c **** /*******************************************************************************
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 9
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 9
 
 
  230:.\Generated_Source\PSoC5/Waitable_1.c **** * Function Name: Waitable_1_Stop
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  254              		.loc 1 257 0
  255 0024 074A     		ldr	r2, .L12+8
  256 0026 074B     		ldr	r3, .L12+8
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 10
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 10
 
 
  257 0028 1B78     		ldrb	r3, [r3]
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  288              		.cfi_startproc
  289              		@ args = 0, pretend = 0, frame = 8
  290              		@ frame_needed = 1, uses_anonymous_args = 0
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 11
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 11
 
 
  291              		@ link register save eliminated.
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  296:.\Generated_Source\PSoC5/Waitable_1.c **** *  void
  297:.\Generated_Source\PSoC5/Waitable_1.c **** *
  298:.\Generated_Source\PSoC5/Waitable_1.c **** * Side Effects:
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 12
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 12
 
 
  299:.\Generated_Source\PSoC5/Waitable_1.c **** *  An existing hardware capture could be overwritten.
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  317:.\Generated_Source\PSoC5/Waitable_1.c **** *
  318:.\Generated_Source\PSoC5/Waitable_1.c **** * Summary:
  319:.\Generated_Source\PSoC5/Waitable_1.c **** *  Reads the status register and returns it's state. This function should use
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 13
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 13
 
 
  320:.\Generated_Source\PSoC5/Waitable_1.c **** *  defined types for the bit-field information as the bits in this register may
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  403              	.LFB7:
  337:.\Generated_Source\PSoC5/Waitable_1.c **** 
  338:.\Generated_Source\PSoC5/Waitable_1.c **** 
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 14
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 14
 
 
  339:.\Generated_Source\PSoC5/Waitable_1.c **** #if (!Waitable_1_UDB_CONTROL_REG_REMOVED) /* Remove API if control register is unused */
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  433              		.size	Waitable_1_ReadControlRegister, .-Waitable_1_ReadControlRegister
  434              		.section	.text.Waitable_1_WriteControlRegister,"ax",%progbits
  435              		.align	2
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 15
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 15
 
 
  436              		.global	Waitable_1_WriteControlRegister
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  467              		.cfi_restore 7
  468              		.cfi_def_cfa_offset 0
  469 0018 7047     		bx	lr
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 16
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 16
 
 
  470              	.L30:
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  412:.\Generated_Source\PSoC5/Waitable_1.c **** }
  499              		.loc 1 412 0
  500 000a 1846     		mov	r0, r3
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 17
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 17
 
 
  501 000c BD46     		mov	sp, r7
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  535 0006 0346     		mov	r3, r0
  536 0008 FB80     		strh	r3, [r7, #6]	@ movhi
  433:.\Generated_Source\PSoC5/Waitable_1.c ****     #if(Waitable_1_UsingFixedFunction)
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 18
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 18
 
 
  434:.\Generated_Source\PSoC5/Waitable_1.c ****         uint16 period_temp = (uint16)period;
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  456:.\Generated_Source\PSoC5/Waitable_1.c **** uint16 Waitable_1_ReadCapture(void) 
  457:.\Generated_Source\PSoC5/Waitable_1.c **** {
  569              		.loc 1 457 0
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 19
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 19
 
 
  570              		.cfi_startproc
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  475:.\Generated_Source\PSoC5/Waitable_1.c **** *
  476:.\Generated_Source\PSoC5/Waitable_1.c **** * Return:
  477:.\Generated_Source\PSoC5/Waitable_1.c **** *  void
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 20
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 20
 
 
  478:.\Generated_Source\PSoC5/Waitable_1.c **** *
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  647              		.type	Waitable_1_ReadCounter, %function
  648              	Waitable_1_ReadCounter:
  649              	.LFB13:
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 21
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 21
 
 
  492:.\Generated_Source\PSoC5/Waitable_1.c **** 
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  670              		.cfi_def_cfa_register 13
  671              		@ sp needed
  672 0012 5DF8047B 		ldr	r7, [sp], #4
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 22
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 22
 
 
  673              		.cfi_restore 7
@@ -1282,48 +1282,48 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  691 0006 00000000 		.4byte	.Ldebug_abbrev0
  692 000a 04       		.byte	0x4
  693 000b 01       		.uleb128 0x1
- 694 000c 1B010000 		.4byte	.LASF35
+ 694 000c 0B010000 		.4byte	.LASF35
  695 0010 01       		.byte	0x1
- 696 0011 FF010000 		.4byte	.LASF36
- 697 0015 7E000000 		.4byte	.LASF37
+ 696 0011 EF010000 		.4byte	.LASF36
+ 697 0015 0B000000 		.4byte	.LASF37
  698 0019 00000000 		.4byte	.Ldebug_ranges0+0
  699 001d 00000000 		.4byte	0
  700 0021 00000000 		.4byte	.Ldebug_line0
  701 0025 02       		.uleb128 0x2
  702 0026 01       		.byte	0x1
  703 0027 06       		.byte	0x6
- 704 0028 4F030000 		.4byte	.LASF0
+ 704 0028 3F030000 		.4byte	.LASF0
  705 002c 02       		.uleb128 0x2
  706 002d 01       		.byte	0x1
  707 002e 08       		.byte	0x8
- 708 002f 6B000000 		.4byte	.LASF1
+ 708 002f BD000000 		.4byte	.LASF1
  709 0033 02       		.uleb128 0x2
  710 0034 02       		.byte	0x2
  711 0035 05       		.byte	0x5
- 712 0036 26030000 		.4byte	.LASF2
+ 712 0036 16030000 		.4byte	.LASF2
  713 003a 02       		.uleb128 0x2
  714 003b 02       		.byte	0x2
  715 003c 07       		.byte	0x7
- 716 003d 24000000 		.4byte	.LASF3
+ 716 003d 76000000 		.4byte	.LASF3
  717 0041 02       		.uleb128 0x2
  718 0042 04       		.byte	0x4
  719 0043 05       		.byte	0x5
- 720 0044 30030000 		.4byte	.LASF4
+ 720 0044 20030000 		.4byte	.LASF4
  721 0048 02       		.uleb128 0x2
  722 0049 04       		.byte	0x4
  723 004a 07       		.byte	0x7
- 724 004b E0000000 		.4byte	.LASF5
+ 724 004b D0000000 		.4byte	.LASF5
  725 004f 02       		.uleb128 0x2
  726 0050 08       		.byte	0x8
  727 0051 05       		.byte	0x5
- 728 0052 BA020000 		.4byte	.LASF6
+ 728 0052 AA020000 		.4byte	.LASF6
  729 0056 02       		.uleb128 0x2
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 23
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 23
 
 
  730 0057 08       		.byte	0x8
  731 0058 07       		.byte	0x7
- 732 0059 25020000 		.4byte	.LASF7
+ 732 0059 15020000 		.4byte	.LASF7
  733 005d 03       		.uleb128 0x3
  734 005e 04       		.byte	0x4
  735 005f 05       		.byte	0x5
@@ -1331,31 +1331,31 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  737 0064 02       		.uleb128 0x2
  738 0065 04       		.byte	0x4
  739 0066 07       		.byte	0x7
- 740 0067 F2010000 		.4byte	.LASF8
+ 740 0067 E2010000 		.4byte	.LASF8
  741 006b 04       		.uleb128 0x4
- 742 006c 05010000 		.4byte	.LASF9
+ 742 006c F5000000 		.4byte	.LASF9
  743 0070 02       		.byte	0x2
  744 0071 A1       		.byte	0xa1
  745 0072 2C000000 		.4byte	0x2c
  746 0076 04       		.uleb128 0x4
- 747 0077 CC010000 		.4byte	.LASF10
+ 747 0077 BC010000 		.4byte	.LASF10
  748 007b 02       		.byte	0x2
  749 007c A2       		.byte	0xa2
  750 007d 3A000000 		.4byte	0x3a
  751 0081 02       		.uleb128 0x2
  752 0082 04       		.byte	0x4
  753 0083 04       		.byte	0x4
- 754 0084 4E000000 		.4byte	.LASF11
+ 754 0084 A0000000 		.4byte	.LASF11
  755 0088 02       		.uleb128 0x2
  756 0089 08       		.byte	0x8
  757 008a 04       		.byte	0x4
- 758 008b A9010000 		.4byte	.LASF12
+ 758 008b 99010000 		.4byte	.LASF12
  759 008f 02       		.uleb128 0x2
  760 0090 01       		.byte	0x1
  761 0091 08       		.byte	0x8
  762 0092 06000000 		.4byte	.LASF13
  763 0096 05       		.uleb128 0x5
- 764 0097 79000000 		.4byte	.LASF14
+ 764 0097 CB000000 		.4byte	.LASF14
  765 009b 02       		.byte	0x2
  766 009c 4B01     		.2byte	0x14b
  767 009e A2000000 		.4byte	0xa2
@@ -1371,20 +1371,20 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  777 00b8 02       		.uleb128 0x2
  778 00b9 04       		.byte	0x4
  779 00ba 07       		.byte	0x7
- 780 00bb 83020000 		.4byte	.LASF16
+ 780 00bb 73020000 		.4byte	.LASF16
  781 00bf 07       		.uleb128 0x7
- 782 00c0 16030000 		.4byte	.LASF17
+ 782 00c0 06030000 		.4byte	.LASF17
  783 00c4 01       		.byte	0x1
  784 00c5 2B       		.byte	0x2b
  785 00c6 00000000 		.4byte	.LFB0
  786 00ca 98000000 		.4byte	.LFE0-.LFB0
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 24
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 24
 
 
  787 00ce 01       		.uleb128 0x1
  788 00cf 9C       		.byte	0x9c
  789 00d0 08       		.uleb128 0x8
- 790 00d1 0B000000 		.4byte	.LASF18
+ 790 00d1 5D000000 		.4byte	.LASF18
  791 00d5 01       		.byte	0x1
  792 00d6 B4       		.byte	0xb4
  793 00d7 00000000 		.4byte	.LFB1
@@ -1392,7 +1392,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  795 00df 01       		.uleb128 0x1
  796 00e0 9C       		.byte	0x9c
  797 00e1 07       		.uleb128 0x7
- 798 00e2 D6020000 		.4byte	.LASF19
+ 798 00e2 C6020000 		.4byte	.LASF19
  799 00e6 01       		.byte	0x1
  800 00e7 D7       		.byte	0xd7
  801 00e8 00000000 		.4byte	.LFB2
@@ -1400,7 +1400,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  803 00f0 01       		.uleb128 0x1
  804 00f1 9C       		.byte	0x9c
  805 00f2 08       		.uleb128 0x8
- 806 00f3 AA020000 		.4byte	.LASF20
+ 806 00f3 9A020000 		.4byte	.LASF20
  807 00f7 01       		.byte	0x1
  808 00f8 F7       		.byte	0xf7
  809 00f9 00000000 		.4byte	.LFB3
@@ -1408,7 +1408,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  811 0101 01       		.uleb128 0x1
  812 0102 9C       		.byte	0x9c
  813 0103 09       		.uleb128 0x9
- 814 0104 B0010000 		.4byte	.LASF24
+ 814 0104 A0010000 		.4byte	.LASF24
  815 0108 01       		.byte	0x1
  816 0109 1701     		.2byte	0x117
  817 010b 00000000 		.4byte	.LFB4
@@ -1417,7 +1417,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  820 0114 9C       		.byte	0x9c
  821 0115 29010000 		.4byte	0x129
  822 0119 0A       		.uleb128 0xa
- 823 011a C8020000 		.4byte	.LASF26
+ 823 011a B8020000 		.4byte	.LASF26
  824 011e 01       		.byte	0x1
  825 011f 1701     		.2byte	0x117
  826 0121 6B000000 		.4byte	0x6b
@@ -1426,7 +1426,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  829 0127 77       		.sleb128 -9
  830 0128 00       		.byte	0
  831 0129 0B       		.uleb128 0xb
- 832 012a 3C020000 		.4byte	.LASF21
+ 832 012a 2C020000 		.4byte	.LASF21
  833 012e 01       		.byte	0x1
  834 012f 2E01     		.2byte	0x12e
  835 0131 00000000 		.4byte	.LFB5
@@ -1434,11 +1434,11 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  837 0139 01       		.uleb128 0x1
  838 013a 9C       		.byte	0x9c
  839 013b 0C       		.uleb128 0xc
- 840 013c 8C020000 		.4byte	.LASF22
+ 840 013c 7C020000 		.4byte	.LASF22
  841 0140 01       		.byte	0x1
  842 0141 4D01     		.2byte	0x14d
  843 0143 6B000000 		.4byte	0x6b
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 25
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 25
 
 
  844 0147 00000000 		.4byte	.LFB6
@@ -1446,7 +1446,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  846 014f 01       		.uleb128 0x1
  847 0150 9C       		.byte	0x9c
  848 0151 0C       		.uleb128 0xc
- 849 0152 D3010000 		.4byte	.LASF23
+ 849 0152 C3010000 		.4byte	.LASF23
  850 0156 01       		.byte	0x1
  851 0157 6401     		.2byte	0x164
  852 0159 6B000000 		.4byte	0x6b
@@ -1455,7 +1455,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  855 0165 01       		.uleb128 0x1
  856 0166 9C       		.byte	0x9c
  857 0167 09       		.uleb128 0x9
- 858 0168 63020000 		.4byte	.LASF25
+ 858 0168 53020000 		.4byte	.LASF25
  859 016c 01       		.byte	0x1
  860 016d 7B01     		.2byte	0x17b
  861 016f 00000000 		.4byte	.LFB8
@@ -1464,7 +1464,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  864 0178 9C       		.byte	0x9c
  865 0179 8D010000 		.4byte	0x18d
  866 017d 0A       		.uleb128 0xa
- 867 017e 0B010000 		.4byte	.LASF27
+ 867 017e FB000000 		.4byte	.LASF27
  868 0182 01       		.byte	0x1
  869 0183 7B01     		.2byte	0x17b
  870 0185 6B000000 		.4byte	0x6b
@@ -1473,7 +1473,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  873 018b 77       		.sleb128 -9
  874 018c 00       		.byte	0
  875 018d 0C       		.uleb128 0xc
- 876 018e 39030000 		.4byte	.LASF28
+ 876 018e 29030000 		.4byte	.LASF28
  877 0192 01       		.byte	0x1
  878 0193 9501     		.2byte	0x195
  879 0195 76000000 		.4byte	0x76
@@ -1482,7 +1482,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  882 01a1 01       		.uleb128 0x1
  883 01a2 9C       		.byte	0x9c
  884 01a3 09       		.uleb128 0x9
- 885 01a4 E7020000 		.4byte	.LASF29
+ 885 01a4 D7020000 		.4byte	.LASF29
  886 01a8 01       		.byte	0x1
  887 01a9 AF01     		.2byte	0x1af
  888 01ab 00000000 		.4byte	.LFB10
@@ -1491,18 +1491,18 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  891 01b4 9C       		.byte	0x9c
  892 01b5 D8010000 		.4byte	0x1d8
  893 01b9 0A       		.uleb128 0xa
- 894 01ba 1D000000 		.4byte	.LASF30
+ 894 01ba 6F000000 		.4byte	.LASF30
  895 01be 01       		.byte	0x1
  896 01bf AF01     		.2byte	0x1af
  897 01c1 76000000 		.4byte	0x76
  898 01c5 02       		.uleb128 0x2
  899 01c6 91       		.byte	0x91
  900 01c7 6E       		.sleb128 -18
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 26
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 26
 
 
  901 01c8 0D       		.uleb128 0xd
- 902 01c9 57020000 		.4byte	.LASF38
+ 902 01c9 47020000 		.4byte	.LASF38
  903 01cd 01       		.byte	0x1
  904 01ce B201     		.2byte	0x1b2
  905 01d0 76000000 		.4byte	0x76
@@ -1511,7 +1511,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  908 01d6 76       		.sleb128 -10
  909 01d7 00       		.byte	0
  910 01d8 0C       		.uleb128 0xc
- 911 01d9 54000000 		.4byte	.LASF31
+ 911 01d9 A6000000 		.4byte	.LASF31
  912 01dd 01       		.byte	0x1
  913 01de C801     		.2byte	0x1c8
  914 01e0 76000000 		.4byte	0x76
@@ -1520,7 +1520,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  917 01ec 01       		.uleb128 0x1
  918 01ed 9C       		.byte	0x9c
  919 01ee 09       		.uleb128 0x9
- 920 01ef FE020000 		.4byte	.LASF32
+ 920 01ef EE020000 		.4byte	.LASF32
  921 01f3 01       		.byte	0x1
  922 01f4 E001     		.2byte	0x1e0
  923 01f6 00000000 		.4byte	.LFB12
@@ -1529,7 +1529,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  926 01ff 9C       		.byte	0x9c
  927 0200 14020000 		.4byte	0x214
  928 0204 0A       		.uleb128 0xa
- 929 0205 13010000 		.4byte	.LASF33
+ 929 0205 03010000 		.4byte	.LASF33
  930 0209 01       		.byte	0x1
  931 020a E001     		.2byte	0x1e0
  932 020c 76000000 		.4byte	0x76
@@ -1538,7 +1538,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  935 0212 76       		.sleb128 -10
  936 0213 00       		.byte	0
  937 0214 0C       		.uleb128 0xc
- 938 0215 37000000 		.4byte	.LASF34
+ 938 0215 89000000 		.4byte	.LASF34
  939 0219 01       		.byte	0x1
  940 021a FC01     		.2byte	0x1fc
  941 021c 76000000 		.4byte	0x76
@@ -1547,7 +1547,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  944 0228 01       		.uleb128 0x1
  945 0229 9C       		.byte	0x9c
  946 022a 0E       		.uleb128 0xe
- 947 022b F2000000 		.4byte	.LASF39
+ 947 022b E2000000 		.4byte	.LASF39
  948 022f 01       		.byte	0x1
  949 0230 1A       		.byte	0x1a
  950 0231 6B000000 		.4byte	0x6b
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  955              		.section	.debug_abbrev,"",%progbits
  956              	.Ldebug_abbrev0:
  957 0000 01       		.uleb128 0x1
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 27
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 27
 
 
  958 0001 11       		.uleb128 0x11
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  1012 0037 16       		.uleb128 0x16
  1013 0038 00       		.byte	0
  1014 0039 03       		.uleb128 0x3
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 28
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 28
 
 
  1015 003a 0E       		.uleb128 0xe
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  1069 0071 12       		.uleb128 0x12
  1070 0072 06       		.uleb128 0x6
  1071 0073 40       		.uleb128 0x40
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 29
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 29
 
 
  1072 0074 18       		.uleb128 0x18
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  1126 00ac 3B       		.uleb128 0x3b
  1127 00ad 05       		.uleb128 0x5
  1128 00ae 27       		.uleb128 0x27
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 30
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 30
 
 
  1129 00af 19       		.uleb128 0x19
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  1183 00e7 03       		.uleb128 0x3
  1184 00e8 0E       		.uleb128 0xe
  1185 00e9 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 31
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 31
 
 
  1186 00ea 0B       		.uleb128 0xb
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  1240 0008 00000000 		.4byte	.LFB1
  1241 000c 48000000 		.4byte	.LFE1
  1242 0010 00000000 		.4byte	.LFB2
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 32
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 32
 
 
  1243 0014 20000000 		.4byte	.LFE2
@@ -1899,220 +1899,219 @@ ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 1
  1273              	.LASF13:
  1274 0006 63686172 		.ascii	"char\000"
  1274      00
- 1275              	.LASF18:
- 1276 000b 57616974 		.ascii	"Waitable_1_Enable\000"
- 1276      61626C65 
- 1276      5F315F45 
- 1276      6E61626C 
- 1276      6500
- 1277              	.LASF30:
- 1278 001d 70657269 		.ascii	"period\000"
- 1278      6F6400
- 1279              	.LASF3:
- 1280 0024 73686F72 		.ascii	"short unsigned int\000"
- 1280      7420756E 
- 1280      7369676E 
- 1280      65642069 
- 1280      6E7400
- 1281              	.LASF34:
- 1282 0037 57616974 		.ascii	"Waitable_1_ReadCounter\000"
- 1282      61626C65 
- 1282      5F315F52 
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 33
+ 1275              	.LASF37:
+ 1276 000b 433A5C55 		.ascii	"C:\\Users\\Lenovo\\Desktop\\Hardware\\Software Mux\\"
+ 1276      73657273 
+ 1276      5C4C656E 
+ 1276      6F766F5C 
+ 1276      4465736B 
+ 1277 0039 4D757820 		.ascii	"Mux Advance Encore\\MuxAdvance.cydsn\000"
+ 1277      41647661 
+ 1277      6E636520 
+ 1277      456E636F 
+ 1277      72655C4D 
+ 1278              	.LASF18:
+ 1279 005d 57616974 		.ascii	"Waitable_1_Enable\000"
+ 1279      61626C65 
+ 1279      5F315F45 
+ 1279      6E61626C 
+ 1279      6500
+ 1280              	.LASF30:
+ 1281 006f 70657269 		.ascii	"period\000"
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 33
 
 
- 1282      65616443 
- 1282      6F756E74 
- 1283              	.LASF11:
- 1284 004e 666C6F61 		.ascii	"float\000"
- 1284      7400
- 1285              	.LASF31:
- 1286 0054 57616974 		.ascii	"Waitable_1_ReadCapture\000"
- 1286      61626C65 
- 1286      5F315F52 
- 1286      65616443 
- 1286      61707475 
- 1287              	.LASF1:
- 1288 006b 756E7369 		.ascii	"unsigned char\000"
- 1288      676E6564 
- 1288      20636861 
- 1288      7200
- 1289              	.LASF14:
- 1290 0079 72656738 		.ascii	"reg8\000"
- 1290      00
- 1291              	.LASF37:
- 1292 007e 433A5C55 		.ascii	"C:\\Users\\Proyectos_Hardware\\Dropbox\\Proyecto Co"
- 1292      73657273 
- 1292      5C50726F 
- 1292      79656374 
- 1292      6F735F48 
- 1293 00ad 6E74726F 		.ascii	"ntroller\\Mux Advance Encore V4_00\\MuxAdvance.cyds"
- 1293      6C6C6572 
- 1293      5C4D7578 
- 1293      20416476 
- 1293      616E6365 
- 1294 00de 6E00     		.ascii	"n\000"
- 1295              	.LASF5:
- 1296 00e0 6C6F6E67 		.ascii	"long unsigned int\000"
- 1296      20756E73 
- 1296      69676E65 
- 1296      6420696E 
- 1296      7400
- 1297              	.LASF39:
- 1298 00f2 57616974 		.ascii	"Waitable_1_initVar\000"
- 1298      61626C65 
- 1298      5F315F69 
- 1298      6E697456 
- 1298      617200
- 1299              	.LASF9:
- 1300 0105 75696E74 		.ascii	"uint8\000"
- 1300      3800
- 1301              	.LASF27:
- 1302 010b 636F6E74 		.ascii	"control\000"
- 1302      726F6C00 
- 1303              	.LASF33:
- 1304 0113 636F756E 		.ascii	"counter\000"
- 1304      74657200 
- 1305              	.LASF35:
- 1306 011b 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
- 1306      4320342E 
- 1306      392E3320 
- 1306      32303135 
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 34
+ 1281      6F6400
+ 1282              	.LASF3:
+ 1283 0076 73686F72 		.ascii	"short unsigned int\000"
+ 1283      7420756E 
+ 1283      7369676E 
+ 1283      65642069 
+ 1283      6E7400
+ 1284              	.LASF34:
+ 1285 0089 57616974 		.ascii	"Waitable_1_ReadCounter\000"
+ 1285      61626C65 
+ 1285      5F315F52 
+ 1285      65616443 
+ 1285      6F756E74 
+ 1286              	.LASF11:
+ 1287 00a0 666C6F61 		.ascii	"float\000"
+ 1287      7400
+ 1288              	.LASF31:
+ 1289 00a6 57616974 		.ascii	"Waitable_1_ReadCapture\000"
+ 1289      61626C65 
+ 1289      5F315F52 
+ 1289      65616443 
+ 1289      61707475 
+ 1290              	.LASF1:
+ 1291 00bd 756E7369 		.ascii	"unsigned char\000"
+ 1291      676E6564 
+ 1291      20636861 
+ 1291      7200
+ 1292              	.LASF14:
+ 1293 00cb 72656738 		.ascii	"reg8\000"
+ 1293      00
+ 1294              	.LASF5:
+ 1295 00d0 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1295      20756E73 
+ 1295      69676E65 
+ 1295      6420696E 
+ 1295      7400
+ 1296              	.LASF39:
+ 1297 00e2 57616974 		.ascii	"Waitable_1_initVar\000"
+ 1297      61626C65 
+ 1297      5F315F69 
+ 1297      6E697456 
+ 1297      617200
+ 1298              	.LASF9:
+ 1299 00f5 75696E74 		.ascii	"uint8\000"
+ 1299      3800
+ 1300              	.LASF27:
+ 1301 00fb 636F6E74 		.ascii	"control\000"
+ 1301      726F6C00 
+ 1302              	.LASF33:
+ 1303 0103 636F756E 		.ascii	"counter\000"
+ 1303      74657200 
+ 1304              	.LASF35:
+ 1305 010b 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1305      4320342E 
+ 1305      392E3320 
+ 1305      32303135 
+ 1305      30333033 
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 34
 
 
- 1306      30333033 
- 1307 014e 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
- 1307      20726576 
- 1307      6973696F 
- 1307      6E203232 
- 1307      31323230 
- 1308 0181 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
- 1308      66756E63 
- 1308      74696F6E 
- 1308      2D736563 
- 1308      74696F6E 
- 1309              	.LASF12:
- 1310 01a9 646F7562 		.ascii	"double\000"
- 1310      6C6500
- 1311              	.LASF24:
- 1312 01b0 57616974 		.ascii	"Waitable_1_SetInterruptMode\000"
- 1312      61626C65 
- 1312      5F315F53 
- 1312      6574496E 
- 1312      74657272 
- 1313              	.LASF10:
- 1314 01cc 75696E74 		.ascii	"uint16\000"
- 1314      313600
- 1315              	.LASF23:
- 1316 01d3 57616974 		.ascii	"Waitable_1_ReadControlRegister\000"
- 1316      61626C65 
- 1316      5F315F52 
- 1316      65616443 
- 1316      6F6E7472 
- 1317              	.LASF8:
- 1318 01f2 756E7369 		.ascii	"unsigned int\000"
- 1318      676E6564 
- 1318      20696E74 
- 1318      00
- 1319              	.LASF36:
- 1320 01ff 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\Waitable_1.c\000"
- 1320      6E657261 
- 1320      7465645F 
- 1320      536F7572 
- 1320      63655C50 
- 1321              	.LASF7:
- 1322 0225 6C6F6E67 		.ascii	"long long unsigned int\000"
- 1322      206C6F6E 
- 1322      6720756E 
- 1322      7369676E 
- 1322      65642069 
- 1323              	.LASF21:
- 1324 023c 57616974 		.ascii	"Waitable_1_SoftwareCapture\000"
- 1324      61626C65 
- 1324      5F315F53 
- 1324      6F667477 
- 1324      61726543 
- 1325              	.LASF38:
- 1326 0257 70657269 		.ascii	"period_temp\000"
- 1326      6F645F74 
- 1326      656D7000 
- 1327              	.LASF25:
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 35
+ 1306 013e 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 1306      20726576 
+ 1306      6973696F 
+ 1306      6E203232 
+ 1306      31323230 
+ 1307 0171 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 1307      66756E63 
+ 1307      74696F6E 
+ 1307      2D736563 
+ 1307      74696F6E 
+ 1308              	.LASF12:
+ 1309 0199 646F7562 		.ascii	"double\000"
+ 1309      6C6500
+ 1310              	.LASF24:
+ 1311 01a0 57616974 		.ascii	"Waitable_1_SetInterruptMode\000"
+ 1311      61626C65 
+ 1311      5F315F53 
+ 1311      6574496E 
+ 1311      74657272 
+ 1312              	.LASF10:
+ 1313 01bc 75696E74 		.ascii	"uint16\000"
+ 1313      313600
+ 1314              	.LASF23:
+ 1315 01c3 57616974 		.ascii	"Waitable_1_ReadControlRegister\000"
+ 1315      61626C65 
+ 1315      5F315F52 
+ 1315      65616443 
+ 1315      6F6E7472 
+ 1316              	.LASF8:
+ 1317 01e2 756E7369 		.ascii	"unsigned int\000"
+ 1317      676E6564 
+ 1317      20696E74 
+ 1317      00
+ 1318              	.LASF36:
+ 1319 01ef 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\Waitable_1.c\000"
+ 1319      6E657261 
+ 1319      7465645F 
+ 1319      536F7572 
+ 1319      63655C50 
+ 1320              	.LASF7:
+ 1321 0215 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1321      206C6F6E 
+ 1321      6720756E 
+ 1321      7369676E 
+ 1321      65642069 
+ 1322              	.LASF21:
+ 1323 022c 57616974 		.ascii	"Waitable_1_SoftwareCapture\000"
+ 1323      61626C65 
+ 1323      5F315F53 
+ 1323      6F667477 
+ 1323      61726543 
+ 1324              	.LASF38:
+ 1325 0247 70657269 		.ascii	"period_temp\000"
+ 1325      6F645F74 
+ 1325      656D7000 
+ 1326              	.LASF25:
+ 1327 0253 57616974 		.ascii	"Waitable_1_WriteControlRegister\000"
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 35
 
 
- 1328 0263 57616974 		.ascii	"Waitable_1_WriteControlRegister\000"
- 1328      61626C65 
- 1328      5F315F57 
- 1328      72697465 
- 1328      436F6E74 
- 1329              	.LASF16:
- 1330 0283 73697A65 		.ascii	"sizetype\000"
- 1330      74797065 
- 1330      00
- 1331              	.LASF22:
- 1332 028c 57616974 		.ascii	"Waitable_1_ReadStatusRegister\000"
- 1332      61626C65 
- 1332      5F315F52 
- 1332      65616453 
- 1332      74617475 
- 1333              	.LASF20:
- 1334 02aa 57616974 		.ascii	"Waitable_1_Stop\000"
- 1334      61626C65 
- 1334      5F315F53 
- 1334      746F7000 
- 1335              	.LASF6:
- 1336 02ba 6C6F6E67 		.ascii	"long long int\000"
- 1336      206C6F6E 
- 1336      6720696E 
- 1336      7400
- 1337              	.LASF26:
- 1338 02c8 696E7465 		.ascii	"interruptMode\000"
- 1338      72727570 
- 1338      744D6F64 
- 1338      6500
- 1339              	.LASF19:
- 1340 02d6 57616974 		.ascii	"Waitable_1_Start\000"
- 1340      61626C65 
- 1340      5F315F53 
- 1340      74617274 
- 1340      00
- 1341              	.LASF29:
- 1342 02e7 57616974 		.ascii	"Waitable_1_WritePeriod\000"
- 1342      61626C65 
- 1342      5F315F57 
- 1342      72697465 
- 1342      50657269 
- 1343              	.LASF32:
- 1344 02fe 57616974 		.ascii	"Waitable_1_WriteCounter\000"
- 1344      61626C65 
- 1344      5F315F57 
- 1344      72697465 
- 1344      436F756E 
- 1345              	.LASF17:
- 1346 0316 57616974 		.ascii	"Waitable_1_Init\000"
- 1346      61626C65 
- 1346      5F315F49 
- 1346      6E697400 
- 1347              	.LASF2:
- 1348 0326 73686F72 		.ascii	"short int\000"
- 1348      7420696E 
- 1348      7400
-ARM GAS  C:\Users\PROYEC~1\AppData\Local\Temp\cccAu27t.s 			page 36
+ 1327      61626C65 
+ 1327      5F315F57 
+ 1327      72697465 
+ 1327      436F6E74 
+ 1328              	.LASF16:
+ 1329 0273 73697A65 		.ascii	"sizetype\000"
+ 1329      74797065 
+ 1329      00
+ 1330              	.LASF22:
+ 1331 027c 57616974 		.ascii	"Waitable_1_ReadStatusRegister\000"
+ 1331      61626C65 
+ 1331      5F315F52 
+ 1331      65616453 
+ 1331      74617475 
+ 1332              	.LASF20:
+ 1333 029a 57616974 		.ascii	"Waitable_1_Stop\000"
+ 1333      61626C65 
+ 1333      5F315F53 
+ 1333      746F7000 
+ 1334              	.LASF6:
+ 1335 02aa 6C6F6E67 		.ascii	"long long int\000"
+ 1335      206C6F6E 
+ 1335      6720696E 
+ 1335      7400
+ 1336              	.LASF26:
+ 1337 02b8 696E7465 		.ascii	"interruptMode\000"
+ 1337      72727570 
+ 1337      744D6F64 
+ 1337      6500
+ 1338              	.LASF19:
+ 1339 02c6 57616974 		.ascii	"Waitable_1_Start\000"
+ 1339      61626C65 
+ 1339      5F315F53 
+ 1339      74617274 
+ 1339      00
+ 1340              	.LASF29:
+ 1341 02d7 57616974 		.ascii	"Waitable_1_WritePeriod\000"
+ 1341      61626C65 
+ 1341      5F315F57 
+ 1341      72697465 
+ 1341      50657269 
+ 1342              	.LASF32:
+ 1343 02ee 57616974 		.ascii	"Waitable_1_WriteCounter\000"
+ 1343      61626C65 
+ 1343      5F315F57 
+ 1343      72697465 
+ 1343      436F756E 
+ 1344              	.LASF17:
+ 1345 0306 57616974 		.ascii	"Waitable_1_Init\000"
+ 1345      61626C65 
+ 1345      5F315F49 
+ 1345      6E697400 
+ 1346              	.LASF2:
+ 1347 0316 73686F72 		.ascii	"short int\000"
+ 1347      7420696E 
+ 1347      7400
+ 1348              	.LASF4:
+ARM GAS  C:\Users\Lenovo\AppData\Local\Temp\cc5D1Uyd.s 			page 36
 
 
- 1349              	.LASF4:
- 1350 0330 6C6F6E67 		.ascii	"long int\000"
- 1350      20696E74 
- 1350      00
- 1351              	.LASF28:
- 1352 0339 57616974 		.ascii	"Waitable_1_ReadPeriod\000"
- 1352      61626C65 
- 1352      5F315F52 
- 1352      65616450 
- 1352      6572696F 
- 1353              	.LASF0:
- 1354 034f 7369676E 		.ascii	"signed char\000"
- 1354      65642063 
- 1354      68617200 
- 1355              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
+ 1349 0320 6C6F6E67 		.ascii	"long int\000"
+ 1349      20696E74 
+ 1349      00
+ 1350              	.LASF28:
+ 1351 0329 57616974 		.ascii	"Waitable_1_ReadPeriod\000"
+ 1351      61626C65 
+ 1351      5F315F52 
+ 1351      65616450 
+ 1351      6572696F 
+ 1352              	.LASF0:
+ 1353 033f 7369676E 		.ascii	"signed char\000"
+ 1353      65642063 
+ 1353      68617200 
+ 1354              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

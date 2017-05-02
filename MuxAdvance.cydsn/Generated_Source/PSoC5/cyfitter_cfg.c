@@ -1,7 +1,7 @@
 /*******************************************************************************
 * File Name: cyfitter_cfg.c
 * 
-* PSoC Creator  3.3
+* PSoC Creator  3.3 SP1
 *
 * Description:
 * This file contains device initialization code.
@@ -30,7 +30,9 @@
     #define CYPACKED_ATTR __attribute__ ((packed))
     #define CYALIGNED __attribute__ ((aligned))
     #define CY_CFG_UNUSED __attribute__ ((unused))
-    #define CY_CFG_SECTION __attribute__ ((section(".psocinit")))
+    #ifndef CY_CFG_SECTION
+        #define CY_CFG_SECTION __attribute__ ((section(".psocinit")))
+    #endif
     
     #if defined(__ARMCC_VERSION)
         #define CY_CFG_MEMORY_BARRIER() __memory_changed()
@@ -53,15 +55,6 @@
     #error Unsupported toolchain
 #endif
 
-#if defined(__ARMCC_VERSION)
-    extern unsigned int Load$$LR$$CYCONFIGECC$$Base;
-    #pragma diag_suppress 170,1296
-    #define CYDEV_ECC_VIRT_BASE 0x80000000
-    #define CYAPP_ECC_OFFSET ((uint32)&Load$$LR$$CYCONFIGECC$$Base - CYDEV_ECC_VIRT_BASE)
-#elif defined (__GNUC__) || defined (__ICCARM__)
-    extern int CY_ECC_OFFSET;
-    #define CYAPP_ECC_OFFSET ((uint32)&CY_ECC_OFFSET)
-#endif
 
 CY_CFG_UNUSED
 static void CYMEMZERO(void *s, size_t n);
@@ -138,47 +131,47 @@ CYPACKED typedef struct
 	uint8 value;
 } CYPACKED_ATTR cy_cfg_addrvalue_t;
 
-#define cy_cfg_addr_table ((const uint32 CYFAR *)(0x48000000u + CYAPP_ECC_OFFSET))
-#define cy_cfg_data_table ((const cy_cfg_addrvalue_t CYFAR *)(0x480000A0u + CYAPP_ECC_OFFSET))
+#define cy_cfg_addr_table ((const uint32 CYFAR *)0x48000000u)
+#define cy_cfg_data_table ((const cy_cfg_addrvalue_t CYFAR *)0x480000A0u)
 
 /* UDB_1_4_1_CONFIG Address: CYDEV_UCFG_B0_P1_U0_BASE Size (bytes): 128 */
-#define BS_UDB_1_4_1_CONFIG_VAL ((const uint8 CYFAR *)(0x48001028u + CYAPP_ECC_OFFSET))
+#define BS_UDB_1_4_1_CONFIG_VAL ((const uint8 CYFAR *)0x48001028u)
 
 /* UDB_1_3_0_CONFIG Address: CYDEV_UCFG_B0_P2_U0_BASE Size (bytes): 128 */
-#define BS_UDB_1_3_0_CONFIG_VAL ((const uint8 CYFAR *)(0x480010A8u + CYAPP_ECC_OFFSET))
+#define BS_UDB_1_3_0_CONFIG_VAL ((const uint8 CYFAR *)0x480010A8u)
 
 /* UDB_1_1_1_CONFIG Address: CYDEV_UCFG_B1_P3_U0_BASE Size (bytes): 128 */
-#define BS_UDB_1_1_1_CONFIG_VAL ((const uint8 CYFAR *)(0x48001128u + CYAPP_ECC_OFFSET))
+#define BS_UDB_1_1_1_CONFIG_VAL ((const uint8 CYFAR *)0x48001128u)
 
 /* UDB_0_1_1_CONFIG Address: CYDEV_UCFG_B1_P4_U0_BASE Size (bytes): 128 */
-#define BS_UDB_0_1_1_CONFIG_VAL ((const uint8 CYFAR *)(0x480011A8u + CYAPP_ECC_OFFSET))
+#define BS_UDB_0_1_1_CONFIG_VAL ((const uint8 CYFAR *)0x480011A8u)
 
 /* UCFG_BCTL0 Address: CYREG_BCTL0_MDCLK_EN Size (bytes): 16 */
-#define BS_UCFG_BCTL0_VAL ((const uint8 CYFAR *)(0x48001228u + CYAPP_ECC_OFFSET))
+#define BS_UCFG_BCTL0_VAL ((const uint8 CYFAR *)0x48001228u)
 
 /* UDBSWITCH_1_3 Address: CYDEV_UCFG_B0_P2_ROUTE_BASE Size (bytes): 128 */
-#define BS_UDBSWITCH_1_3_VAL ((const uint8 CYFAR *)(0x48001238u + CYAPP_ECC_OFFSET))
+#define BS_UDBSWITCH_1_3_VAL ((const uint8 CYFAR *)0x48001238u)
 
 /* IOPINS0_7 Address: CYREG_PRT12_DR Size (bytes): 10 */
-#define BS_IOPINS0_7_VAL ((const uint8 CYFAR *)(0x480012B8u + CYAPP_ECC_OFFSET))
+#define BS_IOPINS0_7_VAL ((const uint8 CYFAR *)0x480012B8u)
 
 /* IOPINS0_8 Address: CYREG_PRT15_DR Size (bytes): 10 */
-#define BS_IOPINS0_8_VAL ((const uint8 CYFAR *)(0x480012C4u + CYAPP_ECC_OFFSET))
+#define BS_IOPINS0_8_VAL ((const uint8 CYFAR *)0x480012C4u)
 
 /* IOPINS0_1 Address: CYREG_PRT1_DR Size (bytes): 10 */
-#define BS_IOPINS0_1_VAL ((const uint8 CYFAR *)(0x480012D0u + CYAPP_ECC_OFFSET))
+#define BS_IOPINS0_1_VAL ((const uint8 CYFAR *)0x480012D0u)
 
 /* IOPINS0_2 Address: CYREG_PRT2_DR Size (bytes): 10 */
-#define BS_IOPINS0_2_VAL ((const uint8 CYFAR *)(0x480012DCu + CYAPP_ECC_OFFSET))
+#define BS_IOPINS0_2_VAL ((const uint8 CYFAR *)0x480012DCu)
 
 /* IOPINS0_4 Address: CYREG_PRT4_DR Size (bytes): 10 */
-#define BS_IOPINS0_4_VAL ((const uint8 CYFAR *)(0x480012E8u + CYAPP_ECC_OFFSET))
+#define BS_IOPINS0_4_VAL ((const uint8 CYFAR *)0x480012E8u)
 
 /* IOPINS0_5 Address: CYREG_PRT5_DR Size (bytes): 10 */
-#define BS_IOPINS0_5_VAL ((const uint8 CYFAR *)(0x480012F4u + CYAPP_ECC_OFFSET))
+#define BS_IOPINS0_5_VAL ((const uint8 CYFAR *)0x480012F4u)
 
 /* IOPINS0_6 Address: CYREG_PRT6_DR Size (bytes): 10 */
-#define BS_IOPINS0_6_VAL ((const uint8 CYFAR *)(0x48001300u + CYAPP_ECC_OFFSET))
+#define BS_IOPINS0_6_VAL ((const uint8 CYFAR *)0x48001300u)
 
 
 /*******************************************************************************
@@ -381,7 +374,7 @@ void cyfitter_cfg(void)
 	/* Setup clocks based on selections from Clock DWR */
 	ClockSetup();
 	/* Enable/Disable Debug functionality based on settings from System DWR */
-	CY_SET_XTND_REG8((void CYFAR *)CYREG_MLOGIC_DEBUG, (CY_GET_XTND_REG8((void CYFAR *)CYREG_MLOGIC_DEBUG) | 0x24u));
+	CY_SET_XTND_REG8((void CYFAR *)CYREG_MLOGIC_DEBUG, (CY_GET_XTND_REG8((void CYFAR *)CYREG_MLOGIC_DEBUG) | 0x04u));
 
 	{
 
