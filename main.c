@@ -4427,7 +4427,9 @@ void polling_LCD1(void){
                         
                         case 0x06:  //
                             bufferLCD1.idType='6';
-                            write_button(1,'m');//Metodos ID
+                            set_picture(1,56);
+                            write_button(1,'i');//Metodos ID
+                            flowLCD1=22;
                         break;
                             
                         case 0x1A:  //Atras
@@ -4656,6 +4658,58 @@ void polling_LCD1(void){
                 
                 case '6':   //
                     /*No establecido*/
+                    if(LCD1_GetRxBufferSize()==8){
+                        set_picture(1,49);
+                        write_button(1,'m');//Metodos ID
+                        flowLCD1=21;
+                        LCD1_ClearRxBuffer();
+                        break;
+                    }
+                    if(touch_present(1)==1){
+        				if(touch_write(1,0x33)){
+        					for(x=1;x<=8;x++){
+        						temporal[x]=touch_read_byte(1);
+        					}
+        					y=0;
+        					for(x=1;x<8;x++){
+                                y=crc_check(y,temporal[x]);
+                            }
+        					if(y==temporal[8]){
+        						bufferLCD1.idSerial[0]=16;
+        						y=16;
+        						for(x=1;x<=8;x++){
+        							if((temporal[x]&0x0F)>=10){
+        								bufferLCD1.idSerial[y]=(temporal[x]&0x0F)+55;
+        							}else{
+        								bufferLCD1.idSerial[y]=(temporal[x]&0x0F)+48;				
+        							}
+                                    y--;
+        							if(((temporal[x]>>4)&0x0F)>=10){
+        								bufferLCD1.idSerial[y]=((temporal[x]>>4)&0x0F)+55;
+        							}else{
+        								bufferLCD1.idSerial[y]=((temporal[x]>>4)&0x0F)+48;				
+        							}
+                                    y--;
+        						}
+                                if(productNumber==1 || bufferLCD1.salePerform=='2'){
+                                    bufferLCD1.productType=1;
+                                    bufferLCD1.stateMux[1]=0x26;
+                                    set_picture(1,55);
+                                    write_button(1,'W');//Espere 1 momento
+                                    isr_1_StartEx(timerAnimation1); 
+                                    Waitable_1_Start();
+                                    countAnimation1=0;
+                                    bufferLCD1.authorizationFlag=0;
+                                    flowLCD1=24;
+                                }else{
+                                    set_picture(1,39+(productNumber-2));
+                                    write_button(1,'P');    //Escoja producto
+                                    flowLCD1=23;
+                                }
+                                LCD1_ClearRxBuffer();
+        					}
+        				}
+        			}
                 break;
             }
         break;
@@ -7048,7 +7102,9 @@ void polling_LCD2(void){
                         
                         case 0x06:  //
                             bufferLCD2.idType='6';
-                            write_button(2,'m');//Metodos ID
+                            set_picture(2,56);
+                            write_button(2,'i');//Metodos ID
+                            flowLCD2=22;
                         break;
                             
                         case 0x1A:  //Atras
@@ -7277,6 +7333,58 @@ void polling_LCD2(void){
                 
                 case '6':   //
                     /*No establecido*/
+                    if(LCD2_GetRxBufferSize()==8){
+                        set_picture(2,49);
+                        write_button(2,'m');//Metodos ID
+                        flowLCD2=21;
+                        LCD2_ClearRxBuffer();
+                        break;
+                    }
+                    if(touch_present(2)==1){
+        				if(touch_write(2,0x33)){
+        					for(x=1;x<=8;x++){
+        						temporal[x]=touch_read_byte(2);
+        					}
+        					y=0;
+        					for(x=1;x<8;x++){
+                                y=crc_check(y,temporal[x]);
+                            }
+        					if(y==temporal[8]){
+        						bufferLCD2.idSerial[0]=16;
+        						y=16;
+        						for(x=1;x<=8;x++){
+        							if((temporal[x]&0x0F)>=10){
+        								bufferLCD2.idSerial[y]=(temporal[x]&0x0F)+55;
+        							}else{
+        								bufferLCD2.idSerial[y]=(temporal[x]&0x0F)+48;				
+        							}
+                                    y--;
+        							if(((temporal[x]>>4)&0x0F)>=10){
+        								bufferLCD2.idSerial[y]=((temporal[x]>>4)&0x0F)+55;
+        							}else{
+        								bufferLCD2.idSerial[y]=((temporal[x]>>4)&0x0F)+48;				
+        							}
+                                    y--;
+        						}
+                                if(productNumber==1 || bufferLCD2.salePerform=='2'){
+                                    bufferLCD2.productType=1;
+                                    bufferLCD2.stateMux[1]=0x26;
+                                    set_picture(2,55);
+                                    write_button(2,'W');//Espere 1 momento
+                                    isr_2_StartEx(timerAnimation2); 
+                                    Waitable_2_Start();
+                                    countAnimation2=0;
+                                    bufferLCD2.authorizationFlag=0;
+                                    flowLCD2=24;
+                                }else{
+                                    set_picture(2,39+(productNumber-2));
+                                    write_button(2,'P');    //Escoja producto
+                                    flowLCD2=23; 
+                                }
+                                LCD2_ClearRxBuffer();
+        					}
+        				}
+        			}
                 break;
             }
         break;
