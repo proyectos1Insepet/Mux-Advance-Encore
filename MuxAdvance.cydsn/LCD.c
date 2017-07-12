@@ -129,6 +129,7 @@ uint8_t buffer[18]={0xAA,0x98,0,0,0x01,0x39,0x23,0xC5,0x02,0x00,0x00,0xFF,0xFF,0
 
 void write_button(uint8 lcd, uint8 screen){
     uint8 x,y,flag,mixto[8]="Mix     ";
+    uint8 token[8] = " /Token ";
     switch(screen){
         case 'M'://Menu
             for(x=0;x<8;x++){
@@ -473,6 +474,7 @@ void write_button(uint8 lcd, uint8 screen){
             for(x=0;x<8;x++){
                 write_LCD(lcd,button[40][x],14,x+1,2,0x2110,'Y');   //Nombre de imagen Teclado Kilometraje Renglon 1
                 write_LCD(lcd,button[41][x],18,x+1,2,0x2110,'Y');   //Nombre de imagen Teclado Kilometraje Renglon 2
+                write_LCD(lcd,token[x],22,x+1,2,0x2110,'Y');   //Nombre de imagen Teclado Kilometraje Renglon 2
             }
         break;
             
