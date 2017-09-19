@@ -49,7 +49,7 @@ CY_ISR(timerAnimation1);
 CY_ISR(timerAnimation2);
 CY_ISR(timerBeagleTX);
 CY_ISR(timerPump);
-uint8 version[10]="Ctr V 2.37";
+uint8 version[10]="Ctr V 2.38";
 uint8 passwordPump[6]="102030";  //Contraseña para habilitar surtidor
 
 
